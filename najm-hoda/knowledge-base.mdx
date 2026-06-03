@@ -1,0 +1,80 @@
+---
+title: "Browse the EarthCoop Knowledge Base for Guides and FAQs"
+sidebarTitle: "Knowledge Base"
+description: "The EarthCoop knowledge base contains articles, guides, and FAQs that NajmHoda searches automatically to give you accurate, sourced answers every time."
+---
+
+The EarthCoop knowledge base is a library of platform documentation maintained by the support team. It serves two purposes: you can browse it yourself to find guides and reference material, and NajmHoda searches it automatically every time you ask a question in the chat widget — so you benefit from it even if you never open it directly.
+
+## What the knowledge base contains
+
+The knowledge base currently includes **20\+ published articles** organised across **18 categories**, covering everything from account registration to group management, NajmBahar finances, project investment, and cooperative elections. Each article has a title, excerpt, full content, and category label. Featured articles are promoted at the top of the browsing view.
+
+Articles are written and reviewed by the EarthCoop team. When a topic comes up repeatedly in support tickets, the team adds or expands a KB article so future users can self-serve.
+
+## How to browse articles directly
+
+<Steps>
+  <Step title="Navigate to the support section">
+    Go to **Support → Knowledge Base** in the main navigation, or visit `/support/knowledge-base` directly.
+  </Step>
+  <Step title="Browse by category">
+    Articles are grouped by category. Click a category name to filter the list to that topic.
+  </Step>
+  <Step title="Search by keyword">
+    Use the search bar at the top of the knowledge base page to find articles by title or content.
+  </Step>
+  <Step title="Open an article">
+    Click any article title to read the full guide. Each article page shows the category, publication date, and related articles at the bottom.
+  </Step>
+</Steps>
+
+## How NajmHoda uses the knowledge base
+
+Every time you send a message in the NajmHoda chat widget, the Steward agent runs an automatic content search before generating a reply. The search works as follows:
+
+1. **Keyword extraction** — The Steward extracts up to five keywords from your question.
+2. **Multi-source search** — It queries three sources simultaneously: KB articles (matching title and excerpt), blog posts (matching title and content), and FAQ entries (matching question and answer text).
+3. **Result ranking** — Up to three results are retrieved from each source, giving the agent up to nine pieces of supporting content per question.
+4. **Prompt injection** — The matched articles, their categories, excerpts, and URLs are passed to the AI model alongside your question, so the answer is grounded in authoritative platform documentation.
+5. **Reference links in response** — Any KB articles or blog posts used in the answer appear as clickable links in the response, so you can read the full source.
+
+<Info>
+  NajmHoda searches the title and excerpt of each article, not the full body text. Keep this in mind if you are wondering why a very specific phrase from inside an article did not surface — try asking in broader terms if your first question returns limited results.
+</Info>
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="Can I search the knowledge base from the chat widget?">
+    Yes. When you ask NajmHoda a question, it automatically searches the knowledge base for you and includes relevant article links in its response. You do not need to open the knowledge base separately unless you want to browse by category.
+  </Accordion>
+
+  <Accordion title="Are knowledge base articles available in both English and Persian?">
+    The platform supports both English and Persian. Article availability in each language depends on whether the content team has published a version in that language. Your interface language preference (set in your profile) does not automatically filter the knowledge base, but the Steward agent will respond in the language it detects from your question.
+  </Accordion>
+
+  <Accordion title="What is the difference between a KB article, a blog post, and a FAQ?">
+    **KB articles** are structured guides and reference documents about how to use specific platform features. **Blog posts** are less formal updates — news, tips, and announcements grouped by topic. **FAQ entries** are short question-and-answer pairs for common queries. NajmHoda searches all three when you ask a question.
+  </Accordion>
+
+  <Accordion title="Can I suggest a new knowledge base article?">
+    Yes. Open a support ticket and describe the topic you could not find documentation for. The support team reviews ticket patterns regularly and creates new articles when a topic comes up frequently.
+  </Accordion>
+</AccordionGroup>
+
+## How articles stay up to date
+
+You do not need to worry about NajmHoda giving you outdated information. The platform keeps content current automatically:
+
+- When an admin publishes, updates, or deletes a KB article, blog post, or FAQ entry, the Steward agent's content cache is cleared instantly.
+- The next question NajmHoda receives after a content change triggers a fresh query, so the answer will reflect the latest published content.
+- The content summary is cached for up to one hour to keep responses fast. In practice this means NajmHoda is always current within one hour of any content change — and often immediately, because any new question after an update rebuilds the cache from scratch.
+
+<Tip>
+  If you receive an answer that seems outdated or incorrect, submit feedback using the thumbs-down button in the chat widget. The support team reviews low-rated responses and updates articles when needed.
+</Tip>
+
+## If you can't find an answer
+
+If the knowledge base does not cover your question and NajmHoda is unable to help, escalate to the support team through the ticket system. See [Support Tickets](/account/support-tickets) to learn how to create a ticket, attach files, and track the response.

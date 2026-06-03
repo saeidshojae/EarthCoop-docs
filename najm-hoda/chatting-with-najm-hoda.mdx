@@ -1,0 +1,147 @@
+---
+title: "How to Chat with NajmHoda and Get Help on EarthCoop"
+sidebarTitle: "Chatting"
+description: "Use the NajmHoda chat widget to ask questions, get step-by-step guidance, and find relevant knowledge base articles on EarthCoop."
+---
+
+The NajmHoda chat widget sits in the corner of every page on EarthCoop. You do not need to navigate to a separate help section — just click the widget, type your question, and receive a structured answer within seconds, complete with relevant knowledge base references and suggested follow-up questions.
+
+## Opening the chat widget
+
+The chat icon is visible at the bottom-right of every page once you are signed in. Click it to expand the widget. If you have had previous conversations, your most recent one loads automatically so you can continue from where you left off.
+
+## Asking a question
+
+Type your question in natural language and press **Send**. NajmHoda automatically:
+
+1. Extracts keywords from your message.
+2. Searches published knowledge base articles, blog posts, and FAQ entries for matches.
+3. Passes those results to the Steward agent along with your conversation history.
+4. Returns a structured response with an answer, steps, related articles, and suggested questions.
+
+<Tip>
+  Ask specific questions for the best results. "How do I remove a member from my group?" gets a more precise answer than "group help."
+</Tip>
+
+You can ask follow-up questions in the same conversation. NajmHoda retains your conversation history for context, so you do not need to repeat information you already provided.
+
+## Conversation history
+
+Every conversation is saved to your account. To review a past conversation:
+
+<Steps>
+  <Step title="Open the chat widget">
+    Click the NajmHoda icon at the bottom-right of any page.
+  </Step>
+  <Step title="Go to conversations">
+    Click the **Conversations** or history icon at the top of the widget panel to see a list of your previous chats.
+  </Step>
+  <Step title="Select a conversation">
+    Click any conversation to load the full message thread.
+  </Step>
+  <Step title="Delete or archive">
+    Open the conversation options menu (three-dot icon) and choose **Delete** to remove it permanently or **Archive** to hide it from your active list without losing it.
+  </Step>
+</Steps>
+
+<Info>
+  Archived conversations are still accessible by filtering your conversation list by status. Deleted conversations cannot be recovered.
+</Info>
+
+## Submitting feedback on a response
+
+After NajmHoda replies, a feedback prompt appears below the message. Select a thumbs-up or thumbs-down rating, then optionally add a short note. Your feedback helps the platform team identify gaps in the knowledge base and improve future responses.
+
+You can also submit structured feedback — bug reports, feature requests, improvement suggestions, or general praise — through the feedback form inside the widget.
+
+## When NajmHoda escalates to human support
+
+NajmHoda handles the vast majority of platform questions automatically. However, some situations require a human agent:
+
+- Your question involves account security, billing disputes, or sensitive personal information.
+- The answer requires access to your specific account data that NajmHoda cannot view.
+- NajmHoda could not find a confident answer in its knowledge base and flags the conversation for human review.
+
+When escalation is needed, NajmHoda explains why and prompts you to open a support ticket. See [Support Tickets](/account/support-tickets) for instructions.
+
+## API access
+
+If you are building an integration or testing the platform programmatically, you can send messages to NajmHoda directly via the REST API. All chat endpoints require a Bearer token obtained through authentication.
+
+### Send a message
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://yourdomain.com/api/najm-hoda/chat \
+  -H "Authorization: Bearer {your-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "How do I create a cooperative group?",
+    "agent": "steward"
+  }'
+```
+
+```json Request body
+{
+  "message": "How do I create a cooperative group?",
+  "agent": "steward"
+}
+```
+
+</CodeGroup>
+
+**Request fields**
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `message` | string | Yes | The question or message text. Maximum 2,000 characters. |
+| `agent` | string | No | Which agent to use. Regular members are always routed to `steward` regardless of this value. |
+| `conversation_id` | integer | No | Pass an existing conversation ID to continue a previous thread. |
+| `context` | object | No | Optional key-value pairs to add extra context to the request. |
+
+### Example response
+
+```json
+{
+  "success": true,
+  "message": "To create a group, navigate to Groups in the sidebar and click Create Group...",
+  "agent": "steward",
+  "agent_name": "Steward",
+  "agent_icon": "🧑‍✈️",
+  "conversation_id": 42,
+  "suggestions": ["How do I invite members?", "What group types are available?"],
+  "response_time_ms": 843,
+  "request_id": "req_abc123"
+}
+```
+
+The `message` field contains the full structured answer from the Steward, including any step-by-step instructions and knowledge base links. The `suggestions` array contains related follow-up questions the agent recommends.
+
+### Submit feedback
+
+```bash
+POST /api/najm-hoda/feedback
+Authorization: Bearer {your-token}
+Content-Type: application/json
+```
+
+**Request fields**
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `type` | string | Yes | Feedback category: `bug`, `feature_request`, `improvement`, `complaint`, `praise`, or `other`. |
+| `subject` | string | Yes | Short summary of your feedback (max 200 characters). |
+| `content` | string | Yes | Full feedback text (max 2,000 characters). |
+| `rating` | integer | No | Optional rating from 1 (poor) to 5 (excellent). |
+
+### Conversation management endpoints
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/api/najm-hoda/conversations` | List all your conversations (paginated). |
+| `GET` | `/api/najm-hoda/conversations/{id}` | Retrieve a single conversation with all messages. |
+| `DELETE` | `/api/najm-hoda/conversations/{id}` | Delete a conversation permanently. |
+| `PUT` | `/api/najm-hoda/conversations/{id}/archive` | Archive a conversation. |
+
+All conversation endpoints require `Authorization: Bearer {your-token}` and only return conversations belonging to the authenticated user.

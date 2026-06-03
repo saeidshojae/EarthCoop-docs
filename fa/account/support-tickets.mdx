@@ -1,0 +1,106 @@
+---
+title: "ثبت و پیگیری تیکت‌های پشتیبانی EarthCoop"
+sidebarTitle: "تیکت پشتیبانی"
+description: "ایجاد تیکت برای گزارش مسائل، پرسیدن سوال، پیوست فایل و پیگیری پاسخ‌ها از تیم پشتیبانی."
+---
+
+تیکت‌های پشتیبانی وقتی لازم هستند که پاسخ انسانی نیاز دارید — مسائل حساب، پرداخت، باگ. اول [NajmHoda](/fa/najm-hoda/chatting-with-najm-hoda) را امتحان کنید.
+
+## چه وقت تیکت باز کنید؟
+
+- NajmHoda حل نکرده باشد.
+- دسترسی به داده فردی لازم باشد.
+- باگ دیده باشید.
+- تجدید نظر در تصمیم گروه یا پلتفرم بخواهید.
+
+## ایجاد تیکت
+
+<Steps>
+  <Step title="دسته (Category)">
+  </Step>
+</Steps>
+
+## وضعیت‌های تیکت
+
+| وضعیت | معنا |
+| --- | --- |
+| **Open (باز)** | دریافت شده، در انتظار پاسخ. |
+| **In Progress (در حال بررسی)** | ارجاع به عامل پشتیبانی. |
+| **Closed (بسته)** | حل شده. |
+
+<Info>
+  نظر دادن روی تیکت بسته، آن را دوباره باز می‌کند.
+</Info>
+
+## ثبت نظر (Comment)
+
+<Steps>
+  <Step title="باز کردن تیکت">
+  </Step>
+  <Step title="بنویسید (حداقل ۵ کاراکتر)">
+  </Step>
+  <Step title="پیوست فایل (اختیاری)">
+  </Step>
+  <Step title="Add Comment">
+  </Step>
+</Steps>
+
+## دانلود پیوست از پاسخ پشتیبانی
+
+روی نام فایل یا آیکون دانلود کلیک کنید.
+
+<Note>
+  دانلودها احراز هویت می‌شوند. فقط تیکت‌های خودتان را دسترسی دارید.
+</Note>
+
+## بستن تیکت
+
+<Steps>
+  <Step title="باز کردن تیکت">
+  </Step>
+  <Step title="Close Ticket">
+  </Step>
+  <Step title="تأیید">
+  </Step>
+</Steps>
+
+## دسترسی API
+
+### فهرست تیکت‌ها
+
+```bash
+GET /api/tickets
+Authorization: Bearer {your-token}
+```
+
+### ایجاد تیکت
+
+```bash
+POST /api/tickets
+```
+
+```json
+{
+  "subject": "...",
+  "message": "...",
+  "category": "technical",
+  "priority": "high"
+}
+```
+
+### خلاصه اندپوینت‌ها
+
+| متد | اندپوینت | توضیح |
+| --- | --- | --- |
+| GET | `/api/tickets` | فهرست. |
+| POST | `/api/tickets` | ایجاد. |
+| GET | `/api/tickets/{id}` | جزئیات. |
+| PUT | `/api/tickets/{id}` | به‌روزرسانی. |
+| POST | `/api/tickets/{id}/comments` | نظر جدید. |
+| PUT | `/api/tickets/{id}/close` | بستن. |
+| GET | `/api/tickets/{id}/attachments/{id}/download` | دانلود پیوست. |
+| GET | `/api/tickets/stats` | آمار. |
+
+<Warning>
+  فقط تیکت‌های حساب خودتان را می‌توانید دستیبابی کنید.
+</Warning>

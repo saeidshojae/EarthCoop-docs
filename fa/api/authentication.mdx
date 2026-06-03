@@ -1,0 +1,115 @@
+---
+title: "احراز هویت API: Bearer Token و Authorization"
+sidebarTitle: "احراز هویت"
+description: "بیاموزید چگونه با ورود به EarthCoop توکن Bearer دریافت کنید و در هدر Authorization درخواست‌های API استفاده کنید."
+---
+
+API از احراز هویت Bearer استفاده می‌کند. هر اندپوینت محافظت‌شده نیاز به توکن در هدر `Authorization` دارد.
+
+## چگونه کار می‌کند
+
+وقتی وارد می‌شوید، پلتفرم یک توکن دسترسی شخصی تولید می‌کند که به حساب شما متصل است.
+
+## دریافت توکن
+
+**گزینه ۱ — رابط وب (پیشنهاد برای تست):** وارد حساب شوید و از مدیریت توکن پرسنلی ایجاد کنید.
+
+**گزینه ۲ — اندپوینت ورود:**
+
+```bash
+curl -X POST https://your-domain.com/login \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{"email": "you@example.com", "password": "your-password"}'
+```
+
+```json
+{
+  "token": "1|abc123xyz..."
+}
+```
+
+توکن را مثل رمز عبور امن نگه دارید.
+
+## ارسال توکن
+
+```http
+Authorization: Bearer {your-token}
+```
+
+همچنین `Accept: application/json` را باید تنظیم کنید.
+
+### مثال درخواست
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/najm-hoda/chat \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "چگونه پروژه ثبت کنم؟"}'
+```
+
+```javascript JavaScript
+const response = await fetch('https://your-domain.com/api/najm-hoda/chat', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_TOKEN',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ message: 'چگونه پروژه ثبت کنم؟' }),
+});
+```
+
+```php PHP
+$client = new \GuzzleHttp\Client();
+$response = $client->post('https://your-domain.com/api/najm-hoda/chat', [
+    'headers' => [
+        'Authorization' => 'Bearer YOUR_TOKEN',
+        'Accept' => 'application/json',
+    ],
+    'json' => ['message' => 'چگونه پروژه ثبت کنم؟'],
+]);
+```
+
+</CodeGroup>
+
+## کدام اندپوینت‌ها احراز هویت لازم دارند
+
+| دسته اندپوینت | احراز هویت |
+| --- | --- |
+| `GET /api/najm-hoda/welcome` | خیر |
+| `POST /api/najm-hoda/escalate` | خیر |
+| `POST /api/najm-hoda/chat` | **بله** |
+| `GET/DELETE/PUT /api/najm-hoda/conversations/*` | **بله** |
+| `POST /api/najm-hoda/feedback` | **بله** |
+| `GET/POST/PUT /api/tickets/*` | **بله** |
+| `GET/POST/DELETE /api/notifications/*` | **بله** |
+| `GET /api/provinces و سایر Geographic` | خیر |
+
+## انقضا و تمدید توکن
+
+توکن پیش‌فرضاً منقضی نمی‌شود مگر ادمین تنظیم کرده باشد. در صورت انقضا، دوباره وارد شوید.
+
+<Warning>
+  توکن را در source control کامیت نکنید؛ در صورت لو رفتن فوراً لغو کنید.
+</Warning>
+
+## پاسخ‌های خطا
+
+**توکن نامعتبر — ۴۰۱:**
+
+```json
+{ "message": "Unauthenticated." }
+```
+
+**توکن معتبر ولی بدون دسترسی — ۴۰۳:**
+
+```json
+{
+  "success": false,
+  "message": "You do not have access to this conversation."
+}
+```

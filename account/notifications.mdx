@@ -1,0 +1,136 @@
+---
+title: "Configure Your Notification Settings on EarthCoop"
+sidebarTitle: "Notifications"
+description: "Control how and when EarthCoop sends you notifications for group activity, project updates, financial transactions, and support tickets."
+---
+
+EarthCoop sends notifications for a wide range of events — group posts, project status changes, NajmBahar transfers, election results, and more. By default, most notification types are enabled as in-app (push) notifications, while email notifications are turned off. You can adjust every category individually to keep your notification stream focused on what matters to you.
+
+## Where to find notification settings
+
+<Steps>
+  <Step title="Open your account menu">
+    Click your avatar or name in the top navigation bar.
+  </Step>
+  <Step title="Go to Notification Settings">
+    Select **Notification Settings** from the dropdown, or navigate to `/notifications/settings` directly.
+  </Step>
+  <Step title="Update your preferences">
+    Toggle the switches for each notification category, then click **Save** at the bottom of the page.
+  </Step>
+</Steps>
+
+## Notification channels
+
+Two delivery channels are available:
+
+| Channel | Description | Default |
+| --- | --- | --- |
+| **In-app (push)** | Appears in the notification bell in the platform header. | On |
+| **Email** | Sent to your registered email address. | Off |
+
+Toggle **Email notifications** and **In-app notifications** at the top of the settings page to enable or disable an entire channel at once. Individual category toggles only take effect if the relevant channel is enabled.
+
+## How to mark notifications as read
+
+New notifications appear in the notification bell at the top of the page. Click the bell icon to open the notification panel. To mark individual notifications as read, click them. To mark all as read at once, click **Mark all as read** at the top of the panel.
+
+Read notifications remain in the panel for a period before they are automatically cleared. You can dismiss any notification manually by clicking the **×** button next to it.
+
+## Notification categories
+
+### Group activity
+
+| Setting | Description |
+| --- | --- |
+| `group_post` | A new post is published in one of your groups. |
+| `group_poll` | A new poll is created in one of your groups. |
+| `group_comment_new` | Someone comments on a post in one of your groups. |
+| `group_comment_reply` | Someone replies to your comment. |
+| `group_invitation` | You receive an invitation to join a group. |
+| `group_report_message` | A message in your group is reported (visible to group managers and inspectors). |
+| `group_chat_request` | A new chat request is submitted to a group you manage. |
+
+### Elections
+
+| Setting | Description |
+| --- | --- |
+| `election_started` | An election begins in one of your groups. |
+| `election_finished` | An election concludes and results are available. |
+| `election_elected` | You are elected to a role in a group. |
+| `election_accepted` | Your candidacy acceptance is confirmed. |
+| `election_reminder` | A reminder before an active election ends. |
+
+### Chat
+
+| Setting | Description |
+| --- | --- |
+| `chat_message` | You receive a new direct chat message. |
+| `chat_reply` | Someone replies to a message in a chat you are participating in. |
+| `chat_mention` | You are mentioned in a group chat. |
+
+### Auctions
+
+| Setting | Description |
+| --- | --- |
+| `auction_started` | An auction starts in one of your groups. |
+| `auction_ended` | An auction ends. |
+| `auction_bid` | A new bid is placed (admin-only by default). |
+| `auction_won` | You win an auction. |
+| `auction_outbid` | Your bid is outbid by another member. |
+| `auction_lost` | An auction ends and you did not win. |
+| `auction_cancelled` | An auction is cancelled. |
+| `auction_reminder` | A reminder before a live auction ends. |
+
+### NajmBahar — Financial transactions
+
+NajmBahar is the platform's internal financial system. The following notifications cover wallet events and the NajmBahar transfer service:
+
+| Setting | Description |
+| --- | --- |
+| `wallet_settled` | A held wallet amount is settled. |
+| `wallet_released` | A hold on your wallet is released. |
+| `wallet_held` | An amount is placed on hold in your wallet. |
+| `wallet_credited` | Your wallet receives a credit. |
+| `wallet_debited` | An amount is deducted from your wallet. |
+| `najm_bahar_transaction` | A NajmBahar transfer is completed on your account. |
+| `najm_bahar_low_balance` | Your NajmBahar balance drops below your configured threshold. |
+| `najm_bahar_large_transaction` | A single transaction exceeds your configured large-transaction threshold. |
+| `najm_bahar_scheduled_transaction` | A scheduled NajmBahar transaction executes. |
+
+<Info>
+  You can configure the balance thresholds for low-balance and large-transaction alerts. Find these settings in the **NajmBahar** section of your notification settings page. The default low-balance threshold is 1,000 units and the default large-transaction threshold is 100,000 units.
+</Info>
+
+### Projects and investments
+
+Project and investment notifications keep you informed when key changes happen to projects you are involved with:
+
+| Event | When it fires |
+| --- | --- |
+| Project status changed | A project you submitted or invested in changes status — for example, moves from pending review to approved, or from active to completed. |
+| Project revision requested | The review team requests changes to a project you submitted. |
+| New investment received | Your project receives a new investment from a member. |
+| Investment status changed | The status of an investment you made changes — for example, from pending to confirmed. |
+
+<Note>
+  Project and investment notifications respect your email and in-app channel settings. Ensure at least one channel is enabled to receive project updates.
+</Note>
+
+### Membership fees
+
+You receive a notification when a membership fee is due or processed for a cooperative group you belong to. Check the **Wallet** section of your notification settings to control these alerts.
+
+### Admin messages
+
+| Setting | Description |
+| --- | --- |
+| `admin_message` | A direct message or announcement from a platform administrator. |
+
+## Managing preferences per category
+
+Each category switch works independently. You can, for example, enable in-app notifications for group posts but disable email for the same type, or turn off auction notifications entirely while keeping financial alerts on. The platform saves your preferences per user, so changes apply only to your account.
+
+<Tip>
+  If your notification bell fills up quickly, consider disabling `group_comment_new` and enabling only `group_comment_reply` so you are only notified about replies to your own comments rather than every comment in a group.
+</Tip>

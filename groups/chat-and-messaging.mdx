@@ -1,0 +1,97 @@
+---
+title: "Group Chat and Real-Time Messaging on EarthCoop"
+sidebarTitle: "Chat & Messaging"
+description: "Send messages, record voice notes, react with emojis, pin announcements, and reply in threads — all in your EarthCoop group's real-time chat space."
+---
+
+Every group on EarthCoop has a live chat space where members can exchange text messages, share files, record voice notes, react to each other's content, and reply to specific messages in organised threads. The chat updates in real time — new messages appear on screen the moment they are sent, without requiring a page refresh.
+
+## Sending a Message
+
+Navigate to your group and open the **Chat** tab. Type your message in the input field at the bottom of the screen, then press **Enter** or click the send button to post it.
+
+A few things to know:
+
+- Messages support up to **2,000 characters**.
+- You can mention another group member by typing `@` followed by their name. A suggestion dropdown appears as you type; select a name to embed a mention. The mentioned member receives a notification.
+- The system applies anti-spam detection. If you send very similar messages in quick succession, your post will be rate-limited temporarily.
+- Managers and inspectors can hide or delete any message. A deleted message is removed from all members' views immediately.
+
+<Tip>
+  Press **Enter** to send and **Shift \+ Enter** to insert a line break within your message.
+</Tip>
+
+## Threaded Replies
+
+To reply directly to a specific message — rather than sending a free-standing response — hover over that message and click the **Reply** icon. Your new message is linked to the original, forming a thread. A reply count badge appears on the original message to indicate that a thread exists.
+
+To read a full thread, click the reply count badge on any message. The thread panel slides open and shows the original message alongside all replies in chronological order.
+
+<Note>
+  You can also reply directly to a blog post or a poll that appears in the chat feed. The reply appears in the main chat stream with a reference to the original post or poll.
+</Note>
+
+## Reactions
+
+Express quick agreement, support, or emotion without sending a message. Hover over any message and click the **emoji** icon that appears. Choose from six reaction types:
+
+| Reaction | Emoji |
+| --- | --- |
+| Like | 👍 |
+| Love | ❤️ |
+| Laugh | 😂 |
+| Wow | 😮 |
+| Sad | 😢 |
+| Angry | 😡 |
+
+Each member can place one reaction per message at a time. Selecting a different emoji removes your previous reaction and adds the new one. Clicking your existing reaction removes it. Reaction counts are visible to all members and update in real time.
+
+## Voice Messages
+
+Record and send an audio message directly from the chat interface — no external app needed.
+
+<Steps>
+  <Step title="Open the Voice Recorder">
+    Click the **microphone** icon in the message input toolbar. The browser requests microphone permission the first time you do this.
+  </Step>
+  <Step title="Record Your Message">
+    Speak your message. A live timer shows the recording duration. The maximum voice message size is **10 MB**, which is typically several minutes of audio.
+  </Step>
+  <Step title="Review and Send">
+    Click the **stop** button to finish recording. A preview player appears so you can listen back before sending. Click **Send** to post it to the group, or **Discard** to start over.
+  </Step>
+</Steps>
+
+Voice messages are stored in common web audio formats (WebM, OGG, WAV, or MP3). All group members can play them back directly in the chat using the inline audio player.
+
+## Pinning Important Messages
+
+Important messages — announcements, decisions, key links — can be pinned to the top of the chat so they stay visible to all members.
+
+- **To pin:** hover over the message and click **Pin**. Managers and inspectors can pin any message.
+- **To unpin:** hover over a pinned message and click **Unpin**. The same role rules apply.
+- A pin icon in the chat header shows how many messages are currently pinned. Click it to see the full list.
+
+## Blog Posts in the Group Feed
+
+In addition to chat messages, members can publish **blog posts** — longer-form content with a title, body text, images, and category tags — directly into the group's activity feed. Blog posts appear interspersed with regular chat messages in chronological order.
+
+To create a blog post, click the **Post** button (distinct from the chat input) and fill in the title and content fields. Other members can react to posts and leave threaded comments.
+
+## Real-Time Updates
+
+The chat uses a WebSocket connection to push new messages, reactions, typing indicators, and pin events to all connected members instantly. You do not need to refresh the page to see new content.
+
+A typing indicator appears at the bottom of the chat when another member is composing a message, giving the conversation a natural, synchronous feel.
+
+<Tip>
+  If you close and reopen the chat tab, the system loads the most recent 50 messages immediately and lets you scroll up to fetch older history on demand.
+</Tip>
+
+<Note>
+  **Offline fallback:** if a WebSocket connection cannot be established (due to network conditions or a corporate firewall), the chat automatically falls back to **long-polling**. Messages are fetched at short intervals instead of being pushed live. You may notice a slight delay compared to real-time mode, but no messages are lost.
+</Note>
+
+## Searching Messages
+
+Use the **Search** icon inside the chat to find past content. You can search by keyword across messages, blog posts, and polls within the group. Advanced filters let you narrow results by author, date range, content type, or the presence of a file attachment.

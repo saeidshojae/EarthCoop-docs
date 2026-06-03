@@ -1,0 +1,326 @@
+---
+title: "Geographic API: Provinces, Cities & Regions"
+sidebarTitle: "Geographic API"
+description: "Public API endpoints to fetch geographic hierarchy data including continents, provinces, counties, districts, cities, and villages for location selection."
+---
+
+The Geographic API provides read-only access to EarthCoop's location hierarchy. Use it to populate cascading dropdown menus on forms — for example, letting a user select their province, then county, then district, and so on. All geographic endpoints are public and require no authentication.
+
+The hierarchy from broadest to most specific is:
+
+```text
+Continent → Country → Province → County → District → City / Rural → Region → Neighborhood → Street → Alley
+```
+
+---
+
+## GET /api/provinces
+
+Returns all active provinces.
+
+**Authentication:** None
+
+**Request:** No parameters.
+
+### Response Fields
+
+<ResponseField name="data" type="array">
+  Array of active province objects.
+</ResponseField>
+
+<ResponseField name="data[].id" type="integer">
+  Province ID.
+</ResponseField>
+
+<ResponseField name="data[].name" type="string">
+  Province name.
+</ResponseField>
+
+### Example Request
+
+```bash
+curl -X GET https://your-domain.com/api/provinces \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    { "id": 1, "name": "Tehran" },
+    { "id": 2, "name": "Isfahan" },
+    { "id": 3, "name": "Khorasan Razavi" }
+  ]
+}
+```
+
+---
+
+## GET /api/counties/{id}
+
+Returns all active counties within the given province.
+
+**Authentication:** None
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The province ID whose counties you want to retrieve.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X GET https://your-domain.com/api/counties/1 \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    { "id": 10, "name": "Tehran County" },
+    { "id": 11, "name": "Shemiranat County" }
+  ]
+}
+```
+
+---
+
+## GET /api/districts/{id}
+
+Returns all active districts within the given county.
+
+**Authentication:** None
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The county ID whose districts you want to retrieve.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X GET https://your-domain.com/api/districts/10 \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    { "id": 20, "name": "Central District" },
+    { "id": 21, "name": "Northern District" }
+  ]
+}
+```
+
+---
+
+## GET /api/cities/{id}
+
+Returns all active cities within the given district.
+
+**Authentication:** None
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The district ID whose cities you want to retrieve.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X GET https://your-domain.com/api/cities/20 \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    { "id": 30, "name": "Tehran" },
+    { "id": 31, "name": "Karaj" }
+  ]
+}
+```
+
+---
+
+## GET /api/villages/{id}
+
+Returns all active villages within the given district.
+
+**Authentication:** None
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The district ID whose villages you want to retrieve.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X GET https://your-domain.com/api/villages/21 \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "data": [
+    { "id": 100, "name": "Lavasan" },
+    { "id": 101, "name": "Firoozkooh" }
+  ]
+}
+```
+
+---
+
+## GET /api/geographic/continents
+
+Returns all continents. This is the entry point for the full hierarchical children traversal described below.
+
+**Authentication:** None
+
+**Request:** No parameters.
+
+### Response Fields
+
+<ResponseField name="(array)" type="array">
+  Flat JSON array (not wrapped in a `data` key) of continent objects, each with `id` and `name`.
+</ResponseField>
+
+### Example Request
+
+```bash
+curl -X GET https://your-domain.com/api/geographic/continents \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+[
+  { "id": 1, "name": "Asia" },
+  { "id": 2, "name": "Europe" },
+  { "id": 3, "name": "Africa" }
+]
+```
+
+<Note>
+  The `/api/geographic/continents` response is a bare JSON array, not an object with a `data` key — unlike the `/api/provinces` family of endpoints.
+</Note>
+
+---
+
+## GET /api/geographic/{level}/{parentId}/children
+
+Returns the direct children of a given geographic entity at any level of the hierarchy. This is the recommended endpoint for building cascading location selectors because it covers the full hierarchy in a single consistent shape.
+
+**Authentication:** None
+
+### Path Parameters
+
+<ParamField path="level" type="string" required>
+  The level of the **parent** entity. Accepted values (case-insensitive):
+
+  | Value | Returns |
+  | --- | --- |
+  | `continent` | Countries in the continent |
+  | `country` | Provinces in the country |
+  | `province` | Counties in the province |
+  | `county` | Districts (sections) in the county |
+  | `section` | Cities and rurals in the district |
+  | `city` | Regions in the city |
+  | `region` | Neighborhoods in the region |
+  | `neighborhood` | Streets in the neighborhood |
+  | `street` | Alleys on the street |
+</ParamField>
+
+<ParamField path="parentId" type="string" required>
+  The ID of the parent entity. For the `section` level, city results use the prefixed format `city_{id}` and rural results use `rural_{id}` — pass these prefixed strings as `parentId` when fetching the next level down (e.g. `city_30` to get regions of city 30).
+</ParamField>
+
+### Response Fields
+
+<ResponseField name="(array)" type="array">
+  A flat JSON array of child objects. Each item has at minimum `id` and `name`.
+</ResponseField>
+
+For the `section` (district) level, each city item has a prefixed `id` and each rural item has a `rural_` prefix:
+
+```json
+[
+  { "id": "city_30", "name": "Tehran" },
+  { "id": "rural_5", "name": "Lavasan (دهستان)" }
+]
+```
+
+### Example Requests
+
+```bash
+# Get countries in Asia (continent id=1)
+curl https://your-domain.com/api/geographic/continent/1/children
+
+# Get provinces in Iran (country id=7)
+curl https://your-domain.com/api/geographic/country/7/children
+
+# Get counties in Tehran province (province id=1)
+curl https://your-domain.com/api/geographic/province/1/children
+
+# Get districts in Tehran county (county id=10)
+curl https://your-domain.com/api/geographic/county/10/children
+
+# Get cities and rurals in Central District (section id=20)
+curl https://your-domain.com/api/geographic/section/20/children
+
+# Get regions in Tehran city (use prefixed id)
+curl https://your-domain.com/api/geographic/city/city_30/children
+```
+
+### Example Response — `province/1/children`
+
+```json
+[
+  { "id": 10, "name": "Tehran County" },
+  { "id": 11, "name": "Shemiranat County" },
+  { "id": 12, "name": "Rey County" }
+]
+```
+
+### Example Response — `section/20/children` (mixed cities and rurals)
+
+```json
+[
+  { "id": "city_30", "name": "Tehran" },
+  { "id": "city_31", "name": "Karaj" },
+  { "id": "rural_5", "name": "Lavasan (دهستان)" }
+]
+```
+
+<Warning>
+  When drilling down from the `section` level, the `id` values are prefixed strings (`city_30`, `rural_5`), not plain integers. You must pass these prefixed strings as-is in the next `parentId` segment. Passing a plain integer at the `city` level will not match.
+</Warning>
+
+### Building a Cascading Location Selector
+
+Here is the recommended sequence for a complete location picker starting at continent level:
+
+1. `GET /api/geographic/continents` — populate the continent dropdown
+2. `GET /api/geographic/continent/{continentId}/children` — populate countries
+3. `GET /api/geographic/country/{countryId}/children` — populate provinces
+4. `GET /api/geographic/province/{provinceId}/children` — populate counties
+5. `GET /api/geographic/county/{countyId}/children` — populate districts
+6. `GET /api/geographic/section/{districtId}/children` — populate cities and rurals (note prefixed IDs)
+7. `GET /api/geographic/city/{city_N}/children` — populate regions within a city
+
+If you only need provincial-level data (common for Iran-specific forms), use the simpler `/api/provinces`, `/api/counties/{id}`, `/api/districts/{id}`, and `/api/cities/{id}` endpoints instead.

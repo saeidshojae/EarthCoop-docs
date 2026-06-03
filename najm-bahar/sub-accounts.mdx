@@ -1,0 +1,131 @@
+---
+title: "Manage NajmBahar Sub-Accounts for Groups and Projects"
+sidebarTitle: "Sub-Accounts"
+description: "Create and manage NajmBahar sub-accounts to separate group finances, track cooperative fund pools, and control shared balances independently."
+---
+
+Every NajmBahar main account can hold multiple sub-accounts — named ledgers that sit beneath your main account and track their own balances independently. Sub-accounts let you separate money by purpose without opening additional accounts: keep a personal spending pool in one sub-account, a group investment fund in another, and a savings reserve in a third. Each sub-account receives its own unique code (in the format `XXXXXXXXXX-NNN`) that others can use to send you funds directly into that pool.
+
+<Info>
+  Membership fee payments are drawn from your **first active sub-account**. Make sure you fund at least one sub-account with sufficient active balance before paying your annual fee.
+</Info>
+
+## Create a sub-account
+
+<Steps>
+  <Step title="Go to Sub-Accounts">
+    Navigate to **NajmBahar → Sub-Accounts** in the sidebar. The page lists all your existing sub-accounts alongside their active and faded balances.
+  </Step>
+  <Step title="Open the creation form">
+    Click **Create Sub-Account**. You will see a form with two optional fields: a name for the sub-account and an initial funding amount.
+  </Step>
+  <Step title="Name the sub-account">
+    Enter a descriptive label — for example, "Group Investment Fund" or "Emergency Reserve". The name can be up to 255 characters and can be renamed later.
+  </Step>
+  <Step title="Set an initial deposit (optional)">
+    If you want to fund the sub-account immediately, enter an amount in the **Initial Amount** field and add an optional description for the transfer. The system draws this amount from your main account's **active** balance. If your active balance is insufficient, the deposit is rejected — but the sub-account is still created with a zero balance.
+  </Step>
+  <Step title="Save">
+    Click **Create**. Your new sub-account appears in the list with its generated code. Copy the code to share it with others who need to send funds to that pool.
+  </Step>
+</Steps>
+
+<Note>
+  Groups have their own NajmBahar accounts managed by group managers and owners. Group sub-accounts are created through the group's own NajmBahar panel and every action is logged with the actor's role for accountability.
+</Note>
+
+## View sub-account balances
+
+Open **NajmBahar → Sub-Accounts** to see the full list. Each row shows:
+
+- **Name** — the label you assigned (or the auto-generated default)
+- **Sub-account code** — the unique identifier used in transfers
+- **Active balance** — funds available for immediate transfers and fee payments
+- **Faded balance** — funds held for cooperative purposes
+- **Status** — active or inactive
+
+Click a sub-account row to open its detail page, which includes the full movement history for that pool.
+
+## Fund a sub-account (transfer to)
+
+<Steps>
+  <Step title="Open the sub-account detail page">
+    From the sub-accounts list, click the sub-account you want to fund.
+  </Step>
+  <Step title="Enter the amount">
+    In the **Transfer To Sub-Account** panel, enter the amount you want to move from your main account into this sub-account. The system validates that your main account has sufficient **active** balance.
+  </Step>
+  <Step title="Add a description (optional)">
+    Provide a note to remind yourself why the funds were moved — for example, "Monthly group contribution".
+  </Step>
+  <Step title="Confirm">
+    Click **Transfer**. The funds move instantly and the action is recorded in the audit log.
+  </Step>
+</Steps>
+
+## Withdraw from a sub-account (transfer from)
+
+<Steps>
+  <Step title="Open the sub-account detail page">
+    Navigate to the sub-account you want to draw from.
+  </Step>
+  <Step title="Enter the amount">
+    In the **Transfer From Sub-Account** panel, enter the withdrawal amount. The system automatically uses **faded** balance first; if the faded balance is insufficient it falls back to **active** balance.
+  </Step>
+  <Step title="Add a description (optional)">
+    Describe the reason for the withdrawal.
+  </Step>
+  <Step title="Confirm">
+    Click **Withdraw**. The funds return to your main account balance and the action is recorded in the audit log.
+  </Step>
+</Steps>
+
+<Warning>
+  If your sub-account holds a mix of active and faded balance that together cover the requested amount but neither pool alone covers it, the system will ask you to split the transfer into two separate operations — one for each balance type.
+</Warning>
+
+## Transfer funds between sub-accounts
+
+You can move money directly from one of your sub-accounts to any other sub-account on the platform — including sub-accounts belonging to other users or groups.
+
+<Steps>
+  <Step title="Go to Transfers">
+    Navigate to **NajmBahar → Transfers** and select the sub-account you want to send from.
+  </Step>
+  <Step title="Enter the destination sub-account code">
+    Type the recipient's sub-account code. A live preview confirms the owner's name and account type before you submit.
+  </Step>
+  <Step title="Choose immediate or scheduled">
+    Select **Immediate** to transfer right away, or **Scheduled** and pick a future date and time. Scheduled transfers are queued and executed automatically.
+  </Step>
+  <Step title="Confirm">
+    Click **Transfer**. Both the source and destination balances update immediately for instant transfers, or a pending record is created for future execution.
+  </Step>
+</Steps>
+
+## Rename a sub-account
+
+Open the sub-account detail page, click **Edit Name**, enter the new label, and save. The rename is recorded in the audit log with both the old and new names.
+
+## Close a sub-account
+
+When you no longer need a sub-account, close it to return its balance to your main account or to another sub-account.
+
+<Steps>
+  <Step title="Open the sub-account detail page">
+    Navigate to the sub-account you want to close.
+  </Step>
+  <Step title="Click Close Sub-Account">
+    The close form asks where to send the remaining balance: **main account** or **another sub-account**.
+  </Step>
+  <Step title="Choose a destination">
+    Select **Main Account** to consolidate funds, or choose a specific sub-account from the dropdown. You cannot close a sub-account to itself.
+  </Step>
+  <Step title="Confirm">
+    Click **Close**. Active and faded balances are transferred separately and the sub-account status is set to inactive. The closure and all balance movements are written to the audit log.
+  </Step>
+</Steps>
+
+<Tip>
+  **Common use case — group investment fund:** Create a dedicated sub-account named "Group Fund" and share its code with all group members. Each member transfers their contribution directly to that code. The group admin can then make investment payments from that sub-account, keeping collective money cleanly separated from any member's personal funds.
+</Tip>

@@ -1,0 +1,171 @@
+---
+title: "Submit and Track Support Tickets on EarthCoop Platform"
+sidebarTitle: "Support Tickets"
+description: "Create support tickets to report issues, ask questions, attach files, and track responses from the EarthCoop support team in one place."
+---
+
+Support tickets are the right tool when you need a human response — for account problems, payment disputes, technical bugs, or anything that requires hands-on investigation. Before opening a ticket, try asking [NajmHoda](/najm-hoda/chatting-with-najm-hoda): it can resolve most how-to questions and platform navigation queries instantly. If NajmHoda cannot help, it will suggest opening a ticket and can guide you through the process.
+
+## When to open a ticket
+
+Use a support ticket when:
+
+- You have a problem that NajmHoda could not resolve.
+- Your issue involves your account, personal data, or a financial transaction.
+- You found a bug or unexpected behaviour you want to report.
+- You received an incorrect automated notification or system message.
+- You need to appeal a decision made by group management or the platform team.
+
+<Tip>
+  If NajmHoda's response includes an escalation notice, click the **Open a ticket** link in the chat to carry your conversation context directly into the ticket form.
+</Tip>
+
+## Creating a ticket
+
+<Steps>
+  <Step title="Go to Support">
+    Navigate to **Support → Tickets** in the main navigation, or go to `/support/tickets`.
+  </Step>
+  <Step title="Click New Ticket">
+    Click the **New Ticket** button at the top-right of the ticket list page.
+  </Step>
+  <Step title="Fill in the subject">
+    Enter a short, descriptive subject line (max 255 characters). Good subjects describe the specific problem, for example: "Cannot download my membership receipt" rather than "Problem with my account".
+  </Step>
+  <Step title="Describe the issue">
+    Write a detailed description in the message field (minimum 10 characters). Include any error messages you saw, the steps you followed before the problem occurred, and what you expected to happen.
+  </Step>
+  <Step title="Choose a category">
+    Select the category that best matches your issue. Categories help the support team route your ticket to the right agent automatically.
+  </Step>
+  <Step title="Attach files (optional)">
+    Click **Add Attachments** to upload screenshots, documents, or logs. Each file must be under 10 MB. Accepted formats include JPG, PNG, GIF, PDF, DOC, DOCX, TXT, ZIP, and RAR. You can attach multiple files.
+  </Step>
+  <Step title="Submit">
+    Click **Submit Ticket**. The platform generates a unique tracking code (for example, `TK-A1B2C3D4`) and sends you an email confirmation. Your ticket status is immediately set to **Open**.
+  </Step>
+</Steps>
+
+## Ticket statuses
+
+| Status | Meaning |
+| --- | --- |
+| **Open** | Your ticket has been received and is waiting for the support team to respond. |
+| **In Progress** | A support agent has picked up the ticket and is actively working on it. |
+| **Closed** | The issue has been resolved or the ticket has been marked closed by you or the support team. |
+
+<Info>
+  If you add a comment to a closed ticket, its status automatically returns to **Open** so the support team knows there is new information to review.
+</Info>
+
+## Adding comments to a ticket
+
+Once a ticket is open, you can add follow-up comments to provide more context or respond to the support team's questions.
+
+<Steps>
+  <Step title="Open the ticket">
+    Go to **Support → Tickets** and click the ticket subject or tracking code.
+  </Step>
+  <Step title="Write your comment">
+    Scroll to the comment box at the bottom of the ticket detail page and type your message (minimum 5 characters).
+  </Step>
+  <Step title="Attach files (optional)">
+    Click **Add Attachments** in the comment box to include screenshots or other supporting files.
+  </Step>
+  <Step title="Submit">
+    Click **Add Comment**. Your comment is added to the ticket thread and the support team is notified by email.
+  </Step>
+</Steps>
+
+## Downloading attachments from staff replies
+
+When the support team adds an attachment to their reply, a download link appears inside the comment. Click the file name or the download icon next to it to save the file to your device. Your browser handles the download directly — no additional steps are required.
+
+<Note>
+  Attachment downloads are authenticated. You can only download attachments from tickets that belong to your account. Attempting to access an attachment URL from a different account will return a 403 error.
+</Note>
+
+## Closing a ticket
+
+You can close a ticket yourself once your issue is resolved:
+
+<Steps>
+  <Step title="Open the ticket">
+    Navigate to the ticket detail page from your ticket list.
+  </Step>
+  <Step title="Click Close Ticket">
+    Click the **Close Ticket** button at the top of the ticket detail page.
+  </Step>
+  <Step title="Confirm">
+    Confirm the action in the prompt. The status changes to **Closed** and the resolution timestamp is recorded.
+  </Step>
+</Steps>
+
+The support team may also close a ticket after resolving the issue. If your problem recurs after a ticket is closed, open a new ticket rather than replying to the old one, so it receives a fresh priority assessment.
+
+## API access
+
+You can manage tickets programmatically using the tickets API. All endpoints require a Bearer token obtained through authentication.
+
+### List your tickets
+
+```bash
+GET /api/tickets
+Authorization: Bearer {your-token}
+```
+
+Optional query parameters: `status` (open, in-progress, closed), `priority` (low, normal, high), `category`, `q` (search term), `per_page`.
+
+### Create a ticket
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://yourdomain.com/api/tickets \
+  -H "Authorization: Bearer {your-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "subject": "Cannot access my wallet after the latest update",
+    "message": "Since the update deployed on Tuesday I cannot open the wallet section. I get a blank white page. Steps to reproduce: 1. Log in, 2. Click Wallet in the sidebar.",
+    "category": "technical"
+  }'
+```
+
+```json Request body
+{
+  "subject": "Cannot access my wallet after the latest update",
+  "message": "Since the update deployed on Tuesday...",
+  "category": "technical",
+  "priority": "high"
+}
+```
+
+</CodeGroup>
+
+The response includes the created ticket object with its `tracking_code`, `status`, `priority`, and `sla_deadline`.
+
+### Close a ticket
+
+```bash
+PUT /api/tickets/{id}/close
+Authorization: Bearer {your-token}
+```
+
+Returns the updated ticket object with `status: "closed"` and a `resolved_at` timestamp.
+
+### API endpoint summary
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/api/tickets` | List your tickets (paginated). |
+| `POST` | `/api/tickets` | Create a new ticket. |
+| `GET` | `/api/tickets/{id}` | Get ticket details including all comments and attachments. |
+| `PUT` | `/api/tickets/{id}` | Update ticket priority or category (open tickets only). |
+| `POST` | `/api/tickets/{id}/comments` | Add a comment to an existing ticket. |
+| `PUT` | `/api/tickets/{id}/close` | Close a ticket. |
+| `GET` | `/api/tickets/{id}/attachments/{attachment_id}/download` | Download a specific attachment. |
+| `GET` | `/api/tickets/stats` | Get a count of your tickets by status. |
+
+<Warning>
+  You can only read, update, or close tickets that belong to your account. Requests to access another user's ticket return a 403 Forbidden response.
+</Warning>

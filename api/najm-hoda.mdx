@@ -1,0 +1,604 @@
+---
+title: "NajmHoda AI Assistant — Chat & Conversations API"
+sidebarTitle: "NajmHoda API"
+description: "REST API endpoints for the NajmHoda AI assistant: send messages, list conversations, delete history, submit feedback, and escalate to support."
+---
+
+NajmHoda is EarthCoop's AI assistant, accessible through both the web interface and this REST API. The API lets you send messages, retrieve conversation histories, manage conversation state, submit feedback, and escalate issues into support tickets. Most endpoints require authentication; the welcome and escalate endpoints are public.
+
+---
+
+## GET /api/najm-hoda/welcome
+
+Returns a welcome message and system statistics for the NajmHoda service. This endpoint is public — no token is required.
+
+**Authentication:** None
+
+**Request:** No parameters.
+
+### Example Request
+
+```bash
+curl -X GET https://your-domain.com/api/najm-hoda/welcome \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "Welcome to NajmHoda. How can I assist you today?",
+  "stats": {
+    "total_conversations": 1420,
+    "active_agents": 4
+  }
+}
+```
+
+<ResponseField name="success" type="boolean">
+  Always `true` for a successful response.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  The welcome message text configured for the NajmHoda service.
+</ResponseField>
+
+<ResponseField name="stats" type="object">
+  Aggregate system statistics such as total conversation count and available agents.
+</ResponseField>
+
+---
+
+## POST /api/najm-hoda/chat
+
+Sends a message to NajmHoda and receives an AI-generated response. A conversation is created automatically if you do not supply a `conversation_id`. Non-admin users are always routed through the `steward` agent regardless of the `agent` field value.
+
+**Authentication:** Required — `Authorization: Bearer {token}`
+
+### Request Body
+
+<ParamField body="message" type="string" required>
+  The user message to send to NajmHoda. Maximum 2,000 characters.
+</ParamField>
+
+<ParamField body="agent" type="string">
+  The agent to route the request to. One of: `auto`, `engineer`, `pilot`, `steward`, `guide`. Defaults to `steward` for non-admin users. Admin users may use any value including `auto` for automatic routing.
+</ParamField>
+
+<ParamField body="conversation_id" type="integer">
+  ID of an existing conversation to continue. If omitted, a new conversation is created automatically.
+</ParamField>
+
+<ParamField body="context" type="object">
+  Optional key-value pairs providing additional context to the agent.
+</ParamField>
+
+### Response Fields
+
+<ResponseField name="success" type="boolean">
+  `true` if the AI responded successfully; `false` on error.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  The AI-generated answer text.
+</ResponseField>
+
+<ResponseField name="agent" type="string">
+  The agent identifier that handled the request (e.g. `steward`).
+</ResponseField>
+
+<ResponseField name="agent_name" type="string">
+  The human-readable display name of the agent.
+</ResponseField>
+
+<ResponseField name="agent_icon" type="string">
+  An emoji or icon string representing the agent.
+</ResponseField>
+
+<ResponseField name="conversation_id" type="integer">
+  The ID of the conversation this message belongs to. Use this in subsequent requests to continue the same conversation.
+</ResponseField>
+
+<ResponseField name="suggestions" type="array">
+  An array of suggested follow-up question strings the user might want to ask next.
+</ResponseField>
+
+<ResponseField name="response_time_ms" type="integer">
+  Time in milliseconds the AI took to generate the response.
+</ResponseField>
+
+<ResponseField name="request_id" type="string">
+  A unique identifier for this specific chat request, useful for debugging and support.
+</ResponseField>
+
+### Example Request
+
+```bash
+curl -X POST https://your-domain.com/api/najm-hoda/chat \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "What documents do I need to submit a cooperative project?",
+    "agent": "steward"
+  }'
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "To submit a cooperative project you will need to provide a project title, description, required capital amount, and at least one supporting document. You can upload PDFs or images up to 10 MB each.",
+  "agent": "steward",
+  "agent_name": "Steward",
+  "agent_icon": "🧑‍✈️",
+  "conversation_id": 847,
+  "suggestions": [
+    "How do I set the required capital amount?",
+    "What file formats are accepted for attachments?"
+  ],
+  "response_time_ms": 1243,
+  "request_id": "req_a1b2c3d4"
+}
+```
+
+### Error Responses
+
+**Validation failure — 422:**
+
+```json
+{
+  "success": false,
+  "errors": {
+    "message": ["The message field is required."]
+  }
+}
+```
+
+**Server error — 500:**
+
+```json
+{
+  "success": false,
+  "message": "An error occurred. Please try again.",
+  "error": null
+}
+```
+
+---
+
+## GET /api/najm-hoda/conversations
+
+Returns a paginated list of all conversations belonging to the authenticated user, ordered newest first.
+
+**Authentication:** Required — `Authorization: Bearer {token}`
+
+### Query Parameters
+
+<ParamField query="status" type="string">
+  Filter conversations by status. Accepted values: `active`, `archived`, `deleted`.
+</ParamField>
+
+<ParamField query="agent" type="string">
+  Filter conversations by agent type. One of: `engineer`, `pilot`, `steward`, `guide`, `auto`.
+</ParamField>
+
+<ParamField query="per_page" type="integer">
+  Number of conversations to return per page. Defaults to `20`.
+</ParamField>
+
+### Response Fields
+
+<ResponseField name="success" type="boolean">
+  `true` on success.
+</ResponseField>
+
+<ResponseField name="conversations" type="array">
+  Paginated array of conversation summary objects.
+</ResponseField>
+
+<ResponseField name="conversations[].id" type="integer">
+  Unique conversation ID.
+</ResponseField>
+
+<ResponseField name="conversations[].title" type="string">
+  Auto-generated title derived from the first message (up to 50 characters).
+</ResponseField>
+
+<ResponseField name="conversations[].agent_type" type="string">
+  The agent type used for this conversation.
+</ResponseField>
+
+<ResponseField name="conversations[].status" type="string">
+  Current status: `active`, `archived`, or `deleted`.
+</ResponseField>
+
+<ResponseField name="conversations[].last_message" type="string">
+  Text of the most recent message in the conversation, or `null`.
+</ResponseField>
+
+<ResponseField name="conversations[].updated_at" type="string">
+  ISO 8601 timestamp of the last activity.
+</ResponseField>
+
+<ResponseField name="conversations[].created_at" type="string">
+  ISO 8601 timestamp of when the conversation was created.
+</ResponseField>
+
+<ResponseField name="pagination" type="object">
+  Pagination metadata: `current_page`, `total`, `per_page`, `last_page`.
+</ResponseField>
+
+### Example Request
+
+```bash
+curl -X GET "https://your-domain.com/api/najm-hoda/conversations?per_page=10&status=active" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "conversations": [
+    {
+      "id": 847,
+      "title": "What documents do I need to submit...",
+      "agent_type": "steward",
+      "status": "active",
+      "last_message": "You can upload PDFs or images up to 10 MB each.",
+      "updated_at": "2024-11-15T09:42:00Z",
+      "created_at": "2024-11-15T09:41:00Z"
+    }
+  ],
+  "pagination": {
+    "current_page": 1,
+    "total": 14,
+    "per_page": 10,
+    "last_page": 2
+  }
+}
+```
+
+---
+
+## GET /api/najm-hoda/conversations/{id}
+
+Returns the full message history for a single conversation. You may only retrieve conversations that belong to your account.
+
+**Authentication:** Required — `Authorization: Bearer {token}`
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The ID of the conversation to retrieve.
+</ParamField>
+
+### Response Fields
+
+<ResponseField name="success" type="boolean">
+  `true` on success.
+</ResponseField>
+
+<ResponseField name="conversation" type="object">
+  The full conversation object including message history.
+</ResponseField>
+
+<ResponseField name="conversation.id" type="integer">
+  Conversation ID.
+</ResponseField>
+
+<ResponseField name="conversation.title" type="string">
+  Auto-generated conversation title.
+</ResponseField>
+
+<ResponseField name="conversation.agent_type" type="string">
+  Agent type used in this conversation.
+</ResponseField>
+
+<ResponseField name="conversation.created_at" type="string">
+  ISO 8601 creation timestamp.
+</ResponseField>
+
+<ResponseField name="conversation.messages" type="array">
+  Chronologically ordered array of message objects.
+</ResponseField>
+
+<ResponseField name="conversation.messages[].role" type="string">
+  Either `user` or `assistant`.
+</ResponseField>
+
+<ResponseField name="conversation.messages[].content" type="string">
+  The text content of the message.
+</ResponseField>
+
+<ResponseField name="conversation.messages[].created_at" type="string">
+  ISO 8601 timestamp of when the message was created.
+</ResponseField>
+
+### Example Request
+
+```bash
+curl -X GET https://your-domain.com/api/najm-hoda/conversations/847 \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "conversation": {
+    "id": 847,
+    "title": "What documents do I need to submit...",
+    "agent_type": "steward",
+    "created_at": "2024-11-15T09:41:00Z",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What documents do I need to submit a cooperative project?",
+        "created_at": "2024-11-15T09:41:05Z"
+      },
+      {
+        "role": "assistant",
+        "content": "To submit a cooperative project you will need to provide...",
+        "created_at": "2024-11-15T09:41:06Z"
+      }
+    ]
+  }
+}
+```
+
+### Error Responses
+
+**Conversation not found — 404:**
+
+```json
+{
+  "success": false,
+  "message": "Conversation not found."
+}
+```
+
+**Access denied — 403:**
+
+```json
+{
+  "success": false,
+  "message": "You do not have access to this conversation."
+}
+```
+
+---
+
+## DELETE /api/najm-hoda/conversations/{id}
+
+Soft-deletes a conversation by setting its status to `deleted`. You may only delete conversations that belong to your account.
+
+**Authentication:** Required — `Authorization: Bearer {token}`
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The ID of the conversation to delete.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X DELETE https://your-domain.com/api/najm-hoda/conversations/847 \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "Conversation deleted successfully."
+}
+```
+
+### Error Responses
+
+**Conversation not found — 404:**
+
+```json
+{
+  "success": false,
+  "message": "Conversation not found."
+}
+```
+
+**Access denied — 403:**
+
+```json
+{
+  "success": false,
+  "message": "You do not have access to this conversation."
+}
+```
+
+---
+
+## PUT /api/najm-hoda/conversations/{id}/archive
+
+Archives a conversation by setting its status to `archived`. Archived conversations remain accessible but are hidden from the default active listing. You may only archive conversations that belong to your account.
+
+**Authentication:** Required — `Authorization: Bearer {token}`
+
+### Path Parameters
+
+<ParamField path="id" type="integer" required>
+  The ID of the conversation to archive.
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X PUT https://your-domain.com/api/najm-hoda/conversations/847/archive \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json"
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "Conversation archived."
+}
+```
+
+---
+
+## POST /api/najm-hoda/feedback
+
+Submits feedback about the NajmHoda service. Feedback is saved and visible to platform administrators.
+
+**Authentication:** Required — `Authorization: Bearer {token}`
+
+### Request Body
+
+<ParamField body="type" type="string" required>
+  Category of feedback. One of: `bug`, `feature_request`, `improvement`, `complaint`, `praise`, `other`.
+</ParamField>
+
+<ParamField body="subject" type="string" required>
+  A brief summary of the feedback. Maximum 200 characters.
+</ParamField>
+
+<ParamField body="content" type="string" required>
+  The full feedback text. Maximum 2,000 characters.
+</ParamField>
+
+<ParamField body="rating" type="integer">
+  Optional satisfaction rating from `1` (poor) to `5` (excellent).
+</ParamField>
+
+### Response Fields
+
+<ResponseField name="success" type="boolean">
+  `true` if feedback was saved successfully.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Confirmation message.
+</ResponseField>
+
+<ResponseField name="feedback_id" type="integer">
+  The ID of the newly created feedback record.
+</ResponseField>
+
+### Example Request
+
+```bash
+curl -X POST https://your-domain.com/api/najm-hoda/feedback \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "improvement",
+    "subject": "Response speed on complex questions",
+    "content": "When I ask detailed financial questions the response takes over 5 seconds.",
+    "rating": 3
+  }'
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "Your feedback has been recorded. Thank you!",
+  "feedback_id": 92
+}
+```
+
+### Error Responses
+
+**Validation failure — 422:**
+
+```json
+{
+  "success": false,
+  "errors": {
+    "type": ["The selected type is invalid."],
+    "subject": ["The subject field is required."]
+  }
+}
+```
+
+---
+
+## POST /api/najm-hoda/escalate
+
+Creates a support ticket from an AI conversation that could not be fully resolved by NajmHoda. This endpoint is public and is intended for use when escalation is needed. It is rate-limited to **30 requests per minute** to prevent abuse.
+
+**Authentication:** None (public endpoint)
+
+<Warning>
+  This endpoint is throttled at **30 requests per minute** per IP address. Clients that exceed this limit receive `429 Too Many Requests` and should back off using the `Retry-After` response header.
+</Warning>
+
+### Request Body
+
+<ParamField body="conversation_id" type="integer">
+  The ID of the conversation being escalated.
+</ParamField>
+
+<ParamField body="reason" type="string">
+  A description of why the conversation requires escalation.
+</ParamField>
+
+### Response Fields
+
+<ResponseField name="success" type="boolean">
+  `true` if the escalation was created successfully.
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Confirmation message.
+</ResponseField>
+
+<ResponseField name="ticket_id" type="integer">
+  The ID of the support ticket created from this escalation.
+</ResponseField>
+
+### Example Request
+
+```bash
+curl -X POST https://your-domain.com/api/najm-hoda/escalate \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "conversation_id": 847,
+    "reason": "User requires manual review of document verification issue."
+  }'
+```
+
+### Example Response
+
+```json
+{
+  "success": true,
+  "message": "Your request has been escalated to the support team.",
+  "ticket_id": 210
+}
+```
+
+### Error Responses
+
+**Rate limit exceeded — 429:**
+
+```json
+{
+  "message": "Too Many Requests."
+}
+```

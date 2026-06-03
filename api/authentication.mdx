@@ -1,0 +1,153 @@
+---
+title: "API Authentication: Bearer Tokens & Authorization"
+sidebarTitle: "Authentication"
+description: "Learn how to obtain a Bearer token by logging in to EarthCoop and include it in the Authorization header for all authenticated API requests."
+---
+
+The EarthCoop API uses Bearer token authentication. Every protected endpoint expects a Bearer token in the `Authorization` request header. You receive this token after authenticating through the platform — no OAuth flow or separate API key setup is required.
+
+## How Authentication Works
+
+When you log in, the platform issues a personal access token tied to your account. You include this token in subsequent API requests. Because tokens are user-scoped, any action performed via the API is attributed to your account — just as if you had performed it through the web interface.
+
+## Getting a Token
+
+**Option 1 — Web UI (recommended for testing):** Log in to your EarthCoop account. If your deployment exposes a token management screen, you can create and name a personal access token there and copy it for use in API calls.
+
+**Option 2 — Login endpoint:** POST your credentials to the login endpoint. Verify the exact path with your administrator, as it may be customised per deployment:
+
+```bash
+curl -X POST https://your-domain.com/login \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{"email": "you@example.com", "password": "your-password"}'
+```
+
+A successful response returns your token in the `token` field:
+
+```json
+{
+  "token": "1|abc123xyz..."
+}
+```
+
+Store this token securely — treat it like a password. It grants full access to your account's resources.
+
+## Passing the Token
+
+Include the token in the `Authorization` header on every authenticated request, prefixed with `Bearer `:
+
+```http
+Authorization: Bearer {your-token}
+```
+
+You must also set `Accept: application/json` so that the server returns JSON error responses instead of HTML redirects on authentication failure.
+
+### Example Authenticated Request
+
+```bash
+curl -X GET https://your-domain.com/api/najm-hoda/conversations \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json"
+```
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://your-domain.com/api/najm-hoda/chat \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "How do I submit a project?"}'
+```
+
+```javascript JavaScript (fetch)
+const response = await fetch('https://your-domain.com/api/najm-hoda/chat', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_TOKEN',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ message: 'How do I submit a project?' }),
+});
+const data = await response.json();
+```
+
+```php PHP (Guzzle)
+$client = new \GuzzleHttp\Client();
+$response = $client->post('https://your-domain.com/api/najm-hoda/chat', [
+    'headers' => [
+        'Authorization' => 'Bearer YOUR_TOKEN',
+        'Accept'        => 'application/json',
+    ],
+    'json' => ['message' => 'How do I submit a project?'],
+]);
+$data = json_decode($response->getBody(), true);
+```
+
+</CodeGroup>
+
+## Which Endpoints Require Authentication
+
+| Endpoint group | Auth required |
+| --- | --- |
+| `GET /api/najm-hoda/welcome` | No — public |
+| `POST /api/najm-hoda/escalate` | No — public (rate-limited) |
+| `POST /api/najm-hoda/chat` | **Yes** |
+| `GET /api/najm-hoda/conversations` | **Yes** |
+| `GET /api/najm-hoda/conversations/{id}` | **Yes** |
+| `DELETE /api/najm-hoda/conversations/{id}` | **Yes** |
+| `PUT /api/najm-hoda/conversations/{id}/archive` | **Yes** |
+| `POST /api/najm-hoda/feedback` | **Yes** |
+| `GET /api/tickets` | **Yes** |
+| `POST /api/tickets` | **Yes** |
+| `GET /api/tickets/{id}` | **Yes** |
+| `PUT /api/tickets/{id}` | **Yes** |
+| `PUT /api/tickets/{id}/close` | **Yes** |
+| `POST /api/tickets/{id}/comments` | **Yes** |
+| `GET /api/notifications` | **Yes** |
+| `POST /api/notifications/{id}` | **Yes** |
+| `DELETE /api/notifications/{id}` | **Yes** |
+| `GET /api/provinces` | No — public |
+| `GET /api/counties/{id}` | No — public |
+| `GET /api/districts/{id}` | No — public |
+| `GET /api/cities/{id}` | No — public |
+| `GET /api/villages/{id}` | No — public |
+| `GET /api/geographic/continents` | No — public |
+| `GET /api/geographic/{level}/{parentId}/children` | No — public |
+
+## Token Expiration and Renewal
+
+Tokens do not expire by default unless your administrator has configured a token expiry duration. If your token has expired, you will receive a `401 Unauthorized` response:
+
+```json
+{
+  "message": "Unauthenticated."
+}
+```
+
+When this happens, re-authenticate using the login endpoint to obtain a fresh token. Contact your administrator for the configured token lifetime if you are unsure.
+
+<Warning>
+  Never commit tokens to source control or log them in application output. If a token is compromised, revoke it immediately through the web UI or by contacting your administrator.
+</Warning>
+
+## Error Responses
+
+**Missing or invalid token — 401 Unauthorized:**
+
+```json
+{
+  "message": "Unauthenticated."
+}
+```
+
+**Valid token, insufficient permission — 403 Forbidden:**
+
+```json
+{
+  "success": false,
+  "message": "You do not have access to this conversation."
+}
+```

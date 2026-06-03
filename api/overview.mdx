@@ -1,0 +1,121 @@
+---
+title: "EarthCoop REST API — Overview & Base URL"
+sidebarTitle: "Overview"
+description: "A complete guide to the EarthCoop REST API: base URL, response format, authentication, rate limits, and common HTTP status codes."
+---
+
+The EarthCoop REST API gives you programmatic access to the platform's core features — including the NajmHoda AI assistant, support tickets, geographic hierarchy data, and user notifications. Every response is JSON, and authentication is handled via Bearer tokens passed in the `Authorization` header.
+
+## Base URL
+
+All API endpoints are served under the following base URL:
+
+```http
+https://your-domain.com/api
+```
+
+Replace `your-domain.com` with your actual EarthCoop deployment host. There is no versioning prefix in the path; routes are mounted directly under `/api`.
+
+## Response Format
+
+Every response body is JSON. Successful responses typically include a top-level `success: true` field alongside the payload. Collection responses include a `data` array and a `meta` object containing pagination details.
+
+```json
+{
+  "success": true,
+  "data": [],
+  "meta": {
+    "current_page": 1,
+    "last_page": 4,
+    "per_page": 15,
+    "total": 58
+  }
+}
+```
+
+## Authentication
+
+Protected endpoints require a Bearer token in the `Authorization` header. See the [Authentication](/api/authentication) page for full details on obtaining and using tokens.
+
+```http
+Authorization: Bearer {your-token}
+```
+
+Requests to protected endpoints without a valid token receive a `401 Unauthorized` response.
+
+## Rate Limiting
+
+Most endpoints have no explicit rate limit beyond standard platform defaults. The escalation endpoint is strictly throttled to prevent abuse:
+
+| Endpoint | Limit |
+| --- | --- |
+| `POST /api/najm-hoda/escalate` | 30 requests per minute |
+
+Exceeding the limit returns `429 Too Many Requests`. Your client should respect the `Retry-After` header in that response.
+
+<Warning>
+  If your integration calls `POST /api/najm-hoda/escalate` in a loop or on every user action, you will hit the 30 requests/minute ceiling quickly. Cache or debounce calls appropriately.
+</Warning>
+
+## Error Format
+
+The API uses standard HTTP status codes to signal outcomes. Error bodies are JSON objects with at least a `message` field, and in validation failures an `errors` object keyed by field name.
+
+**Unauthenticated request:**
+
+```json
+{
+  "message": "Unauthenticated."
+}
+```
+
+**Validation failure (422):**
+
+```json
+{
+  "success": false,
+  "message": "The given data was invalid.",
+  "errors": {
+    "subject": ["The subject field is required."],
+    "message": ["The message must be at least 10 characters."]
+  }
+}
+```
+
+## Common HTTP Status Codes
+
+| Code | Meaning |
+| --- | --- |
+| `200 OK` | Request succeeded; body contains the resource or list. |
+| `201 Created` | Resource was created successfully. |
+| `400 Bad Request` | The request is malformed or violates a business rule (e.g. closing an already-closed ticket). |
+| `401 Unauthorized` | No token provided or token is invalid/expired. |
+| `403 Forbidden` | Token is valid but the user does not have permission for this resource. |
+| `404 Not Found` | The requested resource does not exist. |
+| `422 Unprocessable Entity` | Validation failed; see the `errors` field. |
+| `429 Too Many Requests` | Rate limit exceeded; back off and retry. |
+| `500 Internal Server Error` | An unexpected server-side error occurred. |
+
+## API Sections
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/api/authentication">
+    Learn how to obtain a Bearer token and authenticate every request.
+  </Card>
+
+  <Card title="NajmHoda API" icon="robot" href="/api/najm-hoda">
+    AI chat, conversation history, feedback, and escalation endpoints.
+  </Card>
+
+  <Card title="Tickets API" icon="ticket" href="/api/tickets">
+    Create and manage support tickets, add comments, and download attachments.
+  </Card>
+
+  <Card title="Geographic API" icon="map" href="/api/geographic">
+    Public endpoints for provinces, counties, cities, and the full geographic hierarchy.
+  </Card>
+
+  <Card title="Notifications API" icon="bell" href="/api/notifications">
+    Fetch, mark as read, and delete user notifications for projects and investments.
+  </Card>
+</CardGroup>

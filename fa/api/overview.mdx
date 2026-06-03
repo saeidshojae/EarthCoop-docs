@@ -1,0 +1,86 @@
+---
+title: "API REST ارث‌کوپ — مرور و Base URL"
+sidebarTitle: "معرفی"
+description: "راهنمای کامل API REST EarthCoop: Base URL، فرمت پاسخ، احراز هویت، محدودیت نرخ و کدهای HTTP."
+---
+
+API REST EarthCoop دسترسی برنامه‌ای به امکانات اصلی پلتفرم — NajmHoda، تیکت‌ها، داده‌های جغرافیایی و اعلان‌ها — ارائه می‌دهد. هر پاسخ JSON است و احراز هویت با Bearer token.
+
+## Base URL
+
+```http
+https://your-domain.com/api
+```
+
+## فرمت پاسخ
+
+```json
+{
+  "success": true,
+  "data": [],
+  "meta": {
+    "current_page": 1,
+    "last_page": 4,
+    "per_page": 15,
+    "total": 58
+  }
+}
+```
+
+## احراز هویت (Authentication)
+
+```http
+Authorization: Bearer {your-token}
+```
+
+برای جزئیات به [Authentication](/fa/api/authentication) بروید. درخواست‌های بدون توکن پاسخ `401 Unauthorized` دریافت می‌کنند.
+
+## محدودیت نرخ (Rate Limiting)
+
+| اندپوینت | حد |
+| --- | --- |
+| `POST /api/najm-hoda/escalate` | ۳۰ درخواست در دقیقه |
+
+پاسخ `429 Too Many Requests` در صورت تجاوز. به هدر `Retry-After` احترام بگذارید.
+
+## فرمت خطا
+
+**احراز هویت نشده (۴۰۱):**
+
+```json
+{
+  "message": "Unauthenticated."
+}
+```
+
+**خطای اعتبارسنجی (۴۲۲):**
+
+```json
+{
+  "success": false,
+  "message": "The given data was invalid.",
+  "errors": {
+    "subject": ["The subject field is required."]
+  }
+}
+```
+
+## کدهای HTTP رایج
+
+| کد | معنا |
+| --- | --- |
+| `200 OK` | موفقیت. |
+| `201 Created` | منبع ایجاد شد. |
+| `400 Bad Request` | درخواست نامعتبر. |
+| `401 Unauthorized` | توکن وجود ندارد یا منقضی است. |
+| `403 Forbidden` | دسترسی مجاز نیست. |
+| `404 Not Found` | منبع پیدا نشد. |
+| `422 Unprocessable Entity` | خطای اعتبارسنجی. |
+| `429 Too Many Requests` | محدودیت نرخ. |
+| `500 Internal Server Error` | خطای سرور. |
+
+## بخش‌ها
+
+<CardGroup cols={2}>
+      
+</CardGroup>

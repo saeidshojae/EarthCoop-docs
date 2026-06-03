@@ -1,0 +1,122 @@
+---
+title: "NajmHoda API — چت و گفتگوها"
+sidebarTitle: "NajmHoda API"
+description: "اندپوینت‌های REST API برای دستیار هوشمند NajmHoda: ارسال پیام، لیست گفتگوها، حذف تاریخچه، ثبت بازخورد و ارجاع به پشتیبانی."
+---
+
+## GET /api/najm-hoda/welcome
+
+پیام خوش‌آمد و آمار سیستم. **احراز هویت:** ندارد.
+
+```bash
+curl -X GET https://your-domain.com/api/najm-hoda/welcome -H "Accept: application/json"
+```
+
+```json
+{
+  "success": true,
+  "message": "Welcome to NajmHoda.",
+  "stats": { "total_conversations": 1420, "active_agents": 4 }
+}
+```
+
+## POST /api/najm-hoda/chat
+
+ارسال پیام. **احراز هویت:** Bearer token.
+
+| فیلد | نوع | الزامی | توضیح |
+| --- | --- | --- | --- |
+| `message` | string | بله | حداکثر ۲،۰۰۰ کاراکتر. |
+| `agent` | string | خیر | برای غیر-ادمین همیشه `steward`. |
+| `conversation_id` | int | خیر | ادامه گفتگوی موجود. |
+| `context` | object | خیر | داده افزوده. |
+
+```bash
+curl -X POST https://your-domain.com/api/najm-hoda/chat \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "چگونه پروژه ارسال کنم؟", "agent": "steward"}'
+```
+
+```json
+{
+  "success": true,
+  "message": "...",
+  "agent": "steward",
+  "agent_name": "Steward",
+  "conversation_id": 847,
+  "suggestions": ["..."],
+  "response_time_ms": 1243,
+  "request_id": "req_a1b2c3d4"
+}
+```
+
+## GET /api/najm-hoda/conversations
+
+لیست ترتیب صفحه‌بندی شده گفتگوها.
+
+**پارامترهای Query:** `status` (active/archived/deleted)، `agent`، `per_page` (پیش‌فرض ۲۰).
+
+```json
+{
+  "success": true,
+  "conversations": [
+    { "id": 847, "title": "...", "agent_type": "steward", "status": "active", "updated_at": "..." }
+  ],
+  "pagination": { "current_page": 1, "total": 14, "per_page": 10, "last_page": 2 }
+}
+```
+
+## GET /api/najm-hoda/conversations/{id}
+
+تاریخچه کامل یک گفتگو.
+
+```json
+{
+  "success": true,
+  "conversation": {
+    "id": 847,
+    "title": "...",
+    "agent_type": "steward",
+    "messages": [
+      { "role": "user", "content": "...", "created_at": "..." },
+      { "role": "assistant", "content": "...", "created_at": "..." }
+    ]
+  }
+}
+```
+
+**خطاها:** `403` در صورت عدم دسترسی، `404` در صورت عدم وجود.
+
+## DELETE /api/najm-hoda/conversations/{id}
+
+Soft-delete (تنظیم وضعیت به `deleted`).
+
+## PUT /api/najm-hoda/conversations/{id}/archive
+
+بایگانی گفتگو.
+
+## POST /api/najm-hoda/feedback
+
+ثبت بازخورد.
+
+| فیلد | الزامی | توضیح |
+| --- | --- | --- |
+| `type` | بله | `bug`/`feature_request`/`improvement`/`complaint`/`praise`/`other` |
+| `subject` | بله | حداکثر ۲۰۰ کاراکتر |
+| `content` | بله | حداکثر ۲،۰۰۰ |
+| `rating` | خیر | ۱ تا ۵ |
+
+## POST /api/najm-hoda/escalate
+
+ایجاد تیکت پشتیبانی از گفتگو. **احراز هویت:** عمومی.
+
+<Warning>
+  محدودیت نرخ: **۳۰ درخواست در دقیقه** بر هر IP.
+</Warning>
+
+```bash
+curl -X POST https://your-domain.com/api/najm-hoda/escalate \
+  -H "Content-Type: application/json" \
+  -d '{"conversation_id": 847, "reason": "..."}'
+```

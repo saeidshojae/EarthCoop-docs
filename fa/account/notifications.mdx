@@ -1,0 +1,97 @@
+---
+title: "پیکربندی تنظیمات اعلان‌ها در EarthCoop"
+sidebarTitle: "اعلان‌ها"
+description: "کنترل چگونگی و زمان ارسال اعلان‌های EarthCoop برای فعالیت گروه، به‌روزرسانی پروژه، تراکنش‌های مالی و تیکت‌ها."
+---
+
+EarthCoop برای رویدادهای متعدد اعلان ارسال می‌کند. در حالت پیش‌فرض، بیشتر اعلان‌ها درون پلتفرمی (push) فعال و ایمیلی غیرفعال هستند.
+
+## دسترسی به تنظیمات
+
+<Steps>
+</Steps>
+
+## کانال‌های اعلان
+
+| کانال | توضیح | پیش‌فرض |
+| --- | --- | --- |
+| **In-app (push)** | در زنگ اعلان. | فعال |
+| **Email** | به ایمیل ثبت‌شده. | غیرفعال |
+
+## دسته‌های اعلان
+
+### فعالیت گروه
+
+| تنظیم | توضیح |
+| --- | --- |
+| `group_post` | پست جدید. |
+| `group_poll` | نظرسنجی جدید. |
+| `group_comment_new` | نظر جدید. |
+| `group_comment_reply` | پاسخ به نظر شما. |
+| `group_invitation` | دعوت به گروه. |
+| `group_report_message` | پیام گزارش‌شده. |
+| `group_chat_request` | درخواست چت جدید. |
+
+### انتخابات
+
+| تنظیم | توضیح |
+| --- | --- |
+| `election_started` | آغاز انتخابات. |
+| `election_finished` | پایان انتخابات. |
+| `election_elected` | انتخاب شدن شما. |
+| `election_accepted` | تأیید نامزدی. |
+| `election_reminder` | یادآوری. |
+
+### چت
+
+| تنظیم | توضیح |
+| --- | --- |
+| `chat_message` | پیام جدید. |
+| `chat_reply` | پاسخ. |
+| `chat_mention` | منشن. |
+
+### مزایده‌ها (Auctions)
+
+| تنظیم | توضیح |
+| --- | --- |
+| `auction_started` | شروع. |
+| `auction_ended` | پایان. |
+| `auction_won` | برنده شدن. |
+| `auction_outbid` | پیشنهاد بیشتر. |
+| `auction_lost` | باخت. |
+| `auction_cancelled` | لغو. |
+| `auction_reminder` | یادآوری. |
+
+### NajmBahar — تراکنش‌های مالی
+
+| تنظیم | توضیح |
+| --- | --- |
+| `wallet_credited` | واریز به کیف پول. |
+| `wallet_debited` | کسر از کیف پول. |
+| `najm_bahar_transaction` | تراکنش NajmBahar. |
+| `najm_bahar_low_balance` | موجودی پایین. |
+| `najm_bahar_large_transaction` | تراکنش بزرگ. |
+| `najm_bahar_scheduled_transaction` | اجرای انتقال زمان‌بندی‌شده. |
+
+<Info>
+  می‌توانید آستانه و حدود را در تنظیمات NajmBahar به‌روز کنید. پیش‌فرض: ۱،۰۰۰ واحد برای موجودی پایین، ۱۰۰،۰۰۰ برای تراکنش بزرگ.
+</Info>
+
+### پروژه‌ها و سرمایه‌گذاری‌ها
+
+| رویداد | زمان |
+| --- | --- |
+| Project status changed | تغییر وضعیت پروژه. |
+| Project revision requested | درخواست بازنگری. |
+| New investment received | دریافت سرمایه‌گذاری جدید. |
+| Investment status changed | تغییر وضعیت سرمایه‌گذاری. |
+
+### پیام‌های مدیریتی
+
+| تنظیم | توضیح |
+| --- | --- |
+| `admin_message` | پیام دریافتی از ادمین. |
+
+<Tip>
+  برای کاهش اعلان‌ها، `group_comment_new` را غیرفعال و `group_comment_reply` را فعال نگه دارید.
+</Tip>

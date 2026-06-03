@@ -1,0 +1,112 @@
+---
+title: "Send, Schedule, and Receive NajmBahar Fund Transfers"
+sidebarTitle: "Transfers"
+description: "Transfer funds between NajmBahar accounts within EarthCoop for cooperative payments, profit sharing, and peer-to-peer transactions."
+---
+
+NajmBahar transfers let you move funds between any two active sub-accounts on the platform — whether between your own sub-accounts, to another member's account, or to a group's financial pool. Every transfer is atomic, audited, and either executed immediately or queued for a future date you specify.
+
+## Send a transfer
+
+<Steps>
+  <Step title="Navigate to Transfers">
+    Go to **NajmBahar → Transfers** in the sidebar. The page loads with your main account details and a list of your active sub-accounts.
+  </Step>
+  <Step title="Select a source sub-account">
+    Choose which of your sub-accounts the funds should come from. The form shows the current balance of each sub-account so you can pick the right pool.
+  </Step>
+  <Step title="Enter the destination sub-account code">
+    Type the recipient's sub-account code in the **Destination** field. Codes follow the format `XXXXXXXXXX-NNN`. As you type, the system performs a live lookup and displays the owner's name and account type beneath the field — confirm you are sending to the right person or group before continuing.
+  </Step>
+  <Step title="Enter the amount">
+    Type the amount you want to transfer. The value must be greater than zero and must not exceed the available balance in your source sub-account.
+  </Step>
+  <Step title="Add a description (optional)">
+    Enter a note explaining the purpose of the transfer — for example, "Monthly profit share" or "Group project contribution". Descriptions appear in both parties' transaction histories and in the audit log.
+  </Step>
+  <Step title="Choose the transfer type">
+    Select **Immediate** to execute the transfer right now, or **Scheduled** to set a future execution date and time. If you choose Scheduled, a date/time picker appears — the execution time must be in the future.
+  </Step>
+  <Step title="Submit">
+    Click **Transfer**. For immediate transfers, balances update instantly and both parties receive confirmation. For scheduled transfers, a pending record is created and the system executes it automatically at the chosen time.
+  </Step>
+</Steps>
+
+<Note>
+  When you transfer funds from a group's NajmBahar account, a description is **required**. This ensures every outgoing payment from a collective account has a clear paper trail.
+</Note>
+
+## Required fields at a glance
+
+| Field | Required | Notes |
+| --- | --- | --- |
+| Source sub-account | Yes | Must belong to your account and be active |
+| Destination sub-account code | Yes | Must be an existing, active sub-account |
+| Amount | Yes | Must be greater than zero |
+| Description | Optional for personal; required for group transfers | Max 500 characters |
+| Transaction type | Yes | Immediate or Scheduled |
+| Execution date/time | Only for scheduled transfers | Must be a future date |
+
+## Transfer confirmation and live recipient preview
+
+Before you submit, the destination lookup verifies the sub-account code and returns:
+
+- **Owner type** — user, group, or system
+- **Owner name** — the full name of the receiving user or the name of the group
+- **Sub-account name** — the label the owner has given to that pool
+
+Review this preview carefully. Source and destination sub-accounts cannot be the same, and transfers cannot be reversed once executed.
+
+## Balance validation
+
+The system determines which balance type — **faded** or **active** — to use for the deduction in this order:
+
+1. If the sub-account's faded balance covers the full amount, faded funds are used.
+2. If the active balance covers the full amount, active funds are used.
+3. If neither pool alone covers the amount but their combined total does, the transfer is blocked and you are asked to split it into two separate transfers (one from each balance type).
+4. If the total balance is insufficient, the transfer is rejected with an insufficient balance error.
+
+<Warning>
+  You cannot overdraw a sub-account. Always verify the active and faded balances shown on the sub-account detail page before initiating a large transfer.
+</Warning>
+
+## View transfer history
+
+<Steps>
+  <Step title="Open Sub-Accounts">
+    Go to **NajmBahar → Sub-Accounts**.
+  </Step>
+  <Step title="Select a sub-account">
+    Click the sub-account whose history you want to review. The detail page lists all inbound and outbound transfers, with timestamps, amounts, counterparty names, and descriptions.
+  </Step>
+  <Step title="Review the audit log">
+    The page also surfaces recent internal-transfer audit log entries for your main account, covering fund movements to and from sub-accounts, transfers between sub-accounts, and any scheduled transfers that have been queued or executed.
+  </Step>
+</Steps>
+
+## Receiving transfers
+
+You do not need to take any action to receive a transfer — funds arrive in your sub-account as soon as the sender submits an immediate transfer. For scheduled transfers sent to you, funds arrive at the execution time set by the sender.
+
+Incoming transfers appear in:
+
+- The **balance** of the destination sub-account (updated immediately)
+- The sub-account's **transaction history** on its detail page
+- The platform-wide **audit log**
+
+<Tip>
+  Share your sub-account code directly from the sub-account detail page. The code is always displayed in the `XXXXXXXXXX-NNN` format, and the transfer form also accepts the slash-separated variant `XXXXXXXXXX/NNN` — both resolve to the same account.
+</Tip>
+
+## Scheduled transfers
+
+Scheduled transfers give you control over cash flow timing — useful for recurring cooperative contributions or planned profit distributions.
+
+- When you schedule a transfer, a pending transaction record is created and linked to the scheduled execution time.
+- While pending, the transfer appears in your history with a **pending** status.
+- The system executes it automatically when the scheduled moment arrives.
+- Execution time must always be in the future; attempting to schedule a transfer for a past or current time is rejected immediately.
+
+## Audit trail
+
+Every transfer — immediate or scheduled — is recorded in the NajmBahar audit log with the initiating user, the source and destination sub-account codes, the amount, the description, and a timestamp. For group transfers, the actor's role within the group (manager or owner) is also recorded. This log is immutable and available for review by platform administrators.

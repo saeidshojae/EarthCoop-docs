@@ -1,0 +1,121 @@
+{
+  "projectType": "saas",
+  "projectName": "NewEarthCoop",
+  "projectDescription": "A full-stack cooperative platform for forming and managing local-to-global groups, enabling social and economic collaboration through real-time communication, project investment, and AI-powered assistance.",
+  "theme": "almond",
+  "primaryColor": "#3D8B37",
+  "lightColor": "#E8F5E3",
+  "darkColor": "#1B5E20",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "account-setup"
+            ]
+          },
+          {
+            "group": "Groups & Community",
+            "pages": [
+              "groups/overview",
+              "groups/creating-a-group",
+              "groups/joining-a-group",
+              "groups/chat-and-messaging",
+              "groups/polls-and-elections"
+            ]
+          },
+          {
+            "group": "Projects & Investment",
+            "pages": [
+              "projects/overview",
+              "projects/submitting-a-project",
+              "projects/investing",
+              "projects/tracking-status"
+            ]
+          },
+          {
+            "group": "NajmBahar Finance",
+            "pages": [
+              "najm-bahar/overview",
+              "najm-bahar/sub-accounts",
+              "najm-bahar/transfers",
+              "najm-bahar/membership-fees"
+            ]
+          },
+          {
+            "group": "NajmHoda AI",
+            "pages": [
+              "najm-hoda/overview",
+              "najm-hoda/chatting-with-najm-hoda",
+              "najm-hoda/knowledge-base"
+            ]
+          },
+          {
+            "group": "Account & Settings",
+            "pages": [
+              "account/profile",
+              "account/notifications",
+              "account/support-tickets"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api/overview",
+              "api/authentication"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api/najm-hoda",
+              "api/tickets",
+              "api/geographic",
+              "api/notifications"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Intelligent user grouping by profession, location, and expertise across neighborhood-to-global scales",
+    "Real-time group chat with polls, elections, reactions, and threaded discussions",
+    "Project submission and community investment with transparent review workflows",
+    "NajmBahar integrated financial system with sub-accounts, peer transfers, and membership fees",
+    "NajmHoda AI assistant for answering questions and autonomous platform operations",
+    "Multilingual support (English and Persian) with Jalali calendar",
+    "Support ticket system with file attachments and staff responses",
+    "Reputation and reputation-conversion system",
+    "Google OAuth and email-based authentication with multi-step registration"
+  ],
+  "publicApiSurface": [
+    "POST /api/najm-hoda/chat",
+    "GET /api/najm-hoda/welcome",
+    "GET /api/najm-hoda/conversations",
+    "DELETE /api/najm-hoda/conversations/{id}",
+    "POST /api/najm-hoda/feedback",
+    "GET /api/tickets",
+    "POST /api/tickets",
+    "GET /api/tickets/{id}",
+    "PUT /api/tickets/{id}",
+    "PUT /api/tickets/{id}/close",
+    "POST /api/tickets/{id}/comments",
+    "GET /api/geographic/continents",
+    "GET /api/geographic/{level}/{parentId}/children",
+    "GET /api/provinces",
+    "GET /api/counties/{id}",
+    "GET /api/notifications",
+    "POST /api/najm-hoda/escalate"
+  ]
+}
