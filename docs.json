@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "name": "NewEarthCoop",
+  "name": "EarthCoop",
   "theme": "almond",
   "colors": {
     "primary": "#3D8B37",
@@ -182,6 +182,17 @@
     "primary": {
       "type": "github",
       "href": "https://github.com/saeidshojae/NewEarthCoop"
+    },
+    "links": []
+  },
+  "background": {
+    "decoration": "grid"
+  },
+  "redirects": [
+    {
+      "source": "",
+      "destination": "",
+      "permanent": true
     }
-  }
+  ]
 }
