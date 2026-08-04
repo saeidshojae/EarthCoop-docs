@@ -27,7 +27,7 @@
           {
             "tab": "Foundational Documents",
             "groups": [
-              {"group": "Foundational Corpus", "pages": ["en/foundational/index"]},
+              {"group": "Foundational Corpus", "pages": ["en/foundational/index", "en/foundational/fc/00-overview"]},
               {"group": "Governance", "pages": ["governance/translation-policy"]}
             ]
           },
@@ -58,7 +58,7 @@
             "tab": "اسناد بنیادین",
             "groups": [
               {"group": "فهرست اسناد", "pages": ["fa/foundational/index"]},
-              {"group": "سند مادر — FC", "pages": ["fa/foundational/fc/00-overview", "fa/foundational/fc/01-nature-and-purpose", "fa/foundational/fc/02-fundamental-principles"]},
+              {"group": "سند مادر — FC", "pages": ["fa/foundational/fc/00-overview", "fa/foundational/fc/01-nature-and-purpose", "fa/foundational/fc/02-fundamental-principles", "fa/foundational/fc/03-hierarchy-and-interpretation", "fa/foundational/fc/04-technology-membership-economy", "fa/foundational/fc/05-justice-amendment-and-validity"]},
               {"group": "حکمرانی اسناد", "pages": ["governance/translation-policy"]}
             ]
           },
@@ -77,7 +77,7 @@
           {
             "tab": "الوثائق التأسيسية",
             "groups": [
-              {"group": "مجموعة الوثائق التأسيسية", "pages": ["ar/foundational/index"]},
+              {"group": "مجموعة الوثائق التأسيسية", "pages": ["ar/foundational/index", "ar/foundational/fc/00-overview"]},
               {"group": "حوكمة الوثائق", "pages": ["governance/translation-policy"]}
             ]
           }
