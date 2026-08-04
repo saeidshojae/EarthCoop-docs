@@ -16,79 +16,26 @@
           {
             "tab": "Documentation",
             "groups": [
-              {
-                "group": "Get Started",
-                "pages": [
-                  "introduction",
-                  "quickstart",
-                  "account-setup"
-                ]
-              },
-              {
-                "group": "Groups & Community",
-                "pages": [
-                  "groups/overview",
-                  "groups/creating-a-group",
-                  "groups/joining-a-group",
-                  "groups/chat-and-messaging",
-                  "groups/polls-and-elections"
-                ]
-              },
-              {
-                "group": "Projects & Investment",
-                "pages": [
-                  "projects/overview",
-                  "projects/submitting-a-project",
-                  "projects/investing",
-                  "projects/tracking-status"
-                ]
-              },
-              {
-                "group": "NajmBahar Finance",
-                "pages": [
-                  "najm-bahar/overview",
-                  "najm-bahar/sub-accounts",
-                  "najm-bahar/transfers",
-                  "najm-bahar/membership-fees"
-                ]
-              },
-              {
-                "group": "NajmHoda AI",
-                "pages": [
-                  "najm-hoda/overview",
-                  "najm-hoda/chatting-with-najm-hoda",
-                  "najm-hoda/knowledge-base"
-                ]
-              },
-              {
-                "group": "Account & Settings",
-                "pages": [
-                  "account/profile",
-                  "account/notifications",
-                  "account/support-tickets"
-                ]
-              }
+              {"group": "Get Started", "pages": ["introduction", "quickstart", "account-setup"]},
+              {"group": "Groups & Community", "pages": ["groups/overview", "groups/creating-a-group", "groups/joining-a-group", "groups/chat-and-messaging", "groups/polls-and-elections"]},
+              {"group": "Projects & Investment", "pages": ["projects/overview", "projects/submitting-a-project", "projects/investing", "projects/tracking-status"]},
+              {"group": "NajmBahar Finance", "pages": ["najm-bahar/overview", "najm-bahar/sub-accounts", "najm-bahar/transfers", "najm-bahar/membership-fees"]},
+              {"group": "NajmHoda AI", "pages": ["najm-hoda/overview", "najm-hoda/chatting-with-najm-hoda", "najm-hoda/knowledge-base"]},
+              {"group": "Account & Settings", "pages": ["account/profile", "account/notifications", "account/support-tickets"]}
+            ]
+          },
+          {
+            "tab": "Foundational Documents",
+            "groups": [
+              {"group": "Foundational Corpus", "pages": ["en/foundational/index"]},
+              {"group": "Governance", "pages": ["governance/translation-policy"]}
             ]
           },
           {
             "tab": "API Reference",
             "groups": [
-              {
-                "group": "Overview",
-                "pages": [
-                  "api/overview",
-                  "api/authentication"
-                ]
-              },
-              {
-                "group": "Endpoints",
-                "pages": [
-                  "api/najm-hoda",
-                  "api/tickets",
-                  "api/geographic",
-                  "api/notifications"
-                ]
-              }
+              {"group": "Overview", "pages": ["api/overview", "api/authentication"]},
+              {"group": "Endpoints", "pages": ["api/najm-hoda", "api/tickets", "api/geographic", "api/notifications"]}
             ]
           }
         ]
@@ -99,90 +46,38 @@
           {
             "tab": "مستندات",
             "groups": [
-              {
-                "group": "شروع کار",
-                "pages": [
-                  "fa/introduction",
-                  "fa/quickstart",
-                  "fa/account-setup"
-                ]
-              },
-              {
-                "group": "گروه‌ها و جامعه",
-                "pages": [
-                  "fa/groups/overview",
-                  "fa/groups/creating-a-group",
-                  "fa/groups/joining-a-group",
-                  "fa/groups/chat-and-messaging",
-                  "fa/groups/polls-and-elections"
-                ]
-              },
-              {
-                "group": "پروژه‌ها و سرمایه‌گذاری",
-                "pages": [
-                  "fa/projects/overview",
-                  "fa/projects/submitting-a-project",
-                  "fa/projects/investing",
-                  "fa/projects/tracking-status"
-                ]
-              },
-              {
-                "group": "حساب مالی نجم‌بهار",
-                "pages": [
-                  "fa/najm-bahar/overview",
-                  "fa/najm-bahar/sub-accounts",
-                  "fa/najm-bahar/transfers",
-                  "fa/najm-bahar/membership-fees"
-                ]
-              },
-              {
-                "group": "دستیار هوشمند نجم‌هدا",
-                "pages": [
-                  "fa/najm-hoda/overview",
-                  "fa/najm-hoda/chatting-with-najm-hoda",
-                  "fa/najm-hoda/knowledge-base"
-                ]
-              },
-              {
-                "group": "حساب و تنظیمات",
-                "pages": [
-                  "fa/account/profile",
-                  "fa/account/notifications",
-                  "fa/account/support-tickets"
-                ]
-              }
+              {"group": "شروع کار", "pages": ["fa/introduction", "fa/quickstart", "fa/account-setup"]},
+              {"group": "گروه‌ها و جامعه", "pages": ["fa/groups/overview", "fa/groups/creating-a-group", "fa/groups/joining-a-group", "fa/groups/chat-and-messaging", "fa/groups/polls-and-elections"]},
+              {"group": "پروژه‌ها و سرمایه‌گذاری", "pages": ["fa/projects/overview", "fa/projects/submitting-a-project", "fa/projects/investing", "fa/projects/tracking-status"]},
+              {"group": "حساب مالی نجم‌بهار", "pages": ["fa/najm-bahar/overview", "fa/najm-bahar/sub-accounts", "fa/najm-bahar/transfers", "fa/najm-bahar/membership-fees"]},
+              {"group": "دستیار هوشمند نجم‌هدا", "pages": ["fa/najm-hoda/overview", "fa/najm-hoda/chatting-with-najm-hoda", "fa/najm-hoda/knowledge-base"]},
+              {"group": "حساب و تنظیمات", "pages": ["fa/account/profile", "fa/account/notifications", "fa/account/support-tickets"]}
             ]
           },
           {
             "tab": "اسناد بنیادین",
             "groups": [
-              {
-                "group": "مجموعه قوانین بنیادین",
-                "pages": [
-                  "fa/foundational/index"
-                ]
-              }
+              {"group": "مجموعه قوانین بنیادین", "pages": ["fa/foundational/index"]},
+              {"group": "حکمرانی اسناد", "pages": ["governance/translation-policy"]}
             ]
           },
           {
             "tab": "مرجع API",
             "groups": [
-              {
-                "group": "معرفی",
-                "pages": [
-                  "fa/api/overview",
-                  "fa/api/authentication"
-                ]
-              },
-              {
-                "group": "اندپوینت‌ها",
-                "pages": [
-                  "fa/api/najm-hoda",
-                  "fa/api/tickets",
-                  "fa/api/geographic",
-                  "fa/api/notifications"
-                ]
-              }
+              {"group": "معرفی", "pages": ["fa/api/overview", "fa/api/authentication"]},
+              {"group": "اندپوینت‌ها", "pages": ["fa/api/najm-hoda", "fa/api/tickets", "fa/api/geographic", "fa/api/notifications"]}
+            ]
+          }
+        ]
+      },
+      {
+        "language": "ar",
+        "tabs": [
+          {
+            "tab": "الوثائق التأسيسية",
+            "groups": [
+              {"group": "مجموعة الوثائق التأسيسية", "pages": ["ar/foundational/index"]},
+              {"group": "حوكمة الوثائق", "pages": ["governance/translation-policy"]}
             ]
           }
         ]
@@ -190,18 +85,8 @@
     ]
   },
   "navbar": {
-    "primary": {
-      "type": "github",
-      "href": "https://github.com/saeidshojae/EarthCoop-docs"
-    },
-    "links": [
-      {
-        "label": "اسناد بنیادین",
-        "href": "/fa/foundational/index"
-      }
-    ]
+    "primary": {"type": "github", "href": "https://github.com/saeidshojae/EarthCoop-docs"},
+    "links": [{"label": "اسناد بنیادین", "href": "/fa/foundational/index"}]
   },
-  "background": {
-    "decoration": "grid"
-  }
+  "background": {"decoration": "grid"}
 }
