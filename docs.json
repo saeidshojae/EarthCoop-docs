@@ -57,7 +57,8 @@
           {
             "tab": "اسناد بنیادین",
             "groups": [
-              {"group": "مجموعه قوانین بنیادین", "pages": ["fa/foundational/index"]},
+              {"group": "فهرست اسناد", "pages": ["fa/foundational/index"]},
+              {"group": "سند مادر — FC", "pages": ["fa/foundational/fc/00-overview", "fa/foundational/fc/01-nature-and-purpose", "fa/foundational/fc/02-fundamental-principles"]},
               {"group": "حکمرانی اسناد", "pages": ["governance/translation-policy"]}
             ]
           },
