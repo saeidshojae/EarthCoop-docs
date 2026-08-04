@@ -94,7 +94,7 @@
         ]
       },
       {
-        "language": "ar",
+        "language": "fa",
         "tabs": [
           {
             "tab": "مستندات",
@@ -127,7 +127,7 @@
                 ]
               },
               {
-                "group": "حساب مالی نجم‌بهار (NajmBahar)",
+                "group": "حساب مالی نجم‌بهار",
                 "pages": [
                   "fa/najm-bahar/overview",
                   "fa/najm-bahar/sub-accounts",
@@ -136,7 +136,7 @@
                 ]
               },
               {
-                "group": "دستیار هوشمند نجم‌هدا (NajmHoda)",
+                "group": "دستیار هوشمند نجم‌هدا",
                 "pages": [
                   "fa/najm-hoda/overview",
                   "fa/najm-hoda/chatting-with-najm-hoda",
@@ -149,6 +149,17 @@
                   "fa/account/profile",
                   "fa/account/notifications",
                   "fa/account/support-tickets"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "اسناد بنیادین",
+            "groups": [
+              {
+                "group": "مجموعه قوانین بنیادین",
+                "pages": [
+                  "fa/foundational/index"
                 ]
               }
             ]
@@ -181,18 +192,16 @@
   "navbar": {
     "primary": {
       "type": "github",
-      "href": "https://github.com/saeidshojae/NewEarthCoop"
+      "href": "https://github.com/saeidshojae/EarthCoop-docs"
     },
-    "links": []
+    "links": [
+      {
+        "label": "اسناد بنیادین",
+        "href": "/fa/foundational/index"
+      }
+    ]
   },
   "background": {
     "decoration": "grid"
-  },
-  "redirects": [
-    {
-      "source": "",
-      "destination": "",
-      "permanent": true
-    }
-  ]
+  }
 }
