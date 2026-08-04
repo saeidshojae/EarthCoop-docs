@@ -2,92 +2,65 @@
   "$schema": "https://mintlify.com/docs.json",
   "name": "EarthCoop",
   "theme": "almond",
-  "colors": {
-    "primary": "#3D8B37",
-    "light": "#E8F5E3",
-    "dark": "#1B5E20"
-  },
+  "colors": {"primary": "#3D8B37", "light": "#E8F5E3", "dark": "#1B5E20"},
   "navigation": {
     "languages": [
       {
         "language": "en",
         "default": true,
         "tabs": [
-          {
-            "tab": "Documentation",
-            "groups": [
-              {"group": "Get Started", "pages": ["introduction", "quickstart", "account-setup"]},
-              {"group": "Groups & Community", "pages": ["groups/overview", "groups/creating-a-group", "groups/joining-a-group", "groups/chat-and-messaging", "groups/polls-and-elections"]},
-              {"group": "Projects & Investment", "pages": ["projects/overview", "projects/submitting-a-project", "projects/investing", "projects/tracking-status"]},
-              {"group": "NajmBahar Finance", "pages": ["najm-bahar/overview", "najm-bahar/sub-accounts", "najm-bahar/transfers", "najm-bahar/membership-fees"]},
-              {"group": "NajmHoda AI", "pages": ["najm-hoda/overview", "najm-hoda/chatting-with-najm-hoda", "najm-hoda/knowledge-base"]},
-              {"group": "Account & Settings", "pages": ["account/profile", "account/notifications", "account/support-tickets"]}
-            ]
-          },
-          {
-            "tab": "Foundational Documents",
-            "groups": [
-              {"group": "Foundational Corpus", "pages": ["en/foundational/index", "en/foundational/fc/00-overview"]},
-              {"group": "Governance", "pages": ["governance/translation-policy"]}
-            ]
-          },
-          {
-            "tab": "API Reference",
-            "groups": [
-              {"group": "Overview", "pages": ["api/overview", "api/authentication"]},
-              {"group": "Endpoints", "pages": ["api/najm-hoda", "api/tickets", "api/geographic", "api/notifications"]}
-            ]
-          }
+          {"tab": "Documentation", "groups": [
+            {"group": "Get Started", "pages": ["introduction", "quickstart", "account-setup"]},
+            {"group": "Groups & Community", "pages": ["groups/overview", "groups/creating-a-group", "groups/joining-a-group", "groups/chat-and-messaging", "groups/polls-and-elections"]},
+            {"group": "Projects & Investment", "pages": ["projects/overview", "projects/submitting-a-project", "projects/investing", "projects/tracking-status"]},
+            {"group": "NajmBahar Finance", "pages": ["najm-bahar/overview", "najm-bahar/sub-accounts", "najm-bahar/transfers", "najm-bahar/membership-fees"]},
+            {"group": "NajmHoda AI", "pages": ["najm-hoda/overview", "najm-hoda/chatting-with-najm-hoda", "najm-hoda/knowledge-base"]},
+            {"group": "Account & Settings", "pages": ["account/profile", "account/notifications", "account/support-tickets"]}
+          ]},
+          {"tab": "Foundational Documents", "groups": [
+            {"group": "Foundational Corpus", "pages": ["en/foundational/index", "en/foundational/fc/00-overview"]},
+            {"group": "Governance", "pages": ["governance/translation-policy"]}
+          ]},
+          {"tab": "API Reference", "groups": [
+            {"group": "Overview", "pages": ["api/overview", "api/authentication"]},
+            {"group": "Endpoints", "pages": ["api/najm-hoda", "api/tickets", "api/geographic", "api/notifications"]}
+          ]}
         ]
       },
       {
         "language": "fa",
         "tabs": [
-          {
-            "tab": "مستندات",
-            "groups": [
-              {"group": "شروع کار", "pages": ["fa/introduction", "fa/quickstart", "fa/account-setup"]},
-              {"group": "گروه‌ها و جامعه", "pages": ["fa/groups/overview", "fa/groups/creating-a-group", "fa/groups/joining-a-group", "fa/groups/chat-and-messaging", "fa/groups/polls-and-elections"]},
-              {"group": "پروژه‌ها و سرمایه‌گذاری", "pages": ["fa/projects/overview", "fa/projects/submitting-a-project", "fa/projects/investing", "fa/projects/tracking-status"]},
-              {"group": "حساب مالی نجم‌بهار", "pages": ["fa/najm-bahar/overview", "fa/najm-bahar/sub-accounts", "fa/najm-bahar/transfers", "fa/najm-bahar/membership-fees"]},
-              {"group": "دستیار هوشمند نجم‌هدا", "pages": ["fa/najm-hoda/overview", "fa/najm-hoda/chatting-with-najm-hoda", "fa/najm-hoda/knowledge-base"]},
-              {"group": "حساب و تنظیمات", "pages": ["fa/account/profile", "fa/account/notifications", "fa/account/support-tickets"]}
-            ]
-          },
-          {
-            "tab": "اسناد بنیادین",
-            "groups": [
-              {"group": "فهرست اسناد", "pages": ["fa/foundational/index"]},
-              {"group": "سند مادر — FC", "pages": ["fa/foundational/fc/00-overview", "fa/foundational/fc/01-nature-and-purpose", "fa/foundational/fc/02-fundamental-principles", "fa/foundational/fc/03-hierarchy-and-interpretation", "fa/foundational/fc/04-technology-membership-economy", "fa/foundational/fc/05-justice-amendment-and-validity"]},
-              {"group": "حکمرانی اسناد", "pages": ["governance/translation-policy"]}
-            ]
-          },
-          {
-            "tab": "مرجع API",
-            "groups": [
-              {"group": "معرفی", "pages": ["fa/api/overview", "fa/api/authentication"]},
-              {"group": "اندپوینت‌ها", "pages": ["fa/api/najm-hoda", "fa/api/tickets", "fa/api/geographic", "fa/api/notifications"]}
-            ]
-          }
+          {"tab": "مستندات", "groups": [
+            {"group": "شروع کار", "pages": ["fa/introduction", "fa/quickstart", "fa/account-setup"]},
+            {"group": "گروه‌ها و جامعه", "pages": ["fa/groups/overview", "fa/groups/creating-a-group", "fa/groups/joining-a-group", "fa/groups/chat-and-messaging", "fa/groups/polls-and-elections"]},
+            {"group": "پروژه‌ها و سرمایه‌گذاری", "pages": ["fa/projects/overview", "fa/projects/submitting-a-project", "fa/projects/investing", "fa/projects/tracking-status"]},
+            {"group": "حساب مالی نجم‌بهار", "pages": ["fa/najm-bahar/overview", "fa/najm-bahar/sub-accounts", "fa/najm-bahar/transfers", "fa/najm-bahar/membership-fees"]},
+            {"group": "دستیار هوشمند نجم‌هدا", "pages": ["fa/najm-hoda/overview", "fa/najm-hoda/chatting-with-najm-hoda", "fa/najm-hoda/knowledge-base"]},
+            {"group": "حساب و تنظیمات", "pages": ["fa/account/profile", "fa/account/notifications", "fa/account/support-tickets"]}
+          ]},
+          {"tab": "اسناد بنیادین", "groups": [
+            {"group": "فهرست اسناد", "pages": ["fa/foundational/index"]},
+            {"group": "سند مادر — FC", "pages": ["fa/foundational/fc/00-overview", "fa/foundational/fc/01-nature-and-purpose", "fa/foundational/fc/02-fundamental-principles", "fa/foundational/fc/03-hierarchy-and-interpretation", "fa/foundational/fc/04-technology-membership-economy", "fa/foundational/fc/05-justice-amendment-and-validity"]},
+            {"group": "منشور — CH", "pages": ["fa/foundational/ch/00-overview", "fa/foundational/ch/01-foundations-and-humanity", "fa/foundational/ch/02-economy-governance-technology", "fa/foundational/ch/03-ethics-peace-knowledge", "fa/foundational/ch/04-civilization-documents-validity"]},
+            {"group": "حکمرانی اسناد", "pages": ["governance/translation-policy"]}
+          ]},
+          {"tab": "مرجع API", "groups": [
+            {"group": "معرفی", "pages": ["fa/api/overview", "fa/api/authentication"]},
+            {"group": "اندپوینت‌ها", "pages": ["fa/api/najm-hoda", "fa/api/tickets", "fa/api/geographic", "fa/api/notifications"]}
+          ]}
         ]
       },
       {
         "language": "ar",
         "tabs": [
-          {
-            "tab": "الوثائق التأسيسية",
-            "groups": [
-              {"group": "مجموعة الوثائق التأسيسية", "pages": ["ar/foundational/index", "ar/foundational/fc/00-overview"]},
-              {"group": "حوكمة الوثائق", "pages": ["governance/translation-policy"]}
-            ]
-          }
+          {"tab": "الوثائق التأسيسية", "groups": [
+            {"group": "مجموعة الوثائق التأسيسية", "pages": ["ar/foundational/index", "ar/foundational/fc/00-overview"]},
+            {"group": "حوكمة الوثائق", "pages": ["governance/translation-policy"]}
+          ]}
         ]
       }
     ]
   },
-  "navbar": {
-    "primary": {"type": "github", "href": "https://github.com/saeidshojae/EarthCoop-docs"},
-    "links": [{"label": "اسناد بنیادین", "href": "/fa/foundational/index"}]
-  },
+  "navbar": {"primary": {"type": "github", "href": "https://github.com/saeidshojae/EarthCoop-docs"}, "links": [{"label": "اسناد بنیادین", "href": "/fa/foundational/index"}]},
   "background": {"decoration": "grid"}
 }
