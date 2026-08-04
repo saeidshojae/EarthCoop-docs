@@ -1,0 +1,17 @@
+{
+  "$schema": "./schemas/document-registry.schema.json",
+  "sourceLanguage": "fa",
+  "supportedLanguages": ["fa", "en", "ar"],
+  "documents": [
+    {"volume":0,"id":"FC","slug":"foundational-covenant","fa":{"version":"1.0","status":"final"},"en":{"version":"1.0","status":"not-started"},"ar":{"version":"1.0","status":"not-started"}},
+    {"volume":1,"id":"CH","slug":"charter","fa":{"version":"1.0","status":"final"},"en":{"version":"1.0","status":"not-started"},"ar":{"version":"1.0","status":"not-started"}},
+    {"volume":2,"id":"CO","slug":"constitution","fa":{"version":"1.0","status":"final"},"en":{"version":"1.0","status":"not-started"},"ar":{"version":"1.0","status":"not-started"}},
+    {"volume":3,"id":"EX","slug":"executive-bylaws","fa":{"version":"1.0","status":"final"},"en":{"version":"1.0","status":"not-started"},"ar":{"version":"1.0","status":"not-started"}},
+    {"volume":4,"id":"ECON","slug":"economic-law","fa":{"version":"0.1","status":"draft"},"en":{"version":"0.1","status":"not-started"},"ar":{"version":"0.1","status":"not-started"}},
+    {"volume":5,"id":"DG","slug":"digital-governance-law","fa":{"version":"0.1","status":"draft"},"en":{"version":"0.1","status":"not-started"},"ar":{"version":"0.1","status":"not-started"}},
+    {"volume":6,"id":"JUD","slug":"judicial-law","fa":{"version":"0.1","status":"draft"},"en":{"version":"0.1","status":"not-started"},"ar":{"version":"0.1","status":"not-started"}},
+    {"volume":7,"id":"LOC","slug":"local-communities-law","fa":{"version":"0.1","status":"draft"},"en":{"version":"0.1","status":"not-started"},"ar":{"version":"0.1","status":"not-started"}},
+    {"volume":8,"id":"ETH","slug":"ethical-charter","fa":{"version":"0.1","status":"draft"},"en":{"version":"0.1","status":"not-started"},"ar":{"version":"0.1","status":"not-started"}},
+    {"volume":9,"id":"STD","slug":"technical-standards","fa":{"version":"0.1","status":"draft"},"en":{"version":"0.1","status":"not-started"},"ar":{"version":"0.1","status":"not-started"}}
+  ]
+}
