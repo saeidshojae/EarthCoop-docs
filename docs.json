@@ -28,7 +28,7 @@
         ]
       },
       {
-        "language": "fa",
+        "language": "ar",
         "tabs": [
           {"tab": "مستندات", "groups": [
             {"group": "شروع کار", "pages": ["fa/introduction", "fa/quickstart", "fa/account-setup"]},
@@ -54,15 +54,6 @@
           {"tab": "مرجع API", "groups": [
             {"group": "معرفی", "pages": ["fa/api/overview", "fa/api/authentication"]},
             {"group": "اندپوینت‌ها", "pages": ["fa/api/najm-hoda", "fa/api/tickets", "fa/api/geographic", "fa/api/notifications"]}
-          ]}
-        ]
-      },
-      {
-        "language": "ar",
-        "tabs": [
-          {"tab": "الوثائق التأسيسية", "groups": [
-            {"group": "مجموعة الوثائق التأسيسية", "pages": ["ar/foundational/index", "ar/foundational/fc/00-overview"]},
-            {"group": "حوكمة الوثائق", "pages": ["governance/translation-policy"]}
           ]}
         ]
       }
