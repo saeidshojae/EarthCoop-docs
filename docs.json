@@ -183,7 +183,12 @@
       "type": "github",
       "href": "https://github.com/saeidshojae/NewEarthCoop"
     },
-    "links": []
+    "links": [
+      {
+        "href": "https://EarthCoop.ir",
+        "label": ""
+      }
+    ]
   },
   "background": {
     "decoration": "grid"
@@ -194,5 +199,14 @@
       "destination": "",
       "permanent": true
     }
-  ]
+  ],
+  "logo": {
+    "light": "/images/icon.svg",
+    "dark": "/images/icon.svg",
+    "href": "https://EarthCoop.ir"
+  },
+  "favicon": {
+    "light": "/images/icon.svg",
+    "dark": "/images/icon.svg"
+  }
 }
