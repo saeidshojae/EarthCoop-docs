@@ -1,55 +1,55 @@
-# Mintlify Starter Kit
+# EarthCoop Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+مخزن رسمی مستندات عمومی و اسناد بنیادین **EarthCoop**.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+این مخزن منبع نسخه‌بندی‌شده مستندات Mintlify، راهنمای کاربران، مرجع API و مجموعه قوانین بنیادین EarthCoop است.
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+## ساختار محتوا
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+- مستندات محصول به زبان انگلیسی در مسیرهای اصلی مخزن
+- مستندات فارسی در مسیر `fa/`
+- اسناد بنیادین در مسیر `fa/foundational/`
+- مرجع API در مسیرهای `api/` و `fa/api/`
+- پیکربندی Mintlify در `docs.json`
 
-## AI-assisted writing
+## اسناد بنیادین
 
-Set up your AI coding tool to work with Mintlify:
+مجموعه اسناد بنیادین از جلد صفر تا جلد نهم تنظیم شده است:
+
+| جلد | شناسه | عنوان |
+|---:|:---:|---|
+| ۰ | FC | سند مادر EarthCoop |
+| ۱ | CH | منشور EarthCoop |
+| ۲ | CO | قانون اساسی EarthCoop |
+| ۳ | EX | اساسنامه اجرایی EarthCoop |
+| ۴ | ECON | قانون اقتصاد EarthCoop |
+| ۵ | DG | قانون حکمرانی دیجیتال EarthCoop |
+| ۶ | JUD | قانون قضایی EarthCoop |
+| ۷ | LOC | قانون جوامع محلی EarthCoop |
+| ۸ | ETH | منشور اخلاقی EarthCoop |
+| ۹ | STD | استانداردهای فنی EarthCoop |
+
+هر سند باید دارای شناسه پایدار، شماره نسخه، تاریخ، زبان مبنا، وضعیت اعتبار و سابقه تغییرات باشد.
+
+## توسعه محلی
+
+برای پیش‌نمایش مستندات، Mintlify CLI را نصب کنید:
 
 ```bash
-npx skills add https://mintlify.com/docs
-```
-
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
-
-See the [AI tools guides](/ai-tools) for tool-specific setup.
-
-## Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
-```
-npm i -g mint
-```
-
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
+npm install -g mint
 mint dev
 ```
 
-View your local preview at `http://localhost:3000`.
+پیش‌نمایش محلی به‌طور معمول در `http://localhost:3000` در دسترس است.
 
-## Publishing changes
+## مشارکت
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+قواعد مشارکت در [CONTRIBUTING.md](./CONTRIBUTING.md) آمده است. پیشنهادهای اصلاح اسناد بنیادین باید شناسه سند و ماده مرتبط را مشخص کنند.
 
-## Need help?
+## انتشار
 
-### Troubleshooting
+تغییرات پس از بازبینی و ادغام در شاخه اصلی، از طریق اتصال GitHub و Mintlify منتشر می‌شوند. تغییر مستقیم اسناد مهم روی شاخه اصلی توصیه نمی‌شود؛ از Branch و Pull Request استفاده کنید.
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+## مجوز
 
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+شرایط استفاده و بازنشر محتوا مطابق فایل [LICENSE](./LICENSE) و اعلامیه‌های اختصاصی هر سند است.
