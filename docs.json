@@ -62,7 +62,6 @@
   "navbar": {
     "primary": {"type": "github", "href": "https://github.com/saeidshojae/EarthCoop-docs"},
     "links": [
-      {"label": "اسناد بنیادین", "href": "/fa/foundational/index"},
       {"label": "EarthCoop.ir", "href": "https://EarthCoop.ir"}
     ]
   },
