@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.1",
+  "sourceLanguage": "fa",
+  "releaseDate": "2026-09-20",
+  "status": "registration-candidate",
+  "articleReferenceFormat": "<DOC>-<VERSION>-<ARTICLE>",
+  "documents": [
+    {
+      "volume": 0,
+      "id": "FC",
+      "title": "سند مادر EarthCoop",
+      "currentVersion": "1.1",
+      "previousVersion": "1.0",
+      "status": "freeze-candidate"
+    },
+    {
+      "volume": 1,
+      "id": "CH",
+      "title": "منشور EarthCoop",
+      "currentVersion": "1.0",
+      "previousVersion": null,
+      "status": "current-unchanged"
+    },
+    {
+      "volume": 2,
+      "id": "CO",
+      "title": "قانون اساسی EarthCoop",
+      "currentVersion": "1.0",
+      "previousVersion": null,
+      "status": "current-unchanged"
+    },
+    {
+      "volume": 3,
+      "id": "EX",
+      "title": "اساسنامه اجرایی EarthCoop",
+      "currentVersion": "1.1",
+      "previousVersion": "1.0",
+      "status": "registration-candidate"
+    },
+    {
+      "volume": 4,
+      "id": "ECON",
+      "title": "قانون اقتصاد EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "freeze-candidate"
+    },
+    {
+      "volume": 5,
+      "id": "DG",
+      "title": "قانون حکمرانی دیجیتال EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registration-candidate"
+    },
+    {
+      "volume": 6,
+      "id": "JUD",
+      "title": "قانون قضایی EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registration-candidate"
+    },
+    {
+      "volume": 7,
+      "id": "LOC",
+      "title": "قانون جوامع محلی EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registration-candidate"
+    },
+    {
+      "volume": 8,
+      "id": "ETH",
+      "title": "منشور اخلاقی EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registration-candidate"
+    },
+    {
+      "volume": 9,
+      "id": "STD",
+      "title": "استانداردهای فنی EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registration-candidate"
+    }
+  ]
+}
