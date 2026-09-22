@@ -1,0 +1,19 @@
+{
+  "$schema": "./schemas/knowledge-document.schema.json",
+  "schemaVersion": 1,
+  "sourceLanguage": "fa",
+  "entries": [
+    {
+      "id": "foundational-index-fa",
+      "source": "fa/foundational/index.mdx",
+      "slug": "foundational",
+      "language": "fa",
+      "contentClass": "reference",
+      "status": "under_audit",
+      "authority": "EarthCoop documentation editorial team",
+      "version": "0.1.0",
+      "reviewedAt": "2026-09-22",
+      "provisions": []
+    }
+  ]
+}
