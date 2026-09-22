@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.earthcoop.ir/schemas/knowledge-document.schema.json",
+  "title": "EarthCoop knowledge center manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "sourceLanguage", "entries"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "sourceLanguage": { "const": "fa" },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "source", "slug", "language", "contentClass", "status", "authority", "version", "reviewedAt"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "source": { "type": "string", "pattern": "^[^/].*\\.mdx$" },
+          "slug": { "type": "string", "pattern": "^[a-z0-9/-]+$" },
+          "language": { "enum": ["fa", "en", "ar"] },
+          "contentClass": { "enum": ["guide", "foundational_document", "policy", "reference"] },
+          "status": { "enum": ["concept", "unofficial_explanation", "under_audit", "official_draft", "public_consultation", "approved_not_effective", "effective", "superseded", "withdrawn"] },
+          "authority": { "type": "string", "minLength": 1 },
+          "version": { "type": "string", "minLength": 1 },
+          "reviewedAt": { "type": "string", "format": "date" },
+          "provisions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "anchor"],
+              "properties": {
+                "id": { "type": "string", "pattern": "^[A-Z0-9-]+$" },
+                "anchor": { "type": "string", "pattern": "^[a-z0-9-]+$" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
