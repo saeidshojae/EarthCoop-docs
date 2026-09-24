@@ -2,20 +2,8 @@ name: Validate knowledge content
 
 on:
   pull_request:
-    paths:
-      - "docs-manifest.json"
-      - "schemas/knowledge-document.schema.json"
-      - "scripts/validate-docs-manifest.mjs"
-      - "tests/validate-docs-manifest.test.mjs"
-      - "**/*.mdx"
   push:
     branches: [main]
-    paths:
-      - "docs-manifest.json"
-      - "schemas/knowledge-document.schema.json"
-      - "scripts/validate-docs-manifest.mjs"
-      - "tests/validate-docs-manifest.test.mjs"
-      - "**/*.mdx"
 
 permissions:
   contents: read
@@ -28,5 +16,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node --test tests/validate-docs-manifest.test.mjs
+      - run: node --test
       - run: node scripts/validate-docs-manifest.mjs .

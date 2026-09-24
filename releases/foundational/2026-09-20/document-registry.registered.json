@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "1.1",
+  "sourceLanguage": "fa",
+  "releaseDate": "2026-09-20",
+  "registeredAt": "2026-09-24",
+  "status": "registered-not-effective",
+  "statusAuthority": "EarthCoop founder",
+  "statusDecision": "REGISTRATION-DECISION.fa.md",
+  "supersedesRegistry": "document-registry.candidate.json",
+  "articleReferenceFormat": "<DOC>-<VERSION>-<ARTICLE>",
+  "documents": [
+    {
+      "volume": 0,
+      "id": "FC",
+      "title": "سند مادر EarthCoop",
+      "currentVersion": "1.1",
+      "previousVersion": "1.0",
+      "status": "registered-not-effective"
+    },
+    {
+      "volume": 1,
+      "id": "CH",
+      "title": "منشور EarthCoop",
+      "currentVersion": "1.0",
+      "previousVersion": null,
+      "status": "current-unchanged"
+    },
+    {
+      "volume": 2,
+      "id": "CO",
+      "title": "قانون اساسی EarthCoop",
+      "currentVersion": "1.0",
+      "previousVersion": null,
+      "status": "current-unchanged"
+    },
+    {
+      "volume": 3,
+      "id": "EX",
+      "title": "اساسنامه اجرایی EarthCoop",
+      "currentVersion": "1.1",
+      "previousVersion": "1.0",
+      "status": "registered-not-effective",
+      "consolidatedText": "consolidated/EX-1.1.full.fa.md",
+      "provenance": "consolidated/EX-1.1.provenance.json"
+    },
+    {
+      "volume": 4,
+      "id": "ECON",
+      "title": "قانون اقتصاد EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registered-not-effective"
+    },
+    {
+      "volume": 5,
+      "id": "DG",
+      "title": "قانون حکمرانی دیجیتال EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registered-not-effective"
+    },
+    {
+      "volume": 6,
+      "id": "JUD",
+      "title": "قانون قضایی EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registered-not-effective"
+    },
+    {
+      "volume": 7,
+      "id": "LOC",
+      "title": "قانون جوامع محلی EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registered-not-effective"
+    },
+    {
+      "volume": 8,
+      "id": "ETH",
+      "title": "منشور اخلاقی EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registered-not-effective"
+    },
+    {
+      "volume": 9,
+      "id": "STD",
+      "title": "استانداردهای فنی EarthCoop",
+      "currentVersion": "0.2",
+      "previousVersion": "0.1",
+      "status": "registered-not-effective"
+    }
+  ]
+}
