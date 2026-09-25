@@ -3,17 +3,16 @@
   "schemaVersion": 1,
   "sourceLanguage": "fa",
   "entries": [
-    {
-      "id": "foundational-index-fa",
-      "source": "fa/foundational/index.mdx",
-      "slug": "foundational",
-      "language": "fa",
-      "contentClass": "reference",
-      "status": "under_audit",
-      "authority": "EarthCoop documentation editorial team",
-      "version": "0.1.0",
-      "reviewedAt": "2026-09-22",
-      "provisions": []
-    }
+    {"id":"foundational-index-fa","source":"fa/foundational/index.mdx","slug":"foundational","language":"fa","contentClass":"reference","status":"under_audit","authority":"EarthCoop documentation editorial team","version":"0.1.0","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"fc-fa-1-1","source":"published/foundational/FC-1.1.fa.md","slug":"foundational/fc","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"1.1","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"ch-fa-1-0","source":"published/foundational/CH-1.0.fa.md","slug":"foundational/ch","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"1.0","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"co-fa-1-0","source":"published/foundational/CO-1.0.fa.md","slug":"foundational/co","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"1.0","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"ex-fa-1-1","source":"published/foundational/EX-1.1.fa.md","slug":"foundational/ex","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"1.1","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"econ-fa-0-2","source":"published/foundational/ECON-0.2.fa.md","slug":"foundational/econ","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"0.2","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"dg-fa-0-2","source":"published/foundational/DG-0.2.fa.md","slug":"foundational/dg","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"0.2","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"jud-fa-0-2","source":"published/foundational/JUD-0.2.fa.md","slug":"foundational/jud","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"0.2","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"loc-fa-0-2","source":"published/foundational/LOC-0.2.fa.md","slug":"foundational/loc","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"0.2","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"eth-fa-0-2","source":"published/foundational/ETH-0.2.fa.md","slug":"foundational/eth","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"0.2","reviewedAt":"2026-09-24","provisions":[]},
+    {"id":"std-fa-0-2","source":"published/foundational/STD-0.2.fa.md","slug":"foundational/std","language":"fa","contentClass":"foundational_document","status":"registered_not_effective","authority":"EarthCoop founder","version":"0.2","reviewedAt":"2026-09-24","provisions":[]}
   ]
 }
