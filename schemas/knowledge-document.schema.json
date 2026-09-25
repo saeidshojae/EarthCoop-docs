@@ -18,11 +18,11 @@
         "required": ["id", "source", "slug", "language", "contentClass", "status", "authority", "version", "reviewedAt"],
         "properties": {
           "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-          "source": { "type": "string", "pattern": "^[^/].*\\.mdx$" },
+          "source": { "type": "string", "pattern": "^[^/].*\\.mdx?$" },
           "slug": { "type": "string", "pattern": "^[a-z0-9/-]+$" },
           "language": { "enum": ["fa", "en", "ar"] },
           "contentClass": { "enum": ["guide", "foundational_document", "policy", "reference"] },
-          "status": { "enum": ["concept", "unofficial_explanation", "under_audit", "official_draft", "public_consultation", "approved_not_effective", "effective", "superseded", "withdrawn"] },
+          "status": { "enum": ["concept", "unofficial_explanation", "under_audit", "official_draft", "public_consultation", "registered_not_effective", "approved_not_effective", "effective", "superseded", "withdrawn"] },
           "authority": { "type": "string", "minLength": 1 },
           "version": { "type": "string", "minLength": 1 },
           "reviewedAt": { "type": "string", "format": "date" },

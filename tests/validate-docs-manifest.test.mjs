@@ -29,6 +29,27 @@ test('validates a complete manifest against files in the repository', async () =
   assert.deepEqual(result.errors, []);
 });
 
+test('accepts registered non-effective Markdown as a reviewable legal source', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'docs-manifest-'));
+  await mkdir(path.join(root, 'published/foundational'), { recursive: true });
+  await writeFile(path.join(root, 'published/foundational/EX-1.1.fa.md'), '---\ntitle: "اساسنامه"\ndescription: "متن کامل"\n---\n');
+  const result = await validateDocsManifest(root, {
+    schemaVersion: 1,
+    sourceLanguage: 'fa',
+    entries: [entry({
+      id: 'ex-fa-1-1',
+      source: 'published/foundational/EX-1.1.fa.md',
+      slug: 'foundational/ex',
+      contentClass: 'foundational_document',
+      status: 'registered_not_effective',
+      authority: 'EarthCoop founder',
+      version: '1.1',
+      reviewedAt: '2026-09-24',
+    })],
+  });
+  assert.deepEqual(result.errors, []);
+});
+
 test('rejects duplicate IDs, invalid statuses, and missing source files', async () => {
   const root = await mkdtemp(path.join(tmpdir(), 'docs-manifest-'));
   const result = await validateDocsManifest(root, {
