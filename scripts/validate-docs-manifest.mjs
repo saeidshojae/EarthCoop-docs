@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const allowedClasses = new Set(['guide', 'foundational_document', 'policy', 'reference']);
 const allowedStatuses = new Set([
   'concept', 'unofficial_explanation', 'under_audit', 'official_draft',
-  'public_consultation', 'approved_not_effective', 'effective',
+  'public_consultation', 'registered_not_effective', 'approved_not_effective', 'effective',
   'superseded', 'withdrawn',
 ]);
 
