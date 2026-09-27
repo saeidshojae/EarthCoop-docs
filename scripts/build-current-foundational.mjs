@@ -76,11 +76,13 @@ async function splitBase(repositoryRoot, documentId) {
 }
 
 function canonicalHeader(item, completeness = 'full') {
-  const status = item.id === 'CH' || item.id === 'CO' ? 'جاری — بدون تغییر' : 'ثبت‌شده — غیرنافذ';
   const description = completeness === 'full'
     ? `متن کامل نسخه ${item.version} ${item.title}`
     : `متن اصلاحیه نسخه ${item.version} ${item.title}؛ برای خواندن کامل باید همراه نسخه مبنا استفاده شود`;
-  return `---\ntitle: "${item.title}"\ndescription: "${description}"\n---\n\n# ${item.title}\n\n**شناسه سند:** ${item.id}\n\n**نسخه:** ${item.version}\n\n**وضعیت:** ${status}\n\n**مرجع ثبت:** بنیان‌گذار EarthCoop\n\n**تاریخ ثبت:** 2026-09-24\n\n**کامل‌بودن متن:** ${completeness === 'full' ? 'متن کامل' : 'متن اصلاحیه؛ نسخه مبنا نیز لازم است'}\n\n---\n\n`;
+  const unchanged = item.id === 'CH' || item.id === 'CO'
+    ? '\n**نسبت با خط مبنای عمومی:** بدون تغییر\n'
+    : '';
+  return `---\ntitle: "${item.title}"\ndescription: "${description}"\n---\n\n# ${item.title}\n\n**شناسه سند:** ${item.id}\n\n**نسخه:** ${item.version}\n\n**وضعیت:** ثبت‌شده — غیرنافذ\n${unchanged}\n**مرجع ثبت:** بنیان‌گذار EarthCoop\n\n**تاریخ ثبت:** 2026-09-24\n\n**کامل‌بودن متن:** ${completeness === 'full' ? 'متن کامل' : 'متن اصلاحیه؛ نسخه مبنا نیز لازم است'}\n\n---\n\n`;
 }
 
 function removeConflictingMetadata(markdown) {
@@ -168,4 +170,3 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
     process.exitCode = 1;
   });
 }
-
