@@ -1,21 +1,54 @@
-MIT License
+EarthCoop Public Documentation License v1.0
 
-Copyright (c) 2026 Mintlify
+Copyright (c) 2026 EarthCoop contributors and applicable rights holders.
+All rights reserved except for the limited permissions expressly granted below.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Scope
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This license applies to EarthCoop-authored material in this repository, including documentation, foundational and normative texts, translations, explanatory material, metadata, diagrams, and EarthCoop-specific source code or tooling, unless a file or directory states a different license.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Third-party material is not relicensed by this document. Applicable third-party notices and licenses are recorded in THIRD_PARTY_NOTICES.md or alongside the relevant material.
+
+2. Public access is not open-source licensing
+
+This repository is publicly readable for transparency, review, study, accountability, and participation. Public availability does not place the material in the public domain and does not grant the permissions associated with an open-source software license. This is not an open-source software license.
+
+3. Limited permissions
+
+Subject to this license, you may:
+
+- access, read, and study the material;
+- link to the official repository or official published pages;
+- quote reasonable excerpts for commentary, criticism, scholarship, reporting, or review, with clear attribution to EarthCoop and without implying endorsement or official status;
+- keep unmodified copies for personal, educational, archival, or non-commercial research purposes; and
+- submit proposed corrections, amendments, translations, or other contributions through the contribution process designated by EarthCoop.
+
+These permissions do not limit rights you may already have under applicable law.
+
+4. Restrictions
+
+Except where applicable law expressly permits otherwise or the relevant rights holder gives prior written permission, you may not:
+
+- sell, license, sublicense, or commercially exploit EarthCoop-authored material;
+- redistribute modified or derivative versions of foundational or normative documents as if they were official EarthCoop texts;
+- use EarthCoop names, marks, logos, document identifiers, or presentation in a way that falsely suggests endorsement, authority, affiliation, or official status;
+- remove or falsify authorship, provenance, version, status, or rights notices; or
+- relicense EarthCoop-authored material under an open-source, open-content, or other incompatible license.
+
+5. Ideas, proposals, and normative authority
+
+This license protects copyrightable expression and repository materials; it does not claim ownership of facts, general ideas, principles, methods, or rights that are not subject to copyright under applicable law.
+
+Publication in this repository does not by itself make a draft, proposal, amendment, translation, or historical text legally or normatively effective. Official status is determined by EarthCoop's applicable governance and document-status rules.
+
+6. Contributions
+
+Permission to submit a proposed contribution does not by itself transfer copyright or make that proposal an official EarthCoop text. Contribution and acceptance terms may be specified separately in CONTRIBUTING.md or another applicable policy.
+
+7. No warranty
+
+The material is provided "AS IS", without warranty of any kind, express or implied, to the maximum extent permitted by applicable law. Nothing in this section changes any mandatory right or obligation that cannot lawfully be excluded.
+
+8. Separate permissions
+
+Requests for permissions beyond this license must be obtained from the applicable rights holder. A permission for one use does not create a general license for other uses.
