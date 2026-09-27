@@ -1,7 +1,11 @@
 {
   "$schema": "./schemas/document-registry.schema.json",
+  "schemaVersion": 2,
+  "registryRole": "public_baseline_and_translation_status",
+  "statusSemantics": "editorial_maturity_not_legal_effect",
   "sourceLanguage": "fa",
   "supportedLanguages": ["fa", "en", "ar"],
+  "latestRegisteredRelease": "releases/foundational/2026-09-20/document-registry.registered.json",
   "documents": [
     {"volume":0,"id":"FC","slug":"foundational-covenant","fa":{"version":"1.0","status":"final"},"en":{"version":"1.0","status":"not-started"},"ar":{"version":"1.0","status":"not-started"}},
     {"volume":1,"id":"CH","slug":"charter","fa":{"version":"1.0","status":"final"},"en":{"version":"1.0","status":"not-started"},"ar":{"version":"1.0","status":"not-started"}},
