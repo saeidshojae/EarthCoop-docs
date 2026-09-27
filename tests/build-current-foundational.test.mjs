@@ -37,7 +37,9 @@ test('consolidates amendments without dropping or inventing base articles', asyn
   assert.equal(byId.get('JUD').articleCount, 79);
   assert.equal(byId.get('LOC').articleCount, 73);
   assert.equal(byId.get('ETH').articleCount, 69);
-  assert.equal(byId.get('STD').completeness, 'amendment_only');
-  assert.match(byId.get('STD').markdown, /متن اصلاحیه/);
+  assert.equal(byId.get('STD').articleCount, 78);
+  assert.equal(byId.get('STD').completeness, 'full');
+  assert.ok(byId.get('STD').amendedCount > 0);
+  assert.match(byId.get('STD').markdown, /Technical Capability ≠ Legal Authorization/);
+  assert.doesNotMatch(byId.get('STD').markdown, /متن اصلاحیه؛ نسخه مبنا نیز لازم است/);
 });
-

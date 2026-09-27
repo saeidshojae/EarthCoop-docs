@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.earthcoop.org/schemas/document-registry.schema.json",
+  "title": "EarthCoop public document registry",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "registryRole",
+    "statusSemantics",
+    "sourceLanguage",
+    "supportedLanguages",
+    "latestRegisteredRelease",
+    "documents"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 2},
+    "registryRole": {"const": "public_baseline_and_translation_status"},
+    "statusSemantics": {"const": "editorial_maturity_not_legal_effect"},
+    "sourceLanguage": {"const": "fa"},
+    "supportedLanguages": {
+      "type": "array",
+      "items": {"enum": ["fa", "en", "ar"]},
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "latestRegisteredRelease": {"type": "string", "minLength": 1},
+    "documents": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["volume", "id", "slug", "fa", "en", "ar"],
+        "properties": {
+          "volume": {"type": "integer", "minimum": 0},
+          "id": {"type": "string", "minLength": 1},
+          "slug": {"type": "string", "minLength": 1},
+          "fa": {"$ref": "#/$defs/languageState"},
+          "en": {"$ref": "#/$defs/languageState"},
+          "ar": {"$ref": "#/$defs/languageState"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "languageState": {
+      "type": "object",
+      "required": ["version", "status"],
+      "properties": {
+        "version": {"type": "string", "minLength": 1},
+        "status": {"enum": ["final", "draft", "not-started", "in-review", "published"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
