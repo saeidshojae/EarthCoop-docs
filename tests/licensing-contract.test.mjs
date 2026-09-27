@@ -32,3 +32,10 @@ test('README distinguishes EarthCoop content rights from third-party components'
   assert.match(readme, /EarthCoop Public Documentation License/i);
   assert.match(readme, /THIRD_PARTY_NOTICES\.md/i);
 });
+
+test('contributors certify rights and grant publication rights without transferring copyright', async () => {
+  const contributing = await read('CONTRIBUTING.md');
+  assert.match(contributing, /مالک حقوق|دارای اختیار/i);
+  assert.match(contributing, /مجوز[^\n]*غیرانحصاری/);
+  assert.match(contributing, /حق مؤلف[^\n]*(?:منتقل|واگذار)[^\n]*نمی/i);
+});
