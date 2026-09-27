@@ -1,6 +1,8 @@
 {
   "$schema": "./schemas/knowledge-document.schema.json",
   "schemaVersion": 1,
+  "registryRole": "knowledge_center_ingestion",
+  "statusSemantics": "publication_candidate_status_not_legal_effect",
   "sourceLanguage": "fa",
   "entries": [
     {"id":"foundational-index-fa","source":"fa/foundational/index.mdx","slug":"foundational","language":"fa","contentClass":"reference","status":"under_audit","authority":"EarthCoop documentation editorial team","version":"0.1.0","reviewedAt":"2026-09-24","provisions":[]},
