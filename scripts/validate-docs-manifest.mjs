@@ -39,7 +39,7 @@ async function validateRendition(repositoryPath, rendition, language, at, errors
   }
 
   if (!safeRelativePath(rendition.source)) {
-    errors.push(`${renditionAt} with ${rendition.status} status must use a safe relative source path.`);
+    errors.push(`${renditionAt} with ${rendition.status} status must use a safe relative path for source.`);
   } else {
     try {
       await access(path.join(repositoryPath, rendition.source));
