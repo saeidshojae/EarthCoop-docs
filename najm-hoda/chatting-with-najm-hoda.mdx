@@ -1,147 +1,52 @@
 ---
 title: "How to Chat with NajmHoda and Get Help on EarthCoop"
 sidebarTitle: "Chatting"
-description: "Use the NajmHoda chat widget to ask questions, get step-by-step guidance, and find relevant knowledge base articles on EarthCoop."
+description: "Use NajmHoda's current member chat while understanding conversation ownership, support escalation, and the server-side authorization boundary for actions."
 ---
 
-The NajmHoda chat widget sits in the corner of every page on EarthCoop. You do not need to navigate to a separate help section — just click the widget, type your question, and receive a structured answer within seconds, complete with relevant knowledge base references and suggested follow-up questions.
-
-## Opening the chat widget
-
-The chat icon is visible at the bottom-right of every page once you are signed in. Click it to expand the widget. If you have had previous conversations, your most recent one loads automatically so you can continue from where you left off.
+NajmHoda has a real authenticated chat flow in the current EarthCoop application. You can ask questions in natural language and continue an existing conversation. Ordinary members are routed through the **Steward** mode by the current controller.
 
 ## Asking a question
 
-Type your question in natural language and press **Send**. NajmHoda automatically:
+The current chat request accepts a message of up to **2,000 characters**. A conversation can be continued by supplying its existing conversation context through the product flow. Conversations are owner-scoped: one member must not be able to retrieve or operate on another member's conversation simply by knowing an ID.
 
-1. Extracts keywords from your message.
-2. Searches published knowledge base articles, blog posts, and FAQ entries for matches.
-3. Passes those results to the Steward agent along with your conversation history.
-4. Returns a structured response with an answer, steps, related articles, and suggested questions.
-
-<Tip>
-  Ask specific questions for the best results. "How do I remove a member from my group?" gets a more precise answer than "group help."
-</Tip>
-
-You can ask follow-up questions in the same conversation. NajmHoda retains your conversation history for context, so you do not need to repeat information you already provided.
+NajmHoda may return an answer, suggestions, and other response metadata produced by the current orchestration path. The exact wording and knowledge sources can vary with the active model, policy, available sources, and subsystem state.
 
 ## Conversation history
 
-Every conversation is saved to your account. To review a past conversation:
+The current controller supports these conversation operations for the authenticated owner:
 
-<Steps>
-  <Step title="Open the chat widget">
-    Click the NajmHoda icon at the bottom-right of any page.
-  </Step>
-  <Step title="Go to conversations">
-    Click the **Conversations** or history icon at the top of the widget panel to see a list of your previous chats.
-  </Step>
-  <Step title="Select a conversation">
-    Click any conversation to load the full message thread.
-  </Step>
-  <Step title="Delete or archive">
-    Open the conversation options menu (three-dot icon) and choose **Delete** to remove it permanently or **Archive** to hide it from your active list without losing it.
-  </Step>
-</Steps>
+- list conversations;
+- open a conversation and its messages;
+- archive a conversation;
+- mark a conversation as deleted.
 
-<Info>
-  Archived conversations are still accessible by filtering your conversation list by status. Deleted conversations cannot be recovered.
-</Info>
+The user interface around those operations may evolve, so this guide documents the verified capability rather than promising a particular icon position or menu label.
 
-## Submitting feedback on a response
+## Page context and action safety
 
-After NajmHoda replies, a feedback prompt appears below the message. Select a thumbs-up or thumbs-down rating, then optionally add a short note. Your feedback helps the platform team identify gaps in the knowledge base and improve future responses.
+NajmHoda can receive page context to make assistance more relevant, but browser context is **informational**, not a source of authority. The server resolves the authenticated member and trusted page/domain context again before an action-capable helper can proceed.
 
-You can also submit structured feedback — bug reports, feature requests, improvement suggestions, or general praise — through the feedback form inside the widget.
+All mutating actions require trusted **server authorization** plus the applicable role, ownership, policy, and domain checks. A client cannot grant itself permission by sending fields such as an actor, role, target, or page identifier in chat context.
 
-## When NajmHoda escalates to human support
+<Warning>
+  Asking NajmHoda to perform an action does not make that action authorized. The underlying EarthCoop service remains responsible for permission, validation, execution, and audit.
+</Warning>
 
-NajmHoda handles the vast majority of platform questions automatically. However, some situations require a human agent:
+## Draft assistance vs formal action
 
-- Your question involves account security, billing disputes, or sensitive personal information.
-- The answer requires access to your specific account data that NajmHoda cannot view.
-- NajmHoda could not find a confident answer in its knowledge base and flags the conversation for human review.
+Selected contexts have dedicated assistance. In the secretariat context, for example, the current helper can preview or save a **Draft**. It is deliberately constrained: it does not submit, register, dispatch, or publish the draft on its own.
 
-When escalation is needed, NajmHoda explains why and prompts you to open a support ticket. See [Support Tickets](/account/support-tickets) for instructions.
+That boundary is important throughout EarthCoop. A draft, recommendation, or conversational confirmation is not a formal governance, economic, or administrative act until the responsible workflow executes it under its own rules.
 
-## API access
+## Support escalation
 
-If you are building an integration or testing the platform programmatically, you can send messages to NajmHoda directly via the REST API. All chat endpoints require a Bearer token obtained through authentication.
+The current chat flow includes a support-escalation service. Escalation is conditional: the policy/service evaluates the message and response and may create or link a support ticket when the criteria are met. A failed or uncertain answer should therefore not be described as an automatic guarantee that a ticket is always created.
 
-### Send a message
+When you need a formal support case, see [Support Tickets](/account/support-tickets).
 
-<CodeGroup>
+## API boundary
 
-```bash cURL
-curl -X POST https://yourdomain.com/api/najm-hoda/chat \
-  -H "Authorization: Bearer {your-token}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "How do I create a cooperative group?",
-    "agent": "steward"
-  }'
-```
+EarthCoop currently has internal `/api` routes used by application capabilities, including NajmHoda. Those routes are still part of an evolving application contract and should not be treated from this member guide as a stable external integration API.
 
-```json Request body
-{
-  "message": "How do I create a cooperative group?",
-  "agent": "steward"
-}
-```
-
-</CodeGroup>
-
-**Request fields**
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `message` | string | Yes | The question or message text. Maximum 2,000 characters. |
-| `agent` | string | No | Which agent to use. Regular members are always routed to `steward` regardless of this value. |
-| `conversation_id` | integer | No | Pass an existing conversation ID to continue a previous thread. |
-| `context` | object | No | Optional key-value pairs to add extra context to the request. |
-
-### Example response
-
-```json
-{
-  "success": true,
-  "message": "To create a group, navigate to Groups in the sidebar and click Create Group...",
-  "agent": "steward",
-  "agent_name": "Steward",
-  "agent_icon": "🧑‍✈️",
-  "conversation_id": 42,
-  "suggestions": ["How do I invite members?", "What group types are available?"],
-  "response_time_ms": 843,
-  "request_id": "req_abc123"
-}
-```
-
-The `message` field contains the full structured answer from the Steward, including any step-by-step instructions and knowledge base links. The `suggestions` array contains related follow-up questions the agent recommends.
-
-### Submit feedback
-
-```bash
-POST /api/najm-hoda/feedback
-Authorization: Bearer {your-token}
-Content-Type: application/json
-```
-
-**Request fields**
-
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| `type` | string | Yes | Feedback category: `bug`, `feature_request`, `improvement`, `complaint`, `praise`, or `other`. |
-| `subject` | string | Yes | Short summary of your feedback (max 200 characters). |
-| `content` | string | Yes | Full feedback text (max 2,000 characters). |
-| `rating` | integer | No | Optional rating from 1 (poor) to 5 (excellent). |
-
-### Conversation management endpoints
-
-| Method | Endpoint | Description |
-| --- | --- | --- |
-| `GET` | `/api/najm-hoda/conversations` | List all your conversations (paginated). |
-| `GET` | `/api/najm-hoda/conversations/{id}` | Retrieve a single conversation with all messages. |
-| `DELETE` | `/api/najm-hoda/conversations/{id}` | Delete a conversation permanently. |
-| `PUT` | `/api/najm-hoda/conversations/{id}/archive` | Archive a conversation. |
-
-All conversation endpoints require `Authorization: Bearer {your-token}` and only return conversations belonging to the authenticated user.
+Authentication and action authority are enforced on the server. The existence of a controller method or route does not by itself establish a supported external-client contract or a public credential-issuance workflow.
