@@ -22,3 +22,4 @@ jobs:
       - run: node --test
       - run: node scripts/validate-docs-manifest.mjs .
       - run: node scripts/validate-terminology.mjs .
+      - run: node scripts/check-translation-freshness.mjs .
