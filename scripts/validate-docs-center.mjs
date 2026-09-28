@@ -66,13 +66,13 @@ export async function validateDocsCenter(outDir, { expectedSourceSha } = {}) {
   }
 
   if (!Array.isArray(content.documents)) throw new Error('content-index documents must be an array');
-  const knownRoutes = new Set();
+  const canonicalRouteById = new Map();
   for (const document of content.documents) {
     const expectedRoute = `/#/documents/${encodeURIComponent(document.id)}`;
     if (document.route !== expectedRoute) {
       throw new Error(`Document ${document.id} has a broken hash route`);
     }
-    knownRoutes.add(document.route);
+    canonicalRouteById.set(document.id, document.route);
     for (const locale of REQUIRED_LOCALES) {
       const rendition = document.renditions?.[locale];
       if (!rendition) throw new Error(`Document ${document.id} is missing ${locale} rendition metadata`);
@@ -88,7 +88,17 @@ export async function validateDocsCenter(outDir, { expectedSourceSha } = {}) {
   if (!Array.isArray(search)) throw new Error('search-index must be an array');
   for (const record of search) {
     if (!REQUIRED_LOCALES.includes(record.locale)) throw new Error(`Search record has unsupported locale ${record.locale}`);
-    if (!knownRoutes.has(record.route)) throw new Error(`Search record ${record.id}/${record.locale} has an unknown route`);
+    const canonicalRoute = canonicalRouteById.get(record.id);
+    if (!canonicalRoute) throw new Error(`Search record ${record.id}/${record.locale} references an unknown document`);
+    const expectedRoute = record.anchor
+      ? `${canonicalRoute}?anchor=${encodeURIComponent(record.anchor)}`
+      : canonicalRoute;
+    if (record.route !== expectedRoute) {
+      throw new Error(`Search record ${record.id}/${record.locale} has an unknown route`);
+    }
+    if (record.anchor && (!record.heading || typeof record.heading !== 'string')) {
+      throw new Error(`Search record ${record.id}/${record.locale} anchor requires a heading`);
+    }
     if (typeof record.body !== 'string' || record.body.trim() === '') {
       throw new Error(`Search body is missing for ${record.id}/${record.locale}`);
     }

@@ -85,10 +85,11 @@ test('build is deterministic and emits governed indexes plus deployment metadata
   assert.equal(content.documents[0].renditions.fa.download.filename, 'FC-fa.md');
   assert.equal(content.documents[0].renditions.en.available, false);
 
-  const faSearch = search.find((item) => item.id === 'FC' && item.locale === 'fa');
-  assert.match(faSearch.body, /عدالت و زمین/);
-  assert.deepEqual(faSearch.headings.map((h) => h.text), ['سند مادر', 'عدالت']);
-  assert.equal(faSearch.route, '/#/documents/FC');
+  const faSearch = search.find((item) => item.id === 'FC' && item.locale === 'fa' && item.anchor === 'عدالت');
+  assert.ok(faSearch, 'section-level search record for عدالت should exist');
+  assert.match(faSearch.body, /متن درباره عدالت و زمین/);
+  assert.equal(faSearch.heading, 'عدالت');
+  assert.equal(faSearch.route, '/#/documents/FC?anchor=%D8%B9%D8%AF%D8%A7%D9%84%D8%AA');
 
   assert.equal(manifest.repository, 'saeidshojae/EarthCoop-docs');
   assert.equal(manifest.sourceSha, args.sourceSha);
@@ -110,4 +111,77 @@ test('malformed governed source fails closed without a valid build', async () =>
     buildDocsCenter({ rootDir: root, outDir: path.join(root, 'dist'), sourceSha: 'a'.repeat(40), builtAt: '2026-09-29T00:00:00.000Z' }),
     /renditions/i,
   );
+});
+
+import { validateDocsCenter } from '../scripts/validate-docs-center.mjs';
+
+async function validBuiltFixture() {
+  const root = await makeFixture();
+  const outDir = path.join(root, 'dist');
+  const sourceSha = 'b'.repeat(40);
+  await buildDocsCenter({ rootDir: root, outDir, sourceSha, builtAt: '2026-09-29T00:00:00.000Z' });
+  return { root, outDir, sourceSha };
+}
+
+test('validator accepts a complete static build and deep hash-route boot contract', async () => {
+  const { outDir, sourceSha } = await validBuiltFixture();
+  const report = await validateDocsCenter(outDir, { expectedSourceSha: sourceSha });
+  assert.equal(report.valid, true);
+  assert.equal(report.sourceSha, sourceSha);
+});
+
+test('validator rejects missing index.html', async () => {
+  const { outDir, sourceSha } = await validBuiltFixture();
+  await import('node:fs/promises').then(({ rm }) => rm(path.join(outDir, 'index.html')));
+  await assert.rejects(validateDocsCenter(outDir, { expectedSourceSha: sourceSha }), /index\.html/i);
+});
+
+test('validator rejects deployment manifest SHA mismatch', async () => {
+  const { outDir } = await validBuiltFixture();
+  await assert.rejects(validateDocsCenter(outDir, { expectedSourceSha: 'c'.repeat(40) }), /source sha/i);
+});
+
+test('validator rejects locale set other than exactly fa/en/ar', async () => {
+  const { outDir, sourceSha } = await validBuiltFixture();
+  const contentPath = path.join(outDir, 'content-index.json');
+  const content = JSON.parse(await readFile(contentPath, 'utf8'));
+  content.locales = ['fa', 'en'];
+  await writeFile(contentPath, JSON.stringify(content));
+  await assert.rejects(validateDocsCenter(outDir, { expectedSourceSha: sourceSha }), /locales/i);
+});
+
+test('validator rejects unsafe source payloads in generated content', async () => {
+  const { outDir, sourceSha } = await validBuiltFixture();
+  const contentPath = path.join(outDir, 'content-index.json');
+  const content = JSON.parse(await readFile(contentPath, 'utf8'));
+  content.documents[0].renditions.fa.text += '<script>alert(1)</script>';
+  await writeFile(contentPath, JSON.stringify(content));
+  await assert.rejects(validateDocsCenter(outDir, { expectedSourceSha: sourceSha }), /unsafe/i);
+});
+
+test('validator rejects search records without body text', async () => {
+  const { outDir, sourceSha } = await validBuiltFixture();
+  const searchPath = path.join(outDir, 'search-index.json');
+  const search = JSON.parse(await readFile(searchPath, 'utf8'));
+  search[0].body = '';
+  await writeFile(searchPath, JSON.stringify(search));
+  await assert.rejects(validateDocsCenter(outDir, { expectedSourceSha: sourceSha }), /search body/i);
+});
+
+test('validator rejects deployment manifests that reference missing files', async () => {
+  const { outDir, sourceSha } = await validBuiltFixture();
+  const manifestPath = path.join(outDir, 'deployment-manifest.json');
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  manifest.hashes['missing.txt'] = '0'.repeat(64);
+  await writeFile(manifestPath, JSON.stringify(manifest));
+  await assert.rejects(validateDocsCenter(outDir, { expectedSourceSha: sourceSha }), /missing\.txt/i);
+});
+
+test('validator rejects broken canonical document routes', async () => {
+  const { outDir, sourceSha } = await validBuiltFixture();
+  const contentPath = path.join(outDir, 'content-index.json');
+  const content = JSON.parse(await readFile(contentPath, 'utf8'));
+  content.documents[0].route = '/documents/FC';
+  await writeFile(contentPath, JSON.stringify(content));
+  await assert.rejects(validateDocsCenter(outDir, { expectedSourceSha: sourceSha }), /hash route/i);
 });

@@ -74,25 +74,70 @@ function contentDocument(document) {
   };
 }
 
+function sourceLinesWithoutFrontmatter(text) {
+  const lines = String(text ?? '').split(/\r?\n/);
+  if (lines[0]?.trim() !== '---') return lines;
+  const closing = lines.findIndex((line, index) => index > 0 && line.trim() === '---');
+  return closing > 0 ? lines.slice(closing + 1) : lines;
+}
+
+function searchSections(rendition) {
+  const sections = [];
+  const headings = rendition.headings ?? [];
+  let headingIndex = 0;
+  let current = { anchor: null, heading: null, lines: [] };
+
+  function flush() {
+    const body = current.lines.join('\n').trim();
+    const searchableBody = [current.heading, body].filter(Boolean).join('\n').trim();
+    if (searchableBody) sections.push({ ...current, body: searchableBody });
+    current = { anchor: null, heading: null, lines: [] };
+  }
+
+  for (const line of sourceLinesWithoutFrontmatter(rendition.text)) {
+    const match = /^(#{1,6})\s+(.+?)\s*$/.exec(line);
+    const heading = match ? headings[headingIndex] : null;
+    if (match && heading) {
+      flush();
+      current.anchor = heading.anchor;
+      current.heading = heading.text;
+      headingIndex += 1;
+      continue;
+    }
+    current.lines.push(line);
+  }
+  flush();
+  return sections;
+}
+
 function makeSearchIndex(documents) {
   const records = [];
   for (const document of documents) {
     for (const locale of LOCALES) {
       const rendition = document.renditions[locale];
       if (!rendition.available) continue;
-      records.push({
-        id: document.id,
-        locale,
-        title: rendition.title,
-        headings: rendition.headings,
-        body: rendition.text,
-        legalStatus: document.legalStatus,
-        version: document.version,
-        route: document.route,
-      });
+      for (const section of searchSections(rendition)) {
+        records.push({
+          id: document.id,
+          locale,
+          title: rendition.title,
+          heading: section.heading,
+          anchor: section.anchor,
+          body: section.body,
+          legalStatus: document.legalStatus,
+          version: document.version,
+          route: section.anchor
+            ? `${document.route}?anchor=${encodeURIComponent(section.anchor)}`
+            : document.route,
+        });
+      }
     }
   }
-  return records.sort((a, b) => `${a.id}\u0000${a.locale}`.localeCompare(`${b.id}\u0000${b.locale}`, 'en'));
+  return records.sort((a, b) =>
+    `${a.id}\u0000${a.locale}\u0000${a.anchor ?? ''}`.localeCompare(
+      `${b.id}\u0000${b.locale}\u0000${b.anchor ?? ''}`,
+      'en',
+    ));
 }
 
 export async function buildDocsCenter({ rootDir, outDir, sourceSha, builtAt }) {

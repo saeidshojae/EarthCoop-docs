@@ -9,9 +9,15 @@ const LOCALES = Object.freeze({
 export function parseRoute(hash) {
   const value = String(hash || '#/');
   if (value === '#' || value === '#/' || value === '') return { name: 'home' };
-  const match = /^#\/documents\/([^/?#]+)$/.exec(value);
-  if (match) return { name: 'document', id: decodeURIComponent(match[1]) };
-  return { name: 'not-found' };
+  const match = /^#\/documents\/([^/?#]+)(?:\?([^#]*))?$/.exec(value);
+  if (!match) return { name: 'not-found' };
+  const route = { name: 'document', id: decodeURIComponent(match[1]) };
+  if (match[2]) {
+    const params = new URLSearchParams(match[2]);
+    const anchor = params.get('anchor');
+    if (anchor) route.anchor = anchor;
+  }
+  return route;
 }
 
 export function applyLocale(rootElement, locale) {
@@ -25,6 +31,19 @@ export function renditionMessage(resolution) {
   if (resolution?.available) return '';
   const label = LOCALES[resolution?.locale]?.label ?? resolution?.locale ?? '';
   return `ترجمه ${label} برای این سند هنوز در دسترس نیست.`;
+}
+
+export function resolveDisplayedRendition(item, requestedLocale) {
+  const requested = item?.renditions?.[requestedLocale];
+  if (requested?.available) {
+    return { rendition: requested, contentLocale: requested.locale ?? requestedLocale, notice: '' };
+  }
+  const canonical = item?.renditions?.[item?.canonicalLanguage];
+  return {
+    rendition: canonical ?? null,
+    contentLocale: canonical?.locale ?? item?.canonicalLanguage ?? requestedLocale,
+    notice: renditionMessage({ available: false, locale: requestedLocale }),
+  };
 }
 
 export function makeDownloadPayload(documentRecord, locale, rendition) {
@@ -109,17 +128,13 @@ export function renderSourceBlocks(parent, text, headings = [], documentObject =
   flushText();
 }
 
-function makeToc(headings, onNavigate) {
+function makeToc(headings, documentRoute) {
   const fragment = document.createDocumentFragment();
   for (const heading of headings ?? []) {
     const link = document.createElement('a');
-    link.href = `#heading-${encodeURIComponent(heading.anchor)}`;
+    link.href = `${documentRoute}?anchor=${encodeURIComponent(heading.anchor)}`;
     link.textContent = heading.text;
     link.className = `toc-depth-${heading.depth}`;
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      onNavigate(heading.anchor);
-    });
     fragment.appendChild(link);
   }
   return fragment;
@@ -185,17 +200,11 @@ async function bootstrap() {
     }
   }
 
-  function resolveDisplayedRendition(item) {
-    const requested = item.renditions?.[state.locale];
-    if (requested?.available) return { rendition: requested, notice: '' };
-    const canonical = item.renditions?.[item.canonicalLanguage];
-    return { rendition: canonical ?? null, notice: renditionMessage({ available: false, locale: state.locale }) };
-  }
-
   function renderDocument(item) {
-    const resolved = resolveDisplayedRendition(item);
+    const resolved = resolveDisplayedRendition(item, state.locale);
     state.currentDocument = item;
     state.currentRendition = resolved.rendition;
+    applyLocale(documentView, resolved.contentLocale);
     document.querySelector('#document-id').textContent = item.id;
     document.querySelector('#document-title').textContent = resolved.rendition?.title || item.title || item.id;
     document.querySelector('#document-meta').textContent = `نسخه ${item.version} · ${item.legalStatus}`;
@@ -205,10 +214,7 @@ async function bootstrap() {
     clearElement(toc);
     if (resolved.rendition) {
       renderSourceBlocks(body, resolved.rendition.text ?? '', resolved.rendition.headings ?? []);
-      toc.appendChild(makeToc(resolved.rendition.headings, (anchor) => {
-        const target = document.querySelector(`[data-anchor="${CSS.escape(anchor)}"]`);
-        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }));
+      toc.appendChild(makeToc(resolved.rendition.headings, item.route));
     }
   }
 
@@ -226,6 +232,10 @@ async function bootstrap() {
       if (item) {
         documentView.hidden = false;
         renderDocument(item);
+        if (route.anchor) {
+          const target = document.querySelector(`[data-anchor="${CSS.escape(route.anchor)}"]`);
+          target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
         return;
       }
     }
@@ -240,7 +250,7 @@ async function bootstrap() {
     for (const result of results) {
       const link = document.createElement('a');
       link.href = result.route;
-      link.textContent = `${result.title} — ${result.id}`;
+      link.textContent = result.heading ? `${result.title} · ${result.heading} — ${result.id}` : `${result.title} — ${result.id}`;
       searchResults.appendChild(link);
     }
   }

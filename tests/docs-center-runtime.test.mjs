@@ -124,3 +124,26 @@ test('document renderer hides frontmatter and MDX wrappers and removes common in
   assert.match(visible, /متن راهنما با پیوند و کد/);
   assert.ok(appended.some((node) => node.tagName === 'HR'));
 });
+
+test('anchored hash routes preserve document id and section anchor', async () => {
+  const app = await import(pathToFileURL(path.join(root, 'site/app.js')));
+  assert.deepEqual(
+    app.parseRoute('#/documents/FC?anchor=%D8%B9%D8%AF%D8%A7%D9%84%D8%AA'),
+    { name: 'document', id: 'FC', anchor: 'عدالت' },
+  );
+});
+
+test('fallback rendition keeps its own content locale and direction', async () => {
+  const app = await import(pathToFileURL(path.join(root, 'site/app.js')));
+  const item = {
+    canonicalLanguage: 'fa',
+    renditions: {
+      fa: { available: true, locale: 'fa', text: 'متن فارسی' },
+      en: { available: false, locale: 'en', text: null },
+    },
+  };
+  const resolved = app.resolveDisplayedRendition(item, 'en');
+  assert.equal(resolved.rendition.locale, 'fa');
+  assert.equal(resolved.contentLocale, 'fa');
+  assert.equal(resolved.notice, 'ترجمه English برای این سند هنوز در دسترس نیست.');
+});
