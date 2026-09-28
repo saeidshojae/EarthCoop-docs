@@ -18,112 +18,115 @@ An old guide is never evidence for its own claim. Where code proves only a domai
 
 ## Executive findings
 
-The current English guide set cannot be treated as one uniformly current product manual. The audit inventory contains 30 pages. Several describe real, mature product domains, but a substantial subset uses a starter-era information model or overstates the maturity of a transport/API/user workflow.
+The English product-guide inventory contains **31 pages** at this checkpoint. The original set could not be treated as one uniformly current product manual: several described real mature domains while others used a starter-era information model or overstated the maturity of a transport/API/user workflow.
 
-The largest truth gaps are:
+The largest truth gaps identified were:
 
-- **Legacy product naming:** `index.mdx` still presents `NewEarthCoop` as the current product name. The canonical name is EarthCoop.
-- **Over-broad availability:** `introduction.mdx` and `quickstart.mdx` describe the platform as fully available in English and Persian and collapse current, in-development, and planned capabilities into one status.
-- **Groups:** old guide copy does not accurately center the automatic system-group model and its public/professional/specialty/age-gender dimensions. Generic “find/join/create a group” language is insufficient and sometimes misleading.
-- **Governance and elections:** current runtime has canonical Location/Governance and systemic-election services. Higher-level participation, role eligibility, pending residence/location proposals, Temporary Active and support thresholds must be described from the current contract, not generic cooperative-group assumptions.
-- **Projects/economy:** project and investment services are real, but older copy uses outdated Gol positioning and can imply fund movement/approval semantics that are not safe to infer. ECON 0.2 and ECON-REF-01 must supply the normative vocabulary while code determines what is actually available in the product.
-- **Najm Bahar:** the transaction, fee and project/investment domains are real, but advanced claims such as scheduled transfers require specific evidence. A real transfer core does not prove every transfer mode shown in an old guide.
-- **Najm Hoda:** a real chat/orchestration surface exists, but the subsystem is still evolving. Specialist-agent, autonomous action, fixed knowledge-search or legal/economic-authority claims must not be promoted to current member-facing capability without direct evidence.
-- **API:** `/api/*` currently contains both real domain endpoints and legacy/closure-based routes. Presence under that prefix is not evidence of a stable versioned external/mobile API contract. API pages therefore need explicit current/in-development positioning.
+- **Legacy product naming:** `index.mdx` presented `NewEarthCoop` as the current product name. The canonical name is EarthCoop.
+- **Over-broad availability:** `introduction.mdx` and `quickstart.mdx` collapsed current, in-development, and planned capabilities into one status.
+- **Groups:** old guide copy did not accurately center the automatic system-group model and its public/professional/specialty/age-gender dimensions.
+- **Governance and elections:** higher-level participation, role eligibility, pending residence/location proposals, Temporary Active and support thresholds required the current canonical contract rather than generic cooperative-group assumptions.
+- **Projects/economy:** older copy used outdated Gol positioning and unsafe approval/fund-movement semantics. ECON 0.2 / ECON-REF-01 supply normative vocabulary while code determines current availability.
+- **Najm Bahar:** a real transaction/fee/project core existed, but advanced claims such as scheduled transfers lacked sufficient evidence.
+- **Najm Hoda:** a real chat/orchestration surface existed, while specialist/autonomous/action and fixed-knowledge claims were overstated.
+- **API:** `/api/*` contained real domain endpoints mixed with legacy/closure-based routes; presence under that prefix was not evidence of a stable versioned external/mobile API contract.
 
 ## Location/Governance truth boundary
 
-The canonical Location/Governance architecture is not a future concept. Current project status records the canonical residence/governance model, registration/profile/admin integration, pending proposal lifecycle, canonical group consumers, election consumers and project-scope integration as closed work.
+The canonical Location/Governance architecture is current product architecture, not a future concept. Current project evidence records the residence/governance model, registration/profile/admin integration, pending proposal lifecycle, canonical group consumers, election consumers and project-scope integration.
 
-Three structural cases — city without urban region, urban region without neighborhood, and village without neighborhood — are completed behavior, not future backlog.
+Three structural cases — city without urban region, urban region without neighborhood, and village without neighborhood — are treated as topology cases rather than as reasons to invent missing administrative levels.
 
-Proposal support is also implemented. Distinct-user support may advance a proposal to review readiness, but **support is not approval**. Documentation must not say or imply that reaching the support threshold automatically validates a location, structural claim, project, or governance decision.
+Proposal support is distinct from approval. Distinct-user support may advance a proposal to review readiness, but **support is not approval**. Documentation must not say or imply that reaching the support threshold automatically validates a location, structural claim, project, or governance decision.
 
-Remaining Location/Governance items such as support-progress UX, invitation CTA, and high-volume admin-queue polish are enhancements rather than evidence that the canonical model is absent.
+Optional local address levels such as Street, Alley, Complex, Block, and Building are also distinct from the official base-governance requirement. Community membership at those micro-levels must not be silently promoted into systemic election eligibility.
 
 ## API truth boundary
 
-Sanctum and multiple `/api/*` routes exist, including Najm Hoda and legacy geography. However, the current readiness record explicitly distinguishes this surface from the planned stable/versioned client contract. Accordingly:
+Sanctum and multiple `/api/*` routes exist, including Najm Hoda and legacy geography. However, the current readiness record distinguishes this surface from the planned stable/versioned client contract. Accordingly:
 
-- API documentation may explain verified current endpoints when they are evidenced precisely;
+- API documentation may explain verified current implementation behavior;
 - it must not describe the entire current `routes/api.php` surface as a stable public/mobile API;
 - closure-based legacy geography must not be presented as the canonical Location/Governance architecture;
-- Projects, Notifications, Elections and Najm Bahar may be domain-capable while still lacking a final client-facing versioned contract.
+- Projects, Notifications, Tickets and Najm Hoda may be domain-capable while still lacking a final client-facing versioned contract;
+- authentication middleware does not prove a public token-issuance workflow.
 
 ## Groups, participation and elections
 
 Current code proves automatically materialized governance-scoped/system groups and dedicated public/profession/specialty dimensions. Product guides must distinguish these from user-created groups.
 
-Role semantics must also be explicit. Observer and Temporary Active states do not gain systemic-election voting rights merely from membership; Temporary Active exists for limited participation and is not equivalent to Active for election eligibility. Elected managers and inspectors remain active members for personal voting eligibility under the current election contract.
+Role semantics are explicit. Observer and Temporary Active states do not gain systemic-election voting rights merely from membership; Temporary Active is not equivalent to Active for election eligibility. Elected managers and inspectors retain their personal systemic voting/selectability rights under the current election contract.
 
-Generic claims such as “every group has elections” or “join any cooperative group” require replacement by the actual system-group/user-created-group distinction and election eligibility rules.
+The System Election guide must preserve the candidate-free lifecycle, eligibility snapshot, deterministic tally/ranking, responsibility offer, acceptance/decline/expiry, replacement, appointment, and audit boundaries rather than returning to a generic candidate-election model.
 
 ## Projects and Najm Bahar
 
 Current ProjectService, project controllers, investment controllers and Najm Bahar transaction services prove a real implemented domain. They do not justify retaining older economic terminology.
 
-Public/user guides must observe these boundaries:
+Public/user guides now observe these boundaries:
 
 - **Bahar** is the primary monetary unit; **Gol** is its subunit, not a separate currency.
 - Creation and Activation are distinct events.
-- project support/review/approval must not be collapsed into one step;
-- an approval or investment intent must not be described as an automatic direct transfer to a project owner unless the exact current flow proves it;
-- normative economic architecture may be cited from ECON 0.2 / ECON-REF-01, while product status must still reflect current implementation;
-- VPU, Marketplace or other architecture must be labelled according to evidence rather than assumed current from the law/reference model.
+- the canonical monetary-event model separates Creation, Activation, Transfer, Commitment, Taxation, Cancellation, and Retirement;
+- project support/review/approval are distinct events;
+- approval is not Transfer;
+- investment intent/record is not proof of executed Transfer;
+- public-project reference architecture separates Liability Snapshot, Commitment, Committed Dim, Activation, Transfer, Active Project Fund and execution payments;
+- normative economic architecture may be cited from ECON 0.2 / ECON-REF-01 while product status still reflects current implementation.
 
 ## Najm Hoda
 
 Najm Hoda currently has a real controller/orchestration/chat surface and integration work across EarthCoop domains. That supports describing a current assistant interaction surface. It does not support portraying all envisioned specialist agents, autonomous legal/economic action, or every knowledge-base workflow as current.
 
-Documentation must preserve a strict distinction between:
+Documentation preserves a strict distinction between:
 
 - current conversational/orchestration capabilities;
 - in-development integrations and specialist behavior;
 - planned future advisory/agentic architecture.
 
-Najm Hoda must never be documented as an independent legislator, unappealable adjudicator, or autonomous owner/controller of member assets.
+Client/browser context is informational and cannot grant execution authority. Mutating actions require trusted server authorization plus the applicable domain checks. Najm Hoda is not documented as an independent legislator, unappealable adjudicator, or autonomous owner/controller of member assets.
 
-## Six mandatory rewrites
+## Original mandatory rewrites — closure state
 
-### `introduction.mdx` — Rewrite
+All six originally highlighted mandatory rewrites have been completed on the working branch:
 
-Reason: over-broad product positioning; currently implies a uniform level of availability across group governance, projects, finance, AI and multilingual support. The new introduction must describe EarthCoop by stable current foundations and visibly label in-development/planned capabilities.
+- `introduction.mdx` — rewritten around evidence-backed availability boundaries;
+- `quickstart.mdx` — rewritten around current multi-step onboarding and automatic system-group membership;
+- `groups/overview.mdx` — rewritten around automatic system groups and current participation semantics;
+- `projects/overview.mdx` — rewritten around current project behavior plus explicit ECON reference boundaries;
+- `najm-bahar/overview.mdx` — rewritten around Bahar/Dim/Active and canonical monetary events;
+- `najm-hoda/overview.mdx` — rewritten around current chat/orchestration, evolving capability, and server authorization.
 
-### `quickstart.mdx` — Rewrite
+## Page-family closure
 
-Reason: onboarding language does not accurately reflect current multi-step registration and automatic system-group membership. It must not instruct the user as though manually creating/joining a first group were the central system-group onboarding flow.
+The machine-readable evidence JSON remains the record of the initial per-page review decision. The implementation pass then closed the identified rewrite work as follows:
 
-### `groups/overview.mdx` — Rewrite
+- public top-level positioning and account setup were rewritten;
+- `account/profile.mdx` was rewritten around Primary Residence, canonical Governance Area, topology-aware base governance, pending proposals, and optional micro-location/community membership;
+- account notification settings, support tickets, and translation policy remained in the `keep_correct` class subject to repository-wide validation;
+- all API pages were rewritten to distinguish current implementation from a future stable/versioned public/mobile contract;
+- all group/location/election pages were aligned with automatic system groups and current governance/election semantics;
+- all project/Najm Bahar pages were aligned with current implementation and ECON terminology;
+- all Najm Hoda pages were aligned with current-versus-evolving behavior and authority boundaries.
 
-Reason: needs the canonical automatic system-group model, public/professional-specialty/age-gender families, geographic hierarchy and role/participation distinction.
+## Verification controls added
 
-### `projects/overview.mdx` — Rewrite
+The branch now contains automated documentation contracts that guard the highest-risk regressions, including:
 
-Reason: real project services exist, but old economic terminology and Gol positioning are stale. The page must separate current project functionality from the normative ECON workflow and from capabilities not yet verified as current.
+- deterministic product-guide inventory vs committed artifact;
+- legacy product naming and over-broad availability claims;
+- group/location/governance/election semantics;
+- Bahar/Gol and canonical monetary-event distinctions;
+- support ≠ approval and approval ≠ Transfer;
+- Najm Hoda server-authorization and knowledge-freshness boundaries;
+- API stability/authentication boundaries;
+- Primary Residence / topology / optional micro-location profile semantics.
 
-### `najm-bahar/overview.mdx` — Rewrite
-
-Reason: Najm Bahar is real, but the old overview treats a broad financial architecture as a uniformly current product surface. It must distinguish current implemented account/transaction/fee/project domains from in-development/planned architecture and use ECON terminology.
-
-### `najm-hoda/overview.mdx` — Rewrite
-
-Reason: current chat/orchestration is real while wider specialist/autonomy architecture is evolving. The overview needs a current/in-development/planned boundary and must avoid unsupported authority or fixed-knowledge-process claims.
-
-## Page-family decisions
-
-The evidence JSON is the machine-readable source for per-page decisions. At this checkpoint:
-
-- current account notification settings and support-ticket surfaces can largely be retained, subject to copy/link review;
-- profile/account setup require rewriting around the canonical registration/location model;
-- all API pages require cautious rewriting before they can be presented as a stable API reference;
-- all group pages require semantic alignment with automatic system groups and current governance/election rules;
-- all project/Najm Bahar pages require economic terminology and availability review;
-- all Najm Hoda pages require current-versus-future review;
-- Arabic product renditions must wait until their English sources are reviewed and current.
+The committed inventory is designed to fail when guide source changes make the audit artifact stale, forcing the reviewer to refresh the evidence surface rather than silently drifting documentation.
 
 ## Non-goals
 
-This audit does not:
+This audit and closure do not:
 
 - amend ECON or any foundational document;
 - make ECON-REF-01 effective;
@@ -131,12 +134,9 @@ This audit does not:
 - declare an API stable solely because a route exists;
 - infer a feature from an old guide;
 - fill evidence gaps with model knowledge;
-- publish Arabic translations before the English source is reviewed.
+- publish Arabic translations before their reviewed source and translation workflow are ready;
+- merge this working branch into `main`.
 
-## Next execution order
+## Final pre-merge state
 
-1. correct public top-level English positioning and legacy naming;
-2. rewrite Groups / Location-Governance / Elections guides;
-3. rewrite Projects / Najm Bahar against product evidence + ECON terminology;
-4. rewrite Najm Hoda and support-related guidance;
-5. review links/navigation and only then create reviewed Arabic renditions.
+The truth-alignment implementation is complete on the working branch when all repository validation contracts pass on the final candidate. Merge remains a separate governed action and is intentionally deferred until explicit approval.
