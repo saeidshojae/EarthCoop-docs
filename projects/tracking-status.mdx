@@ -1,124 +1,78 @@
 ---
 title: "Track Your Projects and Investments on EarthCoop"
 sidebarTitle: "Track Status"
-description: "Monitor your project's admin review progress, read reviewer feedback, and follow your investments from payment through to return on EarthCoop."
+description: "Track project review history and investment records without confusing workflow statuses with monetary events or guaranteed returns."
 ---
 
-EarthCoop gives both project owners and investors a complete, real-time view of every submission, decision, and payment event. Whether you are waiting for your project to clear admin review or monitoring the maturity of an active investment, your dashboard surfaces the information you need without having to contact support. This page covers where to find status information, how to read the review history, and which notifications to expect.
+EarthCoop records project and investment lifecycle information so members can distinguish what has been proposed, reviewed, approved, committed, paid, revised or archived. The key rule when reading these screens is simple: **a workflow status is not automatically a monetary event**.
 
-## For Project Owners
+## Track a project you own
 
-### Viewing Your Project Status
+Open the current **My Projects** surface to review projects owned by you or by a group for which your current responsibility grants access. The project record can expose its present review state and the history recorded by the project service.
 
-Go to **NajmBahar → Projects → My Projects** to see all projects you own (or that belong to a group you manage). The list shows each project's current status, submission date, and a quick summary. Click any project to open its detail page.
-
-On the detail page you can see:
-
-- The **current status** badge (`draft`, `pending`, `under_review`, `approved`, `rejected`, or `archived`)
-- Key timestamps: submitted, reviewed, approved or rejected, resubmitted
-- The **rejection reason** if the project was rejected
-- The full **review history log**
-- The **investment statistics** for approved projects (see below)
-
-### Status Timeline
-
-The detail page displays a visual timeline of every status the project has passed through, in chronological order. Each node on the timeline shows the status name and the date it was reached, so you can see at a glance how long the project spent in each stage.
-
-### Review History Log
-
-Every admin action on your project is recorded in the review history. Each log entry contains:
-
-| Field | Description |
-| --- | --- |
-| **Reviewer** | The admin who took the action |
-| **Action** | What was done (started review, approved, rejected, revision requested, archived) |
-| **Comment** | Any notes the reviewer left for you |
-| **Date** | Exact timestamp of the action |
-
-If your project has been through multiple submission rounds — for example, rejected and then resubmitted — every round's reviewer actions appear in the history. This gives you a complete audit trail of decisions and the reasons behind them.
-
-<Info>
-  Revision notes from an admin's "request revision" action are stored in the review history even after you resubmit. You can always refer back to the original feedback.
-</Info>
-
-### Investment Statistics for Approved Projects
-
-Once your project is approved and investors start contributing, the detail page shows a live statistics panel:
-
-| Statistic | Description |
-| --- | --- |
-| **Total Invested** | Sum of all active and completed investments in GOL |
-| **Investment Progress** | Percentage of the funding goal reached |
-| **Number of Investors** | Total count of unique investors who have contributed |
-| **Expected Total Return** | Combined principal \+ profit owed to all investors at maturity |
-
-Use this panel to understand how close you are to your funding goal and to plan for the returns you will need to pay out at completion.
-
----
-
-## For Investors
-
-### Viewing Your Active Investments
-
-Go to **NajmBahar → Investments → My Investments** to see every investment you have made. The list shows:
-
-- The **project name** and category path
-- Your **invested amount** in GOL
-- Your **expected return** in GOL
-- The **current investment status**
-- The **maturity date** (when the investment term ends)
-
-Click any investment to open the detail view, which adds the linked NajmBahar transaction record and the full status history for that investment.
-
-### Investment Status Timeline
-
-The detail page for each investment shows a status timeline similar to the one on the project page. Each step — `pending`, `paid`, `active`, `completed` (or `cancelled` / `refunded`) — is shown with its timestamp so you can confirm exactly when each transition occurred and whether a payment was processed correctly.
-
-### Expected Return Display
-
-Your expected return is displayed prominently on both the My Investments list and the individual investment detail page. It is calculated at the time you invest and locked to the profit percentage agreed at project creation:
+The current core project review states are:
 
 ```text
-Expected Return = Amount + (Amount × Profit Percentage / 100)
+draft → pending → under_review → approved / rejected / archived
 ```
 
-This figure does not change after the investment is created, so you always know exactly what to expect when the project completes.
+| Status | Meaning |
+| --- | --- |
+| **draft** | Project exists but has not been formally submitted. |
+| **pending** | Submitted and waiting for review. |
+| **under_review** | Formal review has started. |
+| **approved** | The review decision is positive. It does not prove that money moved. |
+| **rejected** | Not approved or returned for revision; eligible projects may be resubmitted. |
+| **archived** | Removed from the normal active workflow. |
 
----
+## Review history
+
+Project review actions are stored separately from the current status so later changes do not erase the decision trail. Depending on the action, history can record review start, approval, rejection, revision request, resubmission and archival together with the responsible reviewer and comments supplied by the workflow.
+
+<Info>
+  A resubmission changes the current project state but does not make the earlier rejection or revision event disappear. Historical review facts remain useful for audit and accountability.
+</Info>
+
+## Approval is not payment
+
+An `approved` status tells you what happened in the review domain. It does **not** mean any member balance has been debited, any project account has been credited, or any Active Bahar is available for execution.
+
+For public-project financing, separate records are required for **Commitment**, **Activation** and **Transfer** before value can reach the **Active Project Fund**. Check the monetary ledger rather than inferring those events from the project badge.
+
+## Track an investment
+
+Where the current investment surface exposes your investment records, use the recorded investment state and linked monetary evidence together. An investment record can show the contractual/workflow state of the relationship, while the NajmBahar ledger establishes whether an actual Bahar Transfer occurred.
+
+This distinction matters because:
+
+```text
+investment record ≠ Transfer
+expected value ≠ guaranteed return
+project completion status ≠ automatic payment
+```
+
+## Bahar amounts
+
+**Bahar** is the monetary unit used by EarthCoop. **Gol is the subunit of Bahar** (`1 Bahar = 100 Gol`). Interfaces may use smaller-unit precision internally, but values should be understood as Bahar-denominated economic amounts rather than a separate Gol currency.
+
+## Returns and valuations
+
+A project or investment contract may display an expected return, profit-share term, asset value, or other economic entitlement. Such a figure is contractual information or a valuation; it is not newly created money and it is not a guarantee that the outcome will be achieved.
+
+When evaluating a tracked investment, consider the project's actual execution, risk disclosures, applicable insurance if any, contractual conditions, and the monetary events already recorded.
 
 ## Notifications
 
-The platform sends in-app notifications to keep you informed at every important event. You do not need to poll your dashboard — just check the notification centre in the top navigation bar.
+The current project service sends owner-facing notifications for important project decisions such as approval, rejection and revision requests. Other domain notifications should be interpreted according to the event they actually report; a notification itself is not proof of a money transfer.
 
-### Notifications for Project Owners
+## Audit checklist
 
-| Notification | When It Is Sent |
-| --- | --- |
-| **ProjectStatusChanged** | Every time your project status changes (approved, rejected, archived, etc.) |
-| **ProjectRevisionRequested** | When an admin requests changes before approving |
-| **NewInvestmentReceived** | When an investor submits and pays for an investment in your project |
+When you need to understand what has actually happened, check the facts in this order:
 
-### Notifications for Investors
+1. **Project record** — what is the current review/lifecycle state?
+2. **Review history** — what decision or revision events produced that state?
+3. **Investment/contract record** — what economic relationship was recorded?
+4. **NajmBahar monetary ledger** — did Commitment, Activation or Transfer actually occur?
+5. **Project-fund state** — is Active Bahar actually available for permitted execution payments?
 
-| Notification | When It Is Sent |
-| --- | --- |
-| **InvestmentStatusChanged** | Every time your investment status changes (paid, active, completed, refunded, etc.) |
-| **ProjectStatusChanged** | When a project you have invested in changes status (e.g., the project completes) |
-
-<Tip>
-  Keep an eye on the **ProjectStatusChanged** notification as an investor — it fires when the project owner marks the project complete, which triggers the return of your principal and profit to your NajmBahar balance.
-</Tip>
-
----
-
-## Quick Reference: Where to Find Things
-
-| What You Want to Check | Where to Look |
-| --- | --- |
-| Status of a project you own | NajmBahar → Projects → My Projects → \[Project\] |
-| Admin reviewer notes and history | Project detail page → Review History |
-| Revision request details | Project detail page → Review History or rejection reason field |
-| Your investment status | NajmBahar → Investments → My Investments → \[Investment\] |
-| Expected return on an investment | Investment detail page → Expected Return |
-| How much a project has raised | Approved project detail page → Investment Statistics |
-| Recent platform notifications | Notification centre (bell icon, top navigation) |
+This separation prevents a UI label from being mistaken for legal authorization, a contractual obligation, or completed payment.
