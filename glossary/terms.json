@@ -1,0 +1,17 @@
+{
+  "$schema": "../schemas/terminology.schema.json",
+  "schemaVersion": 1,
+  "terms": [
+    {"key":"earthcoop","fa":"ارث‌کوپ","en":"EarthCoop","ar":"إرث‌كوب","notes":"نام رسمی محصول؛ NewEarthCoop نام قدیمی و غیرمجاز برای محتوای عمومی جدید است."},
+    {"key":"bahar","fa":"بهار","en":"Bahar","ar":"بهار","notes":"واحد اصلی پول EarthCoop."},
+    {"key":"gol","fa":"گل","en":"Gol","ar":"گل","notes":"زیرواحد بهار؛ ارز مستقل نیست."},
+    {"key":"dim_bahar","fa":"بهار کمرنگ","en":"Dim Bahar","ar":"بهار خامل","notes":"بهار خلق‌شده ولی هنوز فعال‌نشده."},
+    {"key":"activation","fa":"فعال‌سازی","en":"Activation","ar":"التفعيل","notes":"تبدیل بهار کمرنگ موجود به بهار فعال بدون افزایش عرضه کل."},
+    {"key":"public_assembly","fa":"مجمع عمومی","en":"Public Assembly","ar":"الجمعية العامة","notes":"گروه حکمرانی عمومی در ساختار مکانی EarthCoop."},
+    {"key":"manager","fa":"مدیر","en":"Manager","ar":"المدير"},
+    {"key":"inspector","fa":"بازرس","en":"Inspector","ar":"المفتش"},
+    {"key":"value_participation_unit","fa":"واحد مشارکت ارزشی (سهم ارزش)","en":"Value Participation Unit (VPU)","ar":"وحدة المشاركة في القيمة","notes":"دارایی قراردادی؛ به‌خودی‌خود پول، مالکیت یا رأی ایجاد نمی‌کند."},
+    {"key":"najm_bahar","fa":"نجم‌بهار","en":"Najm Bahar","ar":"نجم بهار","notes":"معماری مالی و اقتصادی EarthCoop."},
+    {"key":"najm_hoda","fa":"نجم‌هدا","en":"Najm Hoda","ar":"نجم هدى","notes":"سامانه هوشمند/دستیار مرکزی EarthCoop؛ اختیار مستقل حقوقی از نام آن ناشی نمی‌شود."}
+  ]
+}

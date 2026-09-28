@@ -1,104 +1,78 @@
 ---
 title: "Pay and Track Your Annual NajmBahar Membership Fee"
 sidebarTitle: "Membership Fees"
-description: "Learn how to pay your annual NajmBahar membership fee, understand the three-way fee split, and track fee payment history on EarthCoop."
+description: "Understand the annual EarthCoop membership fee, its current policy amount, and how fee payment relates to Activation, Transfer, insurance, and money retirement."
 ---
 
-Membership fees are annual contributions that sustain EarthCoop's cooperative operations. When you open a NajmBahar account, your account is created but remains in a limited state until you pay the fee for the current membership year. The fee is not deducted automatically — you choose when to pay it, giving you full control over the timing.
+The annual membership fee is part of EarthCoop's economic policy and NajmBahar implementation. The current base amount is **12 Bahar per year**, but the authoritative operational amount is resolved through the applicable authorized monetary policy rather than invented by an administrator at payment time.
 
-## How the fee is structured
+## Current base allocation
 
-The annual membership fee is split into three portions at the moment of payment and sent to three separate system accounts simultaneously:
+The current legal allocation is:
 
-| Portion | Destination | Purpose |
-| --- | --- | --- |
-| Membership amount | Membership pool account | Cooperative operating fund |
-| Insurance amount | Insurance pool account | Member insurance reserve |
-| Burn amount | Burn pool account | Cooperative burn pool |
+| Allocation | Current base |
+| --- | ---: |
+| Operations and wages | 6 Bahar |
+| Central insurance | 3 Bahar |
+| Money retirement | 3 Bahar |
+| **Total** | **12 Bahar** |
 
-The exact amounts for each portion are set by platform administrators in the NajmBahar settings. The default split is **6 Bahar** to membership, **3 Bahar** to insurance, and **3 Bahar** to the burn pool — a total of **12 Bahar** per year. You can confirm the current totals in the membership fee payment modal before confirming.
-
-<Note>
-  Membership fees are paid per **membership anniversary year**, calculated from the date your account was created. The system tracks whether you have paid for the current anniversary period and blocks duplicate payments for the same year.
-</Note>
-
-## Check your fee status
-
-<Steps>
-  <Step title="Open your NajmBahar dashboard">
-    Navigate to **NajmBahar → Dashboard**. If your annual fee is due, a prompt appears near the top of the page with the total amount and a **Pay Now** button.
-  </Step>
-  <Step title="Open the fee details modal">
-    Click **Pay Membership Fee** to open the information modal. The modal shows:
-
-    - Whether you have already paid for the current year
-    - The total fee amount and its three-way breakdown
-    - Your sub-account's current active balance
-    - Your next membership anniversary date
-    - A link to create a sub-account if you do not have one yet
-  </Step>
-</Steps>
-
-## Pay your membership fee
-
-<Steps>
-  <Step title="Fund your sub-account">
-    Membership fees are paid from the **active balance** of your first active sub-account. Before paying, make sure that sub-account holds at least the total fee amount in active funds. If you have no sub-account yet, create one first and transfer funds from your main account.
-  </Step>
-  <Step title="Open the payment modal">
-    From the dashboard or wallet, click **Pay Membership Fee**.
-  </Step>
-  <Step title="Review the breakdown">
-    Confirm the three-way split shown in the modal. The amounts are determined by platform settings and are not editable by members.
-  </Step>
-  <Step title="Confirm payment">
-    Click **Pay**. The system executes three separate transfers from your sub-account — one for each portion. The payment is protected against accidental double-submission, so confirming twice is safe.
-  </Step>
-  <Step title="Confirm success">
-    After payment, you are redirected to the NajmBahar dashboard with a success message showing the total amount paid. Your account's full-active status is restored.
-  </Step>
-</Steps>
-
-<Warning>
-  The fee is drawn from **active balance only**. Faded balance cannot be used for membership fee payments. If your sub-account's active balance is below the total fee, top it up from your main account first using the **Transfer To Sub-Account** action.
-</Warning>
-
-## Fee payment history
-
-To review past membership fee payments:
-
-<Steps>
-  <Step title="Go to your sub-account detail page">
-    Navigate to **NajmBahar → Sub-Accounts** and open the sub-account used for fee payments.
-  </Step>
-  <Step title="Review the transaction list">
-    Each year's membership fee payment produces three transaction entries — one per split destination (membership pool, insurance pool, and burn pool). All three entries are recorded with the same payment year so you can easily identify a complete annual payment.
-  </Step>
-</Steps>
-
-You can also see a summary of fee status directly in the dashboard widget, which shows whether your account is fully active for the current year.
-
-## Membership anniversary and due dates
-
-Your membership year runs from your account creation date, not from January 1st. For example, if you joined on 15 March 2024, your next fee is due on 15 March 2025.
-
-The fee info modal always shows you:
-
-- **Membership date** — the original date your account was created
-- **Next anniversary** — the next date your annual fee becomes due
-
-<Tip>
-  Pay your membership fee a few days before your anniversary date to ensure your account remains continuously active without any interruption to transfers or investment access.
-</Tip>
-
-## What happens if you don't pay
-
-Your NajmBahar account continues to exist and you can still receive incoming transfers. However, certain platform features that require a fully active account may be restricted until you pay the current year's fee. You can pay at any time — the system checks the current anniversary year and accepts exactly one payment per year per user.
-
-## Referral bonus and initial balance
-
-When you first open a NajmBahar account, an initial balance is deposited automatically. A portion of this initial balance is designated as **active** and the rest as **faded**, according to the platform's current balance ratio settings. Additionally, if you were referred to the platform by another member, a referral bonus is automatically transferred from your new account to your referrer's account as a one-time system operation.
+**Gol is the subunit of Bahar** (`1 Bahar = 100 Gol`). Internal implementation may store policy amounts in Gol for precision; that does not make Gol a separate currency.
 
 <Info>
-  The referral bonus transfer and the initial funding deposit both appear in the transaction history of your main account. They are system-initiated operations and do not affect your ability to pay the membership fee — only your active sub-account balance matters for fee payment.
+  The implementation first looks for a currently effective versioned monetary policy. Compatibility settings and fee-table fallbacks exist technically, but an admin setting does not acquire legislative authority merely because the software can read it.
 </Info>
+
+## Fee payment and monetary state
+
+A membership-fee payment must preserve the distinction between **Dim** and **Active** Bahar.
+
+- Active Bahar can be transferred through the applicable fee-payment route.
+- Dim Bahar cannot simply be sent as if it were already spendable money.
+- Where the membership-fee route lawfully activates eligible Dim, **Activation occurs before Transfer**. The payment does not create new Bahar.
+
+This means the economic record should be readable as monetary events, not as one unexplained balance edit.
+
+## What the three allocations mean
+
+### Operations and wages
+
+The operations portion supports the authorized operating and compensation needs assigned by the economic framework. It is a transfer/allocation of existing value, not money Creation.
+
+### Central insurance
+
+The insurance portion goes to the applicable central insurance purpose. It should not be confused with a guarantee that every investment or project is insured; specialized investment insurance has its own independent qualification and underwriting rules.
+
+### Money retirement
+
+The retirement portion supports the authorized money-retirement mechanism. **Retirement** is the canonical monetary event that permanently reduces supply when actually executed. Merely allocating money to a retirement-purpose fund is not the same as having already executed retirement.
+
+## Paying the fee in the current product
+
+Use the membership-fee surface exposed by your NajmBahar account. Before confirming, review the amount and the current breakdown shown by the system. The implementation protects the monetary operation through the NajmBahar transaction layer and records the resulting events for audit/reconciliation.
+
+The exact UI labels can evolve. The durable rules are that the amount must come from the applicable authorized policy, the payment must use valid money state, and duplicate or partial execution must not silently create inconsistent balances.
+
+## Policy boundary
+
+The **12 Bahar** base is a Policy Parameter under the current ECON architecture, not a fundamental value that may never change. A lawful policy revision may change the applicable amount or operational configuration within the authority granted by ECON.
+
+The governing order remains:
+
+```text
+Law → Policy → Configuration → Execution
+```
+
+The reverse is not valid. A configuration value cannot amend ECON or create a new monetary route.
+
+## What this fee does not do
+
+Paying the annual fee does not:
+
+- create additional Bahar;
+- turn invitation activity into cash;
+- authorize arbitrary cross-member transfer of Dim;
+- guarantee an investment or project;
+- give the payer additional public-governance voting power.
+
+Participation points and invitation-related participation credit belong to the participation/Activation-entitlement mechanism; they are not a cash referral bonus.

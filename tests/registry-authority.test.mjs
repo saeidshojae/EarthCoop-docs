@@ -18,6 +18,8 @@ test('declares distinct authority roles for public baseline, knowledge ingestion
   assert.equal(registry.statusSemantics, 'editorial_maturity_not_legal_effect');
   assert.equal(manifest.registryRole, 'knowledge_center_ingestion');
   assert.equal(manifest.statusSemantics, 'publication_candidate_status_not_legal_effect');
+  assert.equal(manifest.schemaVersion, 2);
+  assert.equal(manifest.canonicalDefaultLanguage, 'fa');
   assert.equal(
     registry.latestRegisteredRelease,
     'releases/foundational/2026-09-20/document-registry.registered.json',
@@ -37,13 +39,15 @@ test('knowledge manifest registered versions are traceable to the latest registe
   const releaseById = new Map(release.documents.map((item) => [item.id, item]));
 
   for (const entry of manifest.entries.filter((item) => item.contentClass === 'foundational_document')) {
-    const id = entry.id.split('-')[0].toUpperCase();
-    const registered = releaseById.get(id);
-    assert.ok(registered, `missing ${id} from registered release`);
-    assert.equal(entry.version, registered.currentVersion, `${id} version drift`);
+    const registered = releaseById.get(entry.documentId);
+    assert.ok(registered, `missing ${entry.documentId} from registered release`);
+    assert.equal(entry.version, registered.currentVersion, `${entry.documentId} version drift`);
+    assert.equal(entry.canonicalLanguage, 'fa', `${entry.documentId} canonical language drift`);
+    assert.equal(entry.renditions.fa.status, 'current', `${entry.documentId} Persian rendition must be current`);
+    assert.equal(entry.renditions.fa.sourceVersion, entry.version, `${entry.documentId} Persian source version drift`);
     assert.ok(
       registered.status === 'registered-not-effective' || registered.status === 'current-unchanged',
-      `${id} has unexpected registered-release status ${registered.status}`,
+      `${entry.documentId} has unexpected registered-release status ${registered.status}`,
     );
   }
 });

@@ -1,75 +1,105 @@
 ---
 title: "NajmBahar: Integrated Finance for Cooperative Groups"
 sidebarTitle: "Overview"
-description: "NajmBahar is EarthCoop's built-in financial system for peer transfers, sub-accounts, membership fee payments, and cooperative project investments."
+description: "Understand NajmBahar's current transaction core and the ECON reference architecture for Bahar, monetary states, activation, transfers, fees, and retirement."
 ---
 
-NajmBahar is the integrated financial system built directly into EarthCoop. Rather than relying on external payment processors or third-party wallets, every member gets a dedicated NajmBahar account the moment they accept the platform agreement. From that single account you can hold a balance, send funds to any other member, organise money into purpose-specific sub-accounts, pay your annual membership fee, and invest in cooperative projects — all without leaving the platform.
+NajmBahar is EarthCoop's economic and financial subsystem. The **Current product** already contains real account, sub-account, fee, transaction, project and investment services. ECON defines the broader **Normative reference architecture** that every monetary implementation must respect. Some end-to-end integrations remain **In development**, so a rule defined by ECON must not be described as a live user workflow unless the current product also supports it.
 
-## What NajmBahar gives you
+## Bahar and Gol
 
-NajmBahar combines several financial capabilities in one place:
+**Bahar** is the monetary unit. **Gol is the subunit of Bahar**:
 
-<CardGroup cols={2}>
-  <Card title="Wallet & balance" icon="wallet">
-    Your NajmBahar account holds your balance in two tracked states: **active** funds (immediately spendable) and **faded** funds (held for cooperative purposes). Your dashboard shows both at a glance.
-  </Card>
+```text
+1 Bahar = 100 Gol
+```
 
-  <Card title="Peer-to-peer transfers" icon="arrow-right-arrow-left">
-    Send funds directly to any other member or group by entering their sub-account code. Transfers settle immediately or can be scheduled for a future date you choose.
-  </Card>
+Gol is a precision unit inside the Bahar system, not a separate currency.
 
-  <Card title="Sub-accounts" icon="layer-group">
-    Create named sub-accounts under your main account to separate pools of money — for example, a group investment fund kept apart from personal funds.
-  </Card>
+## Dim and Active Bahar
 
-  <Card title="Membership fee payments" icon="id-card">
-    Pay your annual EarthCoop membership fee straight from your NajmBahar balance. The fee is automatically split between the membership pool, the insurance pool, and the burn pool at the moment of payment.
-  </Card>
+NajmBahar distinguishes monetary state:
 
-  <Card title="Project investments" icon="chart-line">
-    Invest in cooperative projects that have been approved on the platform. Your payment flows directly through NajmBahar, and the resulting transaction record is linked to your investment for a tamper-evident payment trail.
-  </Card>
+- **Dim** — created Bahar that is not yet spendable between independent economic actors.
+- **Active** — Bahar that has passed an authorized Activation route and can participate in valid spending and Transfer subject to policy and account rules.
 
-  <Card title="Audit log" icon="list-check">
-    Every credit, debit, transfer, fee payment, and investment is recorded in an immutable audit log. You can review the full history of your account at any time.
-  </Card>
-</CardGroup>
+A balance can therefore exist without being freely transferable. Dim is not merely a UI label or temporary lock; its non-transferability across independent owners is a monetary invariant.
 
-## Opening your NajmBahar account
+## Canonical monetary events
 
-Before you can use any NajmBahar features, you must accept the NajmBahar agreement. The system checks that your profile is complete (name, national ID, phone number, address, and experience) before allowing you to proceed. Once you accept, your main account is created automatically and an initial balance is deposited into it.
+ECON separates seven canonical monetary events:
 
-<Note>
-  Your account is not fully active until you pay the annual membership fee. You can do this at any time from the **Membership Fees** section after your account is created.
-</Note>
+1. **Creation** — brings new Bahar into existence through a legally authorized source.
+2. **Activation** — changes eligible existing Dim Bahar into Active Bahar. Activation is not Creation.
+3. **Transfer** — moves existing Active Bahar between valid economic accounts.
+4. **Commitment** — records an obligation/reservation without pretending that a Transfer has already happened.
+5. **Taxation** — records a tax event under the applicable economic rule.
+6. **Cancellation** — cancels Bahar where the governing rule authorizes cancellation.
+7. **Retirement** — permanently removes Bahar from monetary supply through the authorized retirement process.
 
-## How NajmBahar connects to projects
+These events must not be collapsed into a generic balance edit. Operational account movement or release of a restriction is not a new eighth monetary event.
 
-When a cooperative project is approved on EarthCoop, members can browse it in the **Investments** section and commit funds. Paying for an investment triggers a transfer from your NajmBahar sub-account to the project owner's account. The resulting transaction record is stored directly on your investment, giving both you and the project owner a tamper-evident link between the payment and the commitment.
+## Current transaction core
 
-Project statuses move through a defined lifecycle: draft → pending → under review → approved. Only approved projects are visible in the investment marketplace. If an admin rejects a project you submitted, you can revise it and resubmit — every review action is written to the project's review history.
+The current NajmBahar transaction layer applies explicit safety rules rather than treating every account-to-account move as equivalent:
 
-## Transparent audit trail
+- movements between an owner's own eligible main/sub-account structure can preserve the explicit money state;
+- Dim cannot be transferred between independent users or entities;
+- cross-owner sub-account movement requires Active Bahar and a canonical executor;
+- system operations and treasury-directed movements use their own explicit paths;
+- policy or rollout gates can restrict a transfer even when the accounts themselves exist;
+- monetary operations are designed around transaction safety, idempotency and reconciliation rather than direct balance mutation.
 
-Every action that changes a balance — including initial funding, peer transfers, sub-account moves, membership fee splits, and investment payments — is written to the NajmBahar audit log. Group actions additionally capture the actor's role within the group. This log is your single source of truth for any disputes or reconciliation needs.
+## Creation and initial credit
 
-<Tip>
-  When you transfer funds to another member's sub-account, enter the exact sub-account code (format `XXXXXXXXXX-NNN`). The transfer form shows you a live preview of the recipient's name and account type before you confirm.
-</Tip>
+Under ECON, the ordinary Creation source is a valid unique human economic membership. The initial credit is created as **Dim**, not Active. Creation therefore does not make the full initial credit immediately spendable.
+
+The fundamental amount and value-measure rules belong to ECON and cannot be changed merely by an administrator editing a setting.
+
+## Activation
+
+Activation converts eligible existing Dim into Active Bahar through an authorized route. The recognized routes include the membership-fee mechanism, participation-point entitlement, approved public-project financing and authorized equal General Activation under the conditions established by ECON.
+
+An invitation reward or participation point is not itself Bahar. Where participation creates an activation entitlement, the entitlement acts on already-created Dim rather than creating new money.
+
+## Annual membership fee
+
+The current base annual membership fee is **12 Bahar**, subject to authorized monetary policy. Its legal allocation is:
+
+| Allocation | Current base |
+| --- | ---: |
+| Operations and wages | 6 Bahar |
+| Central insurance | 3 Bahar |
+| Money retirement | 3 Bahar |
+
+The current implementation can resolve the applicable amount from an effective versioned monetary policy and retains technical fallback configuration for compatibility. Configuration is execution infrastructure; it is not legislative authority.
+
+## Projects and investment
+
+Project approval is a project/governance fact, not a Transfer. For public projects, the reference architecture separates **Commitment**, **Activation**, **Transfer**, and arrival of Active Bahar in the **Active Project Fund**. See [Projects overview](/projects/overview) for the full sequence.
+
+Investment contracts and assets can record value and economic entitlements, but asset appreciation or accounting value does not constitute Creation of Bahar.
+
+## Audit and accounting boundary
+
+Monetary truth belongs in auditable ledger events. Account balances should be derived and reconciled from valid operations rather than changed through opaque manual edits. Money Ledger facts are also conceptually separate from Asset Ledger and Liability Ledger facts: an asset, receivable, obligation or valuation is not automatically money.
+
+## Current product vs reference architecture
+
+The transaction, account, fee and project cores are real current product capabilities. The complete ECON architecture — including every Activation route, treasury/fund lifecycle, retirement obligation and public-project monetary chain — should be treated as the **Normative reference architecture** where the live end-to-end path has not yet been completed. Such integrations are **In development**, not silently assumed.
 
 ## Explore NajmBahar features
 
 <CardGroup cols={3}>
   <Card title="Sub-Accounts" icon="layer-group" href="/najm-bahar/sub-accounts">
-    Create separate ledgers for groups, projects, or any purpose you choose.
+    Understand purpose-specific account partitions without confusing account movement with money creation or activation.
   </Card>
 
   <Card title="Transfers" icon="arrow-right-arrow-left" href="/najm-bahar/transfers">
-    Send and receive funds between members instantly or on a schedule.
+    Learn the current rules for Active cross-owner transfers and same-owner account movement.
   </Card>
 
   <Card title="Membership Fees" icon="id-card" href="/najm-bahar/membership-fees">
-    View, pay, and track your annual cooperative membership fee.
+    Review the annual fee, its policy source, and the operations / insurance / money-retirement allocation.
   </Card>
 </CardGroup>

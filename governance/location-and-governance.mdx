@@ -1,0 +1,75 @@
+---
+title: "Location & Governance: Primary Residence and Local Topology"
+sidebarTitle: "Location & Governance"
+description: "Understand EarthCoop's canonical Primary Residence, topology-aware base governance, pending location proposals, and optional local-address levels."
+---
+
+EarthCoop uses a canonical **Location/Governance** model to connect a member's real Primary Residence to the correct local governance area and to the wider system-group hierarchy. This is not a free-text address field and it is not limited to one fixed city structure.
+
+## Primary Residence
+
+During registration, the member selects the geographic path for their **Primary Residence**. The path begins at wider levels and continues until the member reaches the **base governance** level required by the selected settlement topology.
+
+That base is the lowest governance unit that actually exists for the selected place. The registration flow does not invent a missing layer merely to force every member through the same hierarchy.
+
+## Topology-aware base governance
+
+Current EarthCoop behavior explicitly supports different settlement structures, including:
+
+- a city that has urban regions and neighborhoods;
+- a **city without an urban region**;
+- an **urban region without a neighborhood**;
+- a **village without a neighborhood**.
+
+When no lower governance unit exists, the highest valid available level becomes the member's base governance area. A city without regions does not need a fake region; an urban region without neighborhoods does not need a fake neighborhood; and a village without neighborhoods can itself be the relevant base.
+
+## Registration stops at the governance base
+
+The mandatory registration path ends when the valid base-governance level has been selected. The registration step should not force a member to provide Street, Alley, Complex or Building information.
+
+**Street and smaller address levels are optional after registration.** A member can later complete a more precise local address from the profile/location surface where the local topology supports it.
+
+Supported micro-location paths can include combinations such as:
+
+- Street → Building;
+- Street → Alley → Building;
+- Street → Complex → Building;
+- Street → Alley → Complex → Building.
+
+The local-address path provides additional precision; it does not replace the member's canonical Primary Residence or base-governance membership.
+
+## When a place is missing
+
+A member may propose a valid missing location or governance unit through the supported proposal flow. The proposal enters a pending-review state rather than becoming silently approved.
+
+A pending base-level proposal does not automatically have to block registration. EarthCoop can preserve the selected pending residence and the related pending system-group relationships while the proposal is reviewed.
+
+## Community support and review readiness
+
+Other eligible nearby members may support a pending proposal according to the configured support policy. Distinct-user support can move the proposal toward **ready for review** status and make it more visible in the administrative review queue.
+
+<Warning>
+  **Support is not approval.** Reaching the configured support threshold does not automatically approve the location, structural claim, or governance area. Approval remains a separate review decision.
+</Warning>
+
+If a pending proposal is ultimately rejected or superseded, the product must reconcile the affected residence/governance relationships according to the canonical cleanup/migration rules rather than leaving a silent contradictory state.
+
+## System groups derived from residence
+
+The canonical Primary Residence and governance path are consumed by EarthCoop's system-group architecture. They determine the applicable public-assembly membership and help scope professional/specialty and age/gender system memberships across wider levels.
+
+At the local/base level the member may hold the relevant Active membership. Wider levels can be Observer memberships. This is why changing an address is not merely a cosmetic profile edit: it can change canonical governance and group relationships.
+
+## Governance topology and elections
+
+Official systemic-election eligibility follows the canonical official governance topology. Community/micro-location relationships and Temporary Active participation do not automatically become official systemic-election voting/selectability rights.
+
+Current role semantics preserve systemic voting/selectability for Active members and elected Inspectors/Managers, while Observer, Guest and Temporary Active roles do not gain those rights merely by being present in the group.
+
+## Correcting residence later
+
+If a member selected an incorrect residence or the local topology is later clarified, the profile/Location & Governance flow should be used to establish the corrected canonical relationship. Corrections must preserve auditability and must not be implemented by silently editing unrelated higher-level memberships.
+
+<Info>
+  Product UI around proposal-support progress, invitations for nearby supporters, and high-volume administrative review may continue to improve without changing the canonical rule: residence truth, support, review and approval are separate concepts.
+</Info>

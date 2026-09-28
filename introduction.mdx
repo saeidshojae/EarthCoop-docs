@@ -1,45 +1,47 @@
 ---
 title: "What Is EarthCoop and How Does It Work for You?"
 sidebarTitle: "Introduction"
-description: "Discover how EarthCoop brings people together in cooperative groups across every geographic scale — from your neighborhood to the entire globe."
+description: "Understand EarthCoop's cooperative local-to-global structure and the difference between current, in-development, and planned capabilities."
 ---
 
-EarthCoop is a cooperative platform built around one idea: people with shared goals should have a trusted, structured space to organize, invest together, and take collective action — whether they live on the same street or on opposite sides of the world. By combining intelligent group formation, real-time communication, community-driven project investment, and an AI-powered assistant into a single platform, EarthCoop gives you everything you need to move from intention to impact.
+EarthCoop is a cooperative socio-economic platform designed to connect participation from the local community up through wider geographic and professional structures. Its current product combines structured registration, canonical location/governance, automatically assigned system groups, communication and participation tools, project workflows, financial-domain services, support, and an evolving AI assistant.
 
-## What Problem Does EarthCoop Solve?
+The documentation uses three capability labels so an architectural goal is never mistaken for a live feature.
 
-Collaboration at scale is hard. Professionals in the same field rarely find each other across city or country borders. Communities that want to fund local projects have no shared financial infrastructure. Groups that form online quickly fragment without the right tools to make decisions, manage money, or stay aligned. EarthCoop addresses all of these pain points in one place — giving you the structure of a cooperative with the reach of a global network.
+## Current product
 
-## Key Features
+The current product includes a multi-step member-registration flow, profile and Primary Residence data, canonical Location/Governance, system-group membership derived from member information, group communication and participation surfaces, systemic-election services, project workflows, Najm Bahar domain services, support tickets, and a member-facing Najm Hoda interaction surface.
 
-- **Intelligent Group Formation** — Groups are organized by profession, specialty, and geographic scope (from neighborhood to global), so you always find the most relevant communities for your goals and expertise.
-- **Real-Time Group Chat with Polls and Elections** — Every group has a live communication channel with built-in polling and election tools, enabling transparent, democratic decision-making at any scale.
-- **Project Submission and Community Investment** — Any member can submit a project proposal to their group. Fellow members review, discuss, and invest directly, turning collective capital into real-world action.
-- **NajmBahar Integrated Financial System** — EarthCoop's native financial layer, NajmBahar, handles all group-level transactions, investment accounting, and fund distribution with full transparency.
-- **NajmHoda AI Assistant** — NajmHoda is an AI assistant embedded throughout the platform. It answers questions, helps you find the right groups or projects, and guides you through complex workflows.
-- **Multilingual Support (English and Persian/Jalali)** — The platform is fully available in both English and Persian, including Jalali (Solar Hijri) calendar support for date-sensitive features, so that no language barrier prevents participation.
-- **Support Ticket System** — A built-in support system lets you raise issues, track resolutions, and communicate directly with the EarthCoop team — all without leaving the platform.
+EarthCoop's system groups are not simply generic public or private communities. Membership is formed from structured dimensions such as public assemblies, professional/specialty identity, and age/gender groupings across relevant geographic levels. User-created groups are a separate concept and are documented separately from those automatic system memberships.
 
-## Where to Go Next
+## In development
+
+Some domains are implemented but are still being separated behind clearer, stable client contracts or are receiving further product hardening. Examples include the versioned API/mobile boundary, parts of the wider Najm Bahar client surface, and broader Najm Hoda integrations. An endpoint or internal service existing in the repository does not by itself mean that the capability is a stable public API.
+
+## Planned
+
+EarthCoop's broader architecture includes additional marketplace, mobile, economic, and AI-assisted capabilities. Planned architecture is documented as planned until there is implementation evidence that supports a stronger status. Foundational or reference documents may define normative rules before every related product surface is available.
+
+## Language status
+
+Persian is the canonical language for EarthCoop's current foundational/reference document set. English product guides are being audited and corrected against the current product. Arabic is part of the multilingual documentation architecture, but Arabic renditions are published as current only after they are reviewed against a current source. Do not interpret documentation-translation status as a statement about legal effect.
+
+## Core areas
 
 <CardGroup cols={2}>
   <Card title="Quickstart" icon="rocket" href="/quickstart">
-    Get your account set up and join your first group in minutes.
+    Follow the current registration and automatic system-group onboarding flow.
   </Card>
-
   <Card title="Groups" icon="users" href="/groups/overview">
-    Understand how cooperative groups are structured, created, and governed.
+    Understand system groups, user-created groups, participation roles, polls, and elections.
   </Card>
-
   <Card title="Projects" icon="folder-open" href="/projects/overview">
-    Learn how to propose projects and attract investment from your group community.
+    Review current project workflows and their relationship to EarthCoop's economic rules.
   </Card>
-
   <Card title="NajmBahar" icon="piggy-bank" href="/najm-bahar/overview">
-    Explore the financial system that powers cooperative investment on EarthCoop.
+    See the current financial domain and the boundary between implemented and broader reference architecture.
   </Card>
-
   <Card title="NajmHoda AI" icon="robot" href="/najm-hoda/overview">
-    Find out how the AI assistant can accelerate your work on the platform.
+    See what the assistant does today and which wider agentic capabilities are still evolving.
   </Card>
 </CardGroup>

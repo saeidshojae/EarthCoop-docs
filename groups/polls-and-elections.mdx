@@ -1,118 +1,97 @@
 ---
-title: "Running Polls and Elections in Your EarthCoop Group"
+title: "Polls and System Elections in EarthCoop"
 sidebarTitle: "Polls & Elections"
-description: "Use polls to gather quick group consensus and run democratic elections to choose your group's managers and inspectors on EarthCoop."
+description: "Understand the separation between polls/internal decisions and EarthCoop's formal candidate-free System Election lifecycle for Managers and Inspectors."
 ---
 
-EarthCoop gives every group two distinct tools for collective decision-making: **polls** for gathering quick opinions and reaching informal consensus, and **elections** for formally choosing the managers and inspectors who govern the group. Both tools are woven into the group's live feed alongside chat messages and blog posts, so decision-making feels like a natural part of the group's daily conversation rather than a separate administrative task.
+EarthCoop has two different decision domains that should not be confused:
+
+- **Poll / internal decision voting** is used to collect opinion, support a proposal, or make the kinds of decisions exposed by the relevant group workflow.
+- **System Election** is the formal lifecycle used to select official responsibilities such as **Manager** and **Inspector**.
+
+A poll result does not appoint a Manager or Inspector, and a System Election should not be described as an ordinary poll with a candidate list.
 
 ## Polls
 
-### Creating a Poll
+Poll behavior depends on the current group, role and poll configuration. Where the product exposes a poll, eligible members can use it for the decision/opinion purpose supported by that surface.
 
-Any active member of the group can create a poll. Observers can vote but cannot create polls.
+Do not infer systemic-election rights from poll access. Poll eligibility and System Election eligibility are separate contracts.
 
-<Steps>
-  <Step title="Open the Poll Creator">
-    Inside your group's chat feed, click the **Poll** button in the composer toolbar (the bar where you type messages). A creation form slides into view.
-  </Step>
-  <Step title="Write Your Question">
-    Enter the poll question in the **Question** field. Be specific — a clear question produces more useful results.
-  </Step>
-  <Step title="Add Answer Options">
-    Type each answer option and press **Add Option** to include it. You need at least two options. You can add as many as needed.
-  </Step>
-  <Step title="Set the Duration">
-    Choose how many **days** the poll should remain open. Members can vote until the poll expires. After expiry, the results are locked and displayed permanently in the feed.
-  </Step>
-  <Step title="Choose the Poll Type">
-    Select **General** for a standard poll open to all members, or **Skill-Based** to restrict voting to members with a specific expertise field on their profile.
-  </Step>
-  <Step title="Configure Options">
-    Optionally enable **Multiple Choice** to allow members to select more than one answer, or enable **Anonymous Voting** to keep individual votes private while still showing the aggregate results.
-  </Step>
-  <Step title="Publish">
-    Click **Send**. The poll appears immediately in the group feed and all members receive a notification.
-  </Step>
-</Steps>
-
-### Voting on a Poll
-
-When a poll appears in the feed, click the option you want to vote for. Your choice is recorded instantly. You can change your vote at any time before the poll expires by clicking a different option — your previous vote is removed and the new one is recorded.
-
-### Viewing Live Results
-
-Results update in real time as votes come in. Each option shows:
-
-- The **number of votes** it has received.
-- A **percentage bar** representing its share of total votes.
-
-Results are always calculated against the active member count of the group, not the total registered membership, so the percentages reflect meaningful participation.
-
-<Tip>
-  If you want to gather expert opinion on a technical question, create a **Skill-Based** poll and select the relevant expertise field. Only members whose profiles include that skill will be counted in the results, giving you a more informed signal.
-</Tip>
-
-### Editing and Deleting Polls
-
-Managers can edit the question text or extend the deadline of any poll from the feed using the **edit** (pencil) icon. To remove a poll entirely, click the **delete** icon. Deletion removes the poll from the feed for all members immediately.
-
-### Vote Delegation on Polls
-
-If you trust another member's judgment on a particular question — especially in skill-based polls — you can **delegate your vote** to them.
-
-<Steps>
-  <Step title="Find the Delegation Option">
-    In the poll panel, click **Delegate My Vote**.
-  </Step>
-  <Step title="Choose a Delegate">
-    Search for the member you want to delegate to. You can delegate to any active member of the group.
-  </Step>
-  <Step title="Confirm Delegation">
-    Confirm your choice. Your delegate casts a vote on your behalf. You can revoke the delegation and vote directly at any time before the poll closes.
-  </Step>
-</Steps>
-
-<Warning>
-  Delegating your vote does not prevent you from voting yourself. If you cast a direct vote after setting a delegation, your direct vote takes precedence and the delegation is automatically removed.
-</Warning>
+<Info>
+  Some older documentation described one universal poll workflow, including exact editing, delegation or visibility options. Those details should be treated as current only where the live product and current policy prove them. This guide therefore documents the stable domain boundary rather than preserving unsupported UI steps.
+</Info>
 
 ---
 
-## Elections
+## System Election
 
-### What Elections Are
+### No formal candidate-registration stage
 
-Elections are the formal mechanism through which a group chooses its **managers** and **inspectors**. Unlike polls — which are advisory — election results directly update member roles in the group. The number of managers and inspectors a group can elect is determined by its geographic scope and group type, as configured at the platform level.
+EarthCoop's System Election is designed **without formal candidates**. An eligible voter selects or proposes eligible members they trust for Manager and/or Inspector responsibility. A person does not have to register themself on a public candidate slate before another member can select them.
 
-### Election Workflow
+Legacy implementation names such as `candidate_id` may still appear internally in historical data or code, but they must not be interpreted as a product rule requiring formal candidacy.
 
-<Steps>
-  <Step title="An Election Is Opened">
-    A current manager opens a new election from the group dashboard. The election has a defined **start date** and **end date**. Once open, a banner appears in the chat feed and all members are notified.
-  </Step>
-  <Step title="Members Nominate Themselves as Candidates">
-    Any active member who wishes to stand for a manager or inspector position registers as a candidate. Candidates are listed publicly in the election panel, visible to all group members.
-  </Step>
-  <Step title="The Voting Period Opens">
-    During the voting window, each member can cast votes for candidates in two separate positions: **inspector** and **manager**. You select one or more candidates per position, up to the maximum allowed for your group.
-  </Step>
-  <Step title="Submit Your Votes">
-    Click **Submit Votes** to confirm your choices. You can revise your choices at any time before the deadline — submitting again replaces your previous votes.
-  </Step>
-  <Step title="Election Closes and Results Are Tallied">
-    When the manager clicks **Finish Election** (or the end date is reached), the system tallies the votes, identifies the top-voted candidates for each position, and automatically updates their roles in the group. Elected managers and inspectors are notified, and an announcement is broadcast to all group members.
-  </Step>
-</Steps>
+### Policy-driven lifecycle
+
+The System Election lifecycle is driven by the election policy resolved for the group. Thresholds, role capacities, timing, response windows and other configurable parameters belong to that policy rather than to a Manager manually inventing a new election each time.
+
+The current election domain separates lifecycle services for opening/closing cycles, eligibility snapshots, ballots, deterministic tallying, responsibility offers, appointments, vacancy replacement and audit events.
+
+This separation matters because these are different facts:
+
+1. a member is eligible to vote/select;
+2. a member receives enough support to rank within a responsibility result;
+3. that member is offered responsibility;
+4. they accept, decline or let the offer expire;
+5. an appointment is actually applied.
+
+A high tally is therefore not the same event as acceptance or appointment.
+
+### Eligibility
+
+Eligibility follows the canonical official group/governance topology and the role snapshot for the election cycle.
+
+- **Active** members have the systemic voting/selectability rights defined by the current eligibility contract.
+- Elected **Inspector** and **Manager** roles retain those personal systemic voting/selectability rights; receiving responsibility does not remove the member's own vote.
+- **Observer**, **Guest** and **Temporary Active** roles do not gain systemic-election voting/selectability rights merely by being present in the group.
+- Community/micro-location membership does not automatically become official systemic-election eligibility unless the official topology says so.
+
+Eligibility is snapshotted for the cycle so a later incidental membership change cannot silently rewrite the historical electorate used by that election.
+
+### Voting/selecting members
+
+During the open ballot phase, an eligible voter selects eligible members for the available responsibility positions according to policy. Capacity limits and duplicate-selection rules are enforced by the election domain.
+
+EarthCoop does not require a member to select themself, nor does it prohibit self-selection merely because the voter and selected member are the same person where the current policy permits it.
+
+### Tally and ranking
+
+When the ballot phase ends, the election domain closes and tallies the recorded selections deterministically. Ranking and tie behavior must be reproducible and auditable; random backfill is not an acceptable replacement mechanism.
+
+The historical tally is preserved even when a selected person later declines responsibility.
+
+### Responsibility offer and acceptance
+
+A ranked result creates the basis for a responsibility offer; it does not silently install the member in office.
+
+The selected member receives the policy-defined opportunity to **accept** or **decline**. If the member declines, the offer expires, or the member is no longer valid for appointment, the appointment chain moves to the **next ranked eligible member** according to the stored result and policy.
+
+This replacement process must not delete or rewrite the original tally history.
+
+### Appointment
+
+Only after the responsibility-offer conditions are satisfied does the appointment service apply the official Manager/Inspector role and any corresponding higher-level representation side effects. Appointment is designed to be idempotent so retries do not duplicate responsibilities.
+
+## Role responsibility boundary
+
+EarthCoop's broader responsibility rules can restrict simultaneous official responsibilities. A System Election result therefore cannot be read in isolation from current responsibility/representation policy. Higher-level or conflicting responsibility may affect whether and how an appointment is applied.
+
+## Auditability
+
+System Election activity is designed to leave an auditable trail across lifecycle transitions, eligibility, ballots, tally/ranking, responsibility offers, acceptance/decline/expiry, replacements and appointment.
+
+Where a vote or withdrawal supports a comment/rationale, its visibility is controlled by the current policy and user choice. Documentation must not invent privacy options that are not present in the current contract.
 
 <Note>
-  An election can only be finalised once. After **Finish Election** is clicked, results are permanent and the roles of elected members are updated immediately across the platform.
+  Older pages that described manager-started ad hoc elections, required self-nomination, manual completion controls, or immediate installation of winners represented a legacy model and are not the current systemic-election contract.
 </Note>
-
-### Viewing Election History
-
-To review past elections and their outcomes, go to **History → Elections** from the main navigation. Each entry shows the election period, the group it was held in, the candidates who stood, the vote counts, and the final role assignments. You can also view your personal poll-voting history at **History → Polls**.
-
-<Tip>
-  Election history is a key part of group accountability. Managers are encouraged to share past election results with new members so they can understand how the current leadership came to be.
-</Tip>

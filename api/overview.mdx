@@ -1,121 +1,77 @@
 ---
 title: "EarthCoop REST API — Overview & Base URL"
 sidebarTitle: "Overview"
-description: "A complete guide to the EarthCoop REST API: base URL, response format, authentication, rate limits, and common HTTP status codes."
+description: "Understand the current EarthCoop /api surface and why it is still an evolving internal application contract rather than a complete stable public API."
 ---
 
-The EarthCoop REST API gives you programmatic access to the platform's core features — including the NajmHoda AI assistant, support tickets, geographic hierarchy data, and user notifications. Every response is JSON, and authentication is handled via Bearer tokens passed in the `Authorization` header.
+EarthCoop has real HTTP routes under `/api`, but the current route file contains a mixture of application endpoints, legacy compatibility paths, closure-based geographic helpers, and newer controller-backed services. This surface is **evolving / In development** and is **not a stable public API contract** for third-party or native clients yet.
 
-## Base URL
+## Current status
 
-All API endpoints are served under the following base URL:
+The current repository proves that API routes exist for several domains, including NajmHoda, support-related capabilities, notifications, account/user access, and geographic/location data. Route existence is implementation evidence; it does not by itself establish a versioned external contract, compatibility guarantee, or supported SDK surface.
 
-```http
-https://your-domain.com/api
+<Warning>
+  Do not build a long-lived external integration by assuming every current `/api` route, payload, authentication mechanism, or response field is frozen. Stable client/mobile API work remains a separate product-readiness task.
+</Warning>
+
+## Base path
+
+Current application routes are mounted under:
+
+```text
+/api
 ```
 
-Replace `your-domain.com` with your actual EarthCoop deployment host. There is no versioning prefix in the path; routes are mounted directly under `/api`.
-
-## Response Format
-
-Every response body is JSON. Successful responses typically include a top-level `success: true` field alongside the payload. Collection responses include a `data` array and a `meta` object containing pagination details.
-
-```json
-{
-  "success": true,
-  "data": [],
-  "meta": {
-    "current_page": 1,
-    "last_page": 4,
-    "per_page": 15,
-    "total": 58
-  }
-}
-```
+There is no general version prefix that turns the whole current file into a stable `/v1` public contract. A future stable client API may therefore differ from legacy/current internal paths.
 
 ## Authentication
 
-Protected endpoints require a Bearer token in the `Authorization` header. See the [Authentication](/api/authentication) page for full details on obtaining and using tokens.
+Some current routes use Laravel Sanctum authentication, including routes protected by `auth:sanctum`. This establishes an authentication mechanism for those implementation paths; it does not prove that EarthCoop currently publishes a general-purpose external token-issuance workflow.
 
-```http
-Authorization: Bearer {your-token}
-```
+See [Authentication](/api/authentication) for the verified boundary.
 
-Requests to protected endpoints without a valid token receive a `401 Unauthorized` response.
+## Response contracts
 
-## Rate Limiting
+Different current controllers and legacy closure routes can return different JSON shapes. Do not assume one universal envelope such as `{ success, data, meta }` unless the specific controller or future stable API specification defines it.
 
-Most endpoints have no explicit rate limit beyond standard platform defaults. The escalation endpoint is strictly throttled to prevent abuse:
+For implementation work, verify the exact current route and controller. For a public/mobile client, wait for or use the explicitly versioned contract designated for that client rather than inferring stability from present Laravel routes.
 
-| Endpoint | Limit |
-| --- | --- |
-| `POST /api/najm-hoda/escalate` | 30 requests per minute |
+## Authorization and domain rules
 
-Exceeding the limit returns `429 Too Many Requests`. Your client should respect the `Retry-After` header in that response.
+Authentication answers only who the requester is. Each protected operation can also require domain authorization, ownership, role, policy, governance topology, monetary state, or other business rules.
 
-<Warning>
-  If your integration calls `POST /api/najm-hoda/escalate` in a loop or on every user action, you will hit the 30 requests/minute ceiling quickly. Cache or debounce calls appropriately.
-</Warning>
+For action-capable NajmHoda paths in particular, client/browser context cannot grant authority. Trusted server-side policy and domain services decide whether a mutation is permitted.
 
-## Error Format
+## Legacy and canonical location routes
 
-The API uses standard HTTP status codes to signal outcomes. Error bodies are JSON objects with at least a `message` field, and in validation failures an `errors` object keyed by field name.
+The current API file still contains older geography/location helpers alongside the newer canonical location/governance architecture. Their presence is one reason the entire `/api` file must not be described as the final external geographic contract.
 
-**Unauthenticated request:**
+## API sections
 
-```json
-{
-  "message": "Unauthenticated."
-}
-```
-
-**Validation failure (422):**
-
-```json
-{
-  "success": false,
-  "message": "The given data was invalid.",
-  "errors": {
-    "subject": ["The subject field is required."],
-    "message": ["The message must be at least 10 characters."]
-  }
-}
-```
-
-## Common HTTP Status Codes
-
-| Code | Meaning |
-| --- | --- |
-| `200 OK` | Request succeeded; body contains the resource or list. |
-| `201 Created` | Resource was created successfully. |
-| `400 Bad Request` | The request is malformed or violates a business rule (e.g. closing an already-closed ticket). |
-| `401 Unauthorized` | No token provided or token is invalid/expired. |
-| `403 Forbidden` | Token is valid but the user does not have permission for this resource. |
-| `404 Not Found` | The requested resource does not exist. |
-| `422 Unprocessable Entity` | Validation failed; see the `errors` field. |
-| `429 Too Many Requests` | Rate limit exceeded; back off and retry. |
-| `500 Internal Server Error` | An unexpected server-side error occurred. |
-
-## API Sections
+The following pages document current implementation evidence and known boundaries; they should not be read as a guarantee that these paths are already the final stable external API:
 
 <CardGroup cols={2}>
   <Card title="Authentication" icon="key" href="/api/authentication">
-    Learn how to obtain a Bearer token and authenticate every request.
+    Current Sanctum-protected behavior and the absence of a verified general public token-issuance flow.
   </Card>
 
   <Card title="NajmHoda API" icon="robot" href="/api/najm-hoda">
-    AI chat, conversation history, feedback, and escalation endpoints.
+    Current controller-backed chat capabilities and their server-side policy boundary.
   </Card>
 
   <Card title="Tickets API" icon="ticket" href="/api/tickets">
-    Create and manage support tickets, add comments, and download attachments.
+    Current ticket-related routes, documented as an evolving application contract.
   </Card>
 
   <Card title="Geographic API" icon="map" href="/api/geographic">
-    Public endpoints for provinces, counties, cities, and the full geographic hierarchy.
+    Current and legacy geographic paths pending a stable canonical client contract.
   </Card>
 
   <Card title="Notifications API" icon="bell" href="/api/notifications">
-    Fetch, mark as read, and delete user notifications for projects and investments.
+    Current notification routes without promising a final mobile/public payload contract.
   </Card>
 </CardGroup>
+
+## Integration guidance
+
+For internal development, treat the checked-in route/controller code and tests as the implementation source of truth. For third-party or native-client integrations, treat the stable versioned API specification—once explicitly published—as the contract. Until then, the current `/api` surface remains **In development** from the perspective of a durable public API.

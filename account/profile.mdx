@@ -1,126 +1,97 @@
 ---
 title: "Manage Your EarthCoop Profile Settings and Preferences"
 sidebarTitle: "Profile"
-description: "Update your personal details, professional expertise, geographic location level, and language preferences in your EarthCoop profile."
+description: "Manage personal and professional profile information, primary residence, canonical governance placement, optional local address details, and account preferences."
 ---
 
-Your EarthCoop profile is more than a name and avatar — it drives how the platform places you in cooperative groups, matches you with relevant projects, and personalises your experience. Keeping your profile complete and current ensures you are automatically connected to the right communities at the right geographic level.
+Your EarthCoop profile supplies identity, professional, and residence information used by several product domains. Some fields affect presentation; others can affect canonical system-group membership and governance placement. A profile edit should therefore be understood according to the domain it changes rather than as a generic preference update.
 
-## Accessing your profile settings
+## Profile sections
 
-<Steps>
-  <Step title="Open your profile">
-    Click your avatar or name in the top navigation bar and select **Profile** from the dropdown menu, or navigate to `/profile` directly.
-  </Step>
-  <Step title="Go to Edit">
-    On your profile page, click the **Edit Profile** button to open the editable settings form.
-  </Step>
-  <Step title="Save your changes">
-    After updating any section, scroll to the bottom of that section and click **Save**. Each section (personal info, professional info, location, etc.) saves independently.
-  </Step>
-</Steps>
+The current profile experience can include personal information, professional/expertise information, residence/location data, privacy/preferences, and other account-related fields exposed by the live product.
+
+Exact labels and validation rules can evolve. This guide focuses on the durable relationships between profile data and EarthCoop's current group/location architecture.
 
 ## Personal information
 
-The personal information section covers your basic identity details.
+Identity and demographic fields can support account identity and the system dimensions that depend on verified member data. Age/gender-related system groups, where applicable, are derived from the relevant canonical profile facts rather than created manually by the member.
 
-| Field | Description |
-| --- | --- |
-| **First name** | Your given name, entered in Persian characters. |
-| **Last name** | Your family name, entered in Persian characters. |
-| **Date of birth** | Used to place you in the correct age-based cooperative group. |
-| **Gender** | Determines which gender-specific groups you are matched to. |
-| **Profile photo** | Upload a JPG or PNG image (max 4 MB). Click **Remove** to clear your current photo and revert to the default avatar. |
-| **Biography** | A short description of yourself (max 1,000 characters), visible to other members based on your privacy settings. |
-
-<Note>
-  Your name must be entered using Persian (Farsi) characters only. The form validates this automatically and rejects entries that contain Latin characters or numbers.
-</Note>
-
-### Privacy toggles
-
-Each personal information field has a visibility toggle that controls whether other members can see it on your public profile. You can independently show or hide your name, email address, phone number, date of birth, gender, national ID, biography, documents, social networks, groups list, and join date.
+Privacy controls determine what information other members can see where the current product exposes those controls. Privacy visibility is distinct from whether EarthCoop internally needs a field to apply a membership or governance rule.
 
 ## Professional information
 
-The professional section determines which **occupational** and **experience-based** cooperative groups you belong to. These groups are organised into a hierarchy — selecting a specialty automatically adds you to the corresponding groups at your current geographic level all the way up to the global level.
+Occupation and expertise data are used to derive relevant professional/specialty system-group dimensions. Changing these facts can cause the canonical membership projection to be recalculated.
 
-<Steps>
-  <Step title="Select occupational fields">
-    Choose one or more fields from the **Occupational Fields** selector. These represent your trade, industry, or professional sector. Subcategories are available for each top-level field.
-  </Step>
-  <Step title="Select experience fields">
-    Choose one or more fields from the **Experience Fields** selector. These represent areas of practical expertise that may differ from your formal occupation.
-  </Step>
-  <Step title="Save">
-    Click **Save** to apply changes. The platform immediately updates your group memberships — adding you to groups for newly selected fields and removing you from groups for deselected fields.
-  </Step>
-</Steps>
-
-<Warning>
-  Removing an occupational or experience field also removes you from all associated cooperative groups at every geographic level. Rejoin those groups manually if you remove a field by mistake.
-</Warning>
-
-## Location
-
-Your location determines which geographically scoped cooperative groups you belong to. EarthCoop uses a hierarchical location model with the following levels:
-
-| Level | Scope |
-| --- | --- |
-| Alley | Hyper-local (smallest unit) |
-| Street | Local |
-| Neighborhood | Local |
-| Region / Village | District |
-| City / Rural district | Municipal |
-| County | Sub-provincial |
-| Province | Regional |
-| Country | National |
-| Continent | Continental |
-| Global | Platform-wide |
-
-Your current location level is shown on your profile. To update your location:
-
-<Steps>
-  <Step title="Open Edit Profile">
-    Navigate to your profile and click **Edit Profile**.
-  </Step>
-  <Step title="Update your address">
-    Use the cascading address selectors to choose your continent, country, province, county, district, city or rural district, region, neighborhood, street, and alley.
-  </Step>
-  <Step title="Save">
-    Click **Save Location**. The platform removes you from groups tied to your old address and adds you to groups at the equivalent levels for your new address. All previous votes in location-based groups are also cleared automatically.
-  </Step>
-</Steps>
+You should not have to manually reconstruct system memberships that are derived from your canonical profile. The system is responsible for materializing the memberships that follow from the current profile, topology, and membership rules.
 
 <Info>
-  Your address is used solely for group assignment. It is not displayed on your public profile unless you choose to make it visible.
+  User-created groups are different from automatic system groups. A profile change can affect derived system-group membership without implying that every voluntary/user-created membership should be changed.
 </Info>
 
-## Language preference
+## Primary residence
 
-EarthCoop supports **English** and **Persian (Farsi)**. To switch languages:
+Your **Primary Residence** is the residence fact used by the canonical location/governance system. It determines the applicable **Governance Area** and the official location-based membership projection according to the actual topology of the place.
 
-1. Go to **Edit Profile**.
-2. Find the **Language** selector in the preferences section.
-3. Choose **English** or **Persian**.
-4. Save. The interface updates immediately.
+EarthCoop does not assume that every place has the same number of administrative levels. The topology can legitimately include cases such as:
 
-<Tip>
-  If you prefer the Persian calendar, set your **Calendar preference** to **Jalali**. This changes all date fields and timestamps across the platform from the Gregorian calendar to the Solar Hijri (Jalali) calendar.
-</Tip>
+- a city with no region;
+- a region with no neighborhood;
+- a village with no neighborhood;
+- rural branches whose valid governance base differs from an urban path.
 
-## Profile completeness
+Registration/profile flows should stop at the valid **base governance area** for that topology rather than forcing artificial levels to exist.
 
-A complete profile unlocks better group matching and participation features. The platform tracks completion across five areas: identity verification, professional fields, location, experience fields, and social information. When you complete a milestone, the system awards profile completion points to your account.
+## Official governance membership
 
-To see your current profile completeness level, check the progress indicator at the top of your Edit Profile page. Each incomplete section is highlighted with a prompt explaining what to fill in.
+The Primary Residence drives official location-based system memberships. At the member's applicable local/base governance level, the current membership rules determine the direct-participation role; higher official levels can be represented through observer/representation logic according to the canonical governance contract.
+
+Changing Primary Residence causes the current canonical memberships to be re-projected for the new residence. That update must not be described as erasing historical election records, prior audit facts, or past votes. Historical governance/election data has its own lifecycle and audit rules.
+
+## Optional local address and community membership
+
+After the required Primary Residence/base-governance selection, a member may add more precise local address information where supported. Micro-levels can include **Street, Alley, Complex, Block, and Building** depending on the local topology.
+
+These lower address details are **optional** for the member flow. They must not be required merely to complete official registration when the valid governance base has already been selected.
+
+Membership at these optional micro-location levels is a **community** participation choice where the current product exposes it; it is not automatically equivalent to official systemic governance/election eligibility.
+
+<Warning>
+  Do not infer official election rights from a Street, Alley, Complex, Block, or Building community membership unless the canonical official governance topology explicitly grants them.
+</Warning>
+
+## Proposed and pending locations
+
+If the required location is missing, the current location workflow can allow a member to propose a new place. A **proposed / pending** location is not the same as a finally approved reference record, but pending status should not unnecessarily block registration or the related pending system-group projection where the current contract permits continuation.
+
+A pending proposal can be visible to later members so they can choose/support the same proposed place rather than creating duplicates. The support threshold is part of the proposal-review process; **support is not final administrative approval**.
+
+When the required support/review conditions are met, the proposal proceeds through the applicable confirmation workflow. Until then, related groups or memberships can carry a pending state rather than pretending that the location has already received final approval.
+
+## Editing residence safely
+
+When correcting or changing residence:
+
+1. select the actual valid path for the new Primary Residence;
+2. let the topology determine the valid base governance area;
+3. use a pending proposal if a required real location is missing and the workflow supports it;
+4. save the canonical residence change;
+5. review the resulting official groups/governance placement;
+6. add optional micro-address/community detail separately if desired.
+
+A mistaken topology declaration or residence selection should be corrected through the supported location/governance workflow rather than by inventing duplicate geographic records.
+
+## Preferences and language
+
+Account preferences such as language, calendar, and notification behavior should be read from the options actually exposed by the current product. Documentation should not treat the existence of a translated document set as proof that every application surface is fully translated into every planned language.
+
+## Related account guides
 
 <CardGroup cols={2}>
   <Card title="Notification settings" icon="bell" href="/account/notifications">
-    Control which events trigger in-app or email notifications.
+    Review the notification controls exposed by your account.
   </Card>
 
   <Card title="Support tickets" icon="ticket" href="/account/support-tickets">
-    Open a ticket if you need help from the support team with your account.
+    Open and track a formal support case when account-specific help is needed.
   </Card>
 </CardGroup>
