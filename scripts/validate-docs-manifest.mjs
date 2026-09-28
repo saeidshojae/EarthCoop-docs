@@ -94,6 +94,22 @@ export async function validateDocsManifest(repositoryPath, manifest) {
       for (const language of allowedLanguages) {
         await validateRendition(repositoryPath, item.renditions[language], language, at, errors);
       }
+
+      const canonical = item.renditions[item.canonicalLanguage];
+      if (canonical && canonical.status !== 'current') {
+        errors.push(`${at} canonical rendition ${item.canonicalLanguage} must be current.`);
+      }
+      if (canonical && canonical.status === 'current' && canonical.sourceVersion !== item.version) {
+        errors.push(`${at}.renditions.${item.canonicalLanguage} is current but sourceVersion must equal document version ${item.version}.`);
+      }
+
+      for (const language of allowedLanguages) {
+        if (language === item.canonicalLanguage) continue;
+        const rendition = item.renditions[language];
+        if (rendition?.status === 'current' && rendition.sourceVersion !== item.version) {
+          errors.push(`${at}.renditions.${language} is current but sourceVersion must equal document version ${item.version}.`);
+        }
+      }
     }
 
     const provisionIds = new Set();
