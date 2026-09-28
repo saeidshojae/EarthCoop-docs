@@ -17,6 +17,7 @@ async function fixture() {
     'najm-hoda/overview.mdx': '# Hoda\nAssistant guide.',
     'fa/introduction.mdx': '# فارسی\nNewEarthCoop',
     'ar/introduction.mdx': '# العربية\nNewEarthCoop',
+    'en/foundational/index.mdx': '# Foundational index\nLegal source, not product guide.',
     'published/foundational/ECON-0.2.fa.md': '# ECON\nNewEarthCoop',
     'releases/foundational/2026-09-20/ECON-0.1.fa.md': '# release\nNewEarthCoop'
   };
@@ -43,7 +44,7 @@ test('inventories English product guides and excludes language/legal archives', 
     'najm-hoda/overview.mdx'
   ]) assert.ok(paths.includes(required), `missing ${required}`);
 
-  assert.ok(!paths.some((value) => /^(fa|ar|published|releases)\//.test(value)));
+  assert.ok(!paths.some((value) => /^(fa|ar|en|published|releases)\//.test(value)));
 });
 
 test('flags known legacy terms and sensitive capability claims case-insensitively', async () => {
