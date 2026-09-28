@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const excludedTopLevel = new Set([
-  '.github', 'ar', 'audits', 'docs', 'fa', 'glossary', 'node_modules',
+  '.github', 'ar', 'audits', 'docs', 'en', 'fa', 'glossary', 'node_modules',
   'published', 'references', 'releases', 'schemas', 'scripts', 'test', 'tests'
 ]);
 
