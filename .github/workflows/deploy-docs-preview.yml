@@ -1,0 +1,114 @@
+name: Deploy independent docs preview
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-preview
+  cancel-in-progress: false
+
+jobs:
+  deploy-preview:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout approved source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Run repository test suite
+        run: node --test
+
+      - name: Validate knowledge manifest
+        run: node scripts/validate-docs-manifest.mjs .
+
+      - name: Validate terminology
+        run: node scripts/validate-terminology.mjs .
+
+      - name: Check translation freshness
+        run: node scripts/check-translation-freshness.mjs .
+
+      - name: Build independent Docs Center
+        run: node scripts/build-docs-center.mjs --out dist
+
+      - name: Validate generated Docs Center
+        run: node scripts/validate-docs-center.mjs --out dist
+
+      - name: Upload rollback artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: docs-preview-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Preflight FTPS secrets
+        shell: bash
+        env:
+          DOCS_FTP_SERVER: ${{ secrets.DOCS_FTP_SERVER }}
+          DOCS_FTP_USERNAME: ${{ secrets.DOCS_FTP_USERNAME }}
+          DOCS_FTP_PASSWORD: ${{ secrets.DOCS_FTP_PASSWORD }}
+          DOCS_FTP_SERVER_DIR: ${{ secrets.DOCS_FTP_SERVER_DIR }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for name in DOCS_FTP_SERVER DOCS_FTP_USERNAME DOCS_FTP_PASSWORD DOCS_FTP_SERVER_DIR; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is not configured"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+          case "$DOCS_FTP_SERVER_DIR" in
+            */) ;;
+            *) echo "::error::DOCS_FTP_SERVER_DIR must end with /"; exit 1 ;;
+          esac
+
+      - name: Deploy dist to preview over strict FTPS
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ${{ secrets.DOCS_FTP_SERVER }}
+          username: ${{ secrets.DOCS_FTP_USERNAME }}
+          password: ${{ secrets.DOCS_FTP_PASSWORD }}
+          protocol: ftps
+          security: strict
+          local-dir: ./dist/
+          server-dir: ${{ secrets.DOCS_FTP_SERVER_DIR }}
+          dangerous-clean-slate: false
+          log-level: standard
+
+      - name: Verify live preview source SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          live_manifest="$(mktemp)"
+          for attempt in {1..12}; do
+            if curl --fail --silent --show-error \
+              --connect-timeout 10 --max-time 20 \
+              -H 'Cache-Control: no-cache' \
+              "https://docs-preview.earthcoop.ir/deployment-manifest.json?sha=${GITHUB_SHA}&attempt=${attempt}" \
+              -o "$live_manifest"; then
+              live_sha="$(node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));process.stdout.write(m.sourceSha||'')" "$live_manifest")"
+              if [ "$live_sha" = "$GITHUB_SHA" ]; then
+                echo "Preview deployment verified for $GITHUB_SHA"
+                exit 0
+              fi
+            fi
+            sleep 5
+          done
+          echo "::error::Live preview SHA mismatch after bounded retries"
+          exit 1
