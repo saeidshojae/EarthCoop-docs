@@ -8,6 +8,13 @@ function entrySchema() {
   return schema.properties.entries.items;
 }
 
+function resolveLocalRef(node) {
+  if (!node?.$ref) return node;
+  assert.match(node.$ref, /^#\/$defs\//);
+  const key = node.$ref.replace('#/$defs/', '');
+  return schema.$defs[key];
+}
+
 test('manifest contract is schemaVersion 2 with canonical default language', () => {
   assert.equal(schema.properties.schemaVersion.const, 2);
   assert.deepEqual(schema.required, ['schemaVersion', 'canonicalDefaultLanguage', 'entries']);
@@ -29,7 +36,7 @@ test('entry contract requires one document identity and multilingual renditions'
 });
 
 test('rendition contract only allows defined translation statuses and nullable untranslated sources', () => {
-  const rendition = entrySchema().properties.renditions.properties.fa;
+  const rendition = resolveLocalRef(entrySchema().properties.renditions.properties.fa);
   assert.deepEqual(rendition.required, ['source', 'status', 'sourceVersion']);
   assert.deepEqual(rendition.properties.status.enum, ['current', 'needs_review', 'outdated', 'not_translated']);
   assert.deepEqual(rendition.properties.source.type, ['string', 'null']);
