@@ -11,7 +11,7 @@
         "tabs": [
           {"tab": "Documentation", "groups": [
             {"group": "Get Started", "pages": ["introduction", "quickstart", "account-setup"]},
-            {"group": "Groups & Community", "pages": ["groups/overview", "groups/creating-a-group", "groups/joining-a-group", "groups/chat-and-messaging", "groups/polls-and-elections"]},
+            {"group": "Groups & Community", "pages": ["groups/overview", "governance/location-and-governance", "groups/creating-a-group", "groups/joining-a-group", "groups/chat-and-messaging", "groups/polls-and-elections"]},
             {"group": "Projects & Investment", "pages": ["projects/overview", "projects/submitting-a-project", "projects/investing", "projects/tracking-status"]},
             {"group": "NajmBahar Finance", "pages": ["najm-bahar/overview", "najm-bahar/sub-accounts", "najm-bahar/transfers", "najm-bahar/membership-fees"]},
             {"group": "NajmHoda AI", "pages": ["najm-hoda/overview", "najm-hoda/chatting-with-najm-hoda", "najm-hoda/knowledge-base"]},
