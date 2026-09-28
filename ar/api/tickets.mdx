@@ -1,0 +1,82 @@
+---
+title: "Tickets API — ایجاد، به‌روزرسانی و نظر"
+sidebarTitle: "Tickets API"
+description: "اندپوینت‌های REST API برای مدیریت تیکت‌های پشتیبانی: ایجاد، لیست، مشاهده، به‌روزرسانی، بستن و افزودن نظر با پیوست."
+---
+
+همه اندپوینت‌ها نیازمند Bearer token هستند. تیکت‌ها کد پیگیری با فرمت `TK-XXXXXXXX` دریافت می‌کنند.
+
+## GET /api/tickets
+
+لیست تیکت‌ها. پارامترها: `status` (open/in-progress/closed)، `priority`، `category`، `q`، `per_page` (پیش‌فرض ۱۵).
+
+```bash
+curl -X GET "https://your-domain.com/api/tickets?status=open&per_page=10" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+## GET /api/tickets/stats
+
+آمار تفکیکی به تفکیک وضعیت.
+
+```json
+{ "success": true, "data": { "total": 27, "open": 12, "in_progress": 4, "closed": 11 } }
+```
+
+## POST /api/tickets
+
+ایجاد تیکت جدید.
+
+| فیلد | الزامی | توضیح |
+| --- | --- | --- |
+| `subject` | بله | حداکثر ۲۵۵ کاراکتر |
+| `message` | بله | حداقل ۱۰ کاراکتر |
+| `priority` | خیر | `low`/`normal`/`high` |
+| `category` | خیر | دسته |
+| `tags` | خیر | آرایه آیدی تگ‌ها |
+| `attachments` | خیر | حداکثر ۱۰MB فایل |
+
+<CodeGroup>
+
+```bash JSON
+curl -X POST https://your-domain.com/api/tickets \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"subject":"...","message":"...","priority":"high"}'
+```
+
+```bash Multipart
+curl -X POST https://your-domain.com/api/tickets \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -F "subject=..." \
+  -F "message=..." \
+  -F "attachments[]=@/path/to/file.png"
+```
+
+</CodeGroup>
+
+## GET /api/tickets/{id}
+
+جزئیات کامل تیکت شامل نظرات، پیوست‌ها، تگ‌ها و تاریخچه فعالیت‌ها.
+
+## PUT /api/tickets/{id}
+
+به‌روزرسانی `priority` یا `category`. تیکت‌های بسته ویرایش‌پذیر نیستند.
+
+## PUT /api/tickets/{id}/close
+
+بستن تیکت.
+
+## POST /api/tickets/{id}/comments
+
+افزودن نظر (حداقل ۵ کاراکتر). اگر تیکت بسته باشد، دوباره باز می‌شود.
+
+## GET /api/tickets/{id}/attachments/{attachment_id}/download
+
+دانلود فایل پیوست. پاسخ باینری است، نه JSON.
+
+```bash
+curl -X GET https://your-domain.com/api/tickets/35/attachments/14/download \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  --output screenshot.png
+```

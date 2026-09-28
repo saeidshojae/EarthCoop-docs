@@ -1,0 +1,102 @@
+---
+title: "Notifications API — دریافت، خوانده و حذف هشدارها"
+sidebarTitle: "Notifications API"
+description: "اندپوینت‌های REST API برای دریافت، نشانه‌گذاری به‌عنوان خوانده‌شده و حذف اعلان‌های کاربر."
+---
+
+API اعلان‌ها به شما اجازه می‌دهد اعلان‌های درون برنامه‌ای را دریافت، نشانه‌گذاری و حذف کنید. همه اندپوینت‌ها نیازمند Bearer token هستند.
+
+## انواع اعلان
+
+### `project_status_changed`
+
+برای صاحب پروژه وقتی وضعیت پروژه تغییر می‌کند.
+
+فیلدهای `data`: `type`، `project_id`، `project_title`، `status` (approved/rejected/under\_review/archived)، `message`، `comment`، `url`.
+
+### `project_revision_requested`
+
+وقتی ادمین درخواست بازنگری می‌دهد.
+
+فیلدها: `type`، `project_id`، `project_title`، `message`، `revision_notes`، `url`.
+
+### `new_investment_received`
+
+وقتی سرمایه‌گذار پرداخت می‌کند.
+
+فیلدها: `type`، `investment_id`، `project_id`، `project_title`، `amount` (به گل)، `investor_name`، `message`، `url`.
+
+### `investment_status_changed`
+
+وقتی وضعیت سرمایه‌گذاری تغییر می‌کند.
+
+فیلدها: `type`، `investment_id`، `project_title`، `amount`، `status` (paid/active/completed/cancelled/refunded)، `message`، `notes`، `url`.
+
+## ساختار داده اعلان
+
+| فیلد | نوع |
+| --- | --- |
+| `id` | UUID اعلان |
+| `type` | دسته اعلان |
+| `data` | داده وابسته به نوع |
+| `read_at` | تاریخ ISO 8601 خواندن یا `null` |
+| `created_at` | تاریخ ایجاد |
+
+## GET /api/notifications
+
+لیست اعلان‌های خوانده‌نشده کاربر به ترتیب نزولی.
+
+```bash
+curl -X GET https://your-domain.com/api/notifications \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```json
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "type": "project_status_changed",
+    "data": {
+      "type": "project_status_changed",
+      "project_id": 123,
+      "project_title": "...",
+      "status": "approved",
+      "message": "...",
+      "url": "..."
+    },
+    "read_at": null,
+    "created_at": "2024-11-15T10:30:00Z"
+  }
+]
+```
+
+## POST /api/notifications/{id}
+
+نشانه‌گذاری به عنوان خوانده‌شده.
+
+```bash
+curl -X POST https://your-domain.com/api/notifications/{uuid} \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+```json
+{ "success": true, "message": "Notification marked as read." }
+```
+
+## DELETE /api/notifications/{id}
+
+حذف دائمی.
+
+<Note>
+  حذف قابل برگشت نیست. برای حفظ، به جای حذف، نشانه‌گذاری کنید.
+</Note>
+
+```bash
+curl -X DELETE https://your-domain.com/api/notifications/{uuid} \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+## خطاها
+
+- `401 Unauthenticated` — توکن وجود ندارد.
+- `404 Not found` — اعلان یافت نشد.

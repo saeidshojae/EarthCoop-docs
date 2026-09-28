@@ -1,0 +1,97 @@
+---
+title: "Geographic API: استان، شهر و مناطق"
+sidebarTitle: "Geographic API"
+description: "اندپوینت‌های API عمومی برای دریافت داده‌های سلسله‌مراتب جغرافیایی شامل قاره، استان، شهرستان، بخش، شهر و روستا."
+---
+
+API جغرافیایی دسترسی خواندنی-تنها به سلسله‌مراتب مکانی را ارائه می‌دهد. همه اندپوینت‌ها عمومی و بدون احراز هویت هستند.
+
+سلسله‌مراتب:
+
+```text
+قاره → کشور → استان → شهرستان → بخش → شهر/روستا → منطقه → محله → خیابان → کوچه
+```
+
+## GET /api/provinces
+
+لیست همه استان‌های فعال.
+
+```bash
+curl -X GET https://your-domain.com/api/provinces -H "Accept: application/json"
+```
+
+```json
+{ "data": [ { "id": 1, "name": "Tehran" }, { "id": 2, "name": "Isfahan" } ] }
+```
+
+## GET /api/counties/{id}
+
+شهرستان‌های یک استان.
+
+## GET /api/districts/{id}
+
+بخش‌های یک شهرستان.
+
+## GET /api/cities/{id}
+
+شهرهای یک بخش.
+
+## GET /api/villages/{id}
+
+روستاهای یک بخش.
+
+## GET /api/geographic/continents
+
+همه قاره‌ها. پاسخ آرایه تخت (بدون `data` پوشش).
+
+```json
+[ { "id": 1, "name": "Asia" }, { "id": 2, "name": "Europe" } ]
+```
+
+## GET /api/geographic/{level}/{parentId}/children
+
+فرزندان مستقیم یک جوهر جغرافیایی.
+
+| سطح (level) | برمی‌گرداند |
+| --- | --- |
+| `continent` | کشورها |
+| `country` | استان‌ها |
+| `province` | شهرستان‌ها |
+| `county` | بخش‌ها |
+| `section` | شهرها و روستاها |
+| `city` | مناطق |
+| `region` | محلات |
+| `neighborhood` | خیابان‌ها |
+| `street` | کوچه‌ها |
+
+<Warning>
+  در سطح `section`، IDs شهر `city_{id}` و روستا `rural_{id}` پیشونددارند.
+</Warning>
+
+### مثال‌ها
+
+```bash
+curl https://your-domain.com/api/geographic/continent/1/children
+curl https://your-domain.com/api/geographic/country/7/children
+curl https://your-domain.com/api/geographic/section/20/children
+curl https://your-domain.com/api/geographic/city/city_30/children
+```
+
+### پاسخ نمونه — `section/20/children`
+
+```json
+[
+  { "id": "city_30", "name": "Tehran" },
+  { "id": "rural_5", "name": "دهستان لواسان" }
+]
+```
+
+## ساخت سلکتور مکان سلسله‌مراتبی
+
+1. `GET /api/geographic/continents`
+2. `GET /api/geographic/continent/{id}/children`
+3. `GET /api/geographic/country/{id}/children`
+4. `GET /api/geographic/province/{id}/children`
+5. `GET /api/geographic/county/{id}/children`
+6. `GET /api/geographic/section/{id}/children`
+7. `GET /api/geographic/city/city_{N}/children`
