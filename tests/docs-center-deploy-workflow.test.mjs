@@ -74,3 +74,21 @@ test('post-deploy smoke checks only preview manifest with bounded retries and ex
   assert.match(text, /Live preview SHA mismatch/);
   assert.doesNotMatch(text, /https:\/\/docs\.earthcoop\.ir/);
 });
+
+test('operator runbook records exact preview root, secret names, FTPS, backup, SHA check and rollback', async () => {
+  const runbook = await readFile(path.join(root, 'docs/operations/docs-preview-deployment.md'), 'utf8');
+  assert.match(runbook, /docs-preview\.earthcoop\.ir/);
+  assert.match(runbook, /\/home3\/btboeapy\/docs-preview\.earthcoop\.ir/);
+  for (const name of ['DOCS_FTP_SERVER', 'DOCS_FTP_USERNAME', 'DOCS_FTP_PASSWORD', 'DOCS_FTP_SERVER_DIR']) {
+    assert.match(runbook, new RegExp(name));
+  }
+  assert.match(runbook, /relative to the FTP account root/i);
+  assert.match(runbook, /FTPS/i);
+  assert.match(runbook, /backup/i);
+  assert.match(runbook, /deployment-manifest\.json/);
+  assert.match(runbook, /sourceSha/);
+  assert.match(runbook, /rollback/i);
+  assert.match(runbook, /revert/i);
+  assert.match(runbook, /docs\.earthcoop\.ir/);
+  assert.match(runbook, /out of scope/i);
+});
