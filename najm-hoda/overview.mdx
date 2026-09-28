@@ -1,57 +1,69 @@
 ---
 title: "NajmHoda: Your AI Support Assistant on EarthCoop"
 sidebarTitle: "Overview"
-description: "NajmHoda is EarthCoop's built-in AI assistant, helping you find answers, navigate platform features, and get instant support without leaving the page."
+description: "Understand NajmHoda's verified current chat and assistance capabilities, its authorization boundary, and the features that remain evolving or in development."
 ---
 
-NajmHoda is EarthCoop's built-in AI assistant — always available to answer your questions, walk you through platform features, and connect you with the right resources. Whether you are new to the cooperative or need a quick reminder of how something works, NajmHoda is the fastest way to get help without leaving the page you are on.
+NajmHoda is EarthCoop's AI assistance and orchestration subsystem. The **Current product** includes a real member chat path, conversation history, policy-aware orchestration, conditional support escalation, and selected context-aware assistance flows. Other specialist, knowledge, and action capabilities are still **evolving / In development** and should not be treated as uniformly available merely because the architecture anticipates them.
 
-## What NajmHoda can do
+## Current product
 
-NajmHoda handles a broad range of support tasks directly in the chat widget:
+For an authenticated ordinary member, the current chat path routes the conversation through the **Steward** mode. The controller records the conversation under that member, validates the request, passes it through the entry-policy and execution layers, and can return suggestions or escalation information when the applicable services provide them.
 
-- **Answer platform questions** — from account setup and group membership to NajmBahar finances and project investment.
-- **Guide you through features** — ask how to create a cooperative group, submit a project, or configure your notification preferences, and NajmHoda responds with step-by-step instructions.
-- **Surface knowledge base articles** — every response automatically searches published KB articles, blog posts, and FAQs to back up its answer with authoritative references.
-- **Suggest related questions** — NajmHoda proactively surfaces follow-up questions so you can explore a topic further without typing another query.
-- **Escalate to human support** — when a question falls outside NajmHoda's knowledge, it flags the conversation for the support team and can help you open a ticket.
+Current code also supports owner-scoped conversation retrieval, listing, archiving, and deletion. These are real application capabilities; exact placement or styling in the user interface may evolve independently of the underlying controller contract.
 
-## The Steward agent
+## Assistance is not authority
 
-When you chat with NajmHoda as a regular member, you interact with the **Steward** agent. The Steward is the user-facing AI mode, purpose-built to search the knowledge base and respond in a clear, friendly tone. It searches across three content sources on every question:
+NajmHoda can explain, draft, suggest, summarize, and in some explicitly authorized contexts help invoke a product workflow. It does **not** gain authority simply because a user asks it to act.
 
-| Source | Content |
-| --- | --- |
-| Knowledge Base | 20\+ published articles across 18 categories |
-| Blog posts | Platform news, tips, and feature announcements |
-| FAQs | Common questions with verified answers |
+The current execution boundary is deliberately server-controlled:
 
-The Steward formats every response the same way so you always know where to look for more detail:
+- browser-provided page context is informational only;
+- the server resolves the authenticated user and trusted page/domain context again;
+- client-supplied fields cannot grant action authority;
+- mutating actions require the applicable **server authorization**, entry policy, role/ownership checks, and domain service;
+- NajmHoda cannot legislate new rules or override EarthCoop law, policy, permissions, or monetary safeguards.
 
-- **Answer** — a direct, plain-language response to your question.
-- **Steps** — numbered instructions when the answer involves an action.
-- **Example** — a concrete illustration when it helps clarify the steps.
-- **Related KB articles** — links to the source articles the answer drew from.
-- **Related questions** — suggested follow-ups you may want to ask next.
+<Warning>
+  A conversational answer is not itself an approval, election result, legal decision, financial authorization, or completed system mutation. The underlying domain must independently authorize and record the operation.
+</Warning>
 
-<Note>
-  Admin users have access to additional specialist agents. If you are a platform administrator, your chat widget may offer engineering, pilot, or guide modes in addition to the Steward.
-</Note>
+## Context-aware assistance
 
-## How to get started
+Some current flows are page-aware. For example, the implementation contains dedicated assistants for selected private group/action-item and secretariat contexts. Those helpers are constrained by their server-resolved context and domain rules.
 
-Open the chat widget from any page on the platform and type your question in plain language — no special syntax required. NajmHoda understands natural questions like "How do I invite someone to my group?" or "Where do I see my NajmBahar balance?".
+The secretariat drafting assistant provides a useful example of the boundary: it may preview or save a **Draft**, but it is explicitly not allowed to submit, register, dispatch, or publish merely because the chat requested that outcome. A later formal workflow must perform those actions under its own authority.
+
+## Knowledge and support
+
+NajmHoda can use EarthCoop knowledge sources and support infrastructure through the configured orchestration path. The exact retrieval sources, ranking strategy, indexing state, and availability can change as the subsystem evolves, so this documentation does not promise that every answer follows one fixed search recipe.
+
+When the current escalation policy determines that a conversation should move to human support, the chat flow can ask the support service to create or link the relevant ticket information. Escalation is conditional and should not be read as a guarantee that every uncertain answer automatically creates a ticket.
+
+## Evolving / In development capabilities
+
+NajmHoda is a central long-term component of EarthCoop, but several areas remain under active development, including parts of the knowledge pipeline, broader specialist orchestration, and additional authorized actions across product domains.
+
+The safe documentation rule is:
+
+```text
+architectural intention ≠ current capability
+assistant suggestion ≠ system authority
+successful domain mutation = trusted authorization + domain execution + audit record
+```
+
+## Explore NajmHoda
 
 <CardGroup cols={3}>
   <Card title="Chat with NajmHoda" icon="message-bot" href="/najm-hoda/chatting-with-najm-hoda">
-    Learn how to open the widget, read past conversations, and submit feedback on responses.
+    Learn the verified member chat flow, conversation boundary, and server-side authorization rules.
   </Card>
 
   <Card title="Knowledge Base" icon="book-open" href="/najm-hoda/knowledge-base">
-    Browse articles directly or see how NajmHoda uses them to power its answers.
+    Understand the knowledge sources and the limits of freshness and retrieval guarantees.
   </Card>
 
   <Card title="Support Tickets" icon="ticket" href="/account/support-tickets">
-    Open a ticket when you need hands-on help from the EarthCoop support team.
+    Use the support system when a matter requires human handling or a formal ticket workflow.
   </Card>
 </CardGroup>
