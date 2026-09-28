@@ -10,7 +10,7 @@ function entrySchema() {
 
 function resolveLocalRef(node) {
   if (!node?.$ref) return node;
-  assert.match(node.$ref, /^#\/$defs\//);
+  assert.ok(node.$ref.startsWith('#/$defs/'));
   const key = node.$ref.replace('#/$defs/', '');
   return schema.$defs[key];
 }
