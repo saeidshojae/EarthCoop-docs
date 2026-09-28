@@ -42,11 +42,36 @@ function clearElement(element) {
   while (element.firstChild) element.removeChild(element.firstChild);
 }
 
-function appendTextBlock(parent, text) {
-  const pre = document.createElement('pre');
-  pre.className = 'source-text';
-  pre.textContent = text;
-  parent.appendChild(pre);
+export function renderSourceBlocks(parent, text, headings = [], documentObject = document) {
+  const lines = String(text ?? '').split(/\r?\n/);
+  let headingIndex = 0;
+  let textBuffer = [];
+
+  function flushText() {
+    if (textBuffer.length === 0) return;
+    const pre = documentObject.createElement('pre');
+    pre.className = 'source-text';
+    pre.textContent = textBuffer.join('\n');
+    parent.appendChild(pre);
+    textBuffer = [];
+  }
+
+  for (const line of lines) {
+    const match = /^(#{1,6})\s+(.+?)\s*$/.exec(line);
+    const heading = match ? headings[headingIndex] : null;
+    if (match && heading) {
+      flushText();
+      const depth = Math.min(6, Math.max(1, Number(heading.depth) || match[1].length));
+      const element = documentObject.createElement(`h${depth}`);
+      element.textContent = heading.text;
+      element.dataset.anchor = heading.anchor;
+      parent.appendChild(element);
+      headingIndex += 1;
+      continue;
+    }
+    textBuffer.push(line);
+  }
+  flushText();
 }
 
 function makeToc(headings, onNavigate) {
@@ -155,7 +180,7 @@ async function bootstrap() {
     clearElement(body);
     clearElement(toc);
     if (resolved.rendition) {
-      appendTextBlock(body, resolved.rendition.text ?? '');
+      renderSourceBlocks(body, resolved.rendition.text ?? '', resolved.rendition.headings ?? []);
       toc.appendChild(makeToc(resolved.rendition.headings, (anchor) => {
         const target = document.querySelector(`[data-anchor="${CSS.escape(anchor)}"]`);
         target?.scrollIntoView({ behavior: 'smooth', block: 'start' });

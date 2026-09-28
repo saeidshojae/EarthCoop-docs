@@ -65,3 +65,38 @@ test('runtime source does not inject raw document text with innerHTML', async ()
   const app = await text('site/app.js');
   assert.doesNotMatch(app, /innerHTML\s*=\s*[^;]*(document|rendition|source|text)/i);
 });
+
+test('document renderer creates real TOC anchor targets without innerHTML', async () => {
+  const app = await import(pathToFileURL(path.join(root, 'site/app.js')));
+  const appended = [];
+  const fakeDocument = {
+    createElement(tagName) {
+      return {
+        tagName: tagName.toUpperCase(),
+        className: '',
+        textContent: '',
+        dataset: {},
+      };
+    },
+  };
+  const fakeParent = {
+    appendChild(node) { appended.push(node); },
+  };
+
+  app.renderSourceBlocks(
+    fakeParent,
+    '# سند مادر\n\nمتن آغازین\n\n## عدالت\n\nمتن عدالت',
+    [
+      { depth: 1, text: 'سند مادر', anchor: 'سند-مادر' },
+      { depth: 2, text: 'عدالت', anchor: 'عدالت' },
+    ],
+    fakeDocument,
+  );
+
+  const headings = appended.filter((node) => /^H[1-6]$/.test(node.tagName));
+  assert.deepEqual(headings.map((node) => [node.tagName, node.textContent, node.dataset.anchor]), [
+    ['H1', 'سند مادر', 'سند-مادر'],
+    ['H2', 'عدالت', 'عدالت'],
+  ]);
+  assert.ok(appended.some((node) => node.textContent.includes('متن آغازین')));
+});
