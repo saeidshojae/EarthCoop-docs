@@ -39,7 +39,7 @@ The main EarthCoop application already uses GitHub Actions plus FTPS deployment 
 ### In scope
 
 - Reintroduce the independent Docs Center frontend/build source into `EarthCoop-docs` in a maintainable location.
-- Produce a deterministic static output directory, tentatively `dist/`.
+- Produce a deterministic static output directory at `dist/`.
 - Build content from repository-controlled manifests/registries rather than a manually assembled ZIP.
 - Preserve multilingual behavior for Persian, English, and Arabic as defined by the current documentation registry/translation model.
 - Preserve RTL for Persian and Arabic and LTR for English.
@@ -70,13 +70,13 @@ The independent Docs Center must preserve the repository's governance model:
 
 The frontend must render exact legal/editorial status values supplied by governed metadata. It must not infer that `registered`, `current`, `final`, `published`, or `effective` are equivalent.
 
-## 5. Proposed repository layout
+## 5. Repository layout
 
-The implementation plan may refine names after inspecting historical package artifacts, but the design target is:
+The independent frontend source will live under `site/` and generated output under `dist/`:
 
 ```text
 EarthCoop-docs/
-├─ app/ or site/                 # independent Docs Center source
+├─ site/                         # independent Docs Center source
 │  ├─ index.html / templates
 │  ├─ js/
 │  ├─ css/
@@ -93,7 +93,7 @@ EarthCoop-docs/
    └─ deploy-docs-preview.yml
 ```
 
-`dist/` should normally be generated in CI and not treated as source-of-truth. Whether it is committed must be decided in implementation planning; the default recommendation is **not** to commit generated output.
+`dist/` is generated in CI and is not authoritative source. It should not be committed to `main`; the build artifact is retained by CI for debugging and rollback.
 
 ## 6. Deterministic build contract
 
@@ -153,12 +153,14 @@ Search results must preserve locale and navigate to the correct document/anchor.
 
 The generated site must work correctly on ordinary cPanel static hosting without requiring a persistent Node/PHP application server.
 
-The implementation must choose one of these route strategies during planning based on the verified cPanel baseline:
+The preview runtime will use hash-based application routes (`/#/...`). This choice is deliberate because:
 
-1. hash-based routing (`/#/...`) requiring no rewrite rules; or
-2. clean paths with a tested `.htaccess` fallback to `index.html`.
+- it requires no cPanel rewrite dependency;
+- direct refreshes remain safe on ordinary static hosting;
+- the main EarthCoop application already uses document links in the `/#/documents/{id}` family;
+- it gives the lowest-risk compatibility path for the preview migration.
 
-The chosen strategy must preserve current inbound links used by the main EarthCoop application, especially document deep links. If compatibility redirects are needed, they must be explicit and tested.
+The build must preserve inbound document deep links used by the main EarthCoop application, especially `/#/documents/{id}`. Any legacy route aliases found during implementation must be explicit and covered by tests.
 
 ## 10. CI gates
 
@@ -213,7 +215,8 @@ Initial target behavior:
 - credentials stored only in GitHub Actions secrets;
 - deployment uploads only `dist/**` contents;
 - never upload `.git`, source MDX trees, tests, GitHub workflow files, secrets, or local environment files;
-- no destructive clean-slate deletion by default.
+- no destructive clean-slate deletion by default;
+- third-party deployment actions must be pinned to a reviewed immutable commit SHA before the workflow is merged.
 
 ### Required repository secrets
 
@@ -290,7 +293,7 @@ Before cutover, verify:
 - No FTP password or username in repository content or logs.
 - No `.env` deployment artifact.
 - Actions use minimum `contents: read` permission unless another permission is demonstrably required.
-- Third-party GitHub Actions should be pinned to a reviewed version; pinning to a commit SHA should be considered for the production-cutover phase.
+- Third-party GitHub Actions used by the deployment path are pinned to reviewed immutable commit SHAs.
 - Generated content must escape/sanitize untrusted markup as appropriate for the chosen renderer.
 - CI logs must not print secret values or server credentials.
 
@@ -310,8 +313,8 @@ Each successful workflow should make it easy to answer:
 The implementation plan should be dependency-ordered and test-first:
 
 1. recover/inspect the most recent independent Docs Center package/source baseline;
-2. define exact static runtime and deep-link compatibility requirements;
-3. place independent frontend source under version control;
+2. verify the exact visual/functional baseline and any legacy deep-link aliases;
+3. place independent frontend source under `site/`;
 4. add failing build-contract tests;
 5. implement deterministic build to `dist/`;
 6. add full-text search index generation and locale tests;
@@ -326,7 +329,7 @@ The implementation plan should be dependency-ordered and test-first:
 
 This phase is complete when:
 
-- a clean checkout of `EarthCoop-docs@<sha>` can deterministically build the independent Docs Center;
+- a clean checkout of a specific `EarthCoop-docs` commit can deterministically build the independent Docs Center;
 - all repository and Docs Center validation gates pass before deployment;
 - merging an approved change to `main` automatically deploys only generated output to `docs-preview.earthcoop.ir`;
 - the deployed preview exposes the exact source commit/build metadata;
