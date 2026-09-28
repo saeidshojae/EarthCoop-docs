@@ -68,7 +68,7 @@ Membership Fee Policy Parameter است. مقدار پایه جاری ۱۲ Bahar 
 
 ## STD-032 / EC-4006 — Activation
 
-Route allowlist فقط شامل MEMBERSHIP_FEE، PARTICIPATION_POINT، PUBLIC_PROJECT و EQUAL_GENERAL_ACTIVATION است. OTHER/ADMIN/MANUAL یا مسیر آزاد ممنوع است. هر Activation باید Event ID، Member ID، Amount، Route، Source Dim Position، Legal Basis، Policy Version، Reference، Timestamp، Actor، Idempotency Key و Status داشته باشد. Amount <= Remaining Eligible Dim. Atomicity، Idempotency و Concurrency Control الزامی‌اند.
+Route allowlist فقط شامل MEMBERSHIP_FEE، PARTICIPATION_POINT، PUBLIC_PROJECT و EQUAL_GENERAL_ACTIVATION است. OTHER/ADMIN/MANUAL یا مسیر آزاد ممنوع است. هر Activation باید Event ID، Member ID، Amount، Route، Source Dim Position، Legal Basis، Policy Version، Reference، Timestamp، Actor، Idempotency Key و Status داشته باشد. Amount ≤ Remaining Eligible Dim. Atomicity، Idempotency و Concurrency Control الزامی‌اند.
 
 ## STD-033 / EC-4007 — صندوق‌ها و خزانه
 
