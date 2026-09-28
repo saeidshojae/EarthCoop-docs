@@ -24,12 +24,13 @@
 - FTPS deploy uploads only `dist/**`; no repository internals, source MDX, tests, `.git`, workflows, or environment files.
 - Third-party deployment actions must be pinned to reviewed commit SHAs before merge.
 - No destructive remote clean-slate deletion by default.
+- Preview deployment must perform an HTTP smoke check after upload and verify the live `deployment-manifest.json` source SHA before the workflow is considered successful.
 
 ## File Structure
 
 - Create: `site/index.html` — static application shell and no-script fallback.
 - Create: `site/styles.css` — shared responsive styles and RTL/LTR rules.
-- Create: `site/app.js` — hash router, locale switcher, document rendering, navigation, TOC, copy/print controls.
+- Create: `site/app.js` — hash router, locale switcher, document rendering, navigation, TOC, copy/print/download controls.
 - Create: `site/search.js` — client-side full-text search over generated search index.
 - Create: `site/assets/` — version-controlled logo/icons needed by the independent runtime.
 - Create: `scripts/docs-center-lib.mjs` — focused pure functions for source selection, frontmatter/body normalization, routes, locale/status metadata, and search extraction.
@@ -38,7 +39,7 @@
 - Create: `tests/docs-center-source.test.mjs` — source-selection/status/fallback contracts.
 - Create: `tests/docs-center-build.test.mjs` — deterministic build/deployment-manifest/search-index contracts.
 - Create: `tests/docs-center-runtime.test.mjs` — static runtime contract checks without a browser dependency.
-- Create: `tests/docs-center-deploy-workflow.test.mjs` — workflow trigger, gating, secret names, deploy scope, and SHA-pinning contract.
+- Create: `tests/docs-center-deploy-workflow.test.mjs` — workflow trigger, gating, secret names, deploy scope, post-deploy check, and SHA-pinning contract.
 - Create: `.github/workflows/deploy-docs-preview.yml` — build artifact + preview FTPS deployment after `main` validation.
 - Modify: `.gitignore` — ignore `dist/` if not already ignored.
 - Modify: `.github/workflows/validate-knowledge-content.yml` — add independent Docs Center build/validation gate on PR and `main`.
@@ -152,11 +153,11 @@ git commit -m "feat(docs): define independent center source contracts"
 
 **Interfaces:**
 - Consumes: generated `content-index.json`, `search-index.json`, `deployment-manifest.json` from Task 4.
-- Produces: static runtime capable of hash routing, document rendering, TOC, locale switching, print/copy, search, and responsive RTL/LTR rendering.
+- Produces: static runtime capable of hash routing, document rendering, TOC, locale switching, print/copy/download, search, and responsive RTL/LTR rendering.
 
 - [ ] **Step 1: Write failing runtime contract tests**
 
-Assert the shell contains no Mintlify dependency; router recognizes `#/documents/{id}`; locale setter applies `lang` and `dir`; print/copy controls exist; search module filters by active locale; unavailable rendition UI is explicit; runtime does not use `innerHTML` with raw source text.
+Assert the shell contains no Mintlify dependency; router recognizes `#/documents/{id}`; locale setter applies `lang` and `dir`; print/copy/download controls exist; download exports the currently displayed source/rendition rather than an unrelated locale; search module filters by active locale; unavailable rendition UI is explicit; runtime does not use `innerHTML` with raw source text.
 
 - [ ] **Step 2: Run focused tests and verify RED**
 
@@ -199,7 +200,7 @@ git commit -m "feat(docs): restore independent static docs center shell"
 
 - [ ] **Step 1: Write failing build tests**
 
-Use a temp fixture directory. Assert two builds with the same fixed `sourceSha` and `builtAt` produce byte-identical governed outputs; manifest contains repository, SHA, build schema version, locales `[fa,en,ar]`, file count, and hashes; search body includes body text/headings, not only title; route records use `/#/documents/{id}`; malformed source fails closed.
+Use a temp fixture directory. Assert two builds with the same fixed `sourceSha` and `builtAt` produce byte-identical governed outputs; manifest contains repository, SHA, build schema version, locales `[fa,en,ar]`, file count, and hashes; search body includes body text/headings, not only title; route records use `/#/documents/{id}`; downloadable source/rendition metadata is locale-specific; malformed source fails closed.
 
 - [ ] **Step 2: Run focused tests and verify RED**
 
@@ -302,11 +303,11 @@ git commit -m "test(docs): gate independent center build in CI"
 
 **Interfaces:**
 - Consumes: validated `dist/`; GitHub secrets `DOCS_FTP_SERVER`, `DOCS_FTP_USERNAME`, `DOCS_FTP_PASSWORD`, `DOCS_FTP_SERVER_DIR`.
-- Produces: serialized preview deployment on `main`, manual re-deploy via `workflow_dispatch`, and a retained build artifact.
+- Produces: serialized preview deployment on `main`, manual re-deploy via `workflow_dispatch`, retained build artifact, and post-deploy live SHA verification.
 
 - [ ] **Step 1: Write failing workflow contract test**
 
-Parse workflow text and assert: trigger is `push` to `main` plus `workflow_dispatch`; `permissions: contents: read`; build/validate occurs before deploy; artifact upload is present; concurrency group exists with `cancel-in-progress: false`; all four exact secret names are referenced; local-dir is `dist/`; protocol is FTPS; no production domain/DNS step; FTP action is pinned to full 40-hex commit SHA, not a mutable tag.
+Parse workflow text and assert: trigger is `push` to `main` plus `workflow_dispatch`; `permissions: contents: read`; build/validate occurs before deploy; artifact upload is present; concurrency group exists with `cancel-in-progress: false`; all four exact secret names are referenced; local-dir is `dist/`; protocol is FTPS; no production domain/DNS step; FTP action is pinned to full 40-hex commit SHA, not a mutable tag; a post-deploy HTTP check fetches only `https://docs-preview.earthcoop.ir/deployment-manifest.json` and fails unless its `sourceSha` equals `GITHUB_SHA`.
 
 - [ ] **Step 2: Run focused test and verify RED**
 
@@ -320,7 +321,7 @@ Use the same reviewed major deployment action pattern already used by EarthCoop,
 
 - [ ] **Step 4: Implement preview workflow**
 
-The workflow must rebuild from checkout; do not reuse untrusted PR artifacts for deployment. It must fail if required secrets are absent without printing secret values. `server-dir` comes only from `DOCS_FTP_SERVER_DIR`.
+The workflow must rebuild from checkout; do not reuse untrusted PR artifacts for deployment. It must fail if required secrets are absent without printing secret values. `server-dir` comes only from `DOCS_FTP_SERVER_DIR`. After FTPS upload, use a bounded-retry HTTP request to the preview `deployment-manifest.json`; only the preview hostname is permitted, and source SHA mismatch fails the job.
 
 - [ ] **Step 5: Run workflow contract + all tests**
 
@@ -350,11 +351,11 @@ git commit -m "ci(docs): add gated preview FTPS deployment"
 
 - [ ] **Step 1: Write the operations runbook**
 
-Include: exact secret names; cPanel preview document root; how to derive FTP `server-dir` from the FTP account root rather than assuming the absolute filesystem path; TLS/FTPS requirement; first-deploy backup; workflow verification; `deployment-manifest.json` check; rollback to last known-good artifact/commit; explicit statement that `docs.earthcoop.ir` is out of scope.
+Include: exact secret names; cPanel preview document root; how to derive FTP `server-dir` from the FTP account root rather than assuming the absolute filesystem path; TLS/FTPS requirement; first-deploy backup; workflow verification; live `deployment-manifest.json` SHA check; rollback to last known-good artifact/commit; explicit statement that `docs.earthcoop.ir` is out of scope.
 
 - [ ] **Step 2: Add a documentation contract assertion**
 
-Extend `tests/docs-center-deploy-workflow.test.mjs` to assert the runbook contains all secret names, preview hostname, rollback procedure, and production-cutover prohibition.
+Extend `tests/docs-center-deploy-workflow.test.mjs` to assert the runbook contains all secret names, preview hostname, live SHA verification, rollback procedure, and production-cutover prohibition.
 
 - [ ] **Step 3: Run focused tests**
 
@@ -422,17 +423,17 @@ Do not merge until the user has configured or authorized configuration of the fo
 
 Expected: all pre-deploy gates PASS before FTPS step starts.
 
-- [ ] **Step 2: Verify FTPS deploy succeeds and does not touch the production docs domain**
+- [ ] **Step 2: Verify FTPS deploy and built-in post-deploy HTTP SHA check succeed**
 
-Expected: preview deploy PASS; `docs.earthcoop.ir` unchanged.
+Expected: preview deploy PASS and workflow confirms live `deployment-manifest.json.sourceSha == main HEAD`; `docs.earthcoop.ir` remains unchanged.
 
-- [ ] **Step 3: Verify live version identity**
+- [ ] **Step 3: Independently verify live version identity**
 
-Open preview deployment manifest and compare source SHA to merged `main` SHA.
+Open preview deployment manifest and compare source SHA to merged `main` SHA outside the workflow log.
 
 - [ ] **Step 4: Run focused live UAT**
 
-Verify Persian RTL, English LTR, Arabic RTL/unavailable-translation behavior, language switching, full-text search, TOC/anchors, ECON-REF-01 discoverability, `/#/documents/{id}` deep links, mobile layout, copy/print controls, refresh/cache behavior, and representative 404/missing-document handling.
+Verify Persian RTL, English LTR, Arabic RTL/unavailable-translation behavior, language switching, full-text search, TOC/anchors, ECON-REF-01 discoverability, `/#/documents/{id}` deep links, mobile layout, copy/print/download controls, refresh/cache behavior, and representative 404/missing-document handling.
 
 - [ ] **Step 5: Record UAT result**
 
