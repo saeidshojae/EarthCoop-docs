@@ -1,153 +1,61 @@
 ---
 title: "API Authentication: Bearer Tokens & Authorization"
 sidebarTitle: "Authentication"
-description: "Learn how to obtain a Bearer token by logging in to EarthCoop and include it in the Authorization header for all authenticated API requests."
+description: "Understand the verified Sanctum authentication boundary in EarthCoop without assuming an undocumented public token-issuance workflow."
 ---
 
-The EarthCoop API uses Bearer token authentication. Every protected endpoint expects a Bearer token in the `Authorization` request header. You receive this token after authenticating through the platform — no OAuth flow or separate API key setup is required.
+Some current EarthCoop API routes are protected by Laravel Sanctum, including routes using the `auth:sanctum` middleware. This proves that authenticated requests are part of the current application architecture. It does **not** prove that ordinary web login automatically issues a reusable personal access token for external integrations.
 
-## How Authentication Works
+## Verified current boundary
 
-When you log in, the platform issues a personal access token tied to your account. You include this token in subsequent API requests. Because tokens are user-scoped, any action performed via the API is attributed to your account — just as if you had performed it through the web interface.
+The repository currently shows Sanctum-protected routes and authenticated controllers. A request reaching such a route must satisfy the authentication mechanism configured by the running EarthCoop application and then pass any additional domain authorization checks.
 
-## Getting a Token
+Authentication and authorization are different:
 
-**Option 1 — Web UI (recommended for testing):** Log in to your EarthCoop account. If your deployment exposes a token management screen, you can create and name a personal access token there and copy it for use in API calls.
+- **authentication** establishes the requesting identity/session/credential;
+- **authorization** determines whether that identity may perform the requested operation;
+- domain services can impose further ownership, role, policy, governance, or monetary constraints.
 
-**Option 2 — Login endpoint:** POST your credentials to the login endpoint. Verify the exact path with your administrator, as it may be customised per deployment:
+## Public token issuance
 
-```bash
-curl -X POST https://your-domain.com/login \
-  -H "Accept: application/json" \
-  -H "Content-Type: application/json" \
-  -d '{"email": "you@example.com", "password": "your-password"}'
-```
+There is **no verified public token issuance flow documented** in the current repository evidence used for this guide. In particular, this documentation does not claim that:
 
-A successful response returns your token in the `token` field:
+- ordinary `/login` returns a personal access token;
+- every member has a token-management screen;
+- a public password-to-token endpoint is a supported integration contract;
+- external tokens have a particular lifetime, renewal rule, or revocation UI.
 
-```json
-{
-  "token": "1|abc123xyz..."
-}
-```
-
-Store this token securely — treat it like a password. It grants full access to your account's resources.
-
-## Passing the Token
-
-Include the token in the `Authorization` header on every authenticated request, prefixed with `Bearer `:
-
-```http
-Authorization: Bearer {your-token}
-```
-
-You must also set `Accept: application/json` so that the server returns JSON error responses instead of HTML redirects on authentication failure.
-
-### Example Authenticated Request
-
-```bash
-curl -X GET https://your-domain.com/api/najm-hoda/conversations \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Accept: application/json"
-```
-
-<CodeGroup>
-
-```bash cURL
-curl -X POST https://your-domain.com/api/najm-hoda/chat \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Accept: application/json" \
-  -H "Content-Type: application/json" \
-  -d '{"message": "How do I submit a project?"}'
-```
-
-```javascript JavaScript (fetch)
-const response = await fetch('https://your-domain.com/api/najm-hoda/chat', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_TOKEN',
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ message: 'How do I submit a project?' }),
-});
-const data = await response.json();
-```
-
-```php PHP (Guzzle)
-$client = new \GuzzleHttp\Client();
-$response = $client->post('https://your-domain.com/api/najm-hoda/chat', [
-    'headers' => [
-        'Authorization' => 'Bearer YOUR_TOKEN',
-        'Accept'        => 'application/json',
-    ],
-    'json' => ['message' => 'How do I submit a project?'],
-]);
-$data = json_decode($response->getBody(), true);
-```
-
-</CodeGroup>
-
-## Which Endpoints Require Authentication
-
-| Endpoint group | Auth required |
-| --- | --- |
-| `GET /api/najm-hoda/welcome` | No — public |
-| `POST /api/najm-hoda/escalate` | No — public (rate-limited) |
-| `POST /api/najm-hoda/chat` | **Yes** |
-| `GET /api/najm-hoda/conversations` | **Yes** |
-| `GET /api/najm-hoda/conversations/{id}` | **Yes** |
-| `DELETE /api/najm-hoda/conversations/{id}` | **Yes** |
-| `PUT /api/najm-hoda/conversations/{id}/archive` | **Yes** |
-| `POST /api/najm-hoda/feedback` | **Yes** |
-| `GET /api/tickets` | **Yes** |
-| `POST /api/tickets` | **Yes** |
-| `GET /api/tickets/{id}` | **Yes** |
-| `PUT /api/tickets/{id}` | **Yes** |
-| `PUT /api/tickets/{id}/close` | **Yes** |
-| `POST /api/tickets/{id}/comments` | **Yes** |
-| `GET /api/notifications` | **Yes** |
-| `POST /api/notifications/{id}` | **Yes** |
-| `DELETE /api/notifications/{id}` | **Yes** |
-| `GET /api/provinces` | No — public |
-| `GET /api/counties/{id}` | No — public |
-| `GET /api/districts/{id}` | No — public |
-| `GET /api/cities/{id}` | No — public |
-| `GET /api/villages/{id}` | No — public |
-| `GET /api/geographic/continents` | No — public |
-| `GET /api/geographic/{level}/{parentId}/children` | No — public |
-
-## Token Expiration and Renewal
-
-Tokens do not expire by default unless your administrator has configured a token expiry duration. If your token has expired, you will receive a `401 Unauthorized` response:
-
-```json
-{
-  "message": "Unauthenticated."
-}
-```
-
-When this happens, re-authenticate using the login endpoint to obtain a fresh token. Contact your administrator for the configured token lifetime if you are unsure.
+Those behaviors must be documented only when a specific current route/controller and supported product contract prove them.
 
 <Warning>
-  Never commit tokens to source control or log them in application output. If a token is compromised, revoke it immediately through the web UI or by contacting your administrator.
+  Do not send member credentials to a guessed API endpoint in order to obtain a token. A route being protected by `auth:sanctum` does not create a public credential-issuance API.
 </Warning>
 
-## Error Responses
+## Bearer credentials where explicitly provisioned
 
-**Missing or invalid token — 401 Unauthorized:**
+If a trusted EarthCoop deployment or future stable API explicitly provisions a Sanctum-compatible bearer credential through an authorized channel, the client can send it using the normal HTTP authorization header:
 
-```json
-{
-  "message": "Unauthenticated."
-}
+```http
+Authorization: Bearer YOUR_AUTHORIZED_TOKEN
+Accept: application/json
 ```
 
-**Valid token, insufficient permission — 403 Forbidden:**
+That example describes how a bearer credential is presented. It is not a claim about how a credential is currently issued to general users.
 
-```json
-{
-  "success": false,
-  "message": "You do not have access to this conversation."
-}
-```
+## Session-authenticated application requests
+
+EarthCoop's own web application can use the authentication mechanisms configured for its first-party flows. First-party browser behavior should not be conflated with a supported external-token contract. A future native/mobile authentication design may introduce a versioned client contract with its own issuance, refresh, expiry, and revocation rules.
+
+## NajmHoda and action authority
+
+Even after authentication, NajmHoda does not receive arbitrary mutation authority from request context. The server applies entry policy, ownership checks, page/domain resolution, and the applicable service authorization before an action-capable path can proceed.
+
+A valid credential therefore means “the server knows who is making this request,” not “the requester may do anything represented by a route.”
+
+## Error handling
+
+Protected routes can reject an unauthenticated request. The exact response shape is part of the specific current controller/middleware behavior and should not be generalized into one immutable public API format while the external API remains **In development**.
+
+## External client status
+
+EarthCoop's durable, versioned external/mobile authentication contract is still **In development**. Until it is explicitly published, developers should treat the existing Sanctum-protected routes as implementation evidence rather than a promise of a stable public token lifecycle.
