@@ -28,9 +28,7 @@ export function renditionMessage(resolution) {
 }
 
 export function makeDownloadPayload(documentRecord, locale, rendition) {
-  if (!documentRecord?.id || !rendition?.source) {
-    throw new Error('A displayed rendition is required for download');
-  }
+  if (!documentRecord?.id || !rendition?.source) throw new Error('A displayed rendition is required for download');
   return {
     filename: `${documentRecord.id}-${locale}.md`,
     text: String(rendition.text ?? ''),
@@ -42,21 +40,53 @@ function clearElement(element) {
   while (element.firstChild) element.removeChild(element.firstChild);
 }
 
+function cleanInlineMarkdown(value) {
+  return String(value ?? '')
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/__([^_]+)__/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s{2,}$/g, '')
+    .trimEnd();
+}
+
 export function renderSourceBlocks(parent, text, headings = [], documentObject = document) {
-  const lines = String(text ?? '').split(/\r?\n/);
+  const sourceLines = String(text ?? '').split(/\r?\n/);
+  let startIndex = 0;
+  if (sourceLines[0]?.trim() === '---') {
+    const closing = sourceLines.findIndex((line, index) => index > 0 && line.trim() === '---');
+    if (closing > 0) startIndex = closing + 1;
+  }
+
+  const lines = sourceLines.slice(startIndex);
   let headingIndex = 0;
   let textBuffer = [];
 
   function flushText() {
-    if (textBuffer.length === 0) return;
-    const pre = documentObject.createElement('pre');
-    pre.className = 'source-text';
-    pre.textContent = textBuffer.join('\n');
-    parent.appendChild(pre);
+    const visibleLines = textBuffer
+      .map(cleanInlineMarkdown)
+      .filter((line, index, all) => line !== '' || (index > 0 && index < all.length - 1));
     textBuffer = [];
+    const value = visibleLines.join('\n').trim();
+    if (!value) return;
+    const paragraph = documentObject.createElement('p');
+    paragraph.className = 'source-text';
+    paragraph.textContent = value;
+    parent.appendChild(paragraph);
   }
 
   for (const line of lines) {
+    const trimmed = line.trim();
+    if (/^<\/?[A-Z][^>]*>\s*$/.test(trimmed)) continue;
+    if (/^```/.test(trimmed)) continue;
+    if (/^---+$/.test(trimmed)) {
+      flushText();
+      parent.appendChild(documentObject.createElement('hr'));
+      continue;
+    }
+
     const match = /^(#{1,6})\s+(.+?)\s*$/.exec(line);
     const heading = match ? headings[headingIndex] : null;
     if (match && heading) {
@@ -67,6 +97,11 @@ export function renderSourceBlocks(parent, text, headings = [], documentObject =
       element.dataset.anchor = heading.anchor;
       parent.appendChild(element);
       headingIndex += 1;
+      continue;
+    }
+
+    if (trimmed === '') {
+      flushText();
       continue;
     }
     textBuffer.push(line);
@@ -105,18 +140,12 @@ async function bootstrap() {
     fetch('./content-index.json', { cache: 'no-cache' }),
     fetch('./search-index.json', { cache: 'no-cache' }),
   ]);
-  if (!contentResponse.ok || !searchResponse.ok) {
-    throw new Error('Docs Center indexes are unavailable');
-  }
+  if (!contentResponse.ok || !searchResponse.ok) throw new Error('Docs Center indexes are unavailable');
   const content = await contentResponse.json();
   const searchIndex = await searchResponse.json();
   const documents = content.documents ?? [];
-  const state = {
-    locale: content.defaultLocale ?? 'fa',
-    currentDocument: null,
-    currentRendition: null,
-  };
 
+  const state = { locale: content.defaultLocale ?? 'fa', currentDocument: null, currentRendition: null };
   const html = document.documentElement;
   const localeSwitcher = document.querySelector('#locale-switcher');
   const homeView = document.querySelector('#home-view');
@@ -151,9 +180,7 @@ async function bootstrap() {
       link.href = item.route;
       const rendition = item.renditions?.[state.locale];
       const title = rendition?.title || item.title || item.id;
-      link.textContent = rendition?.available === false
-        ? `${title} — ${renditionMessage({ available: false, locale: state.locale })}`
-        : title;
+      link.textContent = rendition?.available === false ? `${title} — ${renditionMessage({ available: false, locale: state.locale })}` : title;
       navigation.appendChild(link);
     }
   }
@@ -162,10 +189,7 @@ async function bootstrap() {
     const requested = item.renditions?.[state.locale];
     if (requested?.available) return { rendition: requested, notice: '' };
     const canonical = item.renditions?.[item.canonicalLanguage];
-    return {
-      rendition: canonical ?? null,
-      notice: renditionMessage({ available: false, locale: state.locale }),
-    };
+    return { rendition: canonical ?? null, notice: renditionMessage({ available: false, locale: state.locale }) };
   }
 
   function renderDocument(item) {
@@ -226,18 +250,10 @@ async function bootstrap() {
   window.addEventListener('hashchange', renderRoute);
   document.querySelector('#print-document').addEventListener('click', () => window.print());
   document.querySelector('#copy-document').addEventListener('click', async () => {
-    if (state.currentRendition) {
-      await navigator.clipboard.writeText(state.currentRendition.text ?? '');
-    }
+    if (state.currentRendition) await navigator.clipboard.writeText(state.currentRendition.text ?? '');
   });
   document.querySelector('#download-document').addEventListener('click', () => {
-    if (state.currentDocument && state.currentRendition) {
-      downloadText(makeDownloadPayload(
-        state.currentDocument,
-        state.currentRendition.locale ?? state.locale,
-        state.currentRendition,
-      ));
-    }
+    if (state.currentDocument && state.currentRendition) downloadText(makeDownloadPayload(state.currentDocument, state.currentRendition.locale ?? state.locale, state.currentRendition));
   });
 
   setLocale(state.locale);

@@ -100,3 +100,27 @@ test('document renderer creates real TOC anchor targets without innerHTML', asyn
   ]);
   assert.ok(appended.some((node) => node.textContent.includes('متن آغازین')));
 });
+
+test('document renderer hides frontmatter and MDX wrappers and removes common inline Markdown syntax', async () => {
+  const app = await import(pathToFileURL(path.join(root, 'site/app.js')));
+  const appended = [];
+  const fakeDocument = {
+    createElement(tagName) {
+      return { tagName: tagName.toUpperCase(), className: '', textContent: '', dataset: {} };
+    },
+  };
+  const fakeParent = { appendChild(node) { appended.push(node); } };
+
+  app.renderSourceBlocks(
+    fakeParent,
+    '---\ntitle: "Internal title"\ndescription: "hidden"\n---\n\n# سند مادر\n\n**شناسه سند:** FC\n\n<Note>\nمتن راهنما با [پیوند](https://example.com) و `کد`.\n</Note>\n\n---',
+    [{ depth: 1, text: 'سند مادر', anchor: 'سند-مادر' }],
+    fakeDocument,
+  );
+
+  const visible = appended.map((node) => node.textContent).join('\n');
+  assert.doesNotMatch(visible, /Internal title|description:|<\/?Note>|\*\*|`/);
+  assert.match(visible, /شناسه سند:\s*FC/);
+  assert.match(visible, /متن راهنما با پیوند و کد/);
+  assert.ok(appended.some((node) => node.tagName === 'HR'));
+});

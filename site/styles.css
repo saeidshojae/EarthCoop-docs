@@ -9,16 +9,8 @@ body { margin: 0; min-height: 100vh; }
 a { color: inherit; }
 button, input, select { font: inherit; }
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: .75rem clamp(1rem, 3vw, 2.5rem);
-  border-bottom: 1px solid #dbe5df;
-  background: rgba(255,255,255,.94);
+  position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: .75rem clamp(1rem, 3vw, 2.5rem); border-bottom: 1px solid #dbe5df; background: rgba(255,255,255,.94);
 }
 .brand { display: inline-flex; align-items: center; gap: .65rem; text-decoration: none; font-weight: 700; }
 .app-layout { display: grid; grid-template-columns: minmax(15rem, 20rem) minmax(0, 1fr); min-height: calc(100vh - 4rem); }
@@ -34,7 +26,8 @@ main > section, main > article { max-width: 76rem; margin-inline: auto; }
 .document-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
 .document-actions button { border: 1px solid #b8ccc0; background: #fff; border-radius: .55rem; padding: .45rem .7rem; cursor: pointer; }
 .document-grid { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; gap: 2rem; margin-top: 1.5rem; }
-.source-text { white-space: pre-wrap; word-break: break-word; font: inherit; margin: 0; }
+.source-text { white-space: pre-wrap; word-break: break-word; font: inherit; margin: .75rem 0; }
+.document-body h1, .document-body h2, .document-body h3, .document-body h4, .document-body h5, .document-body h6 { scroll-margin-top: 5rem; }
 .toc { position: sticky; top: 5rem; align-self: start; display: grid; gap: .35rem; font-size: .9rem; }
 .toc a { text-decoration: none; color: #466256; }
 .toc-depth-2 { padding-inline-start: .8rem; }
