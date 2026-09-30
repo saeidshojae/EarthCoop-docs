@@ -81,3 +81,8 @@ test('desktop polish and independently scrollable mobile drawer are encoded as a
   assert.match(result, /100dvh/);
   assert.match(result, /body\.navigation-open\{overflow:hidden/);
 });
+
+test('lead-box headings keep strong contrast on the dark green background', () => {
+  const result = patchRecoveredStyles('.article-body strong{color:var(--ink)}.lead-box{background:var(--forest);color:white}');
+  assert.match(result, /\.lead-box strong\{color:#dfbd68/);
+});
