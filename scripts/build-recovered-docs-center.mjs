@@ -104,6 +104,14 @@ function previewSiteConfig(canonicalOrigin) {
   return `window.EC_SITE_CONFIG = Object.freeze({\n  deploymentTarget: "self-hosted",\n  canonicalOrigin: "${canonicalOrigin}",\n  mainSiteUrl: "https://earthcoop.ir",\n  integrations: Object.freeze({\n    api: Object.freeze({enabled: false, baseUrl: "https://earthcoop.ir/api/docs/v1"}),\n    sso: Object.freeze({enabled: false, startUrl: "https://earthcoop.ir/docs/sso/start"}),\n  }),\n});\n`;
 }
 
+function recoveredPackageIndex() {
+  return `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documentPackages = Object.freeze([\n  window.EC_CONTENT.publicationPolicyFa,\n  ...window.EC_CONTENT.foundationalDocumentPackages,\n  ...window.EC_CONTENT.referenceDocumentPackages,\n]);\n`;
+}
+
+function referenceCatalogMerge() {
+  return `\nwindow.EC_CONTENT.documents = Object.freeze([\n  ...window.EC_CONTENT.documents,\n  ...window.EC_CONTENT.referenceDocumentPackages.map((record) => ({\n    inventoryId: 'doc.' + record.code,\n    code: record.code,\n    title: record.title,\n    summary: record.summary,\n    status: record.status,\n    filterGroup: 'review',\n    source: record.source,\n    sourceType: 'repository',\n    authority: record.authority,\n    version: record.currentVersion.version,\n    reviewedAt: record.reviewedAt,\n    availability: 'available',\n    destination: '#/documents/' + record.slug,\n  })),\n]);\n`;
+}
+
 export async function buildRecoveredDocsCenter({
   rootDir,
   outDir,
@@ -136,13 +144,19 @@ export async function buildRecoveredDocsCenter({
   const generatedPath = path.join(outDir, 'src/content/document-packages/foundational.generated.fa.js');
   await mkdir(path.dirname(generatedPath), { recursive: true });
   await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages, referencePackages));
+  await writeFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), recoveredPackageIndex());
+
+  const documentsMetadataPath = path.join(outDir, 'src/content/documents.fa.js');
+  const documentsMetadata = await readFile(documentsMetadataPath, 'utf8');
+  await writeFile(documentsMetadataPath, `${documentsMetadata.trimEnd()}${referenceCatalogMerge()}`);
+
   await writeFile(path.join(outDir, 'site-config.js'), previewSiteConfig(canonicalOrigin));
   await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
 
   if (renderStaticDocuments) {
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
-      packages,
+      packages: [...packages, ...referencePackages],
       canonicalOrigin,
     });
   }
