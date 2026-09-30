@@ -3,6 +3,7 @@ import test from 'node:test';
 
 import {
   patchRecoveredAppSource,
+  patchRecoveredDocumentReaderControlsSource,
   patchRecoveredHtml,
   patchRecoveredMobileNavigationSource,
   patchRecoveredStyles,
@@ -36,6 +37,21 @@ const mobileSource = `function setMobileNavigation(open) {
   const sidebar = document.getElementById('sidebar');
   document.body.classList.toggle('navigation-open', Boolean(open));
   return Boolean(open);
+}`;
+
+const documentReaderControlsSource = `function initializeDocumentReaderControls(activeProvisionSlug = null) {
+  const toc = document.getElementById('documentToc');
+  const tocToggle = document.querySelector('[data-document-toc-toggle]');
+  const mobile = window.matchMedia('(max-width:1050px)');
+
+  function synchronizeToc() {
+    if (!toc || !tocToggle) return;
+    toc.hidden = mobile.matches;
+    tocToggle.setAttribute('aria-expanded', String(!toc.hidden));
+  }
+
+  synchronizeToc();
+  mobile.addEventListener?.('change', synchronizeToc);
 }`;
 
 test('always exposes language control while keeping unavailable translations explicit', () => {
@@ -94,4 +110,16 @@ test('desktop document TOC stays sticky while scrolling independently inside the
   assert.match(result, /overflow-y:auto/);
   assert.match(result, /overscroll-behavior:contain/);
   assert.match(result, /scrollbar-gutter:stable/);
+});
+
+test('desktop document TOC is lifted to the document head from its lower natural grid position', () => {
+  const result = patchRecoveredDocumentReaderControlsSource(documentReaderControlsSource);
+  assert.match(result, /function syncDocumentTocViewport\(\)/);
+  assert.match(result, /document\.querySelector\('\.document-head'\)/);
+  assert.match(result, /document\.querySelector\('\.document-reader-layout'\)/);
+  assert.match(result, /getBoundingClientRect\(\)\.top/);
+  assert.match(result, /toc\.style\.marginTop/);
+  assert.match(result, /mobile\.matches/);
+  assert.match(result, /window\.addEventListener\('resize', syncDocumentTocViewport/);
+  assert.match(result, /mobile\.addEventListener\?\.\('change', syncDocumentTocViewport\)/);
 });
