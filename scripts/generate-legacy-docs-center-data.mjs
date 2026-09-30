@@ -1,44 +1,52 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
-
-import { buildCurrentFoundational } from './build-current-foundational.mjs';
+import { buildRecoveredContentCatalog } from './build-recovered-content-catalog.mjs';
 import {
   parseFoundationalMarkdown,
   toLegacyDocumentPackage,
 } from './legacy-docs-center-adapter.mjs';
 
-const USABLE_RENDITION_STATUSES = new Set(['current', 'needs_review', 'outdated']);
-
-export async function buildLegacyFoundationalPackages(rootDir, { currentPackages } = {}) {
-  const manifest = JSON.parse(await readFile(path.join(rootDir, 'docs-manifest.json'), 'utf8'));
-  const consolidated = currentPackages ?? await buildCurrentFoundational(rootDir);
-  const consolidatedById = new Map(consolidated.map((item) => [item.id, item]));
-  const packages = [];
-
-  for (const entry of manifest.entries ?? []) {
-    if (entry.contentClass !== 'foundational_document') continue;
-    if (entry.canonicalLanguage !== 'fa') continue;
-    const rendition = entry.renditions?.fa;
-    if (!rendition?.source || !USABLE_RENDITION_STATUSES.has(rendition.status)) continue;
-
-    const current = consolidatedById.get(entry.documentId);
-    if (!current?.markdown) {
-      throw new Error(`Missing consolidated source for ${entry.documentId}`);
-    }
-    if (String(current.version) !== String(entry.version)) {
-      throw new Error(`Consolidated version mismatch for ${entry.documentId}: ${current.version} != ${entry.version}`);
-    }
-
-    const parsed = parseFoundationalMarkdown(current.markdown, { documentId: entry.documentId });
-    packages.push(toLegacyDocumentPackage(parsed, {
-      ...entry,
-      source: rendition.source,
-    }));
-  }
-
-  return packages.sort((a, b) => a.code.localeCompare(b.code, 'en'));
+function referenceTitle(markdown, fallback) {
+  const body = String(markdown ?? '').replace(/^---[\s\S]*?---\s*/m, '');
+  const heading = body.match(/^#\s+(.+)$/m)?.[1]?.trim();
+  if (!heading) return fallback;
+  return heading.replace(/^ECON-REF-01\s+—\s+/, '').trim();
 }
 
-export function serializeLegacyFoundationalPackages(packages) {
-  return `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.foundationalDocumentPackages = Object.freeze(${JSON.stringify(packages, null, 2)});\n`;
+export async function buildLegacyFoundationalPackages(rootDir, { currentPackages, catalog } = {}) {
+  const governed = catalog ?? await buildRecoveredContentCatalog(rootDir, {
+    currentFoundationalPackages: currentPackages,
+  });
+
+  return governed.documents.map((entry) => {
+    const parsed = parseFoundationalMarkdown(entry.markdown, { documentId: entry.documentId });
+    return toLegacyDocumentPackage(parsed, entry);
+  }).sort((a, b) => a.code.localeCompare(b.code, 'en'));
+}
+
+export async function buildLegacyReferencePackages(rootDir, { currentPackages, catalog } = {}) {
+  const governed = catalog ?? await buildRecoveredContentCatalog(rootDir, {
+    currentFoundationalPackages: currentPackages,
+  });
+  return governed.references.map((entry) => ({
+    id: entry.routeId,
+    slug: entry.routeId,
+    code: entry.documentId,
+    title: referenceTitle(entry.markdown, entry.documentId),
+    summary: `نسخه ${entry.version} — ${entry.legalStatus}`,
+    canonicalLanguage: entry.canonicalLanguage,
+    status: entry.legalStatus,
+    source: entry.source,
+    authority: entry.authority,
+    reviewedAt: entry.reviewedAt,
+    currentVersion: {
+      version: entry.version,
+      publishedAt: entry.reviewedAt,
+      sourcePath: entry.source,
+    },
+    bodyMarkdown: entry.markdown,
+    contentClass: 'reference',
+  })).sort((a, b) => a.code.localeCompare(b.code, 'en'));
+}
+
+export function serializeLegacyFoundationalPackages(packages, referencePackages = []) {
+  return `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.foundationalDocumentPackages = Object.freeze(${JSON.stringify(packages, null, 2)});\nwindow.EC_CONTENT.referenceDocumentPackages = Object.freeze(${JSON.stringify(referencePackages, null, 2)});\n`;
 }
