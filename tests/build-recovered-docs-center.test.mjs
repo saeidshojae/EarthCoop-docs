@@ -23,11 +23,18 @@ async function fixture() {
   await writeFile(path.join(runtime, 'src/content/document-packages/foundational.generated.fa.js'), 'OLD');
   await writeFile(path.join(runtime, 'src/content/document-packages/index.fa.js'), 'OLD-INDEX');
   await writeFile(path.join(runtime, 'src/content/documents.fa.js'), 'window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documents = Object.freeze([]);\n');
+  await writeFile(path.join(runtime, 'src/content/pages.fa.js'), `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.pageRecords = Object.freeze([\n  {route:'map',status:'unofficial_explanation'},\n  {route:'status',status:'under_audit'},\n  {route:'glossary',status:'under_audit'}\n]);\n`);
   await writeFile(path.join(runtime, 'src/pages/document-reader.js'), `function renderDocumentReader(documentRecord) {\n  return \`<div class="breadcrumbs"><a href="/">خانه</a><i></i><a href="/documents/">اسناد بنیادین</a><i></i><span>\${documentRecord.title}</span></div>\`;\n}\n`);
 
   const archive = path.join(root, 'runtime.tar.gz');
   await execFileAsync('tar', ['-czf', archive, '-C', runtime, '.']);
   const archiveHash = createHash('sha256').update(await readFile(archive)).digest('hex');
+
+  await mkdir(path.join(root, 'audits/product-guides'), { recursive: true });
+  await writeFile(path.join(root, 'audits/product-guides/2026-09-28-inventory.json'), JSON.stringify({ pages: [
+    { path:'introduction.mdx', title:'Introduction' },
+    { path:'groups/overview.mdx', title:'Groups' },
+  ] }));
 
   await writeFile(path.join(root, 'docs-manifest.json'), JSON.stringify({
     schemaVersion: 2,
@@ -56,7 +63,7 @@ async function fixture() {
   return { root, archive, archiveHash, currentFoundationalPackages };
 }
 
-test('builds recovered 0.8 runtime with governed data, full-text corpus and preview-safe SEO', async () => {
+test('builds recovered 0.8 runtime with governed data, editorial truth, full-text corpus and preview-safe SEO', async () => {
   const input = await fixture();
   const outDir = path.join(input.root, 'dist');
   const report = await buildRecoveredDocsCenter({
@@ -85,6 +92,17 @@ test('builds recovered 0.8 runtime with governed data, full-text corpus and prev
   assert.match(reader, /documentRecord\.contentClass === 'reference'/);
   assert.match(reader, /اسناد مرجع/);
   assert.match(reader, /اسناد بنیادین/);
+
+  const editorial = JSON.parse(await readFile(path.join(outDir, 'recovered-editorial-truth.json'), 'utf8'));
+  assert.equal(editorial.recoveredPersianGuides.status, 'historical_snapshot');
+  assert.equal(editorial.reviewedEnglishGuides.status, 'verified_current');
+  assert.equal(editorial.reviewedEnglishGuides.runtimeMapped, false);
+  assert.equal(editorial.mapPage.status, 'needs_review');
+  assert.equal(editorial.arabic.status, 'unavailable');
+
+  const pagesMetadata = await readFile(path.join(outDir, 'src/content/pages.fa.js'), 'utf8');
+  assert.match(pagesMetadata, /\['status','map','glossary'\]/);
+  assert.match(pagesMetadata, /status:'under_audit'/);
 
   const locales = JSON.parse(await readFile(path.join(outDir, 'recovered-locales.json'), 'utf8'));
   assert.deepEqual(locales.globalLocales, ['fa']);
