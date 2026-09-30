@@ -31,7 +31,7 @@ export function buildRecoveredSearchIndex(packages, { allowedLocales = ['fa'] } 
         body,
         status: record.status,
         version: record.currentVersion?.version ?? null,
-        route: `#/documents/${record.slug}?anchor=${provision.stableSlug}`,
+        route: `#/documents/${record.slug}/provisions/${provision.stableSlug}`,
       });
     }
   }
