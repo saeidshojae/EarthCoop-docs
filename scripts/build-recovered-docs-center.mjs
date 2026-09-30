@@ -12,6 +12,12 @@ import {
 } from './materialize-docs-center-08.mjs';
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
+const GUIDE_CONTENT_POLICY = Object.freeze({
+  fa: 'recovered_0.8_editorial_snapshot_under_audit',
+  en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
+  ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
+});
+
 function sha256(bytes) {
   return createHash('sha256').update(bytes).digest('hex');
 }
@@ -85,6 +91,7 @@ export async function buildRecoveredDocsCenter({
     runtimeArchiveSha256: recovered.archiveSha256,
     canonicalLanguage: 'fa',
     displayLocales: ['fa'],
+    guideContentPolicy: GUIDE_CONTENT_POLICY,
     canonicalOrigin,
     fileCount: inventory.length + 1,
     hashes,
