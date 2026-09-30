@@ -48,7 +48,11 @@ function assertGuidePolicy(actual) {
   }
 }
 
-export async function validateRecoveredDocsCenter({ outDir, expectedSourceSha } = {}) {
+export async function validateRecoveredDocsCenter({
+  outDir,
+  expectedSourceSha,
+  expectedRuntimeArchiveSha = RECOVERED_08_ARCHIVE_SHA256,
+} = {}) {
   if (!outDir) throw new TypeError('outDir is required');
   const manifestPath = await assertRegularFile(outDir, 'deployment-manifest.json');
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
@@ -62,7 +66,7 @@ export async function validateRecoveredDocsCenter({ outDir, expectedSourceSha } 
   if (manifest.runtimeBaseline !== EXPECTED_BASELINE) {
     throw new Error(`Recovered runtime baseline mismatch: ${manifest.runtimeBaseline}`);
   }
-  if (manifest.runtimeArchiveSha256 !== RECOVERED_08_ARCHIVE_SHA256) {
+  if (manifest.runtimeArchiveSha256 !== expectedRuntimeArchiveSha) {
     throw new Error(`Recovered runtime archive SHA mismatch: ${manifest.runtimeArchiveSha256}`);
   }
   if (manifest.canonicalLanguage !== 'fa') throw new Error('Recovered canonical language must be fa');
@@ -101,7 +105,7 @@ export async function validateRecoveredDocsCenter({ outDir, expectedSourceSha } 
   }
 
   const archiveActual = sha256(await readFile(path.join(outDir, RECOVERED_08_DEPLOYED_ARCHIVE_NAME)));
-  if (archiveActual !== RECOVERED_08_ARCHIVE_SHA256) {
+  if (archiveActual !== expectedRuntimeArchiveSha) {
     throw new Error(`Recovered recovery archive hash mismatch: ${archiveActual}`);
   }
 
