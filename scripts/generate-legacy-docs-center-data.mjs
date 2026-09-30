@@ -4,11 +4,65 @@ import {
   toLegacyDocumentPackage,
 } from './legacy-docs-center-adapter.mjs';
 
+function stripFrontmatter(markdown) {
+  return String(markdown ?? '').replace(/^---\n[\s\S]*?\n---\s*/m, '').trim();
+}
+
 function referenceTitle(markdown, fallback) {
-  const body = String(markdown ?? '').replace(/^---[\s\S]*?---\s*/m, '');
+  const body = stripFrontmatter(markdown);
   const heading = body.match(/^#\s+(.+)$/m)?.[1]?.trim();
   if (!heading) return fallback;
-  return heading.replace(/^ECON-REF-01\s+—\s+/, '').trim();
+  return heading.replace(/^[A-Z0-9-]+\s+—\s+/, '').trim();
+}
+
+function normalizeDigits(value) {
+  const digits = '۰۱۲۳۴۵۶۷۸۹';
+  return String(value).replace(/[۰-۹]/g, (digit) => String(digits.indexOf(digit)));
+}
+
+function sectionSlug(title, index) {
+  const numbered = normalizeDigits(title).match(/^(\d+(?:\.\d+)*)\s*(?:—|-)/)?.[1];
+  return numbered ? `section-${numbered.replaceAll('.', '-')}` : `section-${String(index + 1).padStart(3, '0')}`;
+}
+
+function referenceSections(markdown) {
+  const lines = stripFrontmatter(markdown).split(/\r?\n/);
+  const firstH1 = lines.findIndex((line) => /^#\s+/.test(line));
+  const candidates = [];
+  for (let index = Math.max(firstH1 + 1, 0); index < lines.length; index += 1) {
+    const match = /^(#{1,6})\s+(.+?)\s*$/.exec(lines[index]);
+    if (!match) continue;
+    candidates.push({ index, level: match[1].length, title: match[2].trim() });
+  }
+  return candidates.map((heading, position) => {
+    let end = lines.length;
+    for (let index = heading.index + 1; index < lines.length; index += 1) {
+      const match = /^(#{1,6})\s+/.exec(lines[index]);
+      if (match && match[1].length <= heading.level) {
+        end = index;
+        break;
+      }
+    }
+    const body = lines.slice(heading.index + 1, end).join('\n').trim();
+    return {
+      id: `reference-section-${position + 1}`,
+      stableSlug: sectionSlug(heading.title, position),
+      kind: 'section',
+      title: heading.title,
+      body,
+      order: position + 1,
+      children: [],
+    };
+  });
+}
+
+function referencePreamble(markdown) {
+  const body = stripFrontmatter(markdown);
+  const lines = body.split(/\r?\n/);
+  const firstH1 = lines.findIndex((line) => /^#\s+/.test(line));
+  const nextHeading = lines.findIndex((line, index) => index > firstH1 && /^#{1,6}\s+/.test(line));
+  const end = nextHeading === -1 ? lines.length : nextHeading;
+  return lines.slice(firstH1 + 1, end).join('\n').trim();
 }
 
 export async function buildLegacyFoundationalPackages(rootDir, { currentPackages, catalog } = {}) {
@@ -32,6 +86,7 @@ export async function buildLegacyReferencePackages(rootDir, { currentPackages, c
     code: entry.documentId,
     title: referenceTitle(entry.markdown, entry.documentId),
     summary: `نسخه ${entry.version} — ${entry.legalStatus}`,
+    preamble: referencePreamble(entry.markdown),
     canonicalLanguage: entry.canonicalLanguage,
     status: entry.legalStatus,
     source: entry.source,
@@ -42,7 +97,7 @@ export async function buildLegacyReferencePackages(rootDir, { currentPackages, c
       publishedAt: entry.reviewedAt,
       sourcePath: entry.source,
     },
-    bodyMarkdown: entry.markdown,
+    provisions: referenceSections(entry.markdown),
     contentClass: 'reference',
   })).sort((a, b) => a.code.localeCompare(b.code, 'en'));
 }
