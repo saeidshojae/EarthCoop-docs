@@ -16,7 +16,7 @@ async function fixture() {
     'index.html': '<html><script src="site-config.js"></script></html>',
     'app.js': 'runtime',
     'styles.css': 'styles',
-    'site-config.js': 'window.EC_SITE_CONFIG={canonicalOrigin:"https://docs-preview.earthcoop.ir",deploymentTarget:"self-hosted"};',
+    'site-config.js': 'window.EC_SITE_CONFIG = Object.freeze({\n  deploymentTarget: "self-hosted",\n  canonicalOrigin: "https://docs-preview.earthcoop.ir",\n});\n',
     'src/content/document-packages/foundational.generated.fa.js': 'window.EC_CONTENT={foundationalDocumentPackages:[]};',
     'earthcoop-knowledge-center-0.8.0-cpanel.tar.gz': 'archive-bytes',
   };
