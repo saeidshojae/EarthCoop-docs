@@ -18,11 +18,19 @@ test('real English source is recognized as English only when explicitly register
   });
 });
 
-test('display locales never advertise Arabic without a real registered Arabic rendition', () => {
+test('display locales never advertise Arabic without a genuine Arabic rendition', () => {
   const locales = resolveDisplayLocales({
     fa: { status: 'current', source: 'published/foundational/FC-1.1.fa.md' },
     en: { status: 'not_translated', source: null },
     ar: { status: 'not_translated', source: null },
+  });
+  assert.deepEqual(locales, ['fa']);
+});
+
+test('legacy Mintlify ar/ content is rejected even if metadata incorrectly marks it current', () => {
+  const locales = resolveDisplayLocales({
+    fa: { status: 'current', source: 'published/foundational/FC-1.1.fa.md' },
+    ar: { status: 'current', source: 'ar/introduction.mdx' },
   });
   assert.deepEqual(locales, ['fa']);
 });
