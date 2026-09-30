@@ -52,6 +52,7 @@ const documentReaderControlsSource = `function initializeDocumentReaderControls(
 
   synchronizeToc();
   mobile.addEventListener?.('change', synchronizeToc);
+  const tocLinks = [...document.querySelectorAll('#documentToc a')];
 }`;
 
 test('always exposes language control while keeping unavailable translations explicit', () => {
@@ -122,4 +123,14 @@ test('desktop document TOC is lifted to the document head from its lower natural
   assert.match(result, /mobile\.matches/);
   assert.match(result, /window\.addEventListener\('resize', syncDocumentTocViewport/);
   assert.match(result, /mobile\.addEventListener\?\.\('change', syncDocumentTocViewport\)/);
+});
+
+test('same-document provision links update history and scroll without triggering a full hash rerender', () => {
+  const result = patchRecoveredDocumentReaderControlsSource(documentReaderControlsSource);
+  assert.match(result, /function navigateToProvision\(link, event\)/);
+  assert.match(result, /event\.preventDefault\(\)/);
+  assert.match(result, /history\.pushState\(null, '', targetHash\)/);
+  assert.match(result, /target\.focus\(\{ preventScroll: true \}\)/);
+  assert.match(result, /target\.scrollIntoView\(\{ behavior: 'smooth', block: 'start' \}\)/);
+  assert.match(result, /tocLinks\.forEach\(\(link\) => link\.addEventListener\('click'/);
 });
