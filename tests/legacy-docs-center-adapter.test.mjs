@@ -40,6 +40,27 @@ description: "متن کامل"
 متن ماده دوم.
 `;
 
+const charterStyle = `# منشور EarthCoop
+
+**شناسه سند:** CH
+
+## دیباچه
+متن دیباچه.
+
+# بخش نخست — ماهیت منشور
+
+## ماده CH-001 — ماهیت منشور
+متن ماده اول.
+
+## ماده CH-002 — جایگاه منشور
+متن ماده دوم.
+
+# بخش دوم — فلسفه بنیادین
+
+## ماده CH-003 — اصل آغاز از زمین
+متن ماده سوم.
+`;
+
 test('parses official Markdown into stable flat provisions without inventing section provisions', () => {
   const parsed = parseFoundationalMarkdown(source, { documentId: 'FC' });
   assert.equal(parsed.title, 'سند مادر EarthCoop');
@@ -51,6 +72,14 @@ test('parses official Markdown into stable flat provisions without inventing sec
   ]);
   assert.match(parsed.provisions[0].body, /بند دوم/);
   assert.equal(parsed.provisions[0].children.length, 0);
+});
+
+test('supports CH-style level-2 article headings and stops article bodies at peer or higher headings', () => {
+  const parsed = parseFoundationalMarkdown(charterStyle, { documentId: 'CH' });
+  assert.deepEqual(parsed.provisions.map((item) => item.id), ['CH-001', 'CH-002', 'CH-003']);
+  assert.equal(parsed.provisions[1].body, 'متن ماده دوم.');
+  assert.doesNotMatch(parsed.provisions[1].body, /بخش دوم/);
+  assert.equal(parsed.provisions[2].stableSlug, 'ch-003');
 });
 
 test('rejects article ids that do not belong to the manifest document', () => {
