@@ -28,13 +28,14 @@ async function fixture() {
     hashes[relative] = sha256(Buffer.from(content));
   }
   const sourceSha = '1'.repeat(40);
+  const archiveSha = hashes['earthcoop-knowledge-center-0.8.0-cpanel.tar.gz'];
   const manifest = {
     schemaVersion: 2,
     repository: 'saeidshojae/EarthCoop-docs',
     sourceSha,
     builtAt: '2026-09-30T00:00:00Z',
     runtimeBaseline: 'earthcoop-knowledge-center-0.8.0',
-    runtimeArchiveSha256: hashes['earthcoop-knowledge-center-0.8.0-cpanel.tar.gz'],
+    runtimeArchiveSha256: archiveSha,
     canonicalLanguage: 'fa',
     displayLocales: ['fa'],
     guideContentPolicy: {
@@ -47,32 +48,40 @@ async function fixture() {
     hashes,
   };
   await writeFile(path.join(outDir, 'deployment-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
-  return { outDir, sourceSha };
+  return { outDir, sourceSha, archiveSha };
+}
+
+function validateArgs(input, expectedSourceSha = input.sourceSha) {
+  return {
+    outDir: input.outDir,
+    expectedSourceSha,
+    expectedRuntimeArchiveSha: input.archiveSha,
+  };
 }
 
 test('accepts a complete recovered 0.8 preview build and verifies every declared file hash', async () => {
-  const { outDir, sourceSha } = await fixture();
-  const result = await validateRecoveredDocsCenter({ outDir, expectedSourceSha: sourceSha });
+  const input = await fixture();
+  const result = await validateRecoveredDocsCenter(validateArgs(input));
   assert.equal(result.valid, true);
   assert.equal(result.runtimeBaseline, 'earthcoop-knowledge-center-0.8.0');
 });
 
 test('rejects a tampered file after manifest creation', async () => {
-  const { outDir, sourceSha } = await fixture();
-  await writeFile(path.join(outDir, 'app.js'), 'tampered');
+  const input = await fixture();
+  await writeFile(path.join(input.outDir, 'app.js'), 'tampered');
   await assert.rejects(
-    validateRecoveredDocsCenter({ outDir, expectedSourceSha: sourceSha }),
+    validateRecoveredDocsCenter(validateArgs(input)),
     /hash mismatch.*app\.js/i,
   );
 });
 
-test('rejects wrong source SHA, runtime baseline, preview origin, or locale policy', async () => {
-  const { outDir, sourceSha } = await fixture();
-  const manifestPath = path.join(outDir, 'deployment-manifest.json');
+test('rejects wrong source SHA, runtime baseline, preview origin, locale policy, or guide policy', async () => {
+  const input = await fixture();
+  const manifestPath = path.join(input.outDir, 'deployment-manifest.json');
   const original = JSON.parse(await readFile(manifestPath, 'utf8'));
 
   await assert.rejects(
-    validateRecoveredDocsCenter({ outDir, expectedSourceSha: '2'.repeat(40) }),
+    validateRecoveredDocsCenter(validateArgs(input, '2'.repeat(40))),
     /source SHA/i,
   );
 
@@ -80,24 +89,26 @@ test('rejects wrong source SHA, runtime baseline, preview origin, or locale poli
     (m) => { m.runtimeBaseline = 'other'; },
     (m) => { m.canonicalOrigin = 'https://docs.earthcoop.ir'; },
     (m) => { m.displayLocales = ['fa', 'ar']; },
+    (m) => { m.guideContentPolicy.fa = 'current'; },
   ]) {
     const changed = structuredClone(original);
     mutate(changed);
     await writeFile(manifestPath, JSON.stringify(changed));
     await assert.rejects(
-      validateRecoveredDocsCenter({ outDir, expectedSourceSha: sourceSha }),
-      /baseline|preview origin|display locales/i,
+      validateRecoveredDocsCenter(validateArgs(input)),
+      /baseline|preview origin|display locales|guide content policy/i,
     );
   }
 });
 
-test('rejects a missing recovery archive or missing required generated package', async () => {
-  const { outDir, sourceSha } = await fixture();
-  const manifest = JSON.parse(await readFile(path.join(outDir, 'deployment-manifest.json'), 'utf8'));
+test('rejects a missing recovery archive declaration', async () => {
+  const input = await fixture();
+  const manifestPath = path.join(input.outDir, 'deployment-manifest.json');
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
   delete manifest.hashes['earthcoop-knowledge-center-0.8.0-cpanel.tar.gz'];
-  await writeFile(path.join(outDir, 'deployment-manifest.json'), JSON.stringify(manifest));
+  await writeFile(manifestPath, JSON.stringify(manifest));
   await assert.rejects(
-    validateRecoveredDocsCenter({ outDir, expectedSourceSha: sourceSha }),
+    validateRecoveredDocsCenter(validateArgs(input)),
     /recovery archive/i,
   );
 });
