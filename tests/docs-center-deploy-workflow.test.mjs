@@ -47,6 +47,14 @@ test('pull-request validation builds and validates the recovered candidate with 
   assert.ok(build >= 0 && validate > build);
 });
 
+test('recovered validator itself pins preview origin, Persian-only display and official 0.8 archive by default', async () => {
+  const validator = await readFile(path.join(root, 'scripts/validate-recovered-docs-center.mjs'), 'utf8');
+  assert.match(validator, /https:\/\/docs-preview\.earthcoop\.ir/);
+  assert.match(validator, /displayLocales\) !== JSON\.stringify\(\['fa'\]\)/);
+  assert.match(validator, /expectedRuntimeArchiveSha = RECOVERED_08_ARCHIVE_SHA256/);
+  assert.doesNotMatch(validator, /EXPECTED_ORIGIN\s*=\s*['"]https:\/\/docs\.earthcoop\.ir/);
+});
+
 test('artifact and deploy third-party actions are pinned to immutable full SHAs', async () => {
   const text = await workflow();
   assert.match(text, /actions\/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a/);
