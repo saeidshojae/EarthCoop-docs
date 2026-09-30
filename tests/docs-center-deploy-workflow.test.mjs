@@ -24,14 +24,16 @@ test('workflow uses minimal permissions and serialized non-cancelling preview co
   assert.match(text, /cancel-in-progress:\s*false/);
 });
 
-test('workflow validates and builds from checkout before deployment', async () => {
+test('workflow validates repository and builds recovered 0.8 runtime before deployment', async () => {
   const text = await workflow();
   const checkout = text.indexOf('actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1');
   const tests = text.indexOf('node --test');
-  const build = text.indexOf('node scripts/build-docs-center.mjs --out dist');
-  const validate = text.indexOf('node scripts/validate-docs-center.mjs --out dist');
+  const build = text.indexOf('node scripts/build-recovered-docs-center.mjs --out dist');
   const deploy = text.indexOf('SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287');
-  assert.ok(checkout >= 0 && checkout < tests && tests < build && build < validate && validate < deploy);
+  assert.ok(checkout >= 0 && checkout < tests && tests < build && build < deploy);
+  assert.doesNotMatch(text, /node scripts\/build-docs-center\.mjs --out dist(?:\s|$)/);
+  assert.match(text, /earthcoop-knowledge-center-0\.8\.0/);
+  assert.match(text, /deployment-manifest\.json/);
   assert.doesNotMatch(text, /download-artifact/i);
 });
 
@@ -45,7 +47,7 @@ test('artifact and deploy third-party actions are pinned to immutable full SHAs'
   }
 });
 
-test('workflow preflights exact secret namespace and deploys dist only over strict FTPS', async () => {
+test('workflow preflights exact secret namespace and deploys recovered dist only over strict FTPS', async () => {
   const text = await workflow();
   for (const name of ['DOCS_FTP_SERVER', 'DOCS_FTP_USERNAME', 'DOCS_FTP_PASSWORD', 'DOCS_FTP_SERVER_DIR']) {
     assert.match(text, new RegExp(`secrets\\.${name}`));
@@ -66,12 +68,15 @@ test('workflow uploads rollback artifact before deploy', async () => {
   assert.match(text, /path:\s*dist\//);
 });
 
-test('post-deploy smoke checks only preview manifest with bounded retries and exact live SHA', async () => {
+test('post-deploy smoke checks recovered baseline and exact live SHA on preview only', async () => {
   const text = await workflow();
   assert.match(text, /https:\/\/docs-preview\.earthcoop\.ir\/deployment-manifest\.json/);
+  assert.match(text, /sourceSha/);
+  assert.match(text, /runtimeBaseline/);
+  assert.match(text, /earthcoop-knowledge-center-0\.8\.0/);
   assert.match(text, /GITHUB_SHA/);
   assert.match(text, /for attempt in \{1\.\.12\}/);
-  assert.match(text, /Live preview SHA mismatch/);
+  assert.match(text, /Live preview verification failed/);
   assert.doesNotMatch(text, /https:\/\/docs\.earthcoop\.ir/);
 });
 
