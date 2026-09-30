@@ -2,6 +2,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
 
+import { applyRecoveredUiPolish } from './patch-recovered-ui-polish.mjs';
+
 async function loadRecoveredRenderers(runtimeDir) {
   const window = { EC_CONTENT: { documentDownloads: {} }, EC_PAGES: {}, EC_RENDER: {} };
   const context = vm.createContext({ window, URL, console });
@@ -64,4 +66,6 @@ export async function renderRecoveredStaticDocuments({
     await mkdir(documentDir, { recursive: true });
     await writeFile(path.join(documentDir, 'index.html'), html);
   }
+
+  await applyRecoveredUiPolish({ outDir: runtimeDir, availableLocales: ['fa'] });
 }
