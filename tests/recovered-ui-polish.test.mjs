@@ -86,3 +86,12 @@ test('lead-box headings keep strong contrast on the dark green background', () =
   const result = patchRecoveredStyles('.article-body strong{color:var(--ink)}.lead-box{background:var(--forest);color:white}');
   assert.match(result, /\.lead-box strong\{color:#dfbd68/);
 });
+
+test('desktop document TOC stays sticky while scrolling independently inside the viewport', () => {
+  const result = patchRecoveredStyles('.document-toc{position:sticky;top:135px;align-self:start}');
+  assert.match(result, /@media\(min-width:1051px\)\{\.document-toc\{/);
+  assert.match(result, /max-height:calc\(100dvh - 155px\)/);
+  assert.match(result, /overflow-y:auto/);
+  assert.match(result, /overscroll-behavior:contain/);
+  assert.match(result, /scrollbar-gutter:stable/);
+});
