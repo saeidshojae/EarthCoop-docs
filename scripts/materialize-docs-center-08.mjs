@@ -7,8 +7,9 @@ import { promisify } from 'node:util';
 
 const execFileAsync = promisify(execFile);
 
+export const RECOVERED_08_DEPLOYED_ARCHIVE_NAME = 'earthcoop-knowledge-center-0.8.0-cpanel.tar.gz';
 export const RECOVERED_08_ARCHIVE_SHA256 = 'e1c5938f381db7b7f0efeef527dd828c96e13adc9de5a913de624796c6ae0704';
-export const RECOVERED_08_ARCHIVE_URL = 'https://docs-preview.earthcoop.ir/earthcoop-knowledge-center-0.8.0-cpanel.tar.gz';
+export const RECOVERED_08_ARCHIVE_URL = `https://docs-preview.earthcoop.ir/${RECOVERED_08_DEPLOYED_ARCHIVE_NAME}`;
 export const RECOVERED_08_FILE_HASHES = Object.freeze({
   'index.html': 'db2afdbe08b013f10fd3c643d430d0ef4cb9eb3442ca5f266cf71083045422a5',
   'app.js': 'e961f95541d99ca940c19b860f315eba366e50e4c9dcb9f7302cfc04b156713e',
@@ -56,7 +57,14 @@ export async function materializeRecoveredDocsCenter({
       }
     }
 
-    return { archiveSha256, outDir };
+    const deployedArchivePath = path.join(outDir, RECOVERED_08_DEPLOYED_ARCHIVE_NAME);
+    await writeFile(deployedArchivePath, bytes);
+
+    return {
+      archiveSha256,
+      deployedArchivePath,
+      outDir,
+    };
   } finally {
     await rm(temporary, { recursive: true, force: true });
   }
