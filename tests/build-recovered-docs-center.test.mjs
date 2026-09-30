@@ -54,7 +54,7 @@ async function fixture() {
   return { root, archive, archiveHash, currentFoundationalPackages };
 }
 
-test('builds recovered 0.8 runtime with governed data and explicit preview config', async () => {
+test('builds recovered 0.8 runtime with governed data, full-text corpus and preview-safe SEO', async () => {
   const input = await fixture();
   const outDir = path.join(input.root, 'dist');
   const report = await buildRecoveredDocsCenter({
@@ -79,6 +79,20 @@ test('builds recovered 0.8 runtime with governed data and explicit preview confi
   const packageIndex = await readFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), 'utf8');
   assert.match(packageIndex, /referenceDocumentPackages/);
 
+  const locales = JSON.parse(await readFile(path.join(outDir, 'recovered-locales.json'), 'utf8'));
+  assert.deepEqual(locales.globalLocales, ['fa']);
+
+  const search = JSON.parse(await readFile(path.join(outDir, 'recovered-search-index.json'), 'utf8'));
+  assert.equal(search.length, 1);
+  assert.match(search[0].body, /بدن/);
+
+  const robots = await readFile(path.join(outDir, 'robots.txt'), 'utf8');
+  assert.match(robots, /Disallow: \//);
+  assert.doesNotMatch(robots, /docs\.earthcoop\.ir/);
+  const sitemap = await readFile(path.join(outDir, 'sitemap.xml'), 'utf8');
+  assert.match(sitemap, /docs-preview\.earthcoop\.ir\/documents\/fc\//);
+  assert.doesNotMatch(sitemap, /https:\/\/docs\.earthcoop\.ir/);
+
   const config = await readFile(path.join(outDir, 'site-config.js'), 'utf8');
   assert.match(config, /deploymentTarget: "self-hosted"/);
   assert.match(config, /https:\/\/docs-preview\.earthcoop\.ir/);
@@ -97,4 +111,5 @@ test('builds recovered 0.8 runtime with governed data and explicit preview confi
   });
   assert.equal(report.documentCount, 1);
   assert.equal(report.referenceCount, 0);
+  assert.equal(report.searchRecordCount, 1);
 });
