@@ -13,6 +13,11 @@ function cleanInline(value) {
     .trim();
 }
 
+function headingLevel(line) {
+  const match = /^(#{1,6})\s+/.exec(line);
+  return match ? match[1].length : null;
+}
+
 export function parseFoundationalMarkdown(source, { documentId }) {
   if (!documentId) throw new TypeError('documentId is required');
   const normalized = stripFrontmatter(source);
@@ -21,15 +26,21 @@ export function parseFoundationalMarkdown(source, { documentId }) {
   if (!titleLine) throw new Error(`${documentId} source is missing H1 title`);
   const title = cleanInline(titleLine.replace(/^#\s+/, ''));
 
-  const articlePattern = /^###\s+ماده\s+([A-Z]+-\d+)\s+—\s+(.+?)\s*$/;
-  const articleIndexes = [];
+  const articlePattern = /^(#{2,6})\s+ماده\s+([A-Z]+-\d+)\s+—\s+(.+?)\s*$/;
+  const articles = [];
   for (let index = 0; index < lines.length; index += 1) {
     const match = articlePattern.exec(lines[index]);
-    if (match) articleIndexes.push({ index, match });
+    if (!match) continue;
+    articles.push({
+      index,
+      level: match[1].length,
+      id: match[2],
+      title: cleanInline(match[3]),
+    });
   }
-  if (!articleIndexes.length) throw new Error(`${documentId} source has no article headings`);
+  if (!articles.length) throw new Error(`${documentId} source has no article headings`);
 
-  const firstArticle = articleIndexes[0].index;
+  const firstArticle = articles[0].index;
   const h1Index = lines.indexOf(titleLine);
   const preamble = lines.slice(h1Index + 1, firstArticle)
     .map((line) => cleanInline(line))
@@ -37,21 +48,30 @@ export function parseFoundationalMarkdown(source, { documentId }) {
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 
-  const provisions = articleIndexes.map(({ index, match }, position) => {
-    const id = match[1];
-    if (!id.startsWith(`${documentId}-`)) {
-      throw new Error(`Article ${id} does not belong to ${documentId}`);
+  const provisions = articles.map((article, position) => {
+    if (!article.id.startsWith(`${documentId}-`)) {
+      throw new Error(`Article ${article.id} does not belong to ${documentId}`);
     }
-    const next = articleIndexes[position + 1]?.index ?? lines.length;
-    const body = lines.slice(index + 1, next)
+
+    let end = lines.length;
+    for (let index = article.index + 1; index < lines.length; index += 1) {
+      const level = headingLevel(lines[index]);
+      if (level !== null && level <= article.level) {
+        end = index;
+        break;
+      }
+    }
+
+    const body = lines.slice(article.index + 1, end)
       .join('\n')
       .trim()
       .replace(/\n{3,}/g, '\n\n');
+
     return {
-      id,
-      stableSlug: id.toLowerCase(),
+      id: article.id,
+      stableSlug: article.id.toLowerCase(),
       kind: 'article',
-      title: `ماده ${id} — ${cleanInline(match[2])}`,
+      title: `ماده ${article.id} — ${article.title}`,
       body,
       order: position + 1,
       children: [],
