@@ -24,18 +24,6 @@ async function fixture() {
   await execFileAsync('tar', ['-czf', archive, '-C', runtime, '.']);
   const archiveHash = createHash('sha256').update(await readFile(archive)).digest('hex');
 
-  await mkdir(path.join(root, 'published/foundational'), { recursive: true });
-  await writeFile(path.join(root, 'published/foundational/FC.fa.md'), `# سند مادر
-
-شناسه سند: FC
-
----
-
-## دیباچه
-متن
-
-### ماده FC-001 — اصل
-بدن`);
   await writeFile(path.join(root, 'docs-manifest.json'), JSON.stringify({
     schemaVersion: 2,
     entries: [{
@@ -54,7 +42,23 @@ async function fixture() {
       },
     }],
   }));
-  return { root, archive, archiveHash };
+
+  const currentFoundationalPackages = [{
+    id: 'FC',
+    version: '1.1',
+    markdown: `# سند مادر
+
+شناسه سند: FC
+
+---
+
+## دیباچه
+متن کامل
+
+### ماده FC-001 — اصل
+بدن`,
+  }];
+  return { root, archive, archiveHash, currentFoundationalPackages };
 }
 
 test('builds recovered 0.8 runtime with governed data and explicit preview config', async () => {
@@ -70,6 +74,7 @@ test('builds recovered 0.8 runtime with governed data and explicit preview confi
     verifyRecoveredFiles: false,
     renderStaticDocuments: false,
     canonicalOrigin: 'https://docs-preview.earthcoop.ir',
+    currentFoundationalPackages: input.currentFoundationalPackages,
   });
 
   assert.match(await readFile(path.join(outDir, 'index.html'), 'utf8'), /مرکز دانش/);
