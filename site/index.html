@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>مرکز اسناد EarthCoop</title>
+  <link rel="icon" href="./assets/earthcoop-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#/" aria-label="EarthCoop Docs">
+      <img src="./assets/earthcoop-mark.svg" alt="" width="40" height="40">
+      <span>EarthCoop Docs</span>
+    </a>
+    <label class="locale-control">
+      <span class="sr-only">زبان</span>
+      <select id="locale-switcher" aria-label="زبان">
+        <option value="fa">فارسی</option>
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+      </select>
+    </label>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="ناوبری اسناد">
+      <input id="search-input" type="search" placeholder="جست‌وجو در اسناد…" autocomplete="off">
+      <nav id="document-navigation"></nav>
+      <div id="search-results" hidden></div>
+    </aside>
+    <main id="main-content" tabindex="-1">
+      <section id="home-view">
+        <p class="eyebrow">مرکز رسمی اسناد</p>
+        <h1>اسناد EarthCoop</h1>
+        <p>نسخه‌ها، وضعیت‌ها و متن اسناد از منابع کنترل‌شده همین مخزن ساخته می‌شوند.</p>
+      </section>
+      <article id="document-view" hidden>
+        <header class="document-header">
+          <div>
+            <p id="document-id" class="eyebrow"></p>
+            <h1 id="document-title"></h1>
+            <p id="document-meta"></p>
+          </div>
+          <div class="document-actions" aria-label="ابزار سند">
+            <button id="copy-document" type="button">کپی</button>
+            <button id="print-document" type="button">چاپ</button>
+            <button id="download-document" type="button">دانلود</button>
+          </div>
+        </header>
+        <div id="rendition-notice" class="notice" hidden></div>
+        <div class="document-grid">
+          <div id="document-body" class="document-body"></div>
+          <aside id="table-of-contents" class="toc" aria-label="فهرست این سند"></aside>
+        </div>
+      </article>
+      <section id="not-found-view" hidden>
+        <h1>صفحه پیدا نشد</h1>
+        <p>نشانی درخواست‌شده در مرکز اسناد وجود ندارد.</p>
+      </section>
+    </main>
+  </div>
+  <noscript>برای استفاده از ناوبری تعاملی مرکز اسناد، JavaScript را فعال کنید.</noscript>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
