@@ -20,6 +20,7 @@ const REQUIRED_FILES = [
   'recovered-locales.json',
   'recovered-search-index.json',
   'recovered-seo-routes.json',
+  'recovered-editorial-truth.json',
   'robots.txt',
   'sitemap.xml',
   'src/content/document-packages/foundational.generated.fa.js',
@@ -59,7 +60,8 @@ function assertPreviewHtaccess(content) {
   if (!content.includes('docs-preview\\.earthcoop\\.ir')) throw new Error('Recovered htaccess preview host rule is missing');
   if (!content.includes('RewriteCond %{HTTPS} !=on')) throw new Error('Recovered htaccess HTTPS canonicalization is missing');
   if (!content.includes('ErrorDocument 404 /404/index.html')) throw new Error('Recovered htaccess 404 contract is missing');
-  if (!content.includes('X-Robots-Tag "noindex, nofollow"')) throw new Error('Recovered htaccess preview noindex header is missing');
+  if (!content.includes('Header always set X-Robots-Tag "noindex, nofollow"')) throw new Error('Recovered htaccess preview noindex header is missing');
+  if (/X-Robots-Tag\s+"noindex, nofollow"\s+env=/.test(content)) throw new Error('Recovered htaccess preview noindex header must be unconditional');
 }
 
 export async function validateRecoveredDocsCenter({
@@ -82,6 +84,7 @@ export async function validateRecoveredDocsCenter({
   assertGuidePolicy(manifest.guideContentPolicy);
   if (manifest.canonicalOrigin !== EXPECTED_ORIGIN) throw new Error(`Recovered preview origin mismatch: ${manifest.canonicalOrigin}`);
   if (manifest.previewIndexing !== 'disabled') throw new Error('Recovered preview indexing must be disabled');
+  if (manifest.editorialTruthArtifact !== 'recovered-editorial-truth.json') throw new Error('Recovered editorial truth artifact declaration is invalid');
   if (!manifest.hashes || typeof manifest.hashes !== 'object' || Array.isArray(manifest.hashes)) throw new Error('Recovered deployment manifest hashes are missing');
 
   for (const required of REQUIRED_FILES) {
@@ -114,13 +117,17 @@ export async function validateRecoveredDocsCenter({
   const localeCatalog = JSON.parse(await readFile(path.join(outDir, 'recovered-locales.json'), 'utf8'));
   const searchRows = JSON.parse(await readFile(path.join(outDir, 'recovered-search-index.json'), 'utf8'));
   const seoRoutes = JSON.parse(await readFile(path.join(outDir, 'recovered-seo-routes.json'), 'utf8'));
+  const editorialTruth = JSON.parse(await readFile(path.join(outDir, manifest.editorialTruthArtifact), 'utf8'));
   const robotsTxt = await readFile(path.join(outDir, 'robots.txt'), 'utf8');
+  const sitemapXml = await readFile(path.join(outDir, 'sitemap.xml'), 'utf8');
   validateRecoveredUatContract({
     manifest,
     localeCatalog,
     searchRows,
     seoRoutes,
+    editorialTruth,
     robotsTxt,
+    sitemapXml,
     runtimeFiles: new Set(declaredFiles),
   });
 
