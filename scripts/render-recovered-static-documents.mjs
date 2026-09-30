@@ -39,6 +39,7 @@ export async function renderRecoveredStaticDocuments({
   runtimeDir,
   packages,
   canonicalOrigin = 'https://docs.earthcoop.ir',
+  indexable = true,
 }) {
   const recovered = await loadRecoveredRenderers(runtimeDir);
   const template = await readFile(path.join(runtimeDir, 'documents/fc/index.html'), 'utf8');
@@ -49,7 +50,7 @@ export async function renderRecoveredStaticDocuments({
       description: documentPackage.summary,
       path: `/documents/${documentPackage.slug}/`,
       documentSlug: documentPackage.slug,
-      indexable: true,
+      indexable,
       modifiedAt: documentPackage.reviewedAt,
     };
     const reader = recovered.EC_PAGES.renderDocumentReader(documentPackage);
