@@ -6,7 +6,9 @@ import { fileURLToPath } from 'node:url';
 
 import { buildRecoveredContentCatalog } from './build-recovered-content-catalog.mjs';
 import { buildRecoveredLocaleCatalog } from './recovered-locale-catalog.mjs';
+import { buildRecoveredRouteEntries } from './recovered-route-policy.mjs';
 import { buildRecoveredSearchIndex } from './build-recovered-search-index.mjs';
+import { buildRecoveredSeoAssets } from './build-recovered-seo.mjs';
 import {
   buildLegacyFoundationalPackages,
   buildLegacyReferencePackages,
@@ -86,7 +88,8 @@ ErrorDocument 404 /404/index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json)$">
+  Header always set X-Robots-Tag "noindex, nofollow" env=REDIRECT_STATUS
+  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json)$">
     Header set Cache-Control "no-store, max-age=0"
   </FilesMatch>
   <FilesMatch "\\.(css|js|svg|woff2)$">
@@ -138,10 +141,10 @@ export async function buildRecoveredDocsCenter({
     verifyFiles: verifyRecoveredFiles,
   });
 
-  const catalog = await buildRecoveredContentCatalog(rootDir, {
-    currentFoundationalPackages,
-  });
+  const catalog = await buildRecoveredContentCatalog(rootDir, { currentFoundationalPackages });
   const localeCatalog = buildRecoveredLocaleCatalog(catalog);
+  const routes = buildRecoveredRouteEntries(catalog);
+  const seo = buildRecoveredSeoAssets({ canonicalOrigin, routes, preview: true });
   const packages = await buildLegacyFoundationalPackages(rootDir, { catalog });
   const referencePackages = await buildLegacyReferencePackages(rootDir, { catalog });
   const allPackages = [...packages, ...referencePackages];
@@ -152,6 +155,9 @@ export async function buildRecoveredDocsCenter({
   await writeFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), recoveredPackageIndex());
   await writeFile(path.join(outDir, 'recovered-locales.json'), `${JSON.stringify(localeCatalog, null, 2)}\n`);
   await writeFile(path.join(outDir, 'recovered-search-index.json'), `${JSON.stringify(searchIndex, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-seo-routes.json'), `${JSON.stringify(seo.routes, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'robots.txt'), seo.robotsTxt);
+  await writeFile(path.join(outDir, 'sitemap.xml'), seo.sitemapXml);
 
   const documentsMetadataPath = path.join(outDir, 'src/content/documents.fa.js');
   const documentsMetadata = await readFile(documentsMetadataPath, 'utf8');
@@ -165,6 +171,7 @@ export async function buildRecoveredDocsCenter({
       runtimeDir: outDir,
       packages: allPackages,
       canonicalOrigin,
+      indexable: false,
     });
   }
 
@@ -183,7 +190,9 @@ export async function buildRecoveredDocsCenter({
     displayLocales: localeCatalog.globalLocales,
     guideContentPolicy: GUIDE_CONTENT_POLICY,
     canonicalOrigin,
+    previewIndexing: 'disabled',
     searchRecordCount: searchIndex.length,
+    seoRouteCount: seo.routes.length,
     fileCount: inventory.length + 1,
     hashes,
   };
