@@ -18,6 +18,7 @@ async function fixture() {
   await writeFile(path.join(runtime, 'index.html'), '<h1>مرکز دانش ارث‌کوپ</h1>');
   await writeFile(path.join(runtime, 'app.js'), 'legacy-app');
   await writeFile(path.join(runtime, 'styles.css'), 'legacy-css');
+  await writeFile(path.join(runtime, '.htaccess'), `Options -Indexes\nDirectoryIndex index.html\n\n<IfModule mod_rewrite.c>\n  RewriteEngine On\n  RewriteCond %{HTTPS} !=on\n  RewriteRule ^ https://docs.earthcoop.ir%{REQUEST_URI} [R=301,L]\n\n  RewriteCond %{HTTP_HOST} !^docs\\.earthcoop\\.ir$ [NC]\n  RewriteRule ^ https://docs.earthcoop.ir%{REQUEST_URI} [R=301,L]\n</IfModule>\n`);
   await writeFile(path.join(runtime, 'src/content/document-packages/foundational.generated.fa.js'), 'OLD');
 
   const archive = path.join(root, 'runtime.tar.gz');
@@ -86,6 +87,12 @@ test('builds recovered 0.8 runtime with governed data and explicit preview confi
   const config = await readFile(path.join(outDir, 'site-config.js'), 'utf8');
   assert.match(config, /deploymentTarget: "self-hosted"/);
   assert.match(config, /https:\/\/docs-preview\.earthcoop\.ir/);
+
+  const htaccess = await readFile(path.join(outDir, '.htaccess'), 'utf8');
+  assert.match(htaccess, /docs-preview\.earthcoop\.ir/);
+  assert.doesNotMatch(htaccess, /https:\/\/docs\.earthcoop\.ir/);
+  assert.doesNotMatch(htaccess, /!\^docs\\\.earthcoop\\\.ir\$/);
+
   assert.equal(report.runtimeBaseline, 'earthcoop-knowledge-center-0.8.0');
   assert.deepEqual(report.displayLocales, ['fa']);
   assert.deepEqual(report.guideContentPolicy, {

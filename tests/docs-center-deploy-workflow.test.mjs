@@ -78,12 +78,13 @@ test('workflow preflights exact secret namespace and deploys recovered dist only
   assert.doesNotMatch(text, /docs\.earthcoop\.ir/);
 });
 
-test('workflow uploads rollback artifact before deploy', async () => {
+test('workflow uploads complete rollback artifact including hidden htaccess before deploy', async () => {
   const text = await workflow();
   const upload = text.indexOf('actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a');
   const deploy = text.indexOf('SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287');
   assert.ok(upload >= 0 && upload < deploy);
   assert.match(text, /path:\s*dist\//);
+  assert.match(text, /include-hidden-files:\s*true/);
 });
 
 test('post-deploy smoke checks recovered baseline and exact live SHA on preview only', async () => {

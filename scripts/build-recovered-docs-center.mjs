@@ -35,7 +35,67 @@ async function listFiles(dir, prefix = '') {
   return output;
 }
 
+function canonicalPreviewUrl(canonicalOrigin) {
+  let url;
+  try {
+    url = new URL(canonicalOrigin);
+  } catch {
+    throw new Error('canonicalOrigin must be a valid HTTPS URL');
+  }
+  if (url.protocol !== 'https:' || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {
+    throw new Error('canonicalOrigin must be a bare HTTPS origin');
+  }
+  return url;
+}
+
+function escapeApacheRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function previewHtaccess(canonicalOrigin) {
+  const url = canonicalPreviewUrl(canonicalOrigin);
+  const origin = url.origin;
+  const hostPattern = escapeApacheRegex(url.host);
+  return `Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ ${origin}%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{HTTP_HOST} !^${hostPattern}$ [NC]
+  RewriteRule ^ ${origin}%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^ %{REQUEST_URI}/ [R=301,L]
+</IfModule>
+
+ErrorDocument 404 /404/index.html
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json)$">
+    Header set Cache-Control "no-store, max-age=0"
+  </FilesMatch>
+  <FilesMatch "\\.(css|js|svg|woff2)$">
+    Header set Cache-Control "public, max-age=3600, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType application/javascript .js
+  AddType font/woff2 .woff2
+</IfModule>
+`;
+}
+
 function previewSiteConfig(canonicalOrigin) {
+  canonicalPreviewUrl(canonicalOrigin);
   return `window.EC_SITE_CONFIG = Object.freeze({\n  deploymentTarget: "self-hosted",\n  canonicalOrigin: "${canonicalOrigin}",\n  mainSiteUrl: "https://earthcoop.ir",\n  integrations: Object.freeze({\n    api: Object.freeze({enabled: false, baseUrl: "https://earthcoop.ir/api/docs/v1"}),\n    sso: Object.freeze({enabled: false, startUrl: "https://earthcoop.ir/docs/sso/start"}),\n  }),\n});\n`;
 }
 
@@ -54,6 +114,7 @@ export async function buildRecoveredDocsCenter({
   if (!rootDir || !outDir) throw new TypeError('rootDir and outDir are required');
   if (!/^[0-9a-f]{40}$/i.test(sourceSha ?? '')) throw new Error('sourceSha must be a full 40-character commit SHA');
   if (!builtAt || Number.isNaN(Date.parse(builtAt))) throw new Error('builtAt must be an ISO timestamp');
+  canonicalPreviewUrl(canonicalOrigin);
 
   const recovered = await materializeRecoveredDocsCenter({
     archiveSource: runtimeArchiveSource,
@@ -69,6 +130,7 @@ export async function buildRecoveredDocsCenter({
   await mkdir(path.dirname(generatedPath), { recursive: true });
   await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages));
   await writeFile(path.join(outDir, 'site-config.js'), previewSiteConfig(canonicalOrigin));
+  await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
 
   if (renderStaticDocuments) {
     await renderRecoveredStaticDocuments({
