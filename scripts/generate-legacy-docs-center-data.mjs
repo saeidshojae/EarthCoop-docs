@@ -25,35 +25,45 @@ function sectionSlug(title, index) {
   return numbered ? `section-${numbered.replaceAll('.', '-')}` : `section-${String(index + 1).padStart(3, '0')}`;
 }
 
-function referenceSections(markdown) {
+export function parseRecoveredReferenceStructure(markdown) {
   const lines = stripFrontmatter(markdown).split(/\r?\n/);
   const firstH1 = lines.findIndex((line) => /^#\s+/.test(line));
-  const candidates = [];
+  const headings = [];
   for (let index = Math.max(firstH1 + 1, 0); index < lines.length; index += 1) {
     const match = /^(#{1,6})\s+(.+?)\s*$/.exec(lines[index]);
     if (!match) continue;
-    candidates.push({ index, level: match[1].length, title: match[2].trim() });
+    headings.push({ index, level: match[1].length, title: match[2].trim() });
   }
-  return candidates.map((heading, position) => {
-    let end = lines.length;
-    for (let index = heading.index + 1; index < lines.length; index += 1) {
-      const match = /^(#{1,6})\s+/.exec(lines[index]);
-      if (match && match[1].length <= heading.level) {
-        end = index;
-        break;
-      }
-    }
-    const body = lines.slice(heading.index + 1, end).join('\n').trim();
-    return {
+
+  const roots = [];
+  const stack = [];
+  headings.forEach((heading, position) => {
+    const nextHeadingIndex = headings[position + 1]?.index ?? lines.length;
+    const body = lines.slice(heading.index + 1, nextHeadingIndex).join('\n').trim();
+    const node = {
       id: `reference-section-${position + 1}`,
       stableSlug: sectionSlug(heading.title, position),
       kind: 'section',
       title: heading.title,
       body,
-      order: position + 1,
+      order: 0,
       children: [],
+      _level: heading.level,
     };
+
+    while (stack.length && stack.at(-1)._level >= heading.level) stack.pop();
+    const siblings = stack.length ? stack.at(-1).children : roots;
+    node.order = siblings.length + 1;
+    siblings.push(node);
+    stack.push(node);
   });
+
+  const removeInternal = (nodes) => nodes.map(({ _level, children, ...node }) => ({
+    ...node,
+    children: removeInternal(children),
+  }));
+
+  return { provisions: removeInternal(roots) };
 }
 
 function referencePreamble(markdown) {
@@ -97,7 +107,7 @@ export async function buildLegacyReferencePackages(rootDir, { currentPackages, c
       publishedAt: entry.reviewedAt,
       sourcePath: entry.source,
     },
-    provisions: referenceSections(entry.markdown),
+    provisions: parseRecoveredReferenceStructure(entry.markdown).provisions,
     contentClass: 'reference',
   })).sort((a, b) => a.code.localeCompare(b.code, 'en'));
 }
