@@ -50,7 +50,7 @@ test('pull-request validation builds and validates the recovered candidate with 
 test('recovered validator itself pins preview origin, Persian-only display and official 0.8 archive by default', async () => {
   const validator = await readFile(path.join(root, 'scripts/validate-recovered-docs-center.mjs'), 'utf8');
   assert.match(validator, /https:\/\/docs-preview\.earthcoop\.ir/);
-  assert.match(validator, /displayLocales\) !== JSON\.stringify\(\['fa'\]\)/);
+  assert.match(validator, /JSON\.stringify\(manifest\.displayLocales\) !== JSON\.stringify\(\['fa'\]\)/);
   assert.match(validator, /expectedRuntimeArchiveSha = RECOVERED_08_ARCHIVE_SHA256/);
   assert.doesNotMatch(validator, /EXPECTED_ORIGIN\s*=\s*['"]https:\/\/docs\.earthcoop\.ir/);
 });
