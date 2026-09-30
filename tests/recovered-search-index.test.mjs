@@ -8,12 +8,12 @@ const packages = [
   { code:'ECON-REF-01', slug:'econ-ref-01-fa-0-1', contentClass:'reference', canonicalLanguage:'fa', status:'official_draft', title:'سند مرجع اقتصاد', currentVersion:{version:'0.1'}, provisions:[{stableSlug:'section-2',title:'بخش دوم',body:'مقدمه مدل',children:[{stableSlug:'section-2-4',title:'تمایزهای بنیادین',body:'حق با پول و دارایی یکی نیست',children:[]}]}] },
 ];
 
-test('indexes body text, stable anchors and routes for foundational and nested reference content', () => {
+test('indexes body text, stable anchors and recovered-router routes for foundational and nested reference content', () => {
   const rows = buildRecoveredSearchIndex(packages, { allowedLocales:['fa'] });
   const ref = rows.find((row) => row.documentId === 'ECON-REF-01' && row.anchor === 'section-2-4');
   assert.ok(ref);
   assert.match(ref.body, /حق با پول/);
-  assert.equal(ref.route, '#/documents/econ-ref-01-fa-0-1?anchor=section-2-4');
+  assert.equal(ref.route, '#/documents/econ-ref-01-fa-0-1/provisions/section-2-4');
   assert.equal(ref.contentClass, 'reference');
   assert.equal(ref.status, 'official_draft');
   assert.equal(ref.version, '0.1');
