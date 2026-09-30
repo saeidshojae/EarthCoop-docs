@@ -6,8 +6,10 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const workflowPath = path.join(root, '.github/workflows/deploy-docs-preview.yml');
+const validationWorkflowPath = path.join(root, '.github/workflows/validate-knowledge-content.yml');
 
 async function workflow() { return readFile(workflowPath, 'utf8'); }
+async function validationWorkflow() { return readFile(validationWorkflowPath, 'utf8'); }
 
 test('deploy workflow triggers only from main push or controlled manual dispatch', async () => {
   const text = await workflow();
@@ -24,17 +26,25 @@ test('workflow uses minimal permissions and serialized non-cancelling preview co
   assert.match(text, /cancel-in-progress:\s*false/);
 });
 
-test('workflow validates repository and builds recovered 0.8 runtime before deployment', async () => {
+test('deploy workflow builds and validates recovered 0.8 runtime before artifact/deployment', async () => {
   const text = await workflow();
   const checkout = text.indexOf('actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1');
   const tests = text.indexOf('node --test');
   const build = text.indexOf('node scripts/build-recovered-docs-center.mjs --out dist');
+  const validate = text.indexOf('node scripts/validate-recovered-docs-center.mjs --out dist');
+  const upload = text.indexOf('actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a');
   const deploy = text.indexOf('SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287');
-  assert.ok(checkout >= 0 && checkout < tests && tests < build && build < deploy);
+  assert.ok(checkout >= 0 && checkout < tests && tests < build && build < validate && validate < upload && upload < deploy);
   assert.doesNotMatch(text, /node scripts\/build-docs-center\.mjs --out dist(?:\s|$)/);
-  assert.match(text, /earthcoop-knowledge-center-0\.8\.0/);
-  assert.match(text, /deployment-manifest\.json/);
+  assert.doesNotMatch(text, /Validate recovered build identity[\s\S]*node - <<'NODE'/);
   assert.doesNotMatch(text, /download-artifact/i);
+});
+
+test('pull-request validation builds and validates the recovered candidate with the same validator', async () => {
+  const text = await validationWorkflow();
+  const build = text.indexOf('node scripts/build-recovered-docs-center.mjs --out dist-recovered');
+  const validate = text.indexOf('node scripts/validate-recovered-docs-center.mjs --out dist-recovered');
+  assert.ok(build >= 0 && validate > build);
 });
 
 test('artifact and deploy third-party actions are pinned to immutable full SHAs', async () => {
