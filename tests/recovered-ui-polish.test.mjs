@@ -20,10 +20,17 @@ const html = `<!doctype html>
       <button class="menu-button" id="menuButton">منو</button>
     </div>
   </header>
-  <div class="hero-visual"><div class="orbit">EarthCoop</div></div>
+  <section class="hero">
+    <div>متن معرفی</div>
+    <div class="hero-visual"><div class="orbit">EarthCoop</div></div>
+      </section>
 </body></html>`;
 
-const appSource = `render: () => \`<div class="hero-visual"><div class="orbit">EarthCoop</div></div>\``;
+const appSource = `render: () => \`
+      <section class="hero">
+        <div>متن معرفی</div>
+        <div class="hero-visual"><div class="orbit">EarthCoop</div></div>
+      </section>\``;
 
 const mobileSource = `function setMobileNavigation(open) {
   const sidebar = document.getElementById('sidebar');
