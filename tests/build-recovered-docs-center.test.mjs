@@ -88,5 +88,10 @@ test('builds recovered 0.8 runtime with governed data and explicit preview confi
   assert.match(config, /https:\/\/docs-preview\.earthcoop\.ir/);
   assert.equal(report.runtimeBaseline, 'earthcoop-knowledge-center-0.8.0');
   assert.deepEqual(report.displayLocales, ['fa']);
+  assert.deepEqual(report.guideContentPolicy, {
+    fa: 'recovered_0.8_editorial_snapshot_under_audit',
+    en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
+    ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
+  });
   assert.equal(report.documentCount, 1);
 });
