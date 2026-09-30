@@ -10,7 +10,9 @@ import {
 
 const EXPECTED_BASELINE = 'earthcoop-knowledge-center-0.8.0';
 const EXPECTED_ORIGIN = 'https://docs-preview.earthcoop.ir';
+const EXPECTED_HOST = 'docs-preview.earthcoop.ir';
 const REQUIRED_FILES = [
+  '.htaccess',
   'index.html',
   'app.js',
   'styles.css',
@@ -45,6 +47,24 @@ function assertGuidePolicy(actual) {
     if (actual?.[locale] !== expected) {
       throw new Error(`Guide content policy mismatch for ${locale}`);
     }
+  }
+}
+
+function assertPreviewHtaccess(content) {
+  if (content.includes('https://docs.earthcoop.ir')) {
+    throw new Error('Recovered htaccess contains a production redirect');
+  }
+  if (!content.includes(EXPECTED_ORIGIN)) {
+    throw new Error('Recovered htaccess preview origin mismatch');
+  }
+  if (!content.includes('docs-preview\\.earthcoop\\.ir')) {
+    throw new Error('Recovered htaccess preview host rule is missing');
+  }
+  if (!content.includes('RewriteCond %{HTTPS} !=on')) {
+    throw new Error('Recovered htaccess HTTPS canonicalization is missing');
+  }
+  if (!content.includes('ErrorDocument 404 /404/index.html')) {
+    throw new Error('Recovered htaccess 404 contract is missing');
   }
 }
 
@@ -116,6 +136,9 @@ export async function validateRecoveredDocsCenter({
   if (!config.includes(EXPECTED_ORIGIN)) {
     throw new Error('Recovered site config preview origin mismatch');
   }
+
+  const htaccess = await readFile(path.join(outDir, '.htaccess'), 'utf8');
+  assertPreviewHtaccess(htaccess);
 
   return {
     valid: true,
