@@ -19,6 +19,7 @@ import {
   RECOVERED_08_ARCHIVE_SHA256,
   RECOVERED_08_ARCHIVE_URL,
 } from './materialize-docs-center-08.mjs';
+import { patchRecoveredDocumentReaderSource } from './patch-recovered-document-reader.mjs';
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
@@ -88,7 +89,7 @@ ErrorDocument 404 /404/index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  Header always set X-Robots-Tag "noindex, nofollow" env=REDIRECT_STATUS
+  Header always set X-Robots-Tag "noindex, nofollow"
   <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json)$">
     Header set Cache-Control "no-store, max-age=0"
   </FilesMatch>
@@ -140,6 +141,10 @@ export async function buildRecoveredDocsCenter({
     expectedSha256: runtimeArchiveSha256,
     verifyFiles: verifyRecoveredFiles,
   });
+
+  const readerPath = path.join(outDir, 'src/pages/document-reader.js');
+  const readerSource = await readFile(readerPath, 'utf8');
+  await writeFile(readerPath, patchRecoveredDocumentReaderSource(readerSource));
 
   const catalog = await buildRecoveredContentCatalog(rootDir, { currentFoundationalPackages });
   const localeCatalog = buildRecoveredLocaleCatalog(catalog);
