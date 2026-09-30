@@ -25,8 +25,19 @@ export function classifyRepositoryLocalePath(sourcePath) {
 
 export function resolveDisplayLocales(renditions = {}) {
   const locales = [];
-  if (renditions.fa?.source && USABLE.has(renditions.fa?.status)) locales.push('fa');
-  if (renditions.en?.source && USABLE.has(renditions.en?.status)) locales.push('en');
-  if (renditions.ar?.source && USABLE.has(renditions.ar?.status)) locales.push('ar');
+  const fa = renditions.fa;
+  if (fa?.source && USABLE.has(fa.status)) locales.push('fa');
+
+  const en = renditions.en;
+  if (en?.source && USABLE.has(en.status)
+      && classifyRepositoryLocalePath(en.source).translationLanguage === 'en') {
+    locales.push('en');
+  }
+
+  const ar = renditions.ar;
+  if (ar?.source && USABLE.has(ar.status)
+      && classifyRepositoryLocalePath(ar.source).translationLanguage === 'ar') {
+    locales.push('ar');
+  }
   return locales;
 }
