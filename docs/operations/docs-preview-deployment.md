@@ -22,6 +22,12 @@ The build verifies this SHA before extraction. After verification it **preserves
 
 The repository itself, `.git`, source Markdown/MDX outside generated indexes, secrets, and local environment files are not deployment payloads.
 
+## Language/content scope of this recovery artifact
+
+This recovery artifact intentionally advertises only Persian (`fa`) as a display locale. The restored 0.8 Persian editorial guide pages are retained as an **under-audit snapshot**, not represented as fully current product guidance. Current reviewed English product/API guides remain in the repository but are not yet mapped into this recovered runtime. Legacy Mintlify `ar/` paths are Persian RTL compatibility material and must not be presented as genuine Arabic translations.
+
+English/Arabic runtime integration is therefore a later, separate checkpoint and is not a prerequisite for verifying the 0.8 UI recovery itself.
+
 ## Required GitHub Actions secrets
 
 Configure these repository Actions secrets exactly:
@@ -107,11 +113,10 @@ Open the preview and verify at minimum:
 - `https://docs-preview.earthcoop.ir/`
 - a direct document route such as `/documents/fc/` and the application's document navigation;
 - Persian RTL rendering;
-- no legacy Mintlify `ar/` content is presented as a real Arabic translation;
-- English is shown only where a genuine registered English rendition is actually available;
-- full-text search finds current document body text, not only titles;
+- language controls do not advertise legacy `ar/` content as Arabic or claim unmapped English content is live;
+- full-text search finds current **foundational document** body text, not only titles;
 - table of contents and document navigation;
-- visible version/status values match governed repository metadata;
+- visible foundational document version/status values match governed repository metadata;
 - copy, print, and download controls;
 - mobile layout;
 - missing route/not-found behavior;
@@ -125,9 +130,11 @@ and verify:
 
 - `sourceSha` equals the deployed `main` commit SHA;
 - `runtimeBaseline` equals `earthcoop-knowledge-center-0.8.0`;
-- `runtimeArchiveSha256` equals `e1c5938f381db7b7f0efeef527dd828c96e13adc9de5a913de624796c6ae0704`.
+- `runtimeArchiveSha256` equals `e1c5938f381db7b7f0efeef527dd828c96e13adc9de5a913de624796c6ae0704`;
+- `displayLocales` is exactly `['fa']` for this recovery checkpoint;
+- `guideContentPolicy.fa` identifies the 0.8 editorial snapshot as under audit.
 
-The workflow performs the first two checks automatically; the manual check is useful during first-deploy UAT.
+The workflow automatically checks the source SHA and runtime baseline; the artifact validator checks the remaining build contracts before upload. Manual inspection is still required during first-deploy UAT.
 
 ## Rollback
 
