@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 import { buildRecoveredContentCatalog } from './build-recovered-content-catalog.mjs';
 import { buildRecoveredLocaleCatalog } from './recovered-locale-catalog.mjs';
+import { buildRecoveredSearchIndex } from './build-recovered-search-index.mjs';
 import {
   buildLegacyFoundationalPackages,
   buildLegacyReferencePackages,
@@ -85,7 +86,7 @@ ErrorDocument 404 /404/index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json)$">
+  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json)$">
     Header set Cache-Control "no-store, max-age=0"
   </FilesMatch>
   <FilesMatch "\\.(css|js|svg|woff2)$">
@@ -143,11 +144,14 @@ export async function buildRecoveredDocsCenter({
   const localeCatalog = buildRecoveredLocaleCatalog(catalog);
   const packages = await buildLegacyFoundationalPackages(rootDir, { catalog });
   const referencePackages = await buildLegacyReferencePackages(rootDir, { catalog });
+  const allPackages = [...packages, ...referencePackages];
+  const searchIndex = buildRecoveredSearchIndex(allPackages, { allowedLocales: localeCatalog.globalLocales });
   const generatedPath = path.join(outDir, 'src/content/document-packages/foundational.generated.fa.js');
   await mkdir(path.dirname(generatedPath), { recursive: true });
   await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages, referencePackages));
   await writeFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), recoveredPackageIndex());
   await writeFile(path.join(outDir, 'recovered-locales.json'), `${JSON.stringify(localeCatalog, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-search-index.json'), `${JSON.stringify(searchIndex, null, 2)}\n`);
 
   const documentsMetadataPath = path.join(outDir, 'src/content/documents.fa.js');
   const documentsMetadata = await readFile(documentsMetadataPath, 'utf8');
@@ -159,7 +163,7 @@ export async function buildRecoveredDocsCenter({
   if (renderStaticDocuments) {
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
-      packages: [...packages, ...referencePackages],
+      packages: allPackages,
       canonicalOrigin,
     });
   }
@@ -179,6 +183,7 @@ export async function buildRecoveredDocsCenter({
     displayLocales: localeCatalog.globalLocales,
     guideContentPolicy: GUIDE_CONTENT_POLICY,
     canonicalOrigin,
+    searchRecordCount: searchIndex.length,
     fileCount: inventory.length + 1,
     hashes,
   };
