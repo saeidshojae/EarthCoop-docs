@@ -4,12 +4,24 @@ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { buildLegacyFoundationalPackages, serializeLegacyFoundationalPackages } from './generate-legacy-docs-center-data.mjs';
+import { buildRecoveredContentCatalog } from './build-recovered-content-catalog.mjs';
+import { buildRecoveredEditorialTruth } from './build-recovered-editorial-truth.mjs';
+import { buildRecoveredLocaleCatalog } from './recovered-locale-catalog.mjs';
+import { buildRecoveredRouteEntries } from './recovered-route-policy.mjs';
+import { buildRecoveredSearchIndex } from './build-recovered-search-index.mjs';
+import { buildRecoveredSeoAssets } from './build-recovered-seo.mjs';
+import {
+  buildLegacyFoundationalPackages,
+  buildLegacyReferencePackages,
+  serializeLegacyFoundationalPackages,
+} from './generate-legacy-docs-center-data.mjs';
 import {
   materializeRecoveredDocsCenter,
   RECOVERED_08_ARCHIVE_SHA256,
   RECOVERED_08_ARCHIVE_URL,
 } from './materialize-docs-center-08.mjs';
+import { patchRecoveredDocumentReaderSource } from './patch-recovered-document-reader.mjs';
+import { patchRecoveredEditorialPagesSource } from './patch-recovered-editorial-pages.mjs';
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
@@ -79,7 +91,8 @@ ErrorDocument 404 /404/index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json)$">
+  Header always set X-Robots-Tag "noindex, nofollow"
+  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json|recovered-editorial-truth\\.json)$">
     Header set Cache-Control "no-store, max-age=0"
   </FilesMatch>
   <FilesMatch "\\.(css|js|svg|woff2)$">
@@ -97,6 +110,14 @@ ErrorDocument 404 /404/index.html
 function previewSiteConfig(canonicalOrigin) {
   canonicalPreviewUrl(canonicalOrigin);
   return `window.EC_SITE_CONFIG = Object.freeze({\n  deploymentTarget: "self-hosted",\n  canonicalOrigin: "${canonicalOrigin}",\n  mainSiteUrl: "https://earthcoop.ir",\n  integrations: Object.freeze({\n    api: Object.freeze({enabled: false, baseUrl: "https://earthcoop.ir/api/docs/v1"}),\n    sso: Object.freeze({enabled: false, startUrl: "https://earthcoop.ir/docs/sso/start"}),\n  }),\n});\n`;
+}
+
+function recoveredPackageIndex() {
+  return `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documentPackages = Object.freeze([\n  window.EC_CONTENT.publicationPolicyFa,\n  ...window.EC_CONTENT.foundationalDocumentPackages,\n  ...window.EC_CONTENT.referenceDocumentPackages,\n]);\n`;
+}
+
+function referenceCatalogMerge() {
+  return `\nwindow.EC_CONTENT.documents = Object.freeze([\n  ...window.EC_CONTENT.documents,\n  ...window.EC_CONTENT.referenceDocumentPackages.map((record) => ({\n    inventoryId: 'doc.' + record.code,\n    code: record.code,\n    title: record.title,\n    summary: record.summary,\n    status: record.status,\n    filterGroup: 'review',\n    source: record.source,\n    sourceType: 'repository',\n    authority: record.authority,\n    version: record.currentVersion.version,\n    reviewedAt: record.reviewedAt,\n    availability: 'available',\n    destination: '#/documents/' + record.slug,\n  })),\n]);\n`;
 }
 
 export async function buildRecoveredDocsCenter({
@@ -123,20 +144,49 @@ export async function buildRecoveredDocsCenter({
     verifyFiles: verifyRecoveredFiles,
   });
 
-  const packages = await buildLegacyFoundationalPackages(rootDir, {
-    currentPackages: currentFoundationalPackages,
-  });
+  const readerPath = path.join(outDir, 'src/pages/document-reader.js');
+  const readerSource = await readFile(readerPath, 'utf8');
+  await writeFile(readerPath, patchRecoveredDocumentReaderSource(readerSource));
+
+  const pagesPath = path.join(outDir, 'src/content/pages.fa.js');
+  const pagesSource = await readFile(pagesPath, 'utf8');
+  await writeFile(pagesPath, patchRecoveredEditorialPagesSource(pagesSource));
+
+  const productGuideInventory = JSON.parse(await readFile(path.join(rootDir, 'audits/product-guides/2026-09-28-inventory.json'), 'utf8'));
+  const editorialTruth = buildRecoveredEditorialTruth(productGuideInventory);
+
+  const catalog = await buildRecoveredContentCatalog(rootDir, { currentFoundationalPackages });
+  const localeCatalog = buildRecoveredLocaleCatalog(catalog);
+  const routes = buildRecoveredRouteEntries(catalog);
+  const seo = buildRecoveredSeoAssets({ canonicalOrigin, routes, preview: true });
+  const packages = await buildLegacyFoundationalPackages(rootDir, { catalog });
+  const referencePackages = await buildLegacyReferencePackages(rootDir, { catalog });
+  const allPackages = [...packages, ...referencePackages];
+  const searchIndex = buildRecoveredSearchIndex(allPackages, { allowedLocales: localeCatalog.globalLocales });
   const generatedPath = path.join(outDir, 'src/content/document-packages/foundational.generated.fa.js');
   await mkdir(path.dirname(generatedPath), { recursive: true });
-  await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages));
+  await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages, referencePackages));
+  await writeFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), recoveredPackageIndex());
+  await writeFile(path.join(outDir, 'recovered-locales.json'), `${JSON.stringify(localeCatalog, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-search-index.json'), `${JSON.stringify(searchIndex, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-seo-routes.json'), `${JSON.stringify(seo.routes, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-editorial-truth.json'), `${JSON.stringify(editorialTruth, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'robots.txt'), seo.robotsTxt);
+  await writeFile(path.join(outDir, 'sitemap.xml'), seo.sitemapXml);
+
+  const documentsMetadataPath = path.join(outDir, 'src/content/documents.fa.js');
+  const documentsMetadata = await readFile(documentsMetadataPath, 'utf8');
+  await writeFile(documentsMetadataPath, `${documentsMetadata.trimEnd()}${referenceCatalogMerge()}`);
+
   await writeFile(path.join(outDir, 'site-config.js'), previewSiteConfig(canonicalOrigin));
   await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
 
   if (renderStaticDocuments) {
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
-      packages,
+      packages: allPackages,
       canonicalOrigin,
+      indexable: false,
     });
   }
 
@@ -152,9 +202,13 @@ export async function buildRecoveredDocsCenter({
     runtimeBaseline: 'earthcoop-knowledge-center-0.8.0',
     runtimeArchiveSha256: recovered.archiveSha256,
     canonicalLanguage: 'fa',
-    displayLocales: ['fa'],
+    displayLocales: localeCatalog.globalLocales,
     guideContentPolicy: GUIDE_CONTENT_POLICY,
+    editorialTruthArtifact: 'recovered-editorial-truth.json',
     canonicalOrigin,
+    previewIndexing: 'disabled',
+    searchRecordCount: searchIndex.length,
+    seoRouteCount: seo.routes.length,
     fileCount: inventory.length + 1,
     hashes,
   };
@@ -163,6 +217,7 @@ export async function buildRecoveredDocsCenter({
   return {
     ...deploymentManifest,
     documentCount: packages.length,
+    referenceCount: referencePackages.length,
   };
 }
 
