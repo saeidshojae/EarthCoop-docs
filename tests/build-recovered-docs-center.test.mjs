@@ -57,7 +57,7 @@ async function fixture() {
   return { root, archive, archiveHash };
 }
 
-test('builds from recovered 0.8 runtime while replacing generated data with governed sources', async () => {
+test('builds recovered 0.8 runtime with governed data and explicit preview config', async () => {
   const input = await fixture();
   const outDir = path.join(input.root, 'dist');
   const report = await buildRecoveredDocsCenter({
@@ -68,6 +68,8 @@ test('builds from recovered 0.8 runtime while replacing generated data with gove
     runtimeArchiveSource: input.archive,
     runtimeArchiveSha256: input.archiveHash,
     verifyRecoveredFiles: false,
+    renderStaticDocuments: false,
+    canonicalOrigin: 'https://docs-preview.earthcoop.ir',
   });
 
   assert.match(await readFile(path.join(outDir, 'index.html'), 'utf8'), /مرکز دانش/);
@@ -75,6 +77,11 @@ test('builds from recovered 0.8 runtime while replacing generated data with gove
   assert.match(generated, /FC-001/);
   assert.match(generated, /registered_not_effective/);
   assert.doesNotMatch(generated, /ar\/fake/);
+
+  const config = await readFile(path.join(outDir, 'site-config.js'), 'utf8');
+  assert.match(config, /deploymentTarget: "self-hosted"/);
+  assert.match(config, /https:\/\/docs-preview\.earthcoop\.ir/);
   assert.equal(report.runtimeBaseline, 'earthcoop-knowledge-center-0.8.0');
+  assert.deepEqual(report.displayLocales, ['fa']);
   assert.equal(report.documentCount, 1);
 });
