@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { buildRecoveredContentCatalog } from './build-recovered-content-catalog.mjs';
+import { buildRecoveredEditorialTruth } from './build-recovered-editorial-truth.mjs';
 import { buildRecoveredLocaleCatalog } from './recovered-locale-catalog.mjs';
 import { buildRecoveredRouteEntries } from './recovered-route-policy.mjs';
 import { buildRecoveredSearchIndex } from './build-recovered-search-index.mjs';
@@ -20,6 +21,7 @@ import {
   RECOVERED_08_ARCHIVE_URL,
 } from './materialize-docs-center-08.mjs';
 import { patchRecoveredDocumentReaderSource } from './patch-recovered-document-reader.mjs';
+import { patchRecoveredEditorialPagesSource } from './patch-recovered-editorial-pages.mjs';
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
@@ -90,7 +92,7 @@ ErrorDocument 404 /404/index.html
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
   Header always set X-Robots-Tag "noindex, nofollow"
-  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json)$">
+  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json|recovered-editorial-truth\\.json)$">
     Header set Cache-Control "no-store, max-age=0"
   </FilesMatch>
   <FilesMatch "\\.(css|js|svg|woff2)$">
@@ -146,6 +148,13 @@ export async function buildRecoveredDocsCenter({
   const readerSource = await readFile(readerPath, 'utf8');
   await writeFile(readerPath, patchRecoveredDocumentReaderSource(readerSource));
 
+  const pagesPath = path.join(outDir, 'src/content/pages.fa.js');
+  const pagesSource = await readFile(pagesPath, 'utf8');
+  await writeFile(pagesPath, patchRecoveredEditorialPagesSource(pagesSource));
+
+  const productGuideInventory = JSON.parse(await readFile(path.join(rootDir, 'audits/product-guides/2026-09-28-inventory.json'), 'utf8'));
+  const editorialTruth = buildRecoveredEditorialTruth(productGuideInventory);
+
   const catalog = await buildRecoveredContentCatalog(rootDir, { currentFoundationalPackages });
   const localeCatalog = buildRecoveredLocaleCatalog(catalog);
   const routes = buildRecoveredRouteEntries(catalog);
@@ -161,6 +170,7 @@ export async function buildRecoveredDocsCenter({
   await writeFile(path.join(outDir, 'recovered-locales.json'), `${JSON.stringify(localeCatalog, null, 2)}\n`);
   await writeFile(path.join(outDir, 'recovered-search-index.json'), `${JSON.stringify(searchIndex, null, 2)}\n`);
   await writeFile(path.join(outDir, 'recovered-seo-routes.json'), `${JSON.stringify(seo.routes, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-editorial-truth.json'), `${JSON.stringify(editorialTruth, null, 2)}\n`);
   await writeFile(path.join(outDir, 'robots.txt'), seo.robotsTxt);
   await writeFile(path.join(outDir, 'sitemap.xml'), seo.sitemapXml);
 
@@ -194,6 +204,7 @@ export async function buildRecoveredDocsCenter({
     canonicalLanguage: 'fa',
     displayLocales: localeCatalog.globalLocales,
     guideContentPolicy: GUIDE_CONTENT_POLICY,
+    editorialTruthArtifact: 'recovered-editorial-truth.json',
     canonicalOrigin,
     previewIndexing: 'disabled',
     searchRecordCount: searchIndex.length,
