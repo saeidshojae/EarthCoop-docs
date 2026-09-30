@@ -7,16 +7,21 @@ import {
   RECOVERED_08_ARCHIVE_SHA256,
   RECOVERED_08_DEPLOYED_ARCHIVE_NAME,
 } from './materialize-docs-center-08.mjs';
+import { validateRecoveredUatContract } from './recovered-uat-policy.mjs';
 
 const EXPECTED_BASELINE = 'earthcoop-knowledge-center-0.8.0';
 const EXPECTED_ORIGIN = 'https://docs-preview.earthcoop.ir';
-const EXPECTED_HOST = 'docs-preview.earthcoop.ir';
 const REQUIRED_FILES = [
   '.htaccess',
   'index.html',
   'app.js',
   'styles.css',
   'site-config.js',
+  'recovered-locales.json',
+  'recovered-search-index.json',
+  'recovered-seo-routes.json',
+  'robots.txt',
+  'sitemap.xml',
   'src/content/document-packages/foundational.generated.fa.js',
   RECOVERED_08_DEPLOYED_ARCHIVE_NAME,
 ];
@@ -44,28 +49,17 @@ async function assertRegularFile(outDir, relative) {
 
 function assertGuidePolicy(actual) {
   for (const [locale, expected] of Object.entries(EXPECTED_GUIDE_POLICY)) {
-    if (actual?.[locale] !== expected) {
-      throw new Error(`Guide content policy mismatch for ${locale}`);
-    }
+    if (actual?.[locale] !== expected) throw new Error(`Guide content policy mismatch for ${locale}`);
   }
 }
 
 function assertPreviewHtaccess(content) {
-  if (content.includes('https://docs.earthcoop.ir')) {
-    throw new Error('Recovered htaccess contains a production redirect');
-  }
-  if (!content.includes(EXPECTED_ORIGIN)) {
-    throw new Error('Recovered htaccess preview origin mismatch');
-  }
-  if (!content.includes('docs-preview\\.earthcoop\\.ir')) {
-    throw new Error('Recovered htaccess preview host rule is missing');
-  }
-  if (!content.includes('RewriteCond %{HTTPS} !=on')) {
-    throw new Error('Recovered htaccess HTTPS canonicalization is missing');
-  }
-  if (!content.includes('ErrorDocument 404 /404/index.html')) {
-    throw new Error('Recovered htaccess 404 contract is missing');
-  }
+  if (content.includes('https://docs.earthcoop.ir')) throw new Error('Recovered htaccess contains a production redirect');
+  if (!content.includes(EXPECTED_ORIGIN)) throw new Error('Recovered htaccess preview origin mismatch');
+  if (!content.includes('docs-preview\\.earthcoop\\.ir')) throw new Error('Recovered htaccess preview host rule is missing');
+  if (!content.includes('RewriteCond %{HTTPS} !=on')) throw new Error('Recovered htaccess HTTPS canonicalization is missing');
+  if (!content.includes('ErrorDocument 404 /404/index.html')) throw new Error('Recovered htaccess 404 contract is missing');
+  if (!content.includes('X-Robots-Tag "noindex, nofollow"')) throw new Error('Recovered htaccess preview noindex header is missing');
 }
 
 export async function validateRecoveredDocsCenter({
@@ -80,26 +74,15 @@ export async function validateRecoveredDocsCenter({
   if (manifest.schemaVersion !== 2) throw new Error('Recovered deployment manifest schemaVersion must be 2');
   if (manifest.repository !== 'saeidshojae/EarthCoop-docs') throw new Error('Recovered deployment manifest repository mismatch');
   if (!/^[0-9a-f]{40}$/i.test(manifest.sourceSha ?? '')) throw new Error('Recovered deployment manifest source SHA is invalid');
-  if (expectedSourceSha && manifest.sourceSha !== expectedSourceSha) {
-    throw new Error(`Recovered deployment source SHA mismatch: ${manifest.sourceSha}`);
-  }
-  if (manifest.runtimeBaseline !== EXPECTED_BASELINE) {
-    throw new Error(`Recovered runtime baseline mismatch: ${manifest.runtimeBaseline}`);
-  }
-  if (manifest.runtimeArchiveSha256 !== expectedRuntimeArchiveSha) {
-    throw new Error(`Recovered runtime archive SHA mismatch: ${manifest.runtimeArchiveSha256}`);
-  }
+  if (expectedSourceSha && manifest.sourceSha !== expectedSourceSha) throw new Error(`Recovered deployment source SHA mismatch: ${manifest.sourceSha}`);
+  if (manifest.runtimeBaseline !== EXPECTED_BASELINE) throw new Error(`Recovered runtime baseline mismatch: ${manifest.runtimeBaseline}`);
+  if (manifest.runtimeArchiveSha256 !== expectedRuntimeArchiveSha) throw new Error(`Recovered runtime archive SHA mismatch: ${manifest.runtimeArchiveSha256}`);
   if (manifest.canonicalLanguage !== 'fa') throw new Error('Recovered canonical language must be fa');
-  if (JSON.stringify(manifest.displayLocales) !== JSON.stringify(['fa'])) {
-    throw new Error('Recovered display locales must be exactly [fa]');
-  }
+  if (JSON.stringify(manifest.displayLocales) !== JSON.stringify(['fa'])) throw new Error('Recovered display locales must be exactly [fa]');
   assertGuidePolicy(manifest.guideContentPolicy);
-  if (manifest.canonicalOrigin !== EXPECTED_ORIGIN) {
-    throw new Error(`Recovered preview origin mismatch: ${manifest.canonicalOrigin}`);
-  }
-  if (!manifest.hashes || typeof manifest.hashes !== 'object' || Array.isArray(manifest.hashes)) {
-    throw new Error('Recovered deployment manifest hashes are missing');
-  }
+  if (manifest.canonicalOrigin !== EXPECTED_ORIGIN) throw new Error(`Recovered preview origin mismatch: ${manifest.canonicalOrigin}`);
+  if (manifest.previewIndexing !== 'disabled') throw new Error('Recovered preview indexing must be disabled');
+  if (!manifest.hashes || typeof manifest.hashes !== 'object' || Array.isArray(manifest.hashes)) throw new Error('Recovered deployment manifest hashes are missing');
 
   for (const required of REQUIRED_FILES) {
     if (!Object.hasOwn(manifest.hashes, required)) {
@@ -109,43 +92,39 @@ export async function validateRecoveredDocsCenter({
   }
 
   const declaredFiles = Object.keys(manifest.hashes).sort((a, b) => a.localeCompare(b, 'en'));
-  if (manifest.fileCount !== declaredFiles.length + 1) {
-    throw new Error(`Recovered deployment fileCount mismatch: ${manifest.fileCount}`);
-  }
+  if (manifest.fileCount !== declaredFiles.length + 1) throw new Error(`Recovered deployment fileCount mismatch: ${manifest.fileCount}`);
 
   for (const relative of declaredFiles) {
-    if (path.isAbsolute(relative) || relative.split('/').includes('..')) {
-      throw new Error(`Unsafe recovered manifest path: ${relative}`);
-    }
+    if (path.isAbsolute(relative) || relative.split('/').includes('..')) throw new Error(`Unsafe recovered manifest path: ${relative}`);
     const absolute = await assertRegularFile(outDir, relative);
     const actual = sha256(await readFile(absolute));
-    if (actual !== manifest.hashes[relative]) {
-      throw new Error(`Recovered build hash mismatch for ${relative}`);
-    }
+    if (actual !== manifest.hashes[relative]) throw new Error(`Recovered build hash mismatch for ${relative}`);
   }
 
   const archiveActual = sha256(await readFile(path.join(outDir, RECOVERED_08_DEPLOYED_ARCHIVE_NAME)));
-  if (archiveActual !== expectedRuntimeArchiveSha) {
-    throw new Error(`Recovered recovery archive hash mismatch: ${archiveActual}`);
-  }
+  if (archiveActual !== expectedRuntimeArchiveSha) throw new Error(`Recovered recovery archive hash mismatch: ${archiveActual}`);
 
   const config = await readFile(path.join(outDir, 'site-config.js'), 'utf8');
-  if (!config.includes('deploymentTarget: "self-hosted"')) {
-    throw new Error('Recovered site config is not self-hosted');
-  }
-  if (!config.includes(EXPECTED_ORIGIN)) {
-    throw new Error('Recovered site config preview origin mismatch');
-  }
+  if (!config.includes('deploymentTarget: "self-hosted"')) throw new Error('Recovered site config is not self-hosted');
+  if (!config.includes(EXPECTED_ORIGIN)) throw new Error('Recovered site config preview origin mismatch');
 
   const htaccess = await readFile(path.join(outDir, '.htaccess'), 'utf8');
   assertPreviewHtaccess(htaccess);
 
-  return {
-    valid: true,
-    sourceSha: manifest.sourceSha,
-    runtimeBaseline: manifest.runtimeBaseline,
-    fileCount: manifest.fileCount,
-  };
+  const localeCatalog = JSON.parse(await readFile(path.join(outDir, 'recovered-locales.json'), 'utf8'));
+  const searchRows = JSON.parse(await readFile(path.join(outDir, 'recovered-search-index.json'), 'utf8'));
+  const seoRoutes = JSON.parse(await readFile(path.join(outDir, 'recovered-seo-routes.json'), 'utf8'));
+  const robotsTxt = await readFile(path.join(outDir, 'robots.txt'), 'utf8');
+  validateRecoveredUatContract({
+    manifest,
+    localeCatalog,
+    searchRows,
+    seoRoutes,
+    robotsTxt,
+    runtimeFiles: new Set(declaredFiles),
+  });
+
+  return { valid: true, sourceSha: manifest.sourceSha, runtimeBaseline: manifest.runtimeBaseline, fileCount: manifest.fileCount };
 }
 
 function parseArgs(argv) {
