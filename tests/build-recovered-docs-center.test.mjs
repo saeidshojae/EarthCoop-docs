@@ -20,6 +20,8 @@ async function fixture() {
   await writeFile(path.join(runtime, 'styles.css'), 'legacy-css');
   await writeFile(path.join(runtime, '.htaccess'), `Options -Indexes\nDirectoryIndex index.html\n\n<IfModule mod_rewrite.c>\n  RewriteEngine On\n  RewriteCond %{HTTPS} !=on\n  RewriteRule ^ https://docs.earthcoop.ir%{REQUEST_URI} [R=301,L]\n\n  RewriteCond %{HTTP_HOST} !^docs\\.earthcoop\\.ir$ [NC]\n  RewriteRule ^ https://docs.earthcoop.ir%{REQUEST_URI} [R=301,L]\n</IfModule>\n`);
   await writeFile(path.join(runtime, 'src/content/document-packages/foundational.generated.fa.js'), 'OLD');
+  await writeFile(path.join(runtime, 'src/content/document-packages/index.fa.js'), 'OLD-INDEX');
+  await writeFile(path.join(runtime, 'src/content/documents.fa.js'), 'window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documents = Object.freeze([]);\n');
 
   const archive = path.join(root, 'runtime.tar.gz');
   await execFileAsync('tar', ['-czf', archive, '-C', runtime, '.']);
@@ -47,17 +49,7 @@ async function fixture() {
   const currentFoundationalPackages = [{
     id: 'FC',
     version: '1.1',
-    markdown: `# سند مادر
-
-شناسه سند: FC
-
----
-
-## دیباچه
-متن کامل
-
-### ماده FC-001 — اصل
-بدن`,
+    markdown: `# سند مادر\n\nشناسه سند: FC\n\n---\n\n## دیباچه\nمتن کامل\n\n### ماده FC-001 — اصل\nبدن`,
   }];
   return { root, archive, archiveHash, currentFoundationalPackages };
 }
@@ -84,6 +76,9 @@ test('builds recovered 0.8 runtime with governed data and explicit preview confi
   assert.match(generated, /registered_not_effective/);
   assert.doesNotMatch(generated, /ar\/fake/);
 
+  const packageIndex = await readFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), 'utf8');
+  assert.match(packageIndex, /referenceDocumentPackages/);
+
   const config = await readFile(path.join(outDir, 'site-config.js'), 'utf8');
   assert.match(config, /deploymentTarget: "self-hosted"/);
   assert.match(config, /https:\/\/docs-preview\.earthcoop\.ir/);
@@ -101,4 +96,5 @@ test('builds recovered 0.8 runtime with governed data and explicit preview confi
     ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
   });
   assert.equal(report.documentCount, 1);
+  assert.equal(report.referenceCount, 0);
 });
