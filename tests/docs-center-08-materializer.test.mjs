@@ -7,7 +7,10 @@ import path from 'node:path';
 import test from 'node:test';
 import { promisify } from 'node:util';
 
-import { materializeRecoveredDocsCenter } from '../scripts/materialize-docs-center-08.mjs';
+import {
+  materializeRecoveredDocsCenter,
+  RECOVERED_08_DEPLOYED_ARCHIVE_NAME,
+} from '../scripts/materialize-docs-center-08.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -23,12 +26,13 @@ async function fixtureArchive() {
   const bytes = await readFile(archive);
   return {
     archive,
+    bytes,
     sha256: createHash('sha256').update(bytes).digest('hex'),
     root,
   };
 }
 
-test('materializes a hash-pinned recovered Docs Center archive', async () => {
+test('materializes a hash-pinned recovered Docs Center archive and preserves the verified archive for future recovery', async () => {
   const fixture = await fixtureArchive();
   const outDir = path.join(fixture.root, 'out');
   await materializeRecoveredDocsCenter({
@@ -38,6 +42,8 @@ test('materializes a hash-pinned recovered Docs Center archive', async () => {
     verifyFiles: false,
   });
   assert.equal(await readFile(path.join(outDir, 'index.html'), 'utf8'), 'legacy-ui');
+  const preserved = await readFile(path.join(outDir, RECOVERED_08_DEPLOYED_ARCHIVE_NAME));
+  assert.equal(createHash('sha256').update(preserved).digest('hex'), fixture.sha256);
 });
 
 test('rejects a recovered archive when its SHA differs', async () => {
