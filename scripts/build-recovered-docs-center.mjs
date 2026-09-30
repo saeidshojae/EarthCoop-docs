@@ -4,7 +4,12 @@ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { buildLegacyFoundationalPackages, serializeLegacyFoundationalPackages } from './generate-legacy-docs-center-data.mjs';
+import { buildRecoveredContentCatalog } from './build-recovered-content-catalog.mjs';
+import {
+  buildLegacyFoundationalPackages,
+  buildLegacyReferencePackages,
+  serializeLegacyFoundationalPackages,
+} from './generate-legacy-docs-center-data.mjs';
 import {
   materializeRecoveredDocsCenter,
   RECOVERED_08_ARCHIVE_SHA256,
@@ -123,12 +128,14 @@ export async function buildRecoveredDocsCenter({
     verifyFiles: verifyRecoveredFiles,
   });
 
-  const packages = await buildLegacyFoundationalPackages(rootDir, {
-    currentPackages: currentFoundationalPackages,
+  const catalog = await buildRecoveredContentCatalog(rootDir, {
+    currentFoundationalPackages,
   });
+  const packages = await buildLegacyFoundationalPackages(rootDir, { catalog });
+  const referencePackages = await buildLegacyReferencePackages(rootDir, { catalog });
   const generatedPath = path.join(outDir, 'src/content/document-packages/foundational.generated.fa.js');
   await mkdir(path.dirname(generatedPath), { recursive: true });
-  await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages));
+  await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages, referencePackages));
   await writeFile(path.join(outDir, 'site-config.js'), previewSiteConfig(canonicalOrigin));
   await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
 
@@ -152,7 +159,7 @@ export async function buildRecoveredDocsCenter({
     runtimeBaseline: 'earthcoop-knowledge-center-0.8.0',
     runtimeArchiveSha256: recovered.archiveSha256,
     canonicalLanguage: 'fa',
-    displayLocales: ['fa'],
+    displayLocales: catalog.locales,
     guideContentPolicy: GUIDE_CONTENT_POLICY,
     canonicalOrigin,
     fileCount: inventory.length + 1,
@@ -163,6 +170,7 @@ export async function buildRecoveredDocsCenter({
   return {
     ...deploymentManifest,
     documentCount: packages.length,
+    referenceCount: referencePackages.length,
   };
 }
 
