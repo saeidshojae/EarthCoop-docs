@@ -15,6 +15,7 @@ async function fixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-recovered-build-'));
   const runtime = path.join(root, 'runtime');
   await mkdir(path.join(runtime, 'src/content/document-packages'), { recursive: true });
+  await mkdir(path.join(runtime, 'src/pages'), { recursive: true });
   await writeFile(path.join(runtime, 'index.html'), '<h1>مرکز دانش ارث‌کوپ</h1>');
   await writeFile(path.join(runtime, 'app.js'), 'legacy-app');
   await writeFile(path.join(runtime, 'styles.css'), 'legacy-css');
@@ -22,6 +23,7 @@ async function fixture() {
   await writeFile(path.join(runtime, 'src/content/document-packages/foundational.generated.fa.js'), 'OLD');
   await writeFile(path.join(runtime, 'src/content/document-packages/index.fa.js'), 'OLD-INDEX');
   await writeFile(path.join(runtime, 'src/content/documents.fa.js'), 'window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documents = Object.freeze([]);\n');
+  await writeFile(path.join(runtime, 'src/pages/document-reader.js'), `function renderDocumentReader(documentRecord) {\n  return \`<div class="breadcrumbs"><a href="/">خانه</a><i></i><a href="/documents/">اسناد بنیادین</a><i></i><span>\${documentRecord.title}</span></div>\`;\n}\n`);
 
   const archive = path.join(root, 'runtime.tar.gz');
   await execFileAsync('tar', ['-czf', archive, '-C', runtime, '.']);
@@ -79,6 +81,11 @@ test('builds recovered 0.8 runtime with governed data, full-text corpus and prev
   const packageIndex = await readFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), 'utf8');
   assert.match(packageIndex, /referenceDocumentPackages/);
 
+  const reader = await readFile(path.join(outDir, 'src/pages/document-reader.js'), 'utf8');
+  assert.match(reader, /documentRecord\.contentClass === 'reference'/);
+  assert.match(reader, /اسناد مرجع/);
+  assert.match(reader, /اسناد بنیادین/);
+
   const locales = JSON.parse(await readFile(path.join(outDir, 'recovered-locales.json'), 'utf8'));
   assert.deepEqual(locales.globalLocales, ['fa']);
 
@@ -99,6 +106,8 @@ test('builds recovered 0.8 runtime with governed data, full-text corpus and prev
 
   const htaccess = await readFile(path.join(outDir, '.htaccess'), 'utf8');
   assert.match(htaccess, /docs-preview\.earthcoop\.ir/);
+  assert.match(htaccess, /Header always set X-Robots-Tag "noindex, nofollow"/);
+  assert.doesNotMatch(htaccess, /X-Robots-Tag "noindex, nofollow" env=/);
   assert.doesNotMatch(htaccess, /https:\/\/docs\.earthcoop\.ir/);
   assert.doesNotMatch(htaccess, /!\^docs\\\.earthcoop\\\.ir\$/);
 
