@@ -6,10 +6,12 @@ import test from 'node:test';
 
 import { renderRecoveredStaticDocuments } from '../scripts/render-recovered-static-documents.mjs';
 
-test('uses recovered 0.8 renderers to regenerate direct document pages from current packages', async () => {
+const fixtureRuntime = process.env.EARTHCOOP_KC08_FIXTURE;
+
+test('uses recovered 0.8 renderers to regenerate direct document pages from current packages', {
+  skip: !fixtureRuntime,
+}, async () => {
   const runtimeDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-render-08-'));
-  const fixtureRuntime = process.env.EARTHCOOP_KC08_FIXTURE;
-  if (!fixtureRuntime) return test.skip('EARTHCOOP_KC08_FIXTURE is not configured for this local renderer integration test');
   await cp(fixtureRuntime, runtimeDir, { recursive: true });
 
   const documentPackage = {
