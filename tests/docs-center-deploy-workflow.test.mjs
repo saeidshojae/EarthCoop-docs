@@ -98,10 +98,11 @@ test('post-deploy smoke checks recovered baseline and exact live SHA on preview 
   assert.doesNotMatch(text, /https:\/\/docs\.earthcoop\.ir/);
 });
 
-test('operator runbook records exact preview root, recovery archive, secret names, FTPS, backup, SHA check and rollback', async () => {
+test('operator runbook records recovered validation, exact preview root, recovery archive, secrets, backup and rollback', async () => {
   const runbook = await readFile(path.join(root, 'docs/operations/docs-preview-deployment.md'), 'utf8');
   assert.match(runbook, /docs-preview\.earthcoop\.ir/);
   assert.match(runbook, /\/home3\/btboeapy\/docs-preview\.earthcoop\.ir/);
+  assert.match(runbook, /validate-recovered-docs-center\.mjs/);
   assert.match(runbook, /earthcoop-knowledge-center-0\.8\.0-cpanel\.tar\.gz/);
   assert.match(runbook, /e1c5938f381db7b7f0efeef527dd828c96e13adc9de5a913de624796c6ae0704/);
   assert.match(runbook, /preserv|republish/i);
