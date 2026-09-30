@@ -147,6 +147,31 @@ ${needle}`);
   window.addEventListener('resize', syncDocumentTocViewport, { passive: true });`);
   }
 
+  if (!output.includes('function navigateToProvision(link, event)')) {
+    const tocLinksNeedle = "  const tocLinks = [...document.querySelectorAll('#documentToc a')];";
+    if (!output.includes(tocLinksNeedle)) throw new Error('Recovered provision navigation patch point changed');
+    output = output.replace(tocLinksNeedle, `${tocLinksNeedle}
+  function navigateToProvision(link, event) {
+    const href = link.getAttribute('href') || '';
+    const hashIndex = href.indexOf('#provision-');
+    if (hashIndex < 0) return;
+    const targetHash = href.slice(hashIndex);
+    const provisionSlug = targetHash.slice('#provision-'.length);
+    const target = [...document.querySelectorAll('[data-provision-slug]')]
+      .find((item) => item.dataset.provisionSlug === provisionSlug);
+    if (!target) return;
+    event.preventDefault();
+    history.pushState(null, '', targetHash);
+    target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  tocLinks.forEach((link) => link.addEventListener('click', (event) => navigateToProvision(link, event)));
+  document.querySelectorAll('.provision-permalink').forEach((link) => {
+    link.addEventListener('click', (event) => navigateToProvision(link, event));
+  });`);
+  }
+
   if (!output.includes('window.EC_UI.syncDocumentTocViewport')) {
     output += '\nwindow.EC_UI.syncDocumentTocViewport = syncDocumentTocViewport;\n';
   }
