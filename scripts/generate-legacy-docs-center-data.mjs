@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { buildCurrentFoundational } from './build-current-foundational.mjs';
 import {
   parseFoundationalMarkdown,
   toLegacyDocumentPackage,
@@ -8,8 +9,10 @@ import {
 
 const USABLE_RENDITION_STATUSES = new Set(['current', 'needs_review', 'outdated']);
 
-export async function buildLegacyFoundationalPackages(rootDir) {
+export async function buildLegacyFoundationalPackages(rootDir, { currentPackages } = {}) {
   const manifest = JSON.parse(await readFile(path.join(rootDir, 'docs-manifest.json'), 'utf8'));
+  const consolidated = currentPackages ?? await buildCurrentFoundational(rootDir);
+  const consolidatedById = new Map(consolidated.map((item) => [item.id, item]));
   const packages = [];
 
   for (const entry of manifest.entries ?? []) {
@@ -18,8 +21,15 @@ export async function buildLegacyFoundationalPackages(rootDir) {
     const rendition = entry.renditions?.fa;
     if (!rendition?.source || !USABLE_RENDITION_STATUSES.has(rendition.status)) continue;
 
-    const source = await readFile(path.join(rootDir, rendition.source), 'utf8');
-    const parsed = parseFoundationalMarkdown(source, { documentId: entry.documentId });
+    const current = consolidatedById.get(entry.documentId);
+    if (!current?.markdown) {
+      throw new Error(`Missing consolidated source for ${entry.documentId}`);
+    }
+    if (String(current.version) !== String(entry.version)) {
+      throw new Error(`Consolidated version mismatch for ${entry.documentId}: ${current.version} != ${entry.version}`);
+    }
+
+    const parsed = parseFoundationalMarkdown(current.markdown, { documentId: entry.documentId });
     packages.push(toLegacyDocumentPackage(parsed, {
       ...entry,
       source: rendition.source,
