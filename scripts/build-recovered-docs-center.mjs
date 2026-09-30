@@ -43,6 +43,7 @@ export async function buildRecoveredDocsCenter({
   verifyRecoveredFiles = true,
   renderStaticDocuments = true,
   canonicalOrigin = 'https://docs-preview.earthcoop.ir',
+  currentFoundationalPackages,
 }) {
   if (!rootDir || !outDir) throw new TypeError('rootDir and outDir are required');
   if (!/^[0-9a-f]{40}$/i.test(sourceSha ?? '')) throw new Error('sourceSha must be a full 40-character commit SHA');
@@ -55,7 +56,9 @@ export async function buildRecoveredDocsCenter({
     verifyFiles: verifyRecoveredFiles,
   });
 
-  const packages = await buildLegacyFoundationalPackages(rootDir);
+  const packages = await buildLegacyFoundationalPackages(rootDir, {
+    currentPackages: currentFoundationalPackages,
+  });
   const generatedPath = path.join(outDir, 'src/content/document-packages/foundational.generated.fa.js');
   await mkdir(path.dirname(generatedPath), { recursive: true });
   await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages));
