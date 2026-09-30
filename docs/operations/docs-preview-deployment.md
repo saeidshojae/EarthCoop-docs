@@ -11,7 +11,7 @@ Changing DNS, replacing the current runtime at `docs.earthcoop.ir`, or promoting
 
 ## What the workflow deploys
 
-`.github/workflows/deploy-docs-preview.yml` checks out the approved `main` commit, reruns repository tests and validators, materializes the hash-pinned EarthCoop Knowledge Center 0.8 runtime, regenerates governed document data/static document pages from the repository's current consolidated foundational sources, writes `deployment-manifest.json`, stores `dist/` as a rollback artifact, and uploads **only `dist/`** over strict FTPS.
+`.github/workflows/deploy-docs-preview.yml` checks out the approved `main` commit, reruns repository tests and validators, materializes the hash-pinned EarthCoop Knowledge Center 0.8 runtime, regenerates governed document data/static document pages from the repository's current consolidated foundational sources, writes `deployment-manifest.json`, validates the complete recovered artifact with `scripts/validate-recovered-docs-center.mjs`, stores `dist/` as a rollback artifact, and uploads **only `dist/`** over strict FTPS.
 
 The restored runtime baseline is `earthcoop-knowledge-center-0.8.0`. Its recovery archive is:
 
@@ -90,9 +90,9 @@ The workflow order is intentionally fail-closed:
 3. existing manifest/terminology/translation validators;
 4. download/read the approved 0.8 recovery archive and verify its pinned SHA-256;
 5. build recovered `dist/`, including current governed foundational content and regenerated static document pages;
-6. require `deployment-manifest.json` to report the exact workflow `sourceSha` and `runtimeBaseline = earthcoop-knowledge-center-0.8.0`;
+6. run `node scripts/validate-recovered-docs-center.mjs --out dist`, which verifies the exact `sourceSha`, recovered runtime baseline, preview-only origin, Persian-only display contract, guide freshness policy, required files, recovery archive SHA, and every file hash declared by `deployment-manifest.json`;
 7. preserve the verified 0.8 recovery archive inside `dist/` so the deployment republishes it;
-8. upload the exact `dist/` as a GitHub Actions rollback artifact;
+8. upload the exact validated `dist/` as a GitHub Actions rollback artifact;
 9. preflight required FTPS secrets without printing their values;
 10. deploy `dist/` over strict FTPS;
 11. fetch the live preview `deployment-manifest.json` with bounded retries;
