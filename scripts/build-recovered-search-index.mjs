@@ -7,13 +7,17 @@ function normalizeText(value) {
     .trim();
 }
 
+function flattenProvisions(nodes) {
+  return (nodes ?? []).flatMap((node) => [node, ...flattenProvisions(node.children)]);
+}
+
 export function buildRecoveredSearchIndex(packages, { allowedLocales = ['fa'] } = {}) {
   const allowed = new Set(allowedLocales);
   const rows = [];
   for (const record of packages ?? []) {
     const locale = record.canonicalLanguage ?? 'fa';
     if (!allowed.has(locale)) continue;
-    for (const provision of record.provisions ?? []) {
+    for (const provision of flattenProvisions(record.provisions)) {
       const body = normalizeText(provision.body);
       const heading = normalizeText(provision.title);
       if (!body && !heading) continue;
