@@ -113,6 +113,46 @@ ${needle}`);
   return output;
 }
 
+export function patchRecoveredDocumentReaderControlsSource(source) {
+  let output = String(source);
+  if (!output.includes('function syncDocumentTocViewport()')) {
+    const needle = 'function initializeDocumentReaderControls(activeProvisionSlug = null) {';
+    if (!output.includes(needle)) throw new Error('Recovered document reader controls patch point changed');
+    output = output.replace(needle, `function syncDocumentTocViewport() {
+  const toc = document.getElementById('documentToc');
+  const head = document.querySelector('.document-head');
+  const layout = document.querySelector('.document-reader-layout');
+  const mobile = window.matchMedia('(max-width:1050px)');
+  if (!toc) return 0;
+  if (mobile.matches || !head || !layout) {
+    toc.style.marginTop = '';
+    return 0;
+  }
+  const lift = Math.max(0, Math.round(layout.getBoundingClientRect().top - head.getBoundingClientRect().top));
+  toc.style.marginTop = lift ? \`-${'${lift}'}px\` : '';
+  return lift;
+}
+
+${needle}`);
+  }
+
+  const syncNeedle = '  synchronizeToc();\n  mobile.addEventListener?.(\'change\', synchronizeToc);';
+  if (!output.includes(syncNeedle)) throw new Error('Recovered document TOC synchronization point changed');
+  if (!output.includes("window.addEventListener('resize', syncDocumentTocViewport")) {
+    output = output.replace(syncNeedle, `  synchronizeToc();
+  syncDocumentTocViewport();
+  requestAnimationFrame(syncDocumentTocViewport);
+  mobile.addEventListener?.('change', synchronizeToc);
+  mobile.addEventListener?.('change', syncDocumentTocViewport);
+  window.addEventListener('resize', syncDocumentTocViewport, { passive: true });`);
+  }
+
+  if (!output.includes('window.EC_UI.syncDocumentTocViewport')) {
+    output += '\nwindow.EC_UI.syncDocumentTocViewport = syncDocumentTocViewport;\n';
+  }
+  return output;
+}
+
 export function patchRecoveredStyles(source) {
   const output = String(source);
   if (output.includes('/* Docs Center UAT polish */')) return output;
@@ -166,4 +206,9 @@ export async function applyRecoveredUiPolish({ outDir, availableLocales = ['fa']
   await writeFile(stylesPath, patchRecoveredStyles(await readFile(stylesPath, 'utf8')));
   const mobilePath = path.join(outDir, 'src/ui/mobile-navigation.js');
   await writeFile(mobilePath, patchRecoveredMobileNavigationSource(await readFile(mobilePath, 'utf8')));
+  const documentReaderControlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
+  await writeFile(
+    documentReaderControlsPath,
+    patchRecoveredDocumentReaderControlsSource(await readFile(documentReaderControlsPath, 'utf8')),
+  );
 }
