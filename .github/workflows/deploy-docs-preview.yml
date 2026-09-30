@@ -43,24 +43,8 @@ jobs:
       - name: Build recovered Docs Center 0.8
         run: node scripts/build-recovered-docs-center.mjs --out dist
 
-      - name: Validate recovered build identity
-        shell: bash
-        run: |
-          set -euo pipefail
-          node - <<'NODE'
-          const fs = require('fs');
-          const manifest = JSON.parse(fs.readFileSync('dist/deployment-manifest.json', 'utf8'));
-          if (manifest.sourceSha !== process.env.GITHUB_SHA) {
-            throw new Error(`deployment manifest SHA mismatch: ${manifest.sourceSha}`);
-          }
-          if (manifest.runtimeBaseline !== 'earthcoop-knowledge-center-0.8.0') {
-            throw new Error(`unexpected runtime baseline: ${manifest.runtimeBaseline}`);
-          }
-          if (!fs.existsSync('dist/index.html')) throw new Error('dist/index.html is missing');
-          if (!fs.existsSync('dist/src/content/document-packages/foundational.generated.fa.js')) {
-            throw new Error('generated foundational package is missing');
-          }
-          NODE
+      - name: Validate recovered deployment artifact
+        run: node scripts/validate-recovered-docs-center.mjs --out dist
 
       - name: Upload rollback artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
