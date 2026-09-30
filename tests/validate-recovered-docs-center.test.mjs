@@ -16,7 +16,7 @@ async function fixture() {
     'index.html': '<html><script src="site-config.js"></script></html>',
     'app.js': 'runtime',
     'styles.css': 'styles',
-    '.htaccess': `Options -Indexes\nDirectoryIndex index.html\n<IfModule mod_rewrite.c>\n  RewriteEngine On\n  RewriteCond %{HTTP_HOST} !^docs-preview\\.earthcoop\\.ir$ [NC]\n  RewriteRule ^ https://docs-preview.earthcoop.ir%{REQUEST_URI} [R=301,L]\n</IfModule>\n`,
+    '.htaccess': `Options -Indexes\nDirectoryIndex index.html\n\n<IfModule mod_rewrite.c>\n  RewriteEngine On\n  RewriteCond %{HTTPS} !=on\n  RewriteRule ^ https://docs-preview.earthcoop.ir%{REQUEST_URI} [R=301,L]\n\n  RewriteCond %{HTTP_HOST} !^docs-preview\\.earthcoop\\.ir$ [NC]\n  RewriteRule ^ https://docs-preview.earthcoop.ir%{REQUEST_URI} [R=301,L]\n</IfModule>\n\nErrorDocument 404 /404/index.html\n`,
     'site-config.js': 'window.EC_SITE_CONFIG = Object.freeze({\n  deploymentTarget: "self-hosted",\n  canonicalOrigin: "https://docs-preview.earthcoop.ir",\n});\n',
     'src/content/document-packages/foundational.generated.fa.js': 'window.EC_CONTENT={foundationalDocumentPackages:[]};',
     'earthcoop-knowledge-center-0.8.0-cpanel.tar.gz': 'archive-bytes',
