@@ -35,7 +35,7 @@ import {
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
-  fa: 'recovered_0.8_editorial_snapshot_under_audit',
+  fa: 'audited_current_2026-10-02_official-v1_and_repository_evidence',
   en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
   ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
 });
