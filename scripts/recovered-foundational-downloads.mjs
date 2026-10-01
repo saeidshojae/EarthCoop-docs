@@ -42,7 +42,8 @@ export function ensureStaticReaderInitialization(html) {
   return source.replace(marker, `${marker}${initialization}`);
 }
 
-async function removeLegacyFoundationalPdfs(downloadDir) {
+async function removeLegacyFoundationalPdfs(downloadDir, packages) {
+  const allowedCodes = new Set(packages.map((record) => assertPackage(record).code));
   let entries = [];
   try {
     entries = await readdir(downloadDir, { withFileTypes: true });
@@ -51,7 +52,8 @@ async function removeLegacyFoundationalPdfs(downloadDir) {
   }
   for (const entry of entries) {
     if (!entry.isFile()) continue;
-    if (!/^EarthCoop-[A-Z]+-.+-fa\.pdf$/i.test(entry.name)) continue;
+    const match = /^EarthCoop-([A-Z]+)-.+-fa\.pdf$/i.exec(entry.name);
+    if (!match || !allowedCodes.has(match[1].toUpperCase())) continue;
     await rm(path.join(downloadDir, entry.name), { force: true });
   }
 }
@@ -158,7 +160,7 @@ export async function generateRecoveredFoundationalPdfs({ runtimeDir, packages, 
   const map = buildFoundationalDownloadMap(packages);
   const downloadDir = path.join(runtimeDir, 'downloads', 'documents');
   await mkdir(downloadDir, { recursive: true });
-  await removeLegacyFoundationalPdfs(downloadDir);
+  await removeLegacyFoundationalPdfs(downloadDir, packages);
 
   let server;
   let browserExecutable;
