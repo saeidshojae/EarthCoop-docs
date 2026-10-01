@@ -1,4 +1,4 @@
-import { mkdir, readFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm } from 'node:fs/promises';
 import path from 'node:path';
 
 function assertPackage(record) {
@@ -37,6 +37,20 @@ export function ensureStaticReaderInitialization(html) {
   return source.replace(marker, `${marker}${initialization}`);
 }
 
+async function removeLegacyFoundationalPdfs(downloadDir) {
+  let entries = [];
+  try {
+    entries = await readdir(downloadDir, { withFileTypes: true });
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
+  }
+  for (const entry of entries) {
+    if (!entry.isFile()) continue;
+    if (!/^EarthCoop-[A-Z]+-.+-fa\.pdf$/i.test(entry.name)) continue;
+    await rm(path.join(downloadDir, entry.name), { force: true });
+  }
+}
+
 export async function generateRecoveredFoundationalPdfs({ runtimeDir, packages, runBrowser }) {
   if (!runtimeDir) throw new TypeError('runtimeDir is required');
   if (!Array.isArray(packages)) throw new TypeError('packages must be an array');
@@ -45,6 +59,7 @@ export async function generateRecoveredFoundationalPdfs({ runtimeDir, packages, 
   const map = buildFoundationalDownloadMap(packages);
   const downloadDir = path.join(runtimeDir, 'downloads', 'documents');
   await mkdir(downloadDir, { recursive: true });
+  await removeLegacyFoundationalPdfs(downloadDir);
 
   for (const record of packages) {
     const { slug, code, version } = assertPackage(record);
