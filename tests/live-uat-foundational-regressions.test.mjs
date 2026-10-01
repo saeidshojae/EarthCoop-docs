@@ -10,9 +10,9 @@ import {
   patchRecoveredTocFinalLayoutSource,
 } from '../scripts/patch-recovered-live-uat.mjs';
 
-const DISPLAY_ORDER = ['FC', 'CH', 'EX', 'CO', 'ECON', 'DG', 'JUD', 'LOC', 'ETH', 'STD'];
+const DISPLAY_ORDER = ['FC', 'CO', 'CH', 'ECON', 'DG', 'JUD', 'LOC', 'EX', 'ETH', 'STD'];
 
-test('official-v1 recovered catalog keeps the approved foundational display order and a version-independent reference route', async () => {
+test('official-v1 recovered catalog keeps the approved legal-hierarchy display order and a version-independent reference route', async () => {
   const catalog = await buildRecoveredContentCatalog(process.cwd());
 
   assert.deepEqual(catalog.documents.map((item) => item.documentId), DISPLAY_ORDER);
