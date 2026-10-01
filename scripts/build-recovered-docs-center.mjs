@@ -271,7 +271,7 @@ async function main() {
     sourceSha,
     builtAt,
     runtimeArchiveSource: args.runtimeArchiveSource ?? process.env.DOCS_CENTER_08_ARCHIVE ?? RECOVERED_08_ARCHIVE_URL,
-    canonicalOrigin: args.canonicalOrigin ?? 'https://docs-preview.earthcoop.ir',
+    canonicalOrigin: args.canonicalOrigin ?? process.env.DOCS_CANONICAL_ORIGIN ?? 'https://docs-preview.earthcoop.ir',
   });
   process.stdout.write(`${JSON.stringify(report)}\n`);
 }
