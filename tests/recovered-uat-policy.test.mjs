@@ -9,10 +9,10 @@ const valid = {
     editorialTruthArtifact:'recovered-editorial-truth.json',
   },
   localeCatalog: { globalLocales:['fa'] },
-  searchRows: [{ documentId:'ECON-REF-01', body:'اقتصاد و حق', route:'#/documents/econ-ref-01-fa-1-0/provisions/section-1' }],
+  searchRows: [{ documentId:'ECON-REF-01', body:'اقتصاد و حق', route:'#/documents/econ-ref-01/provisions/section-1' }],
   seoRoutes: [{
-    documentId:'ECON-REF-01', canonical:'https://docs-preview.earthcoop.ir/documents/econ-ref-01-fa-1-0/', indexable:false,
-    hreflang:[{locale:'fa',href:'https://docs-preview.earthcoop.ir/documents/econ-ref-01-fa-1-0/'}],
+    documentId:'ECON-REF-01', canonical:'https://docs-preview.earthcoop.ir/documents/econ-ref-01/', indexable:false,
+    hreflang:[{locale:'fa',href:'https://docs-preview.earthcoop.ir/documents/econ-ref-01/'}],
   }],
   editorialTruth: {
     recoveredPersianGuides:{status:'historical_snapshot'},
@@ -21,11 +21,11 @@ const valid = {
     arabic:{status:'unavailable',legacyMintlifyArIsArabic:false},
   },
   robotsTxt: 'User-agent: *\nDisallow: /\n',
-  sitemapXml: '<?xml version="1.0"?><urlset><url><loc>https://docs-preview.earthcoop.ir/documents/econ-ref-01-fa-1-0/</loc></url></urlset>',
+  sitemapXml: '<?xml version="1.0"?><urlset><url><loc>https://docs-preview.earthcoop.ir/documents/econ-ref-01/</loc></url></urlset>',
   runtimeFiles: new Set([
     '404/index.html',
     'documents/fc/index.html',
-    'documents/econ-ref-01-fa-1-0/index.html',
+    'documents/econ-ref-01/index.html',
     'src/ui/mobile-navigation.js',
     'src/ui/document-reader-controls.js',
     'src/ui/search-dialog.js',
@@ -53,7 +53,7 @@ test('fails closed when reference discovery, preview noindex, mobile/reader cont
     (x) => { x.runtimeFiles.delete('src/ui/mobile-navigation.js'); },
     (x) => { x.runtimeFiles.delete('src/ui/document-reader-controls.js'); },
     (x) => { x.runtimeFiles.delete('404/index.html'); },
-    (x) => { x.runtimeFiles.delete('documents/econ-ref-01-fa-1-0/index.html'); },
+    (x) => { x.runtimeFiles.delete('documents/econ-ref-01/index.html'); },
     (x) => { x.runtimeFiles.delete('recovered-editorial-truth.json'); },
   ]) {
     const input = cloneValid();
@@ -64,7 +64,7 @@ test('fails closed when reference discovery, preview noindex, mobile/reader cont
 
 test('rejects any production canonical, sitemap or false Arabic alternate on preview', () => {
   for (const mutate of [
-    (x) => { x.seoRoutes[0].canonical = 'https://docs.earthcoop.ir/documents/econ-ref-01-fa-1-0/'; },
+    (x) => { x.seoRoutes[0].canonical = 'https://docs.earthcoop.ir/documents/econ-ref-01/'; },
     (x) => { x.seoRoutes[0].hreflang.push({locale:'ar',href:'https://docs-preview.earthcoop.ir/ar/econ-ref-01/'}); },
     (x) => { x.sitemapXml = x.sitemapXml.replace('docs-preview.earthcoop.ir','docs.earthcoop.ir'); },
     (x) => { x.seoRoutes[0].indexable = true; },

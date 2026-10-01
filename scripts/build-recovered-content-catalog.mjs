@@ -5,11 +5,11 @@ import { buildCurrentFoundational } from './build-current-foundational.mjs';
 import { resolveDisplayLocales } from './docs-center-locale-policy.mjs';
 
 const USABLE = new Set(['current', 'needs_review', 'outdated']);
+const OFFICIAL_FOUNDATIONAL_ORDER = Object.freeze(['FC', 'CH', 'CO', 'EX', 'ECON', 'DG', 'JUD', 'LOC', 'ETH', 'STD']);
+const OFFICIAL_FOUNDATIONAL_POSITION = new Map(OFFICIAL_FOUNDATIONAL_ORDER.map((id, index) => [id, index]));
 
 function routeIdForReference(entry) {
-  const locale = entry.canonicalLanguage;
-  const version = String(entry.version).replace(/[^0-9A-Za-z]+/g, '-').replace(/^-|-$/g, '').toLowerCase();
-  return `${entry.documentId.toLowerCase()}-${locale}-${version}`;
+  return entry.documentId.toLowerCase();
 }
 
 function sharedMetadata(entry, source, markdown) {
@@ -30,6 +30,15 @@ function sharedMetadata(entry, source, markdown) {
 
 function isRegisteredReleaseSource(source) {
   return source.startsWith('releases/foundational/');
+}
+
+function foundationalOrder(a, b) {
+  const aPosition = OFFICIAL_FOUNDATIONAL_POSITION.get(a.documentId);
+  const bPosition = OFFICIAL_FOUNDATIONAL_POSITION.get(b.documentId);
+  if (aPosition === undefined || bPosition === undefined) {
+    return a.documentId.localeCompare(b.documentId, 'en');
+  }
+  return aPosition - bPosition;
 }
 
 export async function buildRecoveredContentCatalog(rootDir, { currentFoundationalPackages } = {}) {
@@ -78,7 +87,7 @@ export async function buildRecoveredContentCatalog(rootDir, { currentFoundationa
     }
   }
 
-  documents.sort((a, b) => a.documentId.localeCompare(b.documentId, 'en'));
+  documents.sort(foundationalOrder);
   references.sort((a, b) => a.documentId.localeCompare(b.documentId, 'en'));
   const all = [...documents, ...references];
   const locales = [...new Set(all.flatMap((item) => resolveDisplayLocales(item.renditions)))];

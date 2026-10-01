@@ -14,6 +14,7 @@ import {
   buildLegacyFoundationalPackages,
   buildLegacyReferencePackages,
   serializeLegacyFoundationalPackages,
+  serializeRecoveredDocumentsMetadata,
 } from './generate-legacy-docs-center-data.mjs';
 import {
   materializeRecoveredDocsCenter,
@@ -22,6 +23,10 @@ import {
 } from './materialize-docs-center-08.mjs';
 import { patchRecoveredDocumentReaderSource } from './patch-recovered-document-reader.mjs';
 import { patchRecoveredEditorialPagesSource } from './patch-recovered-editorial-pages.mjs';
+import {
+  patchRecoveredDocumentsPageSource,
+  patchRecoveredTocFinalLayoutSource,
+} from './patch-recovered-live-uat.mjs';
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
@@ -95,7 +100,10 @@ ErrorDocument 404 /404/index.html
   <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json|recovered-editorial-truth\\.json)$">
     Header set Cache-Control "no-store, max-age=0"
   </FilesMatch>
-  <FilesMatch "\\.(css|js|svg|woff2)$">
+  <FilesMatch "\\.(css|js)$">
+    Header set Cache-Control "no-cache, max-age=0, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\\.(svg|woff2)$">
     Header set Cache-Control "public, max-age=3600, must-revalidate"
   </FilesMatch>
 </IfModule>
@@ -114,10 +122,6 @@ function previewSiteConfig(canonicalOrigin) {
 
 function recoveredPackageIndex() {
   return `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documentPackages = Object.freeze([\n  window.EC_CONTENT.publicationPolicyFa,\n  ...window.EC_CONTENT.foundationalDocumentPackages,\n  ...window.EC_CONTENT.referenceDocumentPackages,\n]);\n`;
-}
-
-function referenceCatalogMerge() {
-  return `\nwindow.EC_CONTENT.documents = Object.freeze([\n  ...window.EC_CONTENT.documents,\n  ...window.EC_CONTENT.referenceDocumentPackages.map((record) => ({\n    inventoryId: 'doc.' + record.code,\n    code: record.code,\n    title: record.title,\n    summary: record.summary,\n    status: record.status,\n    filterGroup: 'review',\n    source: record.source,\n    sourceType: 'repository',\n    authority: record.authority,\n    version: record.currentVersion.version,\n    reviewedAt: record.reviewedAt,\n    availability: 'available',\n    destination: '#/documents/' + record.slug,\n  })),\n]);\n`;
 }
 
 export async function buildRecoveredDocsCenter({
@@ -173,15 +177,12 @@ export async function buildRecoveredDocsCenter({
   await writeFile(path.join(outDir, 'recovered-editorial-truth.json'), `${JSON.stringify(editorialTruth, null, 2)}\n`);
   await writeFile(path.join(outDir, 'robots.txt'), seo.robotsTxt);
   await writeFile(path.join(outDir, 'sitemap.xml'), seo.sitemapXml);
-
-  const documentsMetadataPath = path.join(outDir, 'src/content/documents.fa.js');
-  const documentsMetadata = await readFile(documentsMetadataPath, 'utf8');
-  await writeFile(documentsMetadataPath, `${documentsMetadata.trimEnd()}${referenceCatalogMerge()}`);
-
+  await writeFile(path.join(outDir, 'src/content/documents.fa.js'), serializeRecoveredDocumentsMetadata(packages, referencePackages));
   await writeFile(path.join(outDir, 'site-config.js'), previewSiteConfig(canonicalOrigin));
   await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
 
   if (renderStaticDocuments) {
+    // Static rendering applies the established recovered UI-polish pipeline.
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
       packages: allPackages,
@@ -189,6 +190,13 @@ export async function buildRecoveredDocsCenter({
       indexable: false,
     });
   }
+
+  // Live-UAT patches run after established UI polish when static rendering is enabled.
+  // In non-static test builds the TOC helper can bootstrap the same targeted control patch itself.
+  const appPath = path.join(outDir, 'app.js');
+  await writeFile(appPath, patchRecoveredDocumentsPageSource(await readFile(appPath, 'utf8')));
+  const controlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
+  await writeFile(controlsPath, patchRecoveredTocFinalLayoutSource(await readFile(controlsPath, 'utf8')));
 
   const inventory = (await listFiles(outDir)).filter((file) => file !== 'deployment-manifest.json');
   const hashes = {};

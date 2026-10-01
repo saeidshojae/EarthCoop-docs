@@ -51,7 +51,7 @@ test('catalog includes governed foundational documents and ECON-REF-01 without p
 
   assert.deepEqual(catalog.documents.map((item) => item.documentId), ['FC']);
   assert.deepEqual(catalog.references.map((item) => item.documentId), ['ECON-REF-01']);
-  assert.equal(catalog.references[0].routeId, 'econ-ref-01-fa-0-1');
+  assert.equal(catalog.references[0].routeId, 'econ-ref-01');
   assert.equal(catalog.references[0].contentClass, 'reference');
   assert.equal(catalog.references[0].legalStatus, 'official_draft');
   assert.equal(catalog.references[0].canonicalLanguage, 'fa');

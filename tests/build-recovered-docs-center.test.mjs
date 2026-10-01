@@ -16,8 +16,9 @@ async function fixture() {
   const runtime = path.join(root, 'runtime');
   await mkdir(path.join(runtime, 'src/content/document-packages'), { recursive: true });
   await mkdir(path.join(runtime, 'src/pages'), { recursive: true });
+  await mkdir(path.join(runtime, 'src/ui'), { recursive: true });
   await writeFile(path.join(runtime, 'index.html'), '<h1>مرکز دانش ارث‌کوپ</h1>');
-  await writeFile(path.join(runtime, 'app.js'), 'legacy-app');
+  await writeFile(path.join(runtime, 'app.js'), `function documentsPage(){\n const docs=window.EC_CONTENT.documents;\n return \`<h1>اسناد بنیادین</h1><div class="docs-grid">\${docs.map((d)=>d.title).join('')}</div>\`\n}\nfunction statusPage(){return ''}\n`);
   await writeFile(path.join(runtime, 'styles.css'), 'legacy-css');
   await writeFile(path.join(runtime, '.htaccess'), `Options -Indexes\nDirectoryIndex index.html\n\n<IfModule mod_rewrite.c>\n  RewriteEngine On\n  RewriteCond %{HTTPS} !=on\n  RewriteRule ^ https://docs.earthcoop.ir%{REQUEST_URI} [R=301,L]\n\n  RewriteCond %{HTTP_HOST} !^docs\\.earthcoop\\.ir$ [NC]\n  RewriteRule ^ https://docs.earthcoop.ir%{REQUEST_URI} [R=301,L]\n</IfModule>\n`);
   await writeFile(path.join(runtime, 'src/content/document-packages/foundational.generated.fa.js'), 'OLD');
@@ -25,6 +26,7 @@ async function fixture() {
   await writeFile(path.join(runtime, 'src/content/documents.fa.js'), 'window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documents = Object.freeze([]);\n');
   await writeFile(path.join(runtime, 'src/content/pages.fa.js'), `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.pageRecords = Object.freeze([\n  {route:'map',status:'unofficial_explanation'},\n  {route:'status',status:'under_audit'},\n  {route:'glossary',status:'under_audit'}\n]);\n`);
   await writeFile(path.join(runtime, 'src/pages/document-reader.js'), `function renderDocumentReader(documentRecord) {\n  return \`<div class="breadcrumbs"><a href="/">خانه</a><i></i><a href="/documents/">اسناد بنیادین</a><i></i><span>\${documentRecord.title}</span></div>\`;\n}\n`);
+  await writeFile(path.join(runtime, 'src/ui/document-reader-controls.js'), `function syncDocumentTocViewport() {}\nfunction initializeDocumentReaderControls() {\n  window.addEventListener('resize', syncDocumentTocViewport, { passive: true });\n}\n`);
 
   const archive = path.join(root, 'runtime.tar.gz');
   await execFileAsync('tar', ['-czf', archive, '-C', runtime, '.']);
@@ -80,6 +82,13 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   });
 
   assert.match(await readFile(path.join(outDir, 'index.html'), 'utf8'), /مرکز دانش/);
+  const app = await readFile(path.join(outDir, 'app.js'), 'utf8');
+  assert.match(app, /collection === 'foundational'/);
+  assert.match(app, /اسناد مرجع/);
+  const controls = await readFile(path.join(outDir, 'src/ui/document-reader-controls.js'), 'utf8');
+  assert.match(controls, /window\.addEventListener\('load', syncDocumentTocViewport/);
+  assert.match(controls, /document\.fonts\?\.ready/);
+
   const generated = await readFile(path.join(outDir, 'src/content/document-packages/foundational.generated.fa.js'), 'utf8');
   assert.match(generated, /FC-001/);
   assert.match(generated, /registered_not_effective/);

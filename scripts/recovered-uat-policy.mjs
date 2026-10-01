@@ -1,5 +1,5 @@
 const PREVIEW_ORIGIN = 'https://docs-preview.earthcoop.ir';
-const REFERENCE_ROUTE_ID = 'econ-ref-01-fa-1-0';
+const REFERENCE_ROUTE_ID = 'econ-ref-01';
 const REQUIRED_RUNTIME_FILES = [
   '404/index.html',
   'documents/fc/index.html',
