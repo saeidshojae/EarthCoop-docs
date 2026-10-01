@@ -91,7 +91,7 @@ test('replaces amended articles and preserves unchanged articles verbatim', () =
   assert.equal(result.provenance.find((item) => item.id === 'EX-003').source, 'EX 1.1 amendment');
 });
 
-test('rejects missing, non-sequential, foreign, and newly introduced article IDs', () => {
+test('rejects missing, non-sequential, foreign, and skipped newly introduced article IDs', () => {
   assert.throws(
     () => consolidateAmendment({
       base: base.replace(/### ماده EX-002[\s\S]*?(?=### ماده EX-003)/, ''),
@@ -109,7 +109,7 @@ test('rejects missing, non-sequential, foreign, and newly introduced article IDs
   assert.throws(
     () => consolidateAmendment({
       base,
-      amendment: `${amendment}\n## ماده EX-004 — افزوده\n\nمتن.`,
+      amendment: `${amendment}\n## ماده EX-005 — پرش شناسه\n\nمتن.`,
       documentId: 'EX',
       baseVersion: '1.0',
       targetVersion: '1.1',
@@ -117,10 +117,29 @@ test('rejects missing, non-sequential, foreign, and newly introduced article IDs
       authority: 'بنیان‌گذار EarthCoop',
       decisionDate: '2026-09-24',
     }),
-    /not present in base/i,
+    /next stable sequential id|EX-004/i,
   );
 
   assert.throws(() => parseArticles('## ماده ECON-001 — بیگانه\n\nمتن.', 'EX'), /foreign article/i);
+});
+
+test('appends the next stable article id and records provenance', () => {
+  const result = consolidateAmendment({
+    base,
+    amendment: `${amendment}\n## ماده EX-004 — افزوده\n\nمتن افزوده.`,
+    documentId: 'EX',
+    baseVersion: '1.0',
+    targetVersion: '1.1',
+    status: 'ثبت‌شده — غیرنافذ',
+    authority: 'بنیان‌گذار EarthCoop',
+    decisionDate: '2026-09-24',
+  });
+
+  assert.deepEqual(parseArticles(result.document, 'EX').map((article) => article.id), [
+    'EX-001', 'EX-002', 'EX-003', 'EX-004',
+  ]);
+  assert.match(result.document, /ماده EX-004 — افزوده/);
+  assert.equal(result.provenance.at(-1).source, 'EX 1.1 amendment');
 });
 
 test('records one provenance row for every article with source hashes', () => {
