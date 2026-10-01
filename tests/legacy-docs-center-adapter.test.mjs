@@ -87,23 +87,25 @@ test('rejects article ids that do not belong to the manifest document', () => {
   assert.throws(() => parseFoundationalMarkdown(malformed, { documentId: 'FC' }), /CH-002.*FC/);
 });
 
-test('adapts manifest metadata to the 0.8 document package shape without changing legal status', () => {
+test('adapts registered metadata to the 0.8 package and normalizes embedded pre-v1 identity to the registered version', () => {
   const parsed = parseFoundationalMarkdown(source, { documentId: 'FC' });
   const result = toLegacyDocumentPackage(parsed, {
     documentId: 'FC',
     slug: 'foundational/fc',
     canonicalLanguage: 'fa',
-    legalStatus: 'registered_not_effective',
+    legalStatus: 'effective',
     authority: 'EarthCoop founder',
-    version: '1.1',
-    reviewedAt: '2026-09-24',
-    source: 'published/foundational/FC-1.1.fa.md',
+    version: '1.0',
+    reviewedAt: '2026-10-01',
+    source: 'releases/foundational/2026-10-01/consolidated/FC-1.0.full.fa.md',
   });
   assert.equal(result.slug, 'fc');
   assert.equal(result.code, 'FC');
-  assert.equal(result.status, 'registered_not_effective');
-  assert.equal(result.currentVersion.version, '1.1');
-  assert.equal(result.currentVersion.sourcePath, 'published/foundational/FC-1.1.fa.md');
+  assert.equal(result.status, 'effective');
+  assert.equal(result.currentVersion.version, '1.0');
+  assert.equal(result.currentVersion.sourcePath, 'releases/foundational/2026-10-01/consolidated/FC-1.0.full.fa.md');
   assert.equal(result.canonicalLanguage, 'fa');
   assert.equal(result.provisions.length, 2);
+  assert.match(result.preamble, /نسخه:\s*1\.0/);
+  assert.doesNotMatch(result.preamble, /نسخه:\s*1\.1/);
 });
