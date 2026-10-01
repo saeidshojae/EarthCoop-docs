@@ -10,9 +10,9 @@ import {
   patchRecoveredTocFinalLayoutSource,
 } from '../scripts/patch-recovered-live-uat.mjs';
 
-const DISPLAY_ORDER = ['FC', 'CH', 'EX', 'CO', 'ECON', 'DG', 'JUD', 'LOC', 'ETH', 'STD'];
+const DISPLAY_ORDER = ['FC', 'CO', 'CH', 'ECON', 'DG', 'JUD', 'LOC', 'EX', 'ETH', 'STD'];
 
-test('official-v1 recovered catalog keeps the approved foundational display order and a version-independent reference route', async () => {
+test('official-v1 recovered catalog keeps the approved legal-hierarchy display order and a version-independent reference route', async () => {
   const catalog = await buildRecoveredContentCatalog(process.cwd());
 
   assert.deepEqual(catalog.documents.map((item) => item.documentId), DISPLAY_ORDER);
@@ -60,7 +60,7 @@ test('legacy documents metadata has a governed serializer instead of appending r
   assert.match(serialized, /destination: '#\/documents\/' \+ record\.slug/);
 });
 
-test('documents page keeps references outside the foundational filter/count collection', () => {
+test('documents page keeps references outside the foundational filter/count collection and describes hierarchy without claiming publication order', () => {
   const source = `render: () => \`
       <section class="hero">
         <div>متن معرفی</div>
@@ -79,6 +79,10 @@ function statusPage(){return ''}`;
   assert.match(patched, /اسناد مرجع/);
   assert.match(patched, /foundational\.map\(card\)/);
   assert.match(patched, /references\.map\(referenceCard\)/);
+  assert.match(patched, /معماری حقوقی ممیزی‌شده/);
+  assert.match(patched, /قوانین موضوعی هم‌رتبه‌اند/);
+  assert.match(patched, /ETH سند اخلاقی فرابخشی/);
+  assert.doesNotMatch(patched, /بر اساس ترتیب ثبت رسمی نمایش داده می‌شوند/);
 });
 
 test('desktop TOC resynchronizes after final page and font layout, not only initial render/resize', () => {
