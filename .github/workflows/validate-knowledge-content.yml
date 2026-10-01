@@ -29,15 +29,26 @@ jobs:
         run: node scripts/build-recovered-docs-center.mjs --out dist-recovered
       - name: Audit recovered reader capabilities (diagnostic)
         run: node scripts/audit-recovered-reader-capabilities.mjs --out dist-recovered
-      - name: Inspect final reader wiring (diagnostic)
+      - name: Inspect final reader/download contract (diagnostic)
         shell: bash
         run: |
           set -euo pipefail
-          echo '--- FC direct-page reader markers ---'
-          grep -oE '.{0,100}(document-reader-controls|initializeDocumentReaderControls|data-document-(copy|print|download|history)|کپی نشانی سند|چاپ سند|تاریخچه نسخه‌ها).{0,140}' dist-recovered/documents/fc/index.html || true
+          echo '--- browser availability ---'
+          command -v google-chrome || true
+          command -v google-chrome-stable || true
+          command -v chromium || true
+          command -v chromium-browser || true
+          google-chrome --version 2>/dev/null || true
+          chromium --version 2>/dev/null || true
+          echo '--- FC direct-page final scripts ---'
+          tail -n 40 dist-recovered/documents/fc/index.html || true
+          echo '--- document reader download logic ---'
+          grep -nE 'documentDownloads|download|PDF|pdf' dist-recovered/src/pages/document-reader.js || true
+          echo '--- runtime download data source ---'
+          cat dist-recovered/src/data/document-downloads.js || true
           echo '--- controls initialization/click markers ---'
-          grep -nE 'initializeDocumentReaderControls|data-document-(copy|print|download|history)|addEventListener|clipboard|window\.print' dist-recovered/src/ui/document-reader-controls.js || true
-          echo '--- download map ---'
+          grep -nE 'initializeDocumentReaderControls|data-(copy-document-link|print-document|download|document-history)|addEventListener|clipboard|window\.print' dist-recovered/src/ui/document-reader-controls.js || true
+          echo '--- download manifest ---'
           cat dist-recovered/downloads/document-downloads.json || true
       - name: Validate recovered 0.8 candidate
         run: node scripts/validate-recovered-docs-center.mjs --out dist-recovered
