@@ -18,6 +18,15 @@ function headingLevel(line) {
   return match ? match[1].length : null;
 }
 
+function normalizeRegisteredPreamble(preamble, version) {
+  const input = String(preamble ?? '');
+  const governedVersion = String(version ?? '').trim();
+  if (!governedVersion) return input;
+  const identityVersion = /(شناسه سند:\s*[^\n]+\n(?:\s*\n)?نسخه:\s*)[^\n]+/;
+  if (!identityVersion.test(input)) return input;
+  return input.replace(identityVersion, `$1${governedVersion}`);
+}
+
 export function parseFoundationalMarkdown(source, { documentId }) {
   if (!documentId) throw new TypeError('documentId is required');
   const normalized = stripFrontmatter(source);
@@ -89,7 +98,7 @@ export function toLegacyDocumentPackage(parsed, metadata) {
     code: metadata.documentId,
     title: parsed.title,
     summary: `متن کامل نسخه ${metadata.version} ${parsed.title}`,
-    preamble: parsed.preamble,
+    preamble: normalizeRegisteredPreamble(parsed.preamble, metadata.version),
     canonicalLanguage: metadata.canonicalLanguage,
     status: metadata.legalStatus,
     source: metadata.source,
