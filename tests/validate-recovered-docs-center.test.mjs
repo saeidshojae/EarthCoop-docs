@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -23,6 +23,14 @@ async function fixture() {
     glossaryPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
     arabic: { status: 'unavailable', legacyMintlifyArIsArabic: false },
   };
+  const foundationalPackages = [{
+    id: 'fc', slug: 'fc', code: 'FC', title: 'سند مادر EarthCoop', status: 'effective',
+    currentVersion: { version: '1.0', publishedAt: '2026-10-01', sourcePath: 'releases/foundational/2026-10-01/consolidated/FC-1.0.full.fa.md' },
+    provisions: [], contentClass: 'foundational_document',
+  }];
+  const foundationalSource = `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.foundationalDocumentPackages = Object.freeze(${JSON.stringify(foundationalPackages, null, 2)});\nwindow.EC_CONTENT.referenceDocumentPackages = Object.freeze([]);\n`;
+  const directFc = '<html><button data-document-copy>کپی نشانی سند</button><button data-document-print>چاپ سند</button><a data-document-download href="/downloads/documents/EarthCoop-FC-1.0-fa.pdf">دانلود PDF</a><button data-document-history>تاریخچه نسخه‌ها</button><script>initializeDocumentReaderControls()</script></html>';
+  const readerControls = "function initializeDocumentReaderControls(){navigator.clipboard.writeText('x');window.print();history.pushState(null,'','#provision-fc-001');document.querySelectorAll('#documentToc a');const pdf='/downloads/documents/EarthCoop-FC-1.0-fa.pdf';}";
   const files = {
     'index.html': '<html><script src="site-config.js"></script></html>',
     'app.js': 'runtime',
@@ -36,13 +44,14 @@ async function fixture() {
     'robots.txt': 'User-agent: *\nDisallow: /\n',
     'sitemap.xml': '<?xml version="1.0"?><urlset><url><loc>https://docs-preview.earthcoop.ir/documents/econ-ref-01/</loc></url></urlset>\n',
     '404/index.html': '<html>404</html>',
-    'documents/fc/index.html': '<html>FC</html>',
+    'documents/fc/index.html': directFc,
     'documents/econ-ref-01/index.html': '<html>ECON-REF-01</html>',
+    'downloads/documents/EarthCoop-FC-1.0-fa.pdf': '%PDF-current',
     'src/ui/mobile-navigation.js': 'mobile navigation',
-    'src/ui/document-reader-controls.js': 'reader controls',
+    'src/ui/document-reader-controls.js': readerControls,
     'src/ui/search-dialog.js': 'search dialog',
     'src/pages/document-reader.js': 'reader',
-    'src/content/document-packages/foundational.generated.fa.js': 'window.EC_CONTENT={foundationalDocumentPackages:[]};',
+    'src/content/document-packages/foundational.generated.fa.js': foundationalSource,
     'earthcoop-knowledge-center-0.8.0-cpanel.tar.gz': 'archive-bytes',
   };
   const hashes = {};
@@ -82,6 +91,15 @@ async function fixture() {
 
 function validateArgs(input, expectedSourceSha = input.sourceSha) {
   return { outDir: input.outDir, expectedSourceSha, expectedRuntimeArchiveSha: input.archiveSha };
+}
+
+async function rewriteDeclaredFile(input, relative, content) {
+  const absolute = path.join(input.outDir, relative);
+  await writeFile(absolute, content);
+  const manifestPath = path.join(input.outDir, 'deployment-manifest.json');
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  manifest.hashes[relative] = sha256(Buffer.from(content));
+  await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 }
 
 test('accepts a complete recovered 0.8 preview build and verifies every declared file hash', async () => {
@@ -156,4 +174,27 @@ test('rejects production SEO leakage or false editorial truth even when hashes a
     await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
     await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /SEO|production|editorial|historical_snapshot/i);
   }
+});
+
+test('rejects a stale foundational PDF even when every declared hash is internally consistent', async () => {
+  const input = await fixture();
+  const current = 'downloads/documents/EarthCoop-FC-1.0-fa.pdf';
+  const stale = 'downloads/documents/EarthCoop-FC-0.2-fa.pdf';
+  await rename(path.join(input.outDir, current), path.join(input.outDir, stale));
+  const manifestPath = path.join(input.outDir, 'deployment-manifest.json');
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
+  const hash = manifest.hashes[current];
+  delete manifest.hashes[current];
+  manifest.hashes[stale] = hash;
+  await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+
+  await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /PDF.*FC.*1\.0.*0\.2|FC.*PDF.*0\.2.*1\.0/i);
+});
+
+test('rejects a direct document page whose reader controls render but are not wired', async () => {
+  const input = await fixture();
+  const broken = '<html><button>کپی نشانی سند</button><button>چاپ سند</button><button>تاریخچه نسخه‌ها</button></html>';
+  await rewriteDeclaredFile(input, 'documents/fc/index.html', broken);
+
+  await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /Direct document page FC.*download|Direct document page FC.*initialization/i);
 });
