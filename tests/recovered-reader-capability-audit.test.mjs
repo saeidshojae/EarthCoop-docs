@@ -6,7 +6,7 @@ import test from 'node:test';
 
 import { auditRecoveredReaderCapabilities } from '../scripts/audit-recovered-reader-capabilities.mjs';
 
-async function makeArtifact({ includePdf = true, includeDownload = true, pdfVersion = '1.0', directControls = true } = {}) {
+async function makeArtifact({ includePdf = true, includeDownload = true, pdfVersion = '1.0', directControls = true, scriptOnlyInitialization = false } = {}) {
   const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-reader-audit-'));
   await mkdir(path.join(outDir, 'src/ui'), { recursive: true });
   await mkdir(path.join(outDir, 'documents/fc'), { recursive: true });
@@ -23,12 +23,14 @@ async function makeArtifact({ includePdf = true, includeDownload = true, pdfVers
   ].join('\n');
 
   await writeFile(path.join(outDir, 'src/ui/document-reader-controls.js'), controls);
-  await writeFile(
-    path.join(outDir, 'documents/fc/index.html'),
-    directControls
-      ? '<button data-document-copy>کپی نشانی سند</button><button data-document-print>چاپ سند</button><a data-document-download href="/downloads/documents/EarthCoop-FC-1.0-fa.pdf">دانلود PDF</a><button data-document-history>تاریخچه نسخه‌ها</button><script>initializeDocumentReaderControls()</script>'
-      : '<button>کپی نشانی سند</button><button>چاپ سند</button><button>تاریخچه نسخه‌ها</button>',
-  );
+  let directHtml = '<button>کپی نشانی سند</button><button>چاپ سند</button><button>تاریخچه نسخه‌ها</button>';
+  if (directControls) {
+    directHtml = '<button data-document-copy>کپی نشانی سند</button><button data-document-print>چاپ سند</button><a data-document-download href="/downloads/documents/EarthCoop-FC-1.0-fa.pdf">دانلود PDF</a><button data-document-history>تاریخچه نسخه‌ها</button>';
+    directHtml += scriptOnlyInitialization
+      ? '<script src="/src/ui/document-reader-controls.js"></script>'
+      : '<script>initializeDocumentReaderControls()</script>';
+  }
+  await writeFile(path.join(outDir, 'documents/fc/index.html'), directHtml);
   if (includePdf) await writeFile(path.join(outDir, `downloads/documents/EarthCoop-FC-${pdfVersion}-fa.pdf`), '%PDF-fixture');
   return outDir;
 }
@@ -84,4 +86,14 @@ test('flags direct document pages whose visible controls are not wired to reader
   assert.ok(result.directPageIssues.some((issue) => issue.documentId === 'FC' && issue.missing.includes('download')));
   assert.ok(result.directPageIssues.some((issue) => issue.documentId === 'FC' && issue.missing.includes('initialization')));
   assert.ok(result.issues.some((issue) => /direct.*FC|FC.*direct/i.test(issue)));
+});
+
+test('loading the reader-controls script without invoking its initializer is still unwired', async () => {
+  const outDir = await makeArtifact({ scriptOnlyInitialization: true });
+  const result = await auditRecoveredReaderCapabilities({
+    outDir,
+    expectedDocumentVersions: { FC: '1.0' },
+  });
+
+  assert.ok(result.directPageIssues.some((issue) => issue.documentId === 'FC' && issue.missing.includes('initialization')));
 });
