@@ -60,12 +60,14 @@ test('generates a real current-version PDF path per foundational package through
   assert.deepEqual(result.map, buildFoundationalDownloadMap(packages));
 });
 
-test('removes stale foundational PDFs before generating the current governed versions', async () => {
+test('removes stale PDFs only for governed foundational packages before generating current versions', async () => {
   const runtimeDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-pdf-stale-'));
   const downloadDir = path.join(runtimeDir, 'downloads', 'documents');
   await mkdir(downloadDir, { recursive: true });
   await writeFile(path.join(downloadDir, 'EarthCoop-FC-1.1-fa.pdf'), '%PDF-stale');
-  await writeFile(path.join(downloadDir, 'EarthCoop-DG-0.2-fa.pdf'), '%PDF-stale');
+  await writeFile(path.join(downloadDir, 'EarthCoop-CH-0.2-fa.pdf'), '%PDF-stale');
+  await writeFile(path.join(downloadDir, 'EarthCoop-DG-0.2-fa.pdf'), '%PDF-other-foundational-not-in-package-set');
+  await writeFile(path.join(downloadDir, 'EarthCoop-ECON-REF-01-1.0-fa.pdf'), '%PDF-reference');
   await writeFile(path.join(downloadDir, 'unrelated.pdf'), '%PDF-unrelated');
 
   const runBrowser = async ({ outputPdf }) => {
@@ -76,6 +78,8 @@ test('removes stale foundational PDFs before generating the current governed ver
   const files = (await readdir(downloadDir)).sort();
   assert.deepEqual(files, [
     'EarthCoop-CH-1.0-fa.pdf',
+    'EarthCoop-DG-0.2-fa.pdf',
+    'EarthCoop-ECON-REF-01-1.0-fa.pdf',
     'EarthCoop-FC-1.0-fa.pdf',
     'unrelated.pdf',
   ]);
