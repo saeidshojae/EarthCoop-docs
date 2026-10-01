@@ -83,7 +83,7 @@ export async function buildLegacyFoundationalPackages(rootDir, { currentPackages
   return governed.documents.map((entry) => {
     const parsed = parseFoundationalMarkdown(entry.markdown, { documentId: entry.documentId });
     return toLegacyDocumentPackage(parsed, entry);
-  }).sort((a, b) => a.code.localeCompare(b.code, 'en'));
+  });
 }
 
 export async function buildLegacyReferencePackages(rootDir, { currentPackages, catalog } = {}) {
@@ -114,4 +114,43 @@ export async function buildLegacyReferencePackages(rootDir, { currentPackages, c
 
 export function serializeLegacyFoundationalPackages(packages, referencePackages = []) {
   return `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.foundationalDocumentPackages = Object.freeze(${JSON.stringify(packages, null, 2)});\nwindow.EC_CONTENT.referenceDocumentPackages = Object.freeze(${JSON.stringify(referencePackages, null, 2)});\n`;
+}
+
+export function serializeRecoveredDocumentsMetadata() {
+  return `window.EC_CONTENT = window.EC_CONTENT || {};
+window.EC_CONTENT.documents = Object.freeze([
+  ...window.EC_CONTENT.foundationalDocumentPackages.map((record) => ({
+    inventoryId: 'doc.' + record.code,
+    code: record.code,
+    title: record.title,
+    summary: record.summary,
+    status: record.status,
+    filterGroup: 'effective',
+    source: record.source,
+    sourceType: 'repository',
+    authority: record.authority,
+    version: record.currentVersion.version,
+    reviewedAt: record.reviewedAt,
+    availability: 'available',
+    destination: '#/documents/' + record.slug,
+    collection: 'foundational',
+  })),
+  ...window.EC_CONTENT.referenceDocumentPackages.map((record) => ({
+    inventoryId: 'doc.' + record.code,
+    code: record.code,
+    title: record.title,
+    summary: record.summary,
+    status: record.status,
+    filterGroup: 'review',
+    source: record.source,
+    sourceType: 'repository',
+    authority: record.authority,
+    version: record.currentVersion.version,
+    reviewedAt: record.reviewedAt,
+    availability: 'available',
+    destination: '#/documents/' + record.slug,
+    collection: 'reference',
+  })),
+]);
+`;
 }
