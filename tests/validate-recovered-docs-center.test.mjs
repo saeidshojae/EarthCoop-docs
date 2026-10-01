@@ -16,7 +16,13 @@ async function fixture() {
   const searchRows = [{ documentId: 'ECON-REF-01', contentClass: 'reference', locale: 'fa', title: 'سند مرجع اقتصاد', heading: 'بخش', anchor: 'section-1', body: 'اقتصاد و حق', status: 'official_draft', version: '1.0', route: '#/documents/econ-ref-01/provisions/section-1' }];
   const seoRoutes = [{ documentId: 'ECON-REF-01', routeId: 'econ-ref-01', staticPath: '/documents/econ-ref-01/', locale: 'fa', legalStatus: 'official_draft', contentClass: 'reference', canonical: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01/', indexable: false, hreflang: [{ locale: 'fa', href: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01/' }] }];
   const editorialTruth = {
-    recoveredPersianGuides: { status: 'historical_snapshot', source: 'earthcoop-knowledge-center-0.8.0', publicationClaim: 'do_not_present_as_current_product_truth_without_review' },
+    recoveredPersianGuides: {
+      status: 'audited_current',
+      revision: '2026-10-02-audited-v1',
+      source: 'recovered-0.8-shell-with-audited-persian-guide-replacement',
+      productTruth: 'audited_against_current_repository_and_official_v1',
+      publicationClaim: 'current_user_guide_with_explicit_vision_vs_implementation_boundaries',
+    },
     reviewedEnglishGuides: { status: 'verified_current', runtimeMapped: false, evidence: 'audits/product-guides/2026-09-28-inventory.json', paths: [] },
     statusPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
     mapPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
@@ -73,7 +79,7 @@ async function fixture() {
     canonicalLanguage: 'fa',
     displayLocales: ['fa'],
     guideContentPolicy: {
-      fa: 'recovered_0.8_editorial_snapshot_under_audit',
+      fa: 'audited_current_2026-10-02_official-v1_and_repository_evidence',
       en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
       ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
     },
@@ -167,12 +173,12 @@ test('rejects production SEO leakage or false editorial truth even when hashes a
     const absolute = path.join(input.outDir, relative);
     const data = JSON.parse(await readFile(absolute, 'utf8'));
     if (scenario === 'seo') data[0].canonical = 'https://docs.earthcoop.ir/documents/econ-ref-01/';
-    else data.recoveredPersianGuides.status = 'verified_current';
+    else data.recoveredPersianGuides.status = 'historical_snapshot';
     const serialized = `${JSON.stringify(data, null, 2)}\n`;
     await writeFile(absolute, serialized);
     manifest.hashes[relative] = sha256(Buffer.from(serialized));
     await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
-    await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /SEO|production|editorial|historical_snapshot/i);
+    await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /SEO|production|editorial|audited_current|guide/i);
   }
 });
 
