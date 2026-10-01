@@ -29,17 +29,29 @@ jobs:
         run: node scripts/build-recovered-docs-center.mjs --out dist-recovered
       - name: Audit recovered reader capabilities (diagnostic)
         run: node scripts/audit-recovered-reader-capabilities.mjs --out dist-recovered
+      - name: Verify generated foundational PDF content (diagnostic)
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v pdftotext
+          command -v pdfinfo
+          for code in FC CH CO EX ECON DG JUD LOC ETH STD; do
+            pdf="dist-recovered/downloads/documents/EarthCoop-${code}-1.0-fa.pdf"
+            test -s "$pdf"
+            size="$(stat -c '%s' "$pdf")"
+            pages="$(pdfinfo "$pdf" | awk '/^Pages:/ {print $2}')"
+            text="$(pdftotext "$pdf" - 2>/dev/null || true)"
+            compact="$(printf '%s' "$text" | tr -d '[:space:]')"
+            echo "$code size=$size pages=$pages extracted_chars=${#compact}"
+            test "$size" -gt 10000
+            test "${pages:-0}" -gt 0
+            test "${#compact}" -gt 100
+            printf '%s' "$text" | grep -F "$code" >/dev/null
+          done
       - name: Inspect final reader/download contract (diagnostic)
         shell: bash
         run: |
           set -euo pipefail
-          echo '--- browser availability ---'
-          command -v google-chrome || true
-          command -v google-chrome-stable || true
-          command -v chromium || true
-          command -v chromium-browser || true
-          google-chrome --version 2>/dev/null || true
-          chromium --version 2>/dev/null || true
           echo '--- FC direct-page final scripts ---'
           tail -n 40 dist-recovered/documents/fc/index.html || true
           echo '--- document reader download logic ---'
