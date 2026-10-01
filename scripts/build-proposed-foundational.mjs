@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { buildCurrentFoundational } from './build-current-foundational.mjs';
-import { consolidateAmendment } from './consolidate-amendment.mjs';
+import { consolidateAmendment, parseArticles } from './consolidate-amendment.mjs';
 
 const proposalOrder = ['FC', 'CH', 'CO', 'EX', 'ECON', 'DG', 'JUD', 'LOC', 'ETH', 'STD'];
 
@@ -20,8 +20,41 @@ const proposalMetadata = {
   STD: { baseVersion: '0.2', targetVersion: '0.3' },
 };
 
+const proposedRelationships = {
+  FC: 'سند مادر و بالاترین منبع اعتبار اسناد EarthCoop؛ جایگاه سایر اسناد از FC اخذ می‌شود.',
+  CH: 'تابع FC و منبع بنیادین ارزشی و تفسیری؛ جایگزین قانون ساختاری یا موضوعی نیست.',
+  CO: 'تابع FC و قانون ساختاری الزام‌آور؛ با توجه به CH تفسیر می‌شود.',
+  EX: 'تابع FC و CO و، در هر قلمرو تخصصی، تابع قانون موضوعی صلاحیت‌دار؛ منبع اجرای عمومی و workflow است نه قانون‌گذاری ماهوی.',
+  ECON: 'تابع FC و CO و با توجه به CH؛ با DG، JUD و LOC هم‌رتبه و مالک قلمرو تخصصی اقتصاد است.',
+  DG: 'تابع FC و CO و با توجه به CH؛ با ECON، JUD و LOC هم‌رتبه و مالک قلمرو تخصصی داده، فناوری و حکمرانی دیجیتال است.',
+  JUD: 'تابع FC و CO و با توجه به CH؛ با ECON، DG و LOC هم‌رتبه و مالک قلمرو دادرسی، ادله، جبران و اجرای قضایی است.',
+  LOC: 'تابع FC و CO و با توجه به CH؛ با ECON، DG و JUD هم‌رتبه و مالک قلمرو حکمرانی و جوامع محلی است.',
+  ETH: 'تابع FC و CO و چارچوب اخلاقی میان‌رشته‌ای؛ قانون موضوعی مستقل و منبع خودکار ضمانت اجرای قهری نیست.',
+  STD: 'تابع منابع حقوقی و تفویض معتبر مربوط؛ استاندارد فنی به‌خودی‌خود حق، تکلیف ماهوی یا صلاحیت حقوقی ایجاد نمی‌کند.',
+};
+
 const draftStatus = 'پیش‌نویس تلفیقی — ثبت‌نشده — غیرنافذ';
 const draftLegalEffect = 'این متن صرفاً پیش‌نویس تلفیقی برای بازبینی است و تا تصمیم رسمی جداگانه ثبت یا لازم‌الاجرا نیست.';
+
+function normalizeRelationshipMetadata(markdown, documentId) {
+  const articles = parseArticles(markdown, documentId);
+  const firstArticle = articles[0];
+  if (!firstArticle) throw new Error(`Cannot normalize relationship metadata for ${documentId} without articles.`);
+
+  let prefix = markdown.slice(0, firstArticle.start);
+  const suffix = markdown.slice(firstArticle.start);
+
+  prefix = prefix
+    .replace(/^\*\*نسبت با [^:]+:\*\*[^\n]*\n?/gm, '')
+    .replace(/^## روابط اسنادی\s*\n(?:[^#][\s\S]*?)(?=^#{1,2}\s|$)/gm, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trimEnd();
+
+  const relation = proposedRelationships[documentId];
+  if (!relation) throw new Error(`Missing proposed relationship metadata for ${documentId}.`);
+
+  return `${prefix}\n\n**جایگاه و روابط اسنادی پیشنهادی:** ${relation}\n\n${suffix.trimStart()}`;
+}
 
 export async function buildProposedFoundational(repositoryRoot) {
   const currentPackages = await buildCurrentFoundational(repositoryRoot);
@@ -55,13 +88,14 @@ export async function buildProposedFoundational(repositoryRoot) {
       authorityLabel: 'مرجع تهیه',
       decisionDateLabel: 'تاریخ تهیه',
     });
+    const markdown = normalizeRelationshipMetadata(result.document, id);
 
     output.push({
       id,
       version: metadata.targetVersion,
       baseVersion: metadata.baseVersion,
       amendmentPath: path.relative(repositoryRoot, amendmentPath).replaceAll('\\', '/'),
-      markdown: result.document,
+      markdown,
       provenance: result.provenance,
     });
   }
