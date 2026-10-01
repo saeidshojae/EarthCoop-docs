@@ -27,6 +27,7 @@ import {
   patchRecoveredDocumentsPageSource,
   patchRecoveredTocFinalLayoutSource,
 } from './patch-recovered-live-uat.mjs';
+import { applyRecoveredUiPolish } from './patch-recovered-ui-polish.mjs';
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
@@ -148,14 +149,6 @@ export async function buildRecoveredDocsCenter({
     verifyFiles: verifyRecoveredFiles,
   });
 
-  const appPath = path.join(outDir, 'app.js');
-  const appSource = await readFile(appPath, 'utf8');
-  await writeFile(appPath, patchRecoveredDocumentsPageSource(appSource));
-
-  const controlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
-  const controlsSource = await readFile(controlsPath, 'utf8');
-  await writeFile(controlsPath, patchRecoveredTocFinalLayoutSource(controlsSource));
-
   const readerPath = path.join(outDir, 'src/pages/document-reader.js');
   const readerSource = await readFile(readerPath, 'utf8');
   await writeFile(readerPath, patchRecoveredDocumentReaderSource(readerSource));
@@ -185,21 +178,29 @@ export async function buildRecoveredDocsCenter({
   await writeFile(path.join(outDir, 'recovered-editorial-truth.json'), `${JSON.stringify(editorialTruth, null, 2)}\n`);
   await writeFile(path.join(outDir, 'robots.txt'), seo.robotsTxt);
   await writeFile(path.join(outDir, 'sitemap.xml'), seo.sitemapXml);
-
-  const documentsMetadataPath = path.join(outDir, 'src/content/documents.fa.js');
-  await writeFile(documentsMetadataPath, serializeRecoveredDocumentsMetadata(packages, referencePackages));
-
+  await writeFile(path.join(outDir, 'src/content/documents.fa.js'), serializeRecoveredDocumentsMetadata(packages, referencePackages));
   await writeFile(path.join(outDir, 'site-config.js'), previewSiteConfig(canonicalOrigin));
   await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
 
   if (renderStaticDocuments) {
+    // Static rendering also applies the established recovered UI-polish pipeline.
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
       packages: allPackages,
       canonicalOrigin,
       indexable: false,
     });
+  } else {
+    // Test/non-static builds still exercise the same UI-polish baseline once.
+    await applyRecoveredUiPolish({ outDir, availableLocales: ['fa'] });
   }
+
+  // Live-UAT patches must run after the established UI polish so they extend,
+  // rather than pre-empt or duplicate, the previously approved fixes.
+  const appPath = path.join(outDir, 'app.js');
+  await writeFile(appPath, patchRecoveredDocumentsPageSource(await readFile(appPath, 'utf8')));
+  const controlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
+  await writeFile(controlsPath, patchRecoveredTocFinalLayoutSource(await readFile(controlsPath, 'utf8')));
 
   const inventory = (await listFiles(outDir)).filter((file) => file !== 'deployment-manifest.json');
   const hashes = {};
