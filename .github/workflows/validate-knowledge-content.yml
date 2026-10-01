@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          persist-credentials: false
+          persist-credentials: true
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
@@ -43,3 +43,17 @@ jobs:
             docs-manifest.json
           if-no-files-found: error
           retention-days: 3
+      - name: Commit validated effective v1 registration snapshot
+        if: github.event_name == 'pull_request' && github.head_ref == 'legal/foundational-effective-v1-20261001'
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          git add releases/foundational/2026-10-01 document-registry.json docs-manifest.json
+          if git diff --cached --quiet; then
+            echo "Effective v1 registration snapshot already committed."
+            exit 0
+          fi
+          git config user.name "earthcoop-legal-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git commit -m "docs(legal): register effective foundational v1 snapshot"
+          git push origin "HEAD:${BRANCH}"
