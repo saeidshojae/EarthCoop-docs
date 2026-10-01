@@ -5,7 +5,7 @@ import { buildCurrentFoundational } from './build-current-foundational.mjs';
 import { resolveDisplayLocales } from './docs-center-locale-policy.mjs';
 
 const USABLE = new Set(['current', 'needs_review', 'outdated']);
-const FOUNDATIONAL_DISPLAY_ORDER = Object.freeze(['FC', 'CH', 'EX', 'CO', 'ECON', 'DG', 'JUD', 'LOC', 'ETH', 'STD']);
+const FOUNDATIONAL_DISPLAY_ORDER = Object.freeze(['FC', 'CO', 'CH', 'ECON', 'DG', 'JUD', 'LOC', 'EX', 'ETH', 'STD']);
 const FOUNDATIONAL_DISPLAY_POSITION = new Map(FOUNDATIONAL_DISPLAY_ORDER.map((id, index) => [id, index]));
 
 function routeIdForReference(entry) {
