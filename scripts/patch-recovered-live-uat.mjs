@@ -1,3 +1,5 @@
+import { patchRecoveredDocumentReaderControlsSource } from './patch-recovered-ui-polish.mjs';
+
 const DOCUMENTS_START = 'function documentsPage(){';
 const DOCUMENTS_END = 'function statusPage(){';
 
@@ -21,6 +23,9 @@ export function patchRecoveredDocumentsPageSource(source) {
 
 export function patchRecoveredTocFinalLayoutSource(source) {
   let output = String(source);
+  if (!output.includes('function syncDocumentTocViewport()')) {
+    output = patchRecoveredDocumentReaderControlsSource(output);
+  }
   const resizeNeedle = "  window.addEventListener('resize', syncDocumentTocViewport, { passive: true });";
   if (!output.includes(resizeNeedle)) throw new Error('Recovered document TOC resize synchronization point changed');
   if (!output.includes("window.addEventListener('load', syncDocumentTocViewport")) {
