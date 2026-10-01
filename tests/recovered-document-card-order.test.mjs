@@ -6,11 +6,11 @@ import test from 'node:test';
 
 import { buildRecoveredContentCatalog } from '../scripts/build-recovered-content-catalog.mjs';
 
-const LEGAL_HIERARCHY_DISPLAY_ORDER = ['FC', 'CO', 'CH', 'ECON', 'DG', 'JUD', 'LOC', 'EX', 'ETH', 'STD'];
+const FOUNDATIONAL_PRESENTATION_ORDER = ['FC', 'CH', 'CO', 'ECON', 'DG', 'JUD', 'LOC', 'EX', 'ETH', 'STD'];
 
-test('foundational document cards follow the audited legal hierarchy rather than volume or publication order', async () => {
+test('foundational document cards present charter before constitution while keeping thematic laws before executive bylaws', async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-card-order-'));
-  const entries = LEGAL_HIERARCHY_DISPLAY_ORDER.map((documentId) => ({
+  const entries = FOUNDATIONAL_PRESENTATION_ORDER.map((documentId) => ({
     documentId,
     slug: `foundational/${documentId.toLowerCase()}`,
     contentClass: 'foundational_document',
@@ -26,12 +26,12 @@ test('foundational document cards follow the audited legal hierarchy rather than
     },
   }));
   await writeFile(path.join(root, 'docs-manifest.json'), JSON.stringify({ schemaVersion: 2, entries }));
-  const currentFoundationalPackages = LEGAL_HIERARCHY_DISPLAY_ORDER.map((id) => ({
+  const currentFoundationalPackages = FOUNDATIONAL_PRESENTATION_ORDER.map((id) => ({
     id,
     version: '1.0',
     markdown: `# ${id}\n\n**شناسه سند:** ${id}\n\n### ماده ${id}-001 — اصل\nمتن`,
   }));
 
   const catalog = await buildRecoveredContentCatalog(root, { currentFoundationalPackages });
-  assert.deepEqual(catalog.documents.map((item) => item.documentId), LEGAL_HIERARCHY_DISPLAY_ORDER);
+  assert.deepEqual(catalog.documents.map((item) => item.documentId), FOUNDATIONAL_PRESENTATION_ORDER);
 });
