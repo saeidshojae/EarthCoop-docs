@@ -52,7 +52,7 @@ async function inspectDirectPages(outDir, files, expectedDocumentVersions) {
     if (!/(?:data-document-print|چاپ\s+سند)/i.test(html)) missing.push('print');
     if (!/(?:data-document-download|دانلود\s+(?:PDF|پی\s*دی\s*اف)|href=["'][^"']+\.pdf)/i.test(html)) missing.push('download');
     if (!/(?:data-document-history|تاریخچه\s+نسخه)/i.test(html)) missing.push('history');
-    if (!/(?:initializeDocumentReaderControls\s*\(|document-reader-controls\.js)/i.test(html)) missing.push('initialization');
+    if (!/(?:window\.EC_UI\.)?initializeDocumentReaderControls\s*\(/i.test(html)) missing.push('initialization');
     if (missing.length) issues.push({ documentId, missing });
   }
   return issues;
