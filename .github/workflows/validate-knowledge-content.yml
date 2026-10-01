@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 22
           package-manager-cache: false
+      - name: Materialize authorized effective v1 release candidate
+        if: github.event_name == 'pull_request' && github.head_ref == 'legal/foundational-effective-v1-20261001'
+        run: node scripts/build-effective-v1-release.mjs .
       - run: node --test
       - run: node scripts/validate-docs-manifest.mjs .
       - run: node scripts/validate-terminology.mjs .
@@ -29,3 +32,14 @@ jobs:
         run: node scripts/build-recovered-docs-center.mjs --out dist-recovered
       - name: Validate recovered 0.8 candidate
         run: node scripts/validate-recovered-docs-center.mjs --out dist-recovered
+      - name: Upload effective v1 materialization for registration commit
+        if: github.event_name == 'pull_request' && github.head_ref == 'legal/foundational-effective-v1-20261001'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: effective-v1-registration-${{ github.sha }}
+          path: |
+            releases/foundational/2026-10-01/
+            document-registry.json
+            docs-manifest.json
+          if-no-files-found: error
+          retention-days: 3
