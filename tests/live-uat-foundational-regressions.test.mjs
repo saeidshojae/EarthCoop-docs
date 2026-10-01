@@ -6,9 +6,9 @@ import test from 'node:test';
 import { buildRecoveredContentCatalog } from '../scripts/build-recovered-content-catalog.mjs';
 import * as legacyGenerator from '../scripts/generate-legacy-docs-center-data.mjs';
 import {
-  patchRecoveredAppSource,
-  patchRecoveredDocumentReaderControlsSource,
-} from '../scripts/patch-recovered-ui-polish.mjs';
+  patchRecoveredDocumentsPageSource,
+  patchRecoveredTocFinalLayoutSource,
+} from '../scripts/patch-recovered-live-uat.mjs';
 
 const OFFICIAL_ORDER = ['FC', 'CH', 'CO', 'EX', 'ECON', 'DG', 'JUD', 'LOC', 'ETH', 'STD'];
 
@@ -57,7 +57,7 @@ test('legacy documents metadata has a governed serializer instead of appending r
   assert.match(serialized, /collection: 'foundational'/);
   assert.match(serialized, /collection: 'reference'/);
   assert.match(serialized, /filterGroup: 'effective'/);
-  assert.match(serialized, /#\/documents\/econ-ref-01/);
+  assert.match(serialized, /destination: '#\/documents\/' \+ record\.slug/);
 });
 
 test('documents page keeps references outside the foundational filter/count collection', () => {
@@ -73,7 +73,7 @@ function documentsPage(){
 }
 function statusPage(){return ''}`;
 
-  const patched = patchRecoveredAppSource(source);
+  const patched = patchRecoveredDocumentsPageSource(source);
   assert.match(patched, /collection === 'foundational'/);
   assert.match(patched, /collection === 'reference'/);
   assert.match(patched, /اسناد مرجع/);
@@ -82,23 +82,26 @@ function statusPage(){return ''}`;
 });
 
 test('desktop TOC resynchronizes after final page and font layout, not only initial render/resize', () => {
-  const source = `function initializeDocumentReaderControls(activeProvisionSlug = null) {
+  const source = `function syncDocumentTocViewport() {}
+function initializeDocumentReaderControls(activeProvisionSlug = null) {
   const toc = document.getElementById('documentToc');
   const tocToggle = document.querySelector('[data-document-toc-toggle]');
   const mobile = window.matchMedia('(max-width:1050px)');
   function synchronizeToc() { if (!toc || !tocToggle) return; }
   synchronizeToc();
+  window.addEventListener('resize', syncDocumentTocViewport, { passive: true });
   mobile.addEventListener?.('change', synchronizeToc);
   const tocLinks = [...document.querySelectorAll('#documentToc a')];
 }`;
 
-  const patched = patchRecoveredDocumentReaderControlsSource(source);
+  const patched = patchRecoveredTocFinalLayoutSource(source);
   assert.match(patched, /window\.addEventListener\('load', syncDocumentTocViewport/);
   assert.match(patched, /document\.fonts\?\.ready/);
 });
 
 test('preview static JavaScript and CSS are revalidated during UAT so a new deployment cannot reuse stale layout code', async () => {
   const buildSource = await readFile(path.join(process.cwd(), 'scripts/build-recovered-docs-center.mjs'), 'utf8');
-  assert.match(buildSource, /Cache-Control \"no-cache, max-age=0, must-revalidate\"/);
-  assert.doesNotMatch(buildSource, /<FilesMatch \"\\\\\.\(css\|js\)[^\n]*>[\s\S]*max-age=3600/);
+  const assetBlock = buildSource.match(/<FilesMatch "\\\\\.\(css\|js\)\$">[\s\S]*?<\/FilesMatch>/)?.[0] ?? '';
+  assert.match(assetBlock, /Cache-Control "no-cache, max-age=0, must-revalidate"/);
+  assert.doesNotMatch(assetBlock, /max-age=3600/);
 });
