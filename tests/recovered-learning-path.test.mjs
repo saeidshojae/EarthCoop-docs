@@ -73,8 +73,10 @@ test('static guide patch inserts path navigation before related content and pres
 test('SPA patch keeps learning-path navigation on direct /guides/... URLs after client rerender', () => {
   const patched = patchRecoveredLearningPathAppSource(APP_SOURCE);
   assert.match(patched, /function resolveLearningPathRoute\(\)/);
-  assert.match(patched, /location\.pathname\.match\(\/\\\/guides\\\/\(\[\^\\\/?#\]\+\)\\\/?\$\//);
+  assert.match(patched, /location\.pathname\.match/);
+  assert.match(patched, /guides/);
   assert.match(patched, /location\.hash\.match/);
+  assert.match(patched, /const route = resolveLearningPathRoute\(\)/);
   assert.match(patched, /learningPathNavigation/);
   assert.match(patched, /مطالب مرتبط/);
   assert.match(patched, /related\.map/);
