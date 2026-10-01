@@ -36,16 +36,22 @@ const proposedRelationships = {
 const draftStatus = 'پیش‌نویس تلفیقی — ثبت‌نشده — غیرنافذ';
 const draftLegalEffect = 'این متن صرفاً پیش‌نویس تلفیقی برای بازبینی است و تا تصمیم رسمی جداگانه ثبت یا لازم‌الاجرا نیست.';
 
+function stripLegacyRelationshipMetadata(markdown) {
+  return markdown
+    .replace(/^\s*-?\s*\*\*نسبت با [^:]+:\*\*[^\n]*\n?/gm, '')
+    .replace(/\n{3,}/g, '\n\n');
+}
+
 function normalizeRelationshipMetadata(markdown, documentId) {
-  const articles = parseArticles(markdown, documentId);
+  const cleaned = stripLegacyRelationshipMetadata(markdown);
+  const articles = parseArticles(cleaned, documentId);
   const firstArticle = articles[0];
   if (!firstArticle) throw new Error(`Cannot normalize relationship metadata for ${documentId} without articles.`);
 
-  let prefix = markdown.slice(0, firstArticle.start);
-  const suffix = markdown.slice(firstArticle.start);
+  let prefix = cleaned.slice(0, firstArticle.start);
+  const suffix = cleaned.slice(firstArticle.start);
 
   prefix = prefix
-    .replace(/^\*\*نسبت با [^:]+:\*\*[^\n]*\n?/gm, '')
     .replace(/^## روابط اسنادی\s*\n(?:[^#][\s\S]*?)(?=^#{1,2}\s|$)/gm, '')
     .replace(/\n{3,}/g, '\n\n')
     .trimEnd();
