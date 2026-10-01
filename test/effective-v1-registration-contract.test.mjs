@@ -48,10 +48,17 @@ test('version reset does not grant ECON-REF-01 independent legal force', async (
   await access(path.join(releaseRoot, reference.documents[0].consolidatedText));
 });
 
-test('root traceability and knowledge ingestion follow the effective v1 release without redefining public-baseline semantics', async () => {
+test('public baseline and knowledge ingestion both expose the effective official-v1 generation', async () => {
   const rootRegistry = await readJson(path.join(root, 'document-registry.json'));
   const manifest = await readJson(path.join(root, 'docs-manifest.json'));
   assert.equal(rootRegistry.latestRegisteredRelease, 'releases/foundational/2026-10-01/document-registry.registered.json');
+  assert.deepEqual(rootRegistry.documents.map((item) => item.id), foundationalIds);
+  for (const document of rootRegistry.documents) {
+    assert.equal(document.fa.version, '1.0', `${document.id} public Persian baseline version`);
+    assert.equal(document.fa.status, 'final', `${document.id} public Persian baseline status`);
+    assert.equal(document.en.version, '1.0', `${document.id} English target version`);
+    assert.equal(document.ar.version, '1.0', `${document.id} Arabic target version`);
+  }
 
   for (const entry of manifest.entries.filter((item) => item.contentClass === 'foundational_document')) {
     assert.equal(entry.version, '1.0', `${entry.documentId} manifest version`);
