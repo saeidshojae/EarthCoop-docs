@@ -33,7 +33,7 @@ test('final release-candidate review covers the entire proposed legal package wi
   );
   assert.equal(review.documents.length, 11);
   assert.ok(review.documents.every((item) => item.registered === false && item.effective === false));
-  assert.equal(review.blockers.length, 0);
+  assert.deepEqual(review.blockers, []);
 });
 
 test('review preserves stable EX history and checks authority boundaries', async () => {
