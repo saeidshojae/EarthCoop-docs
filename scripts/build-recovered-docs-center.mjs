@@ -17,6 +17,11 @@ import {
   serializeRecoveredDocumentsMetadata,
 } from './generate-legacy-docs-center-data.mjs';
 import {
+  buildFoundationalDownloadMap,
+  generateRecoveredFoundationalPdfs,
+  serializeDocumentDownloadsSource,
+} from './recovered-foundational-downloads.mjs';
+import {
   materializeRecoveredDocsCenter,
   RECOVERED_08_ARCHIVE_SHA256,
   RECOVERED_08_ARCHIVE_URL,
@@ -167,10 +172,13 @@ export async function buildRecoveredDocsCenter({
   const referencePackages = await buildLegacyReferencePackages(rootDir, { catalog });
   const allPackages = [...packages, ...referencePackages];
   const searchIndex = buildRecoveredSearchIndex(allPackages, { allowedLocales: localeCatalog.globalLocales });
+  const downloadMap = buildFoundationalDownloadMap(packages);
   const generatedPath = path.join(outDir, 'src/content/document-packages/foundational.generated.fa.js');
   await mkdir(path.dirname(generatedPath), { recursive: true });
   await writeFile(generatedPath, serializeLegacyFoundationalPackages(packages, referencePackages));
   await writeFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), recoveredPackageIndex());
+  await writeFile(path.join(outDir, 'src/data/document-downloads.js'), serializeDocumentDownloadsSource(downloadMap));
+  await writeFile(path.join(outDir, 'downloads/document-downloads.json'), `${JSON.stringify(downloadMap, null, 2)}\n`);
   await writeFile(path.join(outDir, 'recovered-locales.json'), `${JSON.stringify(localeCatalog, null, 2)}\n`);
   await writeFile(path.join(outDir, 'recovered-search-index.json'), `${JSON.stringify(searchIndex, null, 2)}\n`);
   await writeFile(path.join(outDir, 'recovered-seo-routes.json'), `${JSON.stringify(seo.routes, null, 2)}\n`);
@@ -186,6 +194,7 @@ export async function buildRecoveredDocsCenter({
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
       packages: allPackages,
+      documentDownloads: downloadMap,
       canonicalOrigin,
       indexable: false,
     });
@@ -197,6 +206,10 @@ export async function buildRecoveredDocsCenter({
   await writeFile(appPath, patchRecoveredDocumentsPageSource(await readFile(appPath, 'utf8')));
   const controlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
   await writeFile(controlsPath, patchRecoveredTocFinalLayoutSource(await readFile(controlsPath, 'utf8')));
+
+  if (renderStaticDocuments) {
+    await generateRecoveredFoundationalPdfs({ runtimeDir: outDir, packages });
+  }
 
   const inventory = (await listFiles(outDir)).filter((file) => file !== 'deployment-manifest.json');
   const hashes = {};

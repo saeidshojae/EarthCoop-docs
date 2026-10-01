@@ -3,6 +3,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { auditRecoveredReaderCapabilities } from './audit-recovered-reader-capabilities.mjs';
 import {
   RECOVERED_08_ARCHIVE_SHA256,
   RECOVERED_08_DEPLOYED_ARCHIVE_NAME,
@@ -11,6 +12,7 @@ import { validateRecoveredUatContract } from './recovered-uat-policy.mjs';
 
 const EXPECTED_BASELINE = 'earthcoop-knowledge-center-0.8.0';
 const EXPECTED_ORIGIN = 'https://docs-preview.earthcoop.ir';
+const FOUNDATIONAL_PACKAGE_FILE = 'src/content/document-packages/foundational.generated.fa.js';
 const REQUIRED_FILES = [
   '.htaccess',
   'index.html',
@@ -23,7 +25,7 @@ const REQUIRED_FILES = [
   'recovered-editorial-truth.json',
   'robots.txt',
   'sitemap.xml',
-  'src/content/document-packages/foundational.generated.fa.js',
+  FOUNDATIONAL_PACKAGE_FILE,
   RECOVERED_08_DEPLOYED_ARCHIVE_NAME,
 ];
 const EXPECTED_GUIDE_POLICY = Object.freeze({
@@ -62,6 +64,33 @@ function assertPreviewHtaccess(content) {
   if (!content.includes('ErrorDocument 404 /404/index.html')) throw new Error('Recovered htaccess 404 contract is missing');
   if (!content.includes('Header always set X-Robots-Tag "noindex, nofollow"')) throw new Error('Recovered htaccess preview noindex header is missing');
   if (/X-Robots-Tag\s+"noindex, nofollow"\s+env=/.test(content)) throw new Error('Recovered htaccess preview noindex header must be unconditional');
+}
+
+function parseExpectedFoundationalVersions(source) {
+  const startMarker = 'window.EC_CONTENT.foundationalDocumentPackages = Object.freeze(';
+  const start = source.indexOf(startMarker);
+  if (start < 0) throw new Error('Recovered foundational package version authority is missing');
+  const jsonStart = start + startMarker.length;
+  const end = source.indexOf(');', jsonStart);
+  if (end < 0) throw new Error('Recovered foundational package version authority is malformed');
+
+  let packages;
+  try {
+    packages = JSON.parse(source.slice(jsonStart, end));
+  } catch {
+    throw new Error('Recovered foundational package version authority is not valid JSON');
+  }
+  if (!Array.isArray(packages) || packages.length === 0) throw new Error('Recovered foundational package set is empty');
+
+  const versions = {};
+  for (const record of packages) {
+    const id = String(record?.code ?? '').trim().toUpperCase();
+    const version = String(record?.currentVersion?.version ?? '').trim();
+    if (!id || !version) throw new Error('Recovered foundational package is missing code/current version');
+    if (Object.hasOwn(versions, id)) throw new Error(`Duplicate recovered foundational package: ${id}`);
+    versions[id] = version;
+  }
+  return versions;
 }
 
 export async function validateRecoveredDocsCenter({
@@ -130,6 +159,13 @@ export async function validateRecoveredDocsCenter({
     sitemapXml,
     runtimeFiles: new Set(declaredFiles),
   });
+
+  const foundationalSource = await readFile(path.join(outDir, FOUNDATIONAL_PACKAGE_FILE), 'utf8');
+  const expectedDocumentVersions = parseExpectedFoundationalVersions(foundationalSource);
+  const readerAudit = await auditRecoveredReaderCapabilities({ outDir, expectedDocumentVersions });
+  if (readerAudit.issues.length) {
+    throw new Error(`Recovered reader capability validation failed: ${readerAudit.issues.join(' | ')}`);
+  }
 
   return { valid: true, sourceSha: manifest.sourceSha, runtimeBaseline: manifest.runtimeBaseline, fileCount: manifest.fileCount };
 }

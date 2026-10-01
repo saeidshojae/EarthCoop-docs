@@ -2,10 +2,11 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
 
+import { ensureStaticReaderInitialization } from './recovered-foundational-downloads.mjs';
 import { applyRecoveredUiPolish } from './patch-recovered-ui-polish.mjs';
 
-async function loadRecoveredRenderers(runtimeDir) {
-  const window = { EC_CONTENT: { documentDownloads: {} }, EC_PAGES: {}, EC_RENDER: {} };
+async function loadRecoveredRenderers(runtimeDir, documentDownloads = {}) {
+  const window = { EC_CONTENT: { documentDownloads }, EC_PAGES: {}, EC_RENDER: {} };
   const context = vm.createContext({ window, URL, console });
   for (const relative of [
     'src/content/statuses.js',
@@ -40,10 +41,11 @@ function replaceDocumentMain(html, body) {
 export async function renderRecoveredStaticDocuments({
   runtimeDir,
   packages,
+  documentDownloads = {},
   canonicalOrigin = 'https://docs.earthcoop.ir',
   indexable = true,
 }) {
-  const recovered = await loadRecoveredRenderers(runtimeDir);
+  const recovered = await loadRecoveredRenderers(runtimeDir, documentDownloads);
   const template = await readFile(path.join(runtimeDir, 'documents/fc/index.html'), 'utf8');
 
   for (const documentPackage of packages) {
@@ -61,6 +63,7 @@ export async function renderRecoveredStaticDocuments({
     const structuredData = recovered.EC_RENDER.renderStructuredData(route, canonicalOrigin, { document: documentPackage });
     let html = replaceDocumentHead(template, seoHead, structuredData);
     html = replaceDocumentMain(html, body);
+    html = ensureStaticReaderInitialization(html);
 
     const documentDir = path.join(runtimeDir, 'documents', documentPackage.slug);
     await mkdir(documentDir, { recursive: true });
