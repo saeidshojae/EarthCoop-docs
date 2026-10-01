@@ -193,6 +193,7 @@ export async function buildRecoveredDocsCenter({
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
       packages: allPackages,
+      documentDownloads: downloadMap,
       canonicalOrigin,
       indexable: false,
     });
