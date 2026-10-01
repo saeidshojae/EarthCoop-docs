@@ -18,6 +18,7 @@ import {
 } from './generate-legacy-docs-center-data.mjs';
 import {
   buildFoundationalDownloadMap,
+  generateRecoveredFoundationalPdfs,
   serializeDocumentDownloadsSource,
 } from './recovered-foundational-downloads.mjs';
 import {
@@ -205,6 +206,10 @@ export async function buildRecoveredDocsCenter({
   await writeFile(appPath, patchRecoveredDocumentsPageSource(await readFile(appPath, 'utf8')));
   const controlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
   await writeFile(controlsPath, patchRecoveredTocFinalLayoutSource(await readFile(controlsPath, 'utf8')));
+
+  if (renderStaticDocuments) {
+    await generateRecoveredFoundationalPdfs({ runtimeDir: outDir, packages });
+  }
 
   const inventory = (await listFiles(outDir)).filter((file) => file !== 'deployment-manifest.json');
   const hashes = {};
