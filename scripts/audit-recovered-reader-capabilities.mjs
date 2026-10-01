@@ -31,7 +31,34 @@ function hasEvidence(textFiles, patterns) {
   return textFiles.some(({ content }) => patterns.some((pattern) => pattern.test(content)));
 }
 
-export async function auditRecoveredReaderCapabilities({ outDir }) {
+function parseFoundationalPdf(relative) {
+  const name = path.posix.basename(relative);
+  const match = /^EarthCoop-([A-Z]+)-(.+)-fa\.pdf$/i.exec(name);
+  if (!match) return null;
+  return { documentId: match[1].toUpperCase(), pdfVersion: match[2], path: relative };
+}
+
+async function inspectDirectPages(outDir, files, expectedDocumentVersions) {
+  const issues = [];
+  for (const documentId of Object.keys(expectedDocumentVersions ?? {})) {
+    const relative = `documents/${documentId.toLowerCase()}/index.html`;
+    if (!files.includes(relative)) {
+      issues.push({ documentId, missing: ['page'] });
+      continue;
+    }
+    const html = await readFile(path.join(outDir, relative), 'utf8');
+    const missing = [];
+    if (!/(?:data-document-copy|کپی\s+نشانی)/i.test(html)) missing.push('copy');
+    if (!/(?:data-document-print|چاپ\s+سند)/i.test(html)) missing.push('print');
+    if (!/(?:data-document-download|دانلود\s+(?:PDF|پی\s*دی\s*اف)|href=["'][^"']+\.pdf)/i.test(html)) missing.push('download');
+    if (!/(?:data-document-history|تاریخچه\s+نسخه)/i.test(html)) missing.push('history');
+    if (!/(?:initializeDocumentReaderControls\s*\(|document-reader-controls\.js)/i.test(html)) missing.push('initialization');
+    if (missing.length) issues.push({ documentId, missing });
+  }
+  return issues;
+}
+
+export async function auditRecoveredReaderCapabilities({ outDir, expectedDocumentVersions = {} }) {
   if (!outDir) throw new TypeError('outDir is required');
   const files = await listFiles(outDir);
   const pdfFiles = files.filter((relative) => /\.pdf$/i.test(relative));
@@ -72,13 +99,37 @@ export async function auditRecoveredReaderCapabilities({ outDir }) {
     ]),
   };
 
+  const parsedPdfs = pdfFiles.map(parseFoundationalPdf).filter(Boolean);
+  const pdfVersionMismatches = [];
+  for (const pdf of parsedPdfs) {
+    const expectedVersion = expectedDocumentVersions[pdf.documentId];
+    if (expectedVersion && pdf.pdfVersion !== expectedVersion) {
+      pdfVersionMismatches.push({ ...pdf, expectedVersion });
+    }
+  }
+  pdfVersionMismatches.sort((a, b) => a.documentId.localeCompare(b.documentId, 'en'));
+
+  const directPageIssues = await inspectDirectPages(outDir, files, expectedDocumentVersions);
   const issues = [];
-  if (pdfFiles.length === 0) issues.push('No PDF files found in the final recovered artifact.');
+  if (pdfFiles.length === 0) issues.push('No PDF download files found in the final recovered artifact.');
   for (const [capability, present] of Object.entries(controlEvidence)) {
     if (!present) issues.push(`Missing recovered reader capability evidence: ${capability}.`);
   }
+  for (const mismatch of pdfVersionMismatches) {
+    issues.push(`Foundational PDF version mismatch for ${mismatch.documentId}: expected ${mismatch.expectedVersion}, found ${mismatch.pdfVersion}.`);
+  }
+  for (const issue of directPageIssues) {
+    issues.push(`Direct document page ${issue.documentId} is missing reader wiring: ${issue.missing.join(', ')}.`);
+  }
 
-  return { pdfFiles, controlEvidence, downloadEvidence: controlEvidence.download, issues };
+  return {
+    pdfFiles,
+    controlEvidence,
+    downloadEvidence: controlEvidence.download,
+    pdfVersionMismatches,
+    directPageIssues,
+    issues,
+  };
 }
 
 function parseArgs(argv) {
