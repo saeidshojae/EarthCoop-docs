@@ -1,0 +1,1 @@
+Planning files in this directory are implementation aids only. They are non-normative and do not change document validity, public baseline, registration or legal effect.
