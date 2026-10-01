@@ -23,6 +23,10 @@ import {
 } from './materialize-docs-center-08.mjs';
 import { patchRecoveredDocumentReaderSource } from './patch-recovered-document-reader.mjs';
 import { patchRecoveredEditorialPagesSource } from './patch-recovered-editorial-pages.mjs';
+import {
+  patchRecoveredDocumentsPageSource,
+  patchRecoveredTocFinalLayoutSource,
+} from './patch-recovered-live-uat.mjs';
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
@@ -143,6 +147,14 @@ export async function buildRecoveredDocsCenter({
     expectedSha256: runtimeArchiveSha256,
     verifyFiles: verifyRecoveredFiles,
   });
+
+  const appPath = path.join(outDir, 'app.js');
+  const appSource = await readFile(appPath, 'utf8');
+  await writeFile(appPath, patchRecoveredDocumentsPageSource(appSource));
+
+  const controlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
+  const controlsSource = await readFile(controlsPath, 'utf8');
+  await writeFile(controlsPath, patchRecoveredTocFinalLayoutSource(controlsSource));
 
   const readerPath = path.join(outDir, 'src/pages/document-reader.js');
   const readerSource = await readFile(readerPath, 'utf8');
