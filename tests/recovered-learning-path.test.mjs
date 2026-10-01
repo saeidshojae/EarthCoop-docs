@@ -70,9 +70,11 @@ test('static guide patch inserts path navigation before related content and pres
   assert.ok(patched.includes(RELATED));
 });
 
-test('SPA patch derives the same canonical path instead of changing guide text', () => {
+test('SPA patch keeps learning-path navigation on direct /guides/... URLs after client rerender', () => {
   const patched = patchRecoveredLearningPathAppSource(APP_SOURCE);
-  assert.match(patched, /LEARNING_PATH/);
+  assert.match(patched, /function resolveLearningPathRoute\(\)/);
+  assert.match(patched, /location\.pathname\.match\(\/\\\/guides\\\/\(\[\^\\\/?#\]\+\)\\\/?\$\//);
+  assert.match(patched, /location\.hash\.match/);
   assert.match(patched, /learningPathNavigation/);
   assert.match(patched, /مطالب مرتبط/);
   assert.match(patched, /related\.map/);
@@ -102,7 +104,8 @@ test('build integration patches all eight direct guide routes plus SPA and style
   assert.match(justice, /href="\/guides\/property\/"/);
   assert.match(elections, /href="\/guides\/membership\/"/);
   assert.match(elections, /پایان مسیر/);
-  assert.match(app, /function learningPathNavigation\(\)/);
+  assert.match(app, /function resolveLearningPathRoute\(\)/);
+  assert.match(app, /location\.pathname/);
   assert.match(app, /href="#\/\$\{next\.route\}"/);
   assert.match(styles, /Recovered learning path navigation/);
   for (const route of ROUTES) {
