@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -58,4 +58,25 @@ test('generates a real current-version PDF path per foundational package through
   assert.match(calls[0].outputPdf, /downloads\/documents\/EarthCoop-FC-1\.0-fa\.pdf$/);
   assert.match(await readFile(calls[0].outputPdf, 'utf8'), /^%PDF-/);
   assert.deepEqual(result.map, buildFoundationalDownloadMap(packages));
+});
+
+test('removes stale foundational PDFs before generating the current governed versions', async () => {
+  const runtimeDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-pdf-stale-'));
+  const downloadDir = path.join(runtimeDir, 'downloads', 'documents');
+  await mkdir(downloadDir, { recursive: true });
+  await writeFile(path.join(downloadDir, 'EarthCoop-FC-1.1-fa.pdf'), '%PDF-stale');
+  await writeFile(path.join(downloadDir, 'EarthCoop-DG-0.2-fa.pdf'), '%PDF-stale');
+  await writeFile(path.join(downloadDir, 'unrelated.pdf'), '%PDF-unrelated');
+
+  const runBrowser = async ({ outputPdf }) => {
+    await writeFile(outputPdf, '%PDF-1.4\ncurrent\n');
+  };
+  await generateRecoveredFoundationalPdfs({ runtimeDir, packages, runBrowser });
+
+  const files = (await readdir(downloadDir)).sort();
+  assert.deepEqual(files, [
+    'EarthCoop-CH-1.0-fa.pdf',
+    'EarthCoop-FC-1.0-fa.pdf',
+    'unrelated.pdf',
+  ]);
 });
