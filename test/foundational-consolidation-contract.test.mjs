@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { consolidateAmendment } from '../scripts/consolidate-amendment.mjs';
+import { consolidateAmendment, parseArticles } from '../scripts/consolidate-amendment.mjs';
 
 const base = `# نمونه\n\n**نسخه:** ۱.۰\n\n**وضعیت:** پیش‌نویس\n\n## ماده EX-001 — یک\n\nمتن یک.\n\n## ماده EX-002 — دو\n\nمتن دو.\n\n**پایان اساسنامه اجرایی EarthCoop — نسخه ۱.۰**\n`;
 
@@ -37,4 +37,25 @@ test('consolidation rejects a non-sequential newly introduced article id', () =>
     authority: 'مرجع آزمون',
     decisionDate: '2026-10-01',
   }), /next stable article|sequential|EX-003/i);
+});
+
+test('parser recognizes registered STD alias headings and consolidation canonicalizes them', () => {
+  const stdBase = `# استاندارد\n\n**نسخه:** ۰.۱\n\n**وضعیت:** پیش‌نویس\n\n## ماده STD-001 — یک\n\nمتن یک.\n\n## ماده STD-002 — دو\n\nمتن دو.\n`;
+  const stdAmendment = `## STD-002 / EC-1002 — دو اصلاح‌شده\n\nمتن جدید.\n`;
+
+  assert.deepEqual(parseArticles(stdAmendment, 'STD').map((article) => article.id), ['STD-002']);
+
+  const result = consolidateAmendment({
+    base: stdBase,
+    amendment: stdAmendment,
+    documentId: 'STD',
+    baseVersion: '0.1',
+    targetVersion: '0.2',
+    status: 'پیش‌نویس تلفیقی — ثبت‌نشده — غیرنافذ',
+    authority: 'مرجع آزمون',
+    decisionDate: '2026-10-01',
+  });
+
+  assert.match(result.document, /## ماده STD-002 \/ EC-1002 — دو اصلاح‌شده/);
+  assert.deepEqual(parseArticles(result.document, 'STD').map((article) => article.id), ['STD-001', 'STD-002']);
 });
