@@ -1,0 +1,75 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+import {
+  LEARNING_PATH,
+  learningPathNeighbors,
+  patchRecoveredLearningPathAppSource,
+  patchRecoveredLearningPathHtml,
+  renderLearningPathNavigation,
+} from '../scripts/patch-recovered-learning-path.mjs';
+
+const ROUTES = ['start', 'justice', 'property', 'digital-country', 'structure', 'groups', 'membership', 'elections'];
+
+test('learning path has one canonical ordered route list', () => {
+  assert.deepEqual(LEARNING_PATH.map((item) => item.route), ROUTES);
+});
+
+test('learning path neighbors are deterministic for first, middle and final pages', () => {
+  assert.deepEqual(learningPathNeighbors('start'), {
+    previous: null,
+    current: LEARNING_PATH[0],
+    next: LEARNING_PATH[1],
+  });
+  assert.equal(learningPathNeighbors('property').previous.route, 'justice');
+  assert.equal(learningPathNeighbors('property').next.route, 'digital-country');
+  assert.equal(learningPathNeighbors('elections').previous.route, 'membership');
+  assert.equal(learningPathNeighbors('elections').next, null);
+});
+
+test('first page exposes a prominent clickable continuation to exactly the next route', () => {
+  const html = renderLearningPathNavigation('start', { mode: 'static' });
+  assert.match(html, /class="learning-path-next/);
+  assert.match(html, /href="\/guides\/justice\/"/);
+  assert.match(html, /ادامه مسیر/);
+  assert.match(html, /عدالت و حق زمین/);
+  assert.doesNotMatch(html, /learning-path-previous/);
+});
+
+test('middle page exposes previous and next controls without replacing related content', () => {
+  const html = renderLearningPathNavigation('property', { mode: 'static' });
+  assert.match(html, /class="learning-path-previous/);
+  assert.match(html, /href="\/guides\/justice\/"/);
+  assert.match(html, /href="\/guides\/digital-country\/"/);
+  assert.match(html, /قبلی/);
+  assert.match(html, /بعدی/);
+  assert.match(html, /ادامه مسیر/);
+});
+
+test('final page exposes previous navigation and a path-complete state without inventing a next route', () => {
+  const html = renderLearningPathNavigation('elections', { mode: 'static' });
+  assert.match(html, /href="\/guides\/membership\/"/);
+  assert.match(html, /پایان مسیر/);
+  assert.doesNotMatch(html, /learning-path-next/);
+});
+
+test('static guide patch inserts path navigation before related content and preserves related cards verbatim', () => {
+  const related = '<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related"><a href="/guides/structure/"><span>مطالعه بعدی</span><strong>از کوچه تا سیاره ←</strong></a></div>';
+  const source = `<main><div class="article-body"><p>بدنه صفحه</p>${related}</div></main>`;
+  const patched = patchRecoveredLearningPathHtml(source, 'start');
+  assert.match(patched, /learning-path-navigation/);
+  assert.ok(patched.indexOf('learning-path-navigation') < patched.indexOf('مطالب مرتبط'));
+  assert.match(patched, /href="\/guides\/justice\/"/);
+  assert.ok(patched.includes(related));
+});
+
+test('SPA patch derives the same canonical path instead of changing guide text', () => {
+  const source = `function article(title, category, desc, state, body, related=[]) {
+  return {title,desc,render:()=>\`<div class="article-body">\${body}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related">\${related.map(([t,r])=>\`<a href="#/\${r}">\${t}</a>\`).join('')}</div></div>\`};
+}`;
+  const patched = patchRecoveredLearningPathAppSource(source);
+  assert.match(patched, /LEARNING_PATH/);
+  assert.match(patched, /learningPathNavigation/);
+  assert.match(patched, /مطالب مرتبط/);
+  assert.match(patched, /related\.map/);
+});
