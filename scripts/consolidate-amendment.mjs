@@ -3,7 +3,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const articleHeading = /^(#{2,6})\s+ماده\s+([A-Z]+-\d{3})\s+—[^\n]*$/gm;
+const articleHeading = /^(#{2,6})\s+(?:ماده\s+)?([A-Z]+-\d{3})(?:\s*\/[^\n—]+)?\s+—[^\n]*$/gm;
 
 function sha256(value) {
   return createHash('sha256').update(value, 'utf8').digest('hex');
@@ -85,7 +85,10 @@ function validateNewArticles(baseArticles, amendmentArticles, documentId) {
 }
 
 function normalizeHeadingLevel(text, level) {
-  return text.replace(/^#{2,6}(?=\s+ماده\s+)/, '#'.repeat(level));
+  return text.replace(
+    /^#{2,6}\s+(?:ماده\s+)?([A-Z]+-\d{3})((?:\s*\/[^\n—]+)?\s+—[^\n]*)/,
+    `${'#'.repeat(level)} ماده $1$2`,
+  );
 }
 
 function replaceMetadata(document, {
