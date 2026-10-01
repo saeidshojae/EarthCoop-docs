@@ -1,4 +1,4 @@
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,28 +19,43 @@ function hasAll(text, fragments) {
   return fragments.every((fragment) => text.includes(fragment));
 }
 
-function forbiddenHierarchyFindings(documents) {
+function hierarchyFindings(documents) {
   const findings = [];
   const topical = new Set(['ECON', 'DG', 'JUD', 'LOC']);
+
   for (const item of documents) {
     if (!topical.has(item.id)) continue;
-    const suspicious = [
-      /مکمل و تفصیل‌دهنده\s+(?:قانون |اساسنامه )?EX/,
-      /قوانین موضوعی بالادست/,
-      /تابع\s+(?:اساسنامه اجرایی|EX)\b/,
+
+    const checks = [
+      {
+        code: 'STALE_HIERARCHY_METADATA',
+        pattern: /\*\*نسبت با اساسنامه اجرایی:\*\*[^\n]*(?:مکمل|تابع)[^\n]*(?:EX|اساسنامه اجرایی)/,
+        message: 'فراداده قدیمی هنوز قانون موضوعی را تابع/مکمل EX معرفی می‌کند',
+      },
+      {
+        code: 'STALE_HIERARCHY_LANGUAGE',
+        pattern: new RegExp(`(?:${item.id}|این قانون|قانون [^\\n.]+)[^\\n.]{0,100}(?:تابع|مکمل)[^\\n.]{0,100}(?:EX|اساسنامه اجرایی)`),
+        message: 'متن هنجاری هنوز خود قانون موضوعی را تابع/مکمل EX معرفی می‌کند',
+      },
+      {
+        code: 'STALE_HIERARCHY_LANGUAGE',
+        pattern: /(?:اصلاح|این قانون|قانون [^\n.]+)[^\n.]{0,140}قوانین موضوعی بالادست/,
+        message: 'متن هنجاری هنوز از قوانین موضوعی هم‌رتبه به‌عنوان قوانین بالادست یاد می‌کند',
+      },
     ];
-    for (const pattern of suspicious) {
-      const match = item.markdown.match(pattern);
-      if (match) {
-        findings.push({
-          severity: 'blocker',
-          documentId: item.id,
-          code: 'STALE_HIERARCHY_LANGUAGE',
-          message: `عبارت سلسله‌مراتبی ناسازگار با معماری جدید باقی مانده است: ${match[0]}`,
-        });
-      }
+
+    for (const check of checks) {
+      const match = item.markdown.match(check.pattern);
+      if (!match) continue;
+      findings.push({
+        severity: 'blocker',
+        documentId: item.id,
+        code: check.code,
+        message: `${check.message}: ${match[0]}`,
+      });
     }
   }
+
   return findings;
 }
 
@@ -114,7 +129,7 @@ export async function reviewFoundationalReleaseCandidate(repositoryRoot) {
       && hasAll(ref, ['یک پله در سلسله‌مراتب الزام نیست', 'اثر حقوقی مستقل']),
     executionCannotCreateLaw:
       hasAll(fc, ['EX در هر قلمرو تابع قانون موضوعی صلاحیت‌دار', 'نمی‌تواند حق، تکلیف یا صلاحیت ماهوی'])
-      && hasAll(std, ['Technical Capability', 'Legal Authorization']),
+      && hasAll(std, ['به‌خودی‌خود منبع اختیار حقوقی نیست', 'STD نمی‌تواند مستقلاً']),
   };
 
   const invariantBlockers = Object.entries(invariants)
@@ -127,7 +142,7 @@ export async function reviewFoundationalReleaseCandidate(repositoryRoot) {
   const blockers = [
     ...versionFindings(documents),
     ...draftStatusFindings(documents),
-    ...forbiddenHierarchyFindings(documents),
+    ...hierarchyFindings(documents),
     ...invariantBlockers,
   ];
 
@@ -136,6 +151,7 @@ export async function reviewFoundationalReleaseCandidate(repositoryRoot) {
   return {
     schemaVersion: 1,
     status: 'pre_registration_review',
+    readyForRegistration: blockers.length === 0,
     requiresExplicitFounderDecision: true,
     documents: compactDocuments,
     concordanceRows: concordance.rows.length,
@@ -144,7 +160,7 @@ export async function reviewFoundationalReleaseCandidate(repositoryRoot) {
     reviewNotes: [
       'این بازبینی وضعیت حقوقی هیچ سندی را تغییر نمی‌دهد.',
       'وجود فایل، Manifest entry یا خروجی build به‌تنهایی ثبت، نفاذ یا public baseline ایجاد نمی‌کند.',
-      'عبارات تاریخی/انتقالی فقط زمانی blocker هستند که در متن هدف به‌عنوان سلسله‌مراتب جاری باقی مانده باشند.',
+      'عبارت تاریخی یا نفی صریح سلسله‌مراتب قدیمی blocker محسوب نمی‌شود؛ فقط گزاره هنجاری جاری یا فراداده رسمی ناسازگار blocker است.',
     ],
     unchangedAuthorityFiles: ['document-registry.json', 'docs-manifest.json'],
     registrationProposal: {
@@ -166,6 +182,8 @@ function markdownReport(review) {
     '# بازبینی نهایی Release Candidate اسناد بنیادین EarthCoop — Package F',
     '',
     '**وضعیت:** بازبینی پیش از ثبت — بدون اثر حقوقی مستقل',
+    '',
+    `**آمادگی برای ثبت:** ${review.readyForRegistration ? 'آماده از نظر کنترل‌های این بازبینی' : 'آماده نیست'}`,
     '',
     `**تعداد اسناد بررسی‌شده:** ${review.documents.length}`,
     '',
