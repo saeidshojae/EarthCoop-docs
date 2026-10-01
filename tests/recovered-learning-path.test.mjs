@@ -1,8 +1,12 @@
 import assert from 'node:assert/strict';
+import { mkdtemp, mkdir, readFile, writeFile } from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 import test from 'node:test';
 
 import {
   LEARNING_PATH,
+  applyRecoveredLearningPath,
   learningPathNeighbors,
   patchRecoveredLearningPathAppSource,
   patchRecoveredLearningPathHtml,
@@ -10,6 +14,10 @@ import {
 } from '../scripts/patch-recovered-learning-path.mjs';
 
 const ROUTES = ['start', 'justice', 'property', 'digital-country', 'structure', 'groups', 'membership', 'elections'];
+const RELATED = '<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related"><a href="/guides/structure/"><span>مطالعه بعدی</span><strong>از کوچه تا سیاره ←</strong></a></div>';
+const APP_SOURCE = `function article(title, category, desc, state, body, related=[]) {
+  return {title,desc,render:()=>\`<div class="article-body">\${body}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related">\${related.map(([t,r])=>\`<a href="#/\${r}">\${t}</a>\`).join('')}</div></div>\`};
+}`;
 
 test('learning path has one canonical ordered route list', () => {
   assert.deepEqual(LEARNING_PATH.map((item) => item.route), ROUTES);
@@ -54,22 +62,52 @@ test('final page exposes previous navigation and a path-complete state without i
 });
 
 test('static guide patch inserts path navigation before related content and preserves related cards verbatim', () => {
-  const related = '<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related"><a href="/guides/structure/"><span>مطالعه بعدی</span><strong>از کوچه تا سیاره ←</strong></a></div>';
-  const source = `<main><div class="article-body"><p>بدنه صفحه</p>${related}</div></main>`;
+  const source = `<main><div class="article-body"><p>بدنه صفحه</p>${RELATED}</div></main>`;
   const patched = patchRecoveredLearningPathHtml(source, 'start');
   assert.match(patched, /learning-path-navigation/);
   assert.ok(patched.indexOf('learning-path-navigation') < patched.indexOf('مطالب مرتبط'));
   assert.match(patched, /href="\/guides\/justice\/"/);
-  assert.ok(patched.includes(related));
+  assert.ok(patched.includes(RELATED));
 });
 
 test('SPA patch derives the same canonical path instead of changing guide text', () => {
-  const source = `function article(title, category, desc, state, body, related=[]) {
-  return {title,desc,render:()=>\`<div class="article-body">\${body}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related">\${related.map(([t,r])=>\`<a href="#/\${r}">\${t}</a>\`).join('')}</div></div>\`};
-}`;
-  const patched = patchRecoveredLearningPathAppSource(source);
+  const patched = patchRecoveredLearningPathAppSource(APP_SOURCE);
   assert.match(patched, /LEARNING_PATH/);
   assert.match(patched, /learningPathNavigation/);
   assert.match(patched, /مطالب مرتبط/);
   assert.match(patched, /related\.map/);
+});
+
+test('build integration patches all eight direct guide routes plus SPA and styles from one canonical path', async () => {
+  const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-learning-path-'));
+  for (const route of ROUTES) {
+    const guideDir = path.join(outDir, 'guides', route);
+    await mkdir(guideDir, { recursive: true });
+    await writeFile(path.join(guideDir, 'index.html'), `<main><div class="article-body"><p>body-${route}</p>${RELATED}</div></main>`);
+  }
+  await writeFile(path.join(outDir, 'app.js'), APP_SOURCE);
+  await writeFile(path.join(outDir, 'styles.css'), '.article-body{display:block}\n');
+
+  await applyRecoveredLearningPath({ outDir });
+
+  const start = await readFile(path.join(outDir, 'guides/start/index.html'), 'utf8');
+  const justice = await readFile(path.join(outDir, 'guides/justice/index.html'), 'utf8');
+  const elections = await readFile(path.join(outDir, 'guides/elections/index.html'), 'utf8');
+  const app = await readFile(path.join(outDir, 'app.js'), 'utf8');
+  const styles = await readFile(path.join(outDir, 'styles.css'), 'utf8');
+
+  assert.match(start, /href="\/guides\/justice\/"/);
+  assert.doesNotMatch(start, /learning-path-previous/);
+  assert.match(justice, /href="\/guides\/start\/"/);
+  assert.match(justice, /href="\/guides\/property\/"/);
+  assert.match(elections, /href="\/guides\/membership\/"/);
+  assert.match(elections, /پایان مسیر/);
+  assert.match(app, /function learningPathNavigation\(\)/);
+  assert.match(app, /href="#\/\$\{next\.route\}"/);
+  assert.match(styles, /Recovered learning path navigation/);
+  for (const route of ROUTES) {
+    const page = await readFile(path.join(outDir, 'guides', route, 'index.html'), 'utf8');
+    assert.match(page, new RegExp(`data-learning-path-route="${route}"`));
+    assert.ok(page.includes(RELATED), `related cards changed for ${route}`);
+  }
 });
