@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "releaseDate": "2026-10-01",
+  "registeredAt": "2026-10-01",
+  "versionEpoch": "official-v1",
+  "documents": [
+    {
+      "id": "ECON-REF-01",
+      "title": "سند مرجع اقتصاد EarthCoop و معماری نجم بهار",
+      "currentVersion": "1.0",
+      "previousVersion": null,
+      "preV1SourceVersion": "0.2",
+      "status": "registered-reference",
+      "independentLegalEffect": false,
+      "consolidatedText": "consolidated/ECON-REF-01-1.0.full.fa.md",
+      "provenance": "consolidated/ECON-REF-01-1.0.provenance.json",
+      "sha256": "d017c7caa1d89c88e53ce503f105b863421c3d3fe2715bd057cf229b2d7c6ff2"
+    }
+  ]
+}

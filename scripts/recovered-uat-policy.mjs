@@ -1,8 +1,9 @@
 const PREVIEW_ORIGIN = 'https://docs-preview.earthcoop.ir';
+const REFERENCE_ROUTE_ID = 'econ-ref-01-fa-1-0';
 const REQUIRED_RUNTIME_FILES = [
   '404/index.html',
   'documents/fc/index.html',
-  'documents/econ-ref-01-fa-0-1/index.html',
+  `documents/${REFERENCE_ROUTE_ID}/index.html`,
   'src/ui/mobile-navigation.js',
   'src/ui/document-reader-controls.js',
   'src/ui/search-dialog.js',
@@ -61,7 +62,7 @@ export function validateRecoveredUatContract({
   if (manifest?.searchRecordCount !== (searchRows ?? []).length) throw new Error('Recovered search record count mismatch');
   if (manifest?.seoRouteCount !== (seoRoutes ?? []).length) throw new Error('Recovered SEO route count mismatch');
   if (manifest?.editorialTruthArtifact !== 'recovered-editorial-truth.json') throw new Error('Recovered editorial truth artifact contract is missing');
-  if (!(searchRows ?? []).some((row) => row.documentId === 'ECON-REF-01' && row.body && row.route.includes('econ-ref-01-fa-0-1/provisions/'))) {
+  if (!(searchRows ?? []).some((row) => row.documentId === 'ECON-REF-01' && row.body && row.route.includes(`${REFERENCE_ROUTE_ID}/provisions/`))) {
     throw new Error('ECON-REF-01 is missing from full-text search');
   }
   if (!(seoRoutes ?? []).some((route) => route.documentId === 'ECON-REF-01' && route.indexable === false && route.canonical.startsWith(`${PREVIEW_ORIGIN}/`))) {

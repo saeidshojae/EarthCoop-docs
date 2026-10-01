@@ -1,0 +1,474 @@
+{
+  "schemaVersion": 1,
+  "status": "effective",
+  "versionEpoch": "official-v1",
+  "documentId": "CO",
+  "version": "1.0",
+  "previousVersion": null,
+  "preV1SourceVersion": "1.1",
+  "sourceAmendment": "published/foundational/CO-1.1.fa.md",
+  "provisions": [
+    {
+      "id": "CO-001",
+      "source": "CO 1.0",
+      "sha256": "eebb06aa037f93ca04b36bd3d123027a2f7b82db6bc95493c3696d3249e02021",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-002",
+      "source": "CO 1.0",
+      "sha256": "77d044fa77a18a9bc18a8a039f9695b35743d71c032f01742de5c0b84648cdec",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-003",
+      "source": "CO 1.0",
+      "sha256": "3d90bdb1f6200e740540a6bad5289360f2e0c0928d70a2b9a189d1670177209c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-004",
+      "source": "CO 1.0",
+      "sha256": "63058056dfdda0af89c533dbeab0432652a73755551f0b048a2282f036d8559a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-005",
+      "source": "CO 1.0",
+      "sha256": "b0a8fe032408d3443bc01b6ea972331ef8250632b7d7bd85599587221f6e6487",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-006",
+      "source": "CO 1.0",
+      "sha256": "98fdaa151ef044b9f03158395284516b3ef357717518b6e36225dbeb66d1e7b5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-007",
+      "source": "CO 1.0",
+      "sha256": "d884414370f2acb37050a3e9ac313f86044e7b243fe94f24e2f8169a8122172f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-008",
+      "source": "CO 1.0",
+      "sha256": "c1f5350051fe4e468c1ab99eccbce98d35b7001d48e921edd992c689155fb481",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-009",
+      "source": "CO 1.0",
+      "sha256": "cda2f3dcd2290e8306378e0a5d0c4fa089b0336fea4d2584382e1d8ffa0fe5b4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-010",
+      "source": "CO 1.0",
+      "sha256": "50395c27954777f6f54c0145ac8480fcca8fec1e1686689ee7c2b640313b19b7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-011",
+      "source": "CO 1.0",
+      "sha256": "7a28931fccfa725b6fde9b3776bcba659b497021bd194b8ddde6b31a3fca7dc5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-012",
+      "source": "CO 1.0",
+      "sha256": "47069e38cb0ea401eab635509b0b1bb4988ffe6fd54ab42268b6dd0d5c5f620e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-013",
+      "source": "CO 1.0",
+      "sha256": "ab5257234f7ec6aa2593214b51a711ad69d6b2e05aafd5bc5e8755888fc97eff",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-014",
+      "source": "CO 1.0",
+      "sha256": "be1df8faa20091e872ffe16d9bddc60de10e42d7a0da71df18fd6e61f823c25e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-015",
+      "source": "CO 1.0",
+      "sha256": "8f4a06b0b12a429cc3aaca67fba6082fb0dbd98ea9d6049a38311c6feb151f23",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-016",
+      "source": "CO 1.0",
+      "sha256": "39a62050d776342ac7dc19571de5cc7e241dd41b65d3b9a709475032815f2c27",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-017",
+      "source": "CO 1.0",
+      "sha256": "b0b2e54a47cda09629d9348af4a463dfa11ccbbf01655abb6626426ce21bd157",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-018",
+      "source": "CO 1.1 amendment",
+      "sha256": "a9252692f6357ec9b0895ba190e8fe606046d73874869c471942631f4c45ea5b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-019",
+      "source": "CO 1.1 amendment",
+      "sha256": "7dd12e8467efe358383c90c297e6444b6955637db57e2eb67478618f85dd3c8e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-020",
+      "source": "CO 1.0",
+      "sha256": "92cb18b9e1967e495826aa3da8184f28a375722046555d9f5c645bd66ed303d8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-021",
+      "source": "CO 1.1 amendment",
+      "sha256": "cf8733a5585f4027ed960a16d0e230a44b355bf16fa70ae0bd233272a9ae056e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-022",
+      "source": "CO 1.0",
+      "sha256": "1c22c9b7810d1ee5ae9a47cbc9f4d8046ce127be1fa126ab5d70fe705348cbd9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-023",
+      "source": "CO 1.1 amendment",
+      "sha256": "8aac7847d2fd7ad2ea598d467499f0d76140919f9f0e4d79c3eeca5615e9c42e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-024",
+      "source": "CO 1.1 amendment",
+      "sha256": "51aef2d5a7ce38c80628ab91df4e2d1b0bba976bd81cba5cdb737797efa29735",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-025",
+      "source": "CO 1.0",
+      "sha256": "fe1e6a4f7187751675220ae2189f53659a0153963dcb79628e482c7475a7a8a6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-026",
+      "source": "CO 1.0",
+      "sha256": "7b104b03638cd8f72d75dd3965f3a2a49ff8f2ac93130b64edca4ef41fae4d54",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-027",
+      "source": "CO 1.0",
+      "sha256": "2819a63aae958abb819aaacd2d112860efaabb100547326ab68547e6e4861ba6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-028",
+      "source": "CO 1.0",
+      "sha256": "83a6ca14ac89c898c6721ecf4bf9ca0069565b26694f3902f5c8095f77574f53",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-029",
+      "source": "CO 1.0",
+      "sha256": "4ce45972cfb81421c0100dd9e0b7929ad912f8d237796c2e689d087dddf92ef4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-030",
+      "source": "CO 1.0",
+      "sha256": "d7030ee962e8a4377a8f86d5274ee5581684c4ac89d3348d7ca49cc9fc875209",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-031",
+      "source": "CO 1.0",
+      "sha256": "dc52c6d55ef2b41af144b0726753d7ef7c197f867a914d2f92ee44ec520f54c0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-032",
+      "source": "CO 1.0",
+      "sha256": "e300a2a09573e6e64764742e38ca8283ff8d9a831d4d84bf3b7760b3cb7dd58c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-033",
+      "source": "CO 1.0",
+      "sha256": "9d9dd7fdc01935455312a78a2ef22c5af1df095dce8809351ff7d41d9da35e9b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-034",
+      "source": "CO 1.0",
+      "sha256": "4f8feb62311e4d12942d60034cfc1caaee052f457c111a792ff2b3d6cb096e12",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-035",
+      "source": "CO 1.1 amendment",
+      "sha256": "f7de2c7bb0cda62ecbac4227bb7d7ac07ec57a81deb7ba1f979754c0fe743f85",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-036",
+      "source": "CO 1.1 amendment",
+      "sha256": "c0fdaa4396524bea4f57e35a8c80c31c1daaae237bb8070f39a214a8573bed2a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-037",
+      "source": "CO 1.1 amendment",
+      "sha256": "508263e93234b7b0fe8b9e22467cde3114c0e1f0a21d47ad2fff95b8b10af7a9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-038",
+      "source": "CO 1.0",
+      "sha256": "7a4685332ee3c729993818e9d2bb420b751c250edbb91711f0912dc5c3d37e08",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-039",
+      "source": "CO 1.0",
+      "sha256": "f9e9faa5d20b123c6cbf92487abedebf7cf1026c69af30dd5057131f9572bb68",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-040",
+      "source": "CO 1.0",
+      "sha256": "cfb0b2e6a13ba13b193b8500ca65e420671da340afffbe728c2aade4794b84f9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-041",
+      "source": "CO 1.0",
+      "sha256": "e32737b77b7789ada9b0fcf589a3ab14c15fad5d49d2a61bdf32f402cb0fcc92",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-042",
+      "source": "CO 1.0",
+      "sha256": "6db5f7fe7528b6e0c8bfc7561fd55b9f42ac7b282bd9b020c2e8aa4a48db9b33",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-043",
+      "source": "CO 1.0",
+      "sha256": "5d87f6f637d409e222fde878efc390a4c8c9110e0c43e76df00aa30aa51d99dd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-044",
+      "source": "CO 1.0",
+      "sha256": "8562add9aad3bb43ac75d817996c097de29e4788290e5435b6b80cdc43d410f8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-045",
+      "source": "CO 1.0",
+      "sha256": "818cabe13e0faeddbf206a9c4968b98d97ea94de24740650f1383885c6254322",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-046",
+      "source": "CO 1.0",
+      "sha256": "d3dc42269b75a0d65f58feb927de642b401d9febb8f3ef0d6a940f7c948cf815",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-047",
+      "source": "CO 1.0",
+      "sha256": "8c3062d18c39f7d653525a5f226cb20346fa301c71b690fef9c9219dce348a21",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-048",
+      "source": "CO 1.0",
+      "sha256": "6dce19363bb5b35e9604c7dcda342860ff0d0a261a0d64ba6032d0c8cf7f7ee7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-049",
+      "source": "CO 1.0",
+      "sha256": "5a48cd835139e6e092259c31fe77954970254a9982607f802204213627793e72",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-050",
+      "source": "CO 1.0",
+      "sha256": "7242c5d8dd03db63265e817c079a2b9c5ffa5ebd9b32e86491914593ce2c2635",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-051",
+      "source": "CO 1.0",
+      "sha256": "f86056092f4c18548f9200b7b90b76a98c303dcf302dc803c5ea8671e500c494",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-052",
+      "source": "CO 1.0",
+      "sha256": "2ae2c05d46bac68be2d7b7f0e27db2ef938272e840d6e989a3ecee50e555218f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-053",
+      "source": "CO 1.0",
+      "sha256": "250b5530028aa47053506f5e28a6b51e17107207f8c760c01f9a696636e2bac3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-054",
+      "source": "CO 1.1 amendment",
+      "sha256": "413f6337cffd87f796e8c5eea99c314cd9491e65a38cb30fe582408cf2cf4474",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-055",
+      "source": "CO 1.0",
+      "sha256": "750fd9840741fcbc1ba8b76f796497b0053bdfa96d9eb2592aa03d24f1b70b5e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-056",
+      "source": "CO 1.0",
+      "sha256": "c360188a29a5a83e51a0f20f7f35837f32d42bb62841a1c00e3470b208c8b659",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-057",
+      "source": "CO 1.1 amendment",
+      "sha256": "761d130d3a679e715c2536819044fd85b30f77de3dc5d810ead30cce2da9d4bf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-058",
+      "source": "CO 1.1 amendment",
+      "sha256": "a25d94b87b133a2ffb90ab13b1023c6573d017f7a075c15acbace19c4170f673",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-059",
+      "source": "CO 1.0",
+      "sha256": "f753a805a0034169623edcb0c899b986ed858f3a13dcf70f7de7cd27f286a415",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-060",
+      "source": "CO 1.0",
+      "sha256": "b0b79206154d5ccae2a68359615626c2fb377691e85c11746b142d23e017153d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-061",
+      "source": "CO 1.0",
+      "sha256": "ae70f225cb4f0a43af7b5b0e70446536c63ceb530506a6d1599859fccbb73e9e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-062",
+      "source": "CO 1.0",
+      "sha256": "6cd898d54bafda872dae81c1b20b98759cd952afed926882948f28ea89f2fc51",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-063",
+      "source": "CO 1.0",
+      "sha256": "382ce0d76c345ede9dfabf5fe15d4308e9579e4be1dad9df96636ac7c8e63c10",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-064",
+      "source": "CO 1.1 amendment",
+      "sha256": "e856561f3f6e0e905b11236df4e4a9c1aa6f935e4962facf5084f04f2bc2476b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-065",
+      "source": "CO 1.0",
+      "sha256": "3b43ecdddab3f4d53adf43fb64e86ce784faecda00fcedf79ff79780cce08558",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    },
+    {
+      "id": "CO-066",
+      "source": "CO 1.0",
+      "sha256": "57f019dfcf236487b860c490e610fa11c662d9372b4d2b5b2ed0cc144b64284a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.1"
+    }
+  ]
+}

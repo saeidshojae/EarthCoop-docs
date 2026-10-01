@@ -1,0 +1,3267 @@
+{
+  "schemaVersion": 1,
+  "status": "effective",
+  "versionEpoch": "official-v1",
+  "documentId": "ECON",
+  "version": "1.0",
+  "previousVersion": null,
+  "preV1SourceVersion": "0.3",
+  "sourceAmendment": "published/foundational/ECON-0.3.fa.md",
+  "provisions": [
+    {
+      "id": "ECON-001",
+      "source": "ECON 0.2",
+      "sha256": "cc3650747afa2829cbcf5bfc8b6d74ad963d8cfceb766a99b8dd2d1340c28172",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-002",
+      "source": "ECON 0.3 amendment",
+      "sha256": "eeb1b77b0c51328f107b073fb1861e8b37906e90d1c5f49584afd12319cd878b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-003",
+      "source": "ECON 0.2",
+      "sha256": "b15eae6613e12b1d7e050b56535eddd4c01c99f441ec52d5370a9ba0c1ed417f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-004",
+      "source": "ECON 0.2",
+      "sha256": "0711ed9725173d25d131b5856e323ef97d0bc328e620908886d6c18c6a82116a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-005",
+      "source": "ECON 0.2",
+      "sha256": "e6fb4bdd400aa7b10ff92d6d0a0d2712e88d013191d829f1657bf14659bd4437",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-006",
+      "source": "ECON 0.2",
+      "sha256": "0a54f1fad31547f350a0566c3ce966342415a738bcaed89de5fb77e7a7a2b083",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-007",
+      "source": "ECON 0.2",
+      "sha256": "ab32b6063c7474ac8ec2143191ef78696e46205004967dfb8651e74cfff217b7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-008",
+      "source": "ECON 0.2",
+      "sha256": "f714c051b566d9ade1f83528897004d55b3cff2ea75ff86dfb610eeb4d5cbefe",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-009",
+      "source": "ECON 0.2",
+      "sha256": "0780228dbf1c5abeb8aa7c7d6ef8cdb0c8d99b1432c14e3ba534ed986934d515",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-010",
+      "source": "ECON 0.2",
+      "sha256": "585584bcb8da731cba4899fffd5b3ae6e924711fbfe9c1e7b1314050579a27e2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-011",
+      "source": "ECON 0.2",
+      "sha256": "e8f44713a0e21bf75abb13aa8f1cb77925a08c6035262bf0e3f49d29e9470d17",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-012",
+      "source": "ECON 0.2",
+      "sha256": "c36b5ab4fdbf9b66323169e47b1049ad03ede4de8a9a4fd7c9c80d8f538c8daa",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-013",
+      "source": "ECON 0.2",
+      "sha256": "81fc2c2b25ca0bb17de0ec050ca077c6b7e9d35d0eed9df6c981fc5098536350",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-014",
+      "source": "ECON 0.2",
+      "sha256": "ddb394a034e6ae5d4bf77553a346f40ff7df7bb7f3669baa1fa6fae86a0035f1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-015",
+      "source": "ECON 0.2",
+      "sha256": "a3cd7ab3b4d113292e9466030b1eadb3d413c33dd6307597749b7ba319ac5506",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-016",
+      "source": "ECON 0.2",
+      "sha256": "53371edc77b06f55751fc7ed5f8a3dc2c3c2d12ed4f9bba1076ebe76f068fbef",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-017",
+      "source": "ECON 0.2",
+      "sha256": "0bfc20cd8cde2428613fc72f0fe61363e1040fd4e2647b85d7bbee5926026429",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-018",
+      "source": "ECON 0.2",
+      "sha256": "54e2d9e46704ae8c0413799926546ac512e5e48be924cc49c2e4cb8c2eb5d22d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-019",
+      "source": "ECON 0.2",
+      "sha256": "6366165be2552014e2fd7954b6e80c77656f3b2619ceb02d7096f704468b2d63",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-020",
+      "source": "ECON 0.2",
+      "sha256": "3e4f625435a6f2460ee2bb4e32b130e517a7bea42adea3cfc109af9032a46c93",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-021",
+      "source": "ECON 0.2",
+      "sha256": "cf41cbfbe65b113eb72a273943fe38dc659b1b00948783e7f9e34fef872e32d6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-022",
+      "source": "ECON 0.2",
+      "sha256": "a3a2bfd66fef82edc76a204f713d617f6fba19234435c3564c8874cfbe91f70b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-023",
+      "source": "ECON 0.2",
+      "sha256": "3a12f93cc8a8c43f392cb7241b920d405ecd6db96b344cdab7b0dd82992f5bf9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-024",
+      "source": "ECON 0.2",
+      "sha256": "32cacbfb5bae02840167ae32c0be37027a6f925966ffb9f62beb225f991b6afc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-025",
+      "source": "ECON 0.2",
+      "sha256": "275d38aafb3a63f4feac599f111476e7d0cdc0872948d12616cf1d5ae6b57a72",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-026",
+      "source": "ECON 0.2",
+      "sha256": "7a273bbf525859d9745fddc5ced91a1179d0e849cd0f673583c4b229d374aefe",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-027",
+      "source": "ECON 0.2",
+      "sha256": "9414ffaaa6bb94edaeb4efa3b075b387b70b5a18f1f815d1e2469ff3c50bd8bf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-028",
+      "source": "ECON 0.2",
+      "sha256": "6651d82e260b364a9d053ba97cd5757514e8c244d6c9ca08c7b42fca95bda7a9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-029",
+      "source": "ECON 0.2",
+      "sha256": "2e83b39b2c2e3689167dcd0326111c0947d3efbf629650783bc12c0822d36377",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-030",
+      "source": "ECON 0.2",
+      "sha256": "46a42865fcc791092463cb8e97e7aac166068247cb90a7b6904d13dde469ce93",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-031",
+      "source": "ECON 0.2",
+      "sha256": "23d55c54782628cff2a60ea9c8aa9a702c456146cd4da508934e0a2355a29612",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-032",
+      "source": "ECON 0.2",
+      "sha256": "85f41a4a47d492d95bec7448ed014afc4bb5ed8e213b1f1175b955ad6ee2f9b7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-033",
+      "source": "ECON 0.2",
+      "sha256": "a8d28182c5c70d67e48ebfe5602d76bc53055d038340c7d5748f14283dcecffc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-034",
+      "source": "ECON 0.2",
+      "sha256": "9bf902d5a94884198b4ccbbb662fc90818ac97f6c4de08c2f53eb463658ccbed",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-035",
+      "source": "ECON 0.2",
+      "sha256": "125378543d59b67b7872069579f345fa7e2829da5a54c2bf66db6d3da2473d83",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-036",
+      "source": "ECON 0.2",
+      "sha256": "f4a1b507f3dbd15cd1d9fbfc76e23a2421e7dab90b6302ed5099a1e578f734fa",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-037",
+      "source": "ECON 0.2",
+      "sha256": "d810e45a33966875f2ed1559d6c600e18f9feea275ce0166524cdc811acfd47b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-038",
+      "source": "ECON 0.2",
+      "sha256": "6c55ff4a08c93c87a0475f40ed9552f8f25997b27bef6b36bd83daf5cb57bcaf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-039",
+      "source": "ECON 0.2",
+      "sha256": "99363c8cff7face48a38621943da930826d9733cdf6926e462341990c00154b3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-040",
+      "source": "ECON 0.2",
+      "sha256": "e91bc55950f6b3c8f63c0f4d2330491b57b62e38c8666b811189bf3b3b35b990",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-041",
+      "source": "ECON 0.2",
+      "sha256": "a2538067df1b2ef0435e71d7078c11bfc343b9362e160013a4045800b8b2c1c7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-042",
+      "source": "ECON 0.2",
+      "sha256": "7d7c8570b791ea7f89d9a3fb17f603d81424c8f5339723704a3ce614cfe1b0a9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-043",
+      "source": "ECON 0.2",
+      "sha256": "04c020a9f860ce9211e216edadd7f8ff02d50768bc4bacae305af488c3edb96f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-044",
+      "source": "ECON 0.2",
+      "sha256": "c4d65346cf18d03e050586c8af143459a3682eb6a015c116cceb18bcbe0baf20",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-045",
+      "source": "ECON 0.2",
+      "sha256": "de84ce2d04a147a56ef46fba7dfe555704d1ebe10d11b5ba27035d05dccbfafb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-046",
+      "source": "ECON 0.2",
+      "sha256": "3ece9265f4642d94114be507bfc30045d4e854f3df1c2a59f4208dc47674ec0f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-047",
+      "source": "ECON 0.2",
+      "sha256": "4464bd491b8d10f3f6abd21d16e24777027ef91ef6a18b61d44d1bd936dd6fe6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-048",
+      "source": "ECON 0.2",
+      "sha256": "b6deb8b5795ec0fb247cc18c146994baba43c0edda784fe3427e295090edeb12",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-049",
+      "source": "ECON 0.2",
+      "sha256": "0d9a43df8a956cbc601ca477e4a67eed25e8282de3358a6d836c367353c951f9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-050",
+      "source": "ECON 0.2",
+      "sha256": "df172150ffafb7b1f32c0d69b7ef243405fbd4d2fd7801b313999f6e06383a03",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-051",
+      "source": "ECON 0.2",
+      "sha256": "ac78a308f63bdd8d21c22db5464c7a8883270f55442e4554d2369429fd52a8e7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-052",
+      "source": "ECON 0.2",
+      "sha256": "c58e340eb83e1d8cc99eedd2ed8e7f2836f2745f83af057250f4de5cef406e91",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-053",
+      "source": "ECON 0.2",
+      "sha256": "53ef5beb66298377d2bdf5906e484c729fcbc3bf11fb0a1310a4feee9bed425d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-054",
+      "source": "ECON 0.2",
+      "sha256": "b0ef31a64532bd7b622ead865e43bfa70799e126f44b4e6a44b8b391bd1e1836",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-055",
+      "source": "ECON 0.2",
+      "sha256": "daf51103fea9dd64cc0abdc0fd6d606d5a07811a6ad61768f304f5b2bb1b8c71",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-056",
+      "source": "ECON 0.2",
+      "sha256": "57451a79976c6d715a008acdc1fb5d88b456b51f224fc9ccb2a252f8e8388c85",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-057",
+      "source": "ECON 0.2",
+      "sha256": "79e1db899272ce55a3498cfd9040b2188da78ec3263a4b4031bddaae71225174",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-058",
+      "source": "ECON 0.2",
+      "sha256": "a12d320d6e0515415b3a9e51a7c0b3da08d330fae22755b3554f38967292eb49",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-059",
+      "source": "ECON 0.2",
+      "sha256": "ebf1e603e2668301e0655f26f8d54d157b10c01e7c2d986e61045ed95b668415",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-060",
+      "source": "ECON 0.2",
+      "sha256": "49b4e3c33f004d7622c5a60c927fc4583c7785efbee7d7b45281ac4482a3d44d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-061",
+      "source": "ECON 0.2",
+      "sha256": "2795f115519fd5b0f693f0ec8b435d5bd58154c3f985e9d712176c0d74944128",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-062",
+      "source": "ECON 0.2",
+      "sha256": "92d4c0054d0ad74e4d22abf1662dedfea810a3db9504636be8ce8664d945767b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-063",
+      "source": "ECON 0.2",
+      "sha256": "283fce6ec13c252a2e0c9fa3687bd33dfadb61d6e49595b8c05ce42dd3810b61",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-064",
+      "source": "ECON 0.2",
+      "sha256": "a10d39b4bade27778b4b6336fe9c287e8c3a95fe008f42ef8c74c4b18347e6d3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-065",
+      "source": "ECON 0.2",
+      "sha256": "86f8f93b6b6a851c951c1204804bd9e32cbc522392e768f6608595df3d562e59",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-066",
+      "source": "ECON 0.2",
+      "sha256": "c226adbaf577cb9f0563fcb405fcf6a3a1d0f8f920cbac1b3a13d2ea3f38af19",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-067",
+      "source": "ECON 0.2",
+      "sha256": "903ca1197bd8edf13ee1f534f20951489889b9047deb326d4d1442738385dee5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-068",
+      "source": "ECON 0.2",
+      "sha256": "26c2dabb55a1e9258def99b8ef0e12abf126c754093c7384bd3320d6dcd146fb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-069",
+      "source": "ECON 0.2",
+      "sha256": "be1613b8f5cc53eccfe0f653e28e569c150ba29dbf5c7adbdb815469db250c4e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-070",
+      "source": "ECON 0.2",
+      "sha256": "3f1bbbe28e4692efcc9a05dba1f556ad6d619e719b20627e98ffc9d81eaff41f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-071",
+      "source": "ECON 0.2",
+      "sha256": "dc0a82b0025860d26d15e021a9c388538cfe14ade9bcf111a9d9c6bc85f17116",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-072",
+      "source": "ECON 0.2",
+      "sha256": "b96575b6ca463bda14cc5c61b6e937e53e4e1ccd5548a23512557ae9517a3d8a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-073",
+      "source": "ECON 0.2",
+      "sha256": "494d26e6dcbe888feedceb9b3a96405e4aa6e319e5bac8c7682d1f3cccec3228",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-074",
+      "source": "ECON 0.2",
+      "sha256": "004291cf5c70a01e7e513f43108f6c5b5f9368461df0dbbd158aaafb9f17186e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-075",
+      "source": "ECON 0.2",
+      "sha256": "e6d6abdc42901a25fcdcb2eff9c4085720d988ae10ce608b920137fdfeb1839c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-076",
+      "source": "ECON 0.2",
+      "sha256": "599ea8cd0f18008cd0bb9c8ec09277da0c58a8b0a116676993ab839b616c3fef",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-077",
+      "source": "ECON 0.2",
+      "sha256": "c01635ef2f460b2f2b3cc2c62dc528075905084a939d6a1058b83b0edc5d61b4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-078",
+      "source": "ECON 0.2",
+      "sha256": "4a462e1a4b97164fb8ee14f5d93fbfc3d9ad4de901d4a82f9f0f9acd6bce2746",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-079",
+      "source": "ECON 0.2",
+      "sha256": "4eb1dbdb6d36b86d647561bd9a9040b09f8e7816d9fb852b202fb607607d4b3d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-080",
+      "source": "ECON 0.2",
+      "sha256": "d73766dffa032464e58fb0a52e8b1afc8283ff515b4ba5237d0d577c6dd827b3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-081",
+      "source": "ECON 0.2",
+      "sha256": "e104dc2fd1b5bf5904558fea13d82427deac7ba39a741523495820016f382ef9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-082",
+      "source": "ECON 0.2",
+      "sha256": "3d1aa738f04d4990f6e79882c88f5d436c326f1b0a94d21a1941e5ee71cb97b9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-083",
+      "source": "ECON 0.2",
+      "sha256": "15afcafbad838fad995cca114fee4db25e95807d086014f8399592d4673b1581",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-084",
+      "source": "ECON 0.2",
+      "sha256": "9259be113ec50782e2cc47a9b0b094944bda5a9f2bbb623f0261c3071f4a53e1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-085",
+      "source": "ECON 0.2",
+      "sha256": "b8977beb8e563a537231b5c75426596cc45c3292857065210a6f88c1d7a078cc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-086",
+      "source": "ECON 0.2",
+      "sha256": "4eb2439cf011d860f5c12c529e5051f5ed1ed3f1bb453e0b89c23a1421a046c9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-087",
+      "source": "ECON 0.2",
+      "sha256": "a60a971ff1df11a916ca4412b24bef3e20f5bfc633c696137c6ec722853d3bbc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-088",
+      "source": "ECON 0.2",
+      "sha256": "386671f6eeeb0b0989dc2f8ffef734dc9f8f61a21c70ba030648d844adcc1d93",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-089",
+      "source": "ECON 0.2",
+      "sha256": "df2d99b93dec0fdce1d978309e7bed8b213ae02fe67d3365740dc41c423c263a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-090",
+      "source": "ECON 0.2",
+      "sha256": "39be575794a1def2926749e0c9b7dacd63be594e0f700ade65ed4c3109a9a79e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-091",
+      "source": "ECON 0.2",
+      "sha256": "08202ed8489641d2d085ff5996a982d50af9ac4f9e6cef8913443e17d78e79b4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-092",
+      "source": "ECON 0.2",
+      "sha256": "e6e32d302c1e774cb0fc0c51ad6ce75802a7a94f769757fd5b0f6b2c4200fd49",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-093",
+      "source": "ECON 0.2",
+      "sha256": "76761c8fe8a5949d866da420fd51b07d410e559b96f06f29cb1b21748d542bbf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-094",
+      "source": "ECON 0.2",
+      "sha256": "b7c7b2f45e2e41a23573a1e424b64585ae7f8ed7a368ee3b3f9fab71719785fe",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-095",
+      "source": "ECON 0.2",
+      "sha256": "7b2d833fe8ea39d2d36df3d71c6229c95cb58bfe80c3f966af517135733bdaab",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-096",
+      "source": "ECON 0.2",
+      "sha256": "10fac484519598e333f6dec72acf6e1121c81cadf2f410659aa7f7c27a8b8869",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-097",
+      "source": "ECON 0.2",
+      "sha256": "3e38c1566878d5c381ec56e39bb01597c71f7147dd00e19dcd393a9038b26129",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-098",
+      "source": "ECON 0.2",
+      "sha256": "d36319db2ca6e3c56a17cf5dda69317b421651e45533d5f99db48ceaaad6959b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-099",
+      "source": "ECON 0.2",
+      "sha256": "12ff207284bbf9f80114aca7f52e28b9d6c1060d97dc64ea224c8588ed19f121",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-100",
+      "source": "ECON 0.2",
+      "sha256": "2c6905861a3fadce172da390c8a47992e24343e2ea2876f7bca36e3cb11348b2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-101",
+      "source": "ECON 0.2",
+      "sha256": "5341a6dca33ab37f06cd29714046e2bddb0ef09aa9e0877e8c86936fe15dba40",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-102",
+      "source": "ECON 0.2",
+      "sha256": "83067ab8781f82900d5a299d18c626fa53b46459df2a3b8fab7ace4661380606",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-103",
+      "source": "ECON 0.2",
+      "sha256": "f15f9aff6dd5d0144f668c3e7063339d5987357fb7114b4378a1396e9d7ab86d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-104",
+      "source": "ECON 0.2",
+      "sha256": "aeecda2c9aadb306157a95365afe410571710c91248278eed7b1608b29214a6c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-105",
+      "source": "ECON 0.2",
+      "sha256": "a77e409f9e804c18b91458c1f13b4e83dcafad1a7bc9846e5a8e571ca863da67",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-106",
+      "source": "ECON 0.2",
+      "sha256": "6d0f5728867b0877e4059967e7ea0f71119ec8c6ac8b5321d5030b340e784423",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-107",
+      "source": "ECON 0.2",
+      "sha256": "f62a058f566becd266ea9e83c84bfc3509f85147b1f0a2b6a2f6b79ad112b190",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-108",
+      "source": "ECON 0.2",
+      "sha256": "77b4a72b749f409a8496d9316fd629725a725579d26374a54c1110a06683fd1d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-109",
+      "source": "ECON 0.2",
+      "sha256": "fa246b267d7d93a1ae380e274f8e036d96789f797aadbca9d91046a25744d5ab",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-110",
+      "source": "ECON 0.2",
+      "sha256": "71c39a4741a4f313d44151efeb563d02e0b255f705a648ac6d03cadee78be42f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-111",
+      "source": "ECON 0.2",
+      "sha256": "230b4882a2ed1a133407b9074ea1d1bf4c6f1aa7bfeb933293de2324ebe2e113",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-112",
+      "source": "ECON 0.2",
+      "sha256": "2e379973c87394ab96328554a81949767c9c0400247ac5ab4e518ec21f912995",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-113",
+      "source": "ECON 0.2",
+      "sha256": "9f40692a52a3a004b993fbfd07c77cddfb5aab9207fb15cc804e18824ba73015",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-114",
+      "source": "ECON 0.2",
+      "sha256": "ec6714216fb19e9061bacc3440cae64fcd77d9d43e6ad0dbbde725199781a92d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-115",
+      "source": "ECON 0.2",
+      "sha256": "6ec16a105f7de5967cbe8bfc2bdea304df84e1bb90c3f1801ada835563f153c2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-116",
+      "source": "ECON 0.2",
+      "sha256": "b0f3bfecace4b1c522afe0d3fe639586b51f7529b6248a43e5b6522f4055f7d7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-117",
+      "source": "ECON 0.2",
+      "sha256": "931020ee4ee2bd35d8abaceb4033a5876416898616fdbc706a4fc9e03f9b076e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-118",
+      "source": "ECON 0.2",
+      "sha256": "d443dec8cc64d60e15212d5dcbb3476e2b3f33d9dc1d3c7c209401398275d531",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-119",
+      "source": "ECON 0.2",
+      "sha256": "1a2dd3aea7f909b580aafe1eab59313a50a74d73b2a5be8574087963b48f8f1e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-120",
+      "source": "ECON 0.2",
+      "sha256": "8479a1b3f01c1395b78b01c9606601552e0cc6275e426f7f98f2f688e95dfd9a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-121",
+      "source": "ECON 0.2",
+      "sha256": "4d6ee6f98425a5859bc73df51f9d7d5c067c367e8f6f222ab5722f938acb0a08",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-122",
+      "source": "ECON 0.2",
+      "sha256": "3bec783f121cc19026345b341af27ba823aff6a2fcf47fc81e5708b2178363a1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-123",
+      "source": "ECON 0.2",
+      "sha256": "09a4fe68bdead95367d6f53df2690ce886b4663be22d07b641324a1b0f853d91",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-124",
+      "source": "ECON 0.2",
+      "sha256": "5a562c10f83bb0805c3910829bae908c2c2496eb1b11a42e21625a8e4d5c36b1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-125",
+      "source": "ECON 0.2",
+      "sha256": "de98925bab5559c6bef51ba8d4c06b7542da43ed007e015325507461684dd79f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-126",
+      "source": "ECON 0.2",
+      "sha256": "e570c67802437e22b05cb9436e6791acb0b9bc8437b8f530fa62d8ddd12d6616",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-127",
+      "source": "ECON 0.2",
+      "sha256": "fe8b82115875b37ed7266fd10ee104d201f919f50966e04e1bd0e3e4226dc851",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-128",
+      "source": "ECON 0.2",
+      "sha256": "4ba4c23907fe5e7b9efc808c5bd6a90eabf6acf98275fb516886c934fa27a588",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-129",
+      "source": "ECON 0.2",
+      "sha256": "38bd1726a0d4de99f073be1bdf5ad67e9963af66289060a7e62f64c66db46664",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-130",
+      "source": "ECON 0.2",
+      "sha256": "58b624ff8f7ddcdba5a908f17ac5ee11c977449abf8d1f67187f1d04bd216646",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-131",
+      "source": "ECON 0.2",
+      "sha256": "b7c19a37e56af96681d177e63726818e1474d60eff1ab8fe20b1f7f33fe2ef38",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-132",
+      "source": "ECON 0.2",
+      "sha256": "7f637bdeec0fdce476a82886e32e0b04dee4ea7178410eb694fca8ff5f548a92",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-133",
+      "source": "ECON 0.2",
+      "sha256": "1ad19f33e7fe6aceaafb53072147a672c2c135f3a7344b38914ef25a7593a7e8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-134",
+      "source": "ECON 0.2",
+      "sha256": "40a602aac3d573293cfff8fcda3edd19e3191e8d04a4b20d5608a95678e951b4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-135",
+      "source": "ECON 0.2",
+      "sha256": "de4a701d6b9628fb84eafd88b03a48be1ebb31dcd6398544ec50c37951804471",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-136",
+      "source": "ECON 0.2",
+      "sha256": "8f3fa06069305079469bea45b83c4056db7bc111eae7e70d4990d725ce6eec42",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-137",
+      "source": "ECON 0.2",
+      "sha256": "78550547dabfaf644fe7c3b6b551daf82ab296e42c25c39a76dd1d2da0dc282e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-138",
+      "source": "ECON 0.2",
+      "sha256": "d3060421c344aa7f7d69c8fd7dd9338954b1dab73991d8a2629afc509f02fc28",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-139",
+      "source": "ECON 0.2",
+      "sha256": "8e05d236783b75340fde9f52548c9685c207b672b7a9c6a6dfbf23fa1dc079b9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-140",
+      "source": "ECON 0.2",
+      "sha256": "09b4f9ff1144e7d3383adc62b5a3f5804c4583b21498ff293bcfc52b491989fc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-141",
+      "source": "ECON 0.2",
+      "sha256": "3ceb9e3633b6c9dec0e2f8c619db9f3bf868311b5d69abb9d09111af4895250f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-142",
+      "source": "ECON 0.2",
+      "sha256": "e5aff7608216e811bdc5584a96272bcfeddb8b6f20a197b2ab87a7cc7a4afb5c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-143",
+      "source": "ECON 0.2",
+      "sha256": "dccbf03f87a1aa1189108668c2942f6e21688406280e99f9e163d761e8b83246",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-144",
+      "source": "ECON 0.2",
+      "sha256": "7259e299519815b4a1caddd4ade700fc22ab09d131c029862038ea13c85fb3a2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-145",
+      "source": "ECON 0.2",
+      "sha256": "648c26fdb893158257f47170b15b2fd9cff2c13a2bdbb88659297090248efa04",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-146",
+      "source": "ECON 0.2",
+      "sha256": "eceede572955b694464448260278b648ec3b45afc8de4e154d6d696204a60521",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-147",
+      "source": "ECON 0.2",
+      "sha256": "51a04275e25eb5b3aa6af0fb8e8cda0fcba703d264386892fd99f085642be39b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-148",
+      "source": "ECON 0.2",
+      "sha256": "6d96d9847b6ab5e1f9f2788b57887608e3a9ced9c9e58b6d9fbbb5bfe34aece5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-149",
+      "source": "ECON 0.2",
+      "sha256": "bd585e22ba67d7d46667cce05e26d19bf104124d83b805ff2ecf2d3cf80f9b9e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-150",
+      "source": "ECON 0.2",
+      "sha256": "c750cea5a88b7ddd1bb247347d9a36a3528c4930f2934847d2d386bbb01e20b9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-151",
+      "source": "ECON 0.2",
+      "sha256": "c34874d9b7721f9570c117afbdfaba11203b8f11d3dae2d37e8a94c7a56c7567",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-152",
+      "source": "ECON 0.2",
+      "sha256": "d2bda62f2a19c7cfae0bd987b4ccaca95d6696389fbe5c0cad5fed7057cf71fa",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-153",
+      "source": "ECON 0.2",
+      "sha256": "4140003fbe94d5f8ab0365e117d9b0b1eee033e9178fe2312b1b80d3780e91d4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-154",
+      "source": "ECON 0.2",
+      "sha256": "24449bb3b30da99c130f98cdf57df63b4986e7e79de1cca4f37132de8b448b56",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-155",
+      "source": "ECON 0.2",
+      "sha256": "59895821b4827950d3410f5232dfbfcd2920e3a05ad9666d02d2577896129a57",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-156",
+      "source": "ECON 0.2",
+      "sha256": "e4075d019e3f9da0e36fff022c544810e4d61dda94dac0bc316f47ee996316e2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-157",
+      "source": "ECON 0.2",
+      "sha256": "3429d7e2d7cfb5e7f2daa0c7744226fabd7481df3e8cb77831d1e324541d30e6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-158",
+      "source": "ECON 0.2",
+      "sha256": "77b64f5524bb8e64230849a1b3f373f25aee0a54f94822aa0a92fbf5012d0720",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-159",
+      "source": "ECON 0.2",
+      "sha256": "d913ef7bff699e0cca0961c89a0688e36cdd20e002122eb2296750bd8f69a7d7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-160",
+      "source": "ECON 0.2",
+      "sha256": "1a49b3040b3d70c814c9734474d04c6c13fd46218d73679689243e45d527a78d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-161",
+      "source": "ECON 0.2",
+      "sha256": "53d609ec536a4ae1c6e6aa1328465cc9bf55f71b794087106ad6b7f1bbffac78",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-162",
+      "source": "ECON 0.2",
+      "sha256": "bc4aafab58adb54201a2392dab561500109664f8192260618b118491cfeaeaf7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-163",
+      "source": "ECON 0.2",
+      "sha256": "b1c41e0021302a010e9d4a713ec230bcef48c866cec7197ba99f994e2f81eff9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-164",
+      "source": "ECON 0.2",
+      "sha256": "601eaa12a14371bb36f7daff81b8083af4f7917a1572cd8ff5d136d407fe8709",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-165",
+      "source": "ECON 0.2",
+      "sha256": "4d91e35e57fce7faf336452c27e292d1ee52392e5e7b6f7bbb28e792fb7e6631",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-166",
+      "source": "ECON 0.2",
+      "sha256": "b4dad660d26cb0396e6e9df3a2f3400d79e2e97e8ae470336cdf7b0e2d5d5203",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-167",
+      "source": "ECON 0.2",
+      "sha256": "b2ce13d4358bcbeb2c1be6b86955c6014dfb3c5574dfcc94582b4ecbf91712d8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-168",
+      "source": "ECON 0.2",
+      "sha256": "eee08509c8cf7d82d0712ea29ca76130eebc2c18f4a5b715ff471e9404406012",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-169",
+      "source": "ECON 0.2",
+      "sha256": "937717c8eab75cde05a7d4297291f0f5203c07f36a8c8d16a503fdb4c9a2dfb7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-170",
+      "source": "ECON 0.2",
+      "sha256": "bf446164c031292be86b113d437a78371855eb090d959b0f141c9897794fba08",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-171",
+      "source": "ECON 0.2",
+      "sha256": "128d93cc925986349daf08bba7fd5199ed9abfecf87f616663888ada224aafe7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-172",
+      "source": "ECON 0.2",
+      "sha256": "36cd830163a7abc5400590e3c1ba2610f3f5d93c110796f2fb3b7c31385a19f6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-173",
+      "source": "ECON 0.2",
+      "sha256": "e220eb7a38bef0f91a942849702d599aada59f8e0ea05cef2482d41780b8a0b0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-174",
+      "source": "ECON 0.2",
+      "sha256": "ff3f5709dfee326ca9d71f8fcee49e28f3b371d19a6176bb6a51740e220735fd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-175",
+      "source": "ECON 0.2",
+      "sha256": "b03632d9bba8874150546686a5c9427b8f110b45187aa13c5b0fb674488d65c2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-176",
+      "source": "ECON 0.2",
+      "sha256": "2eca19fdaad789474a3630b1ab4fe0fc22e677827146b42c1618ac538a1661b0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-177",
+      "source": "ECON 0.2",
+      "sha256": "a376e7599c0f1a44ef3c1960dc9c68388372cccc260c74b3f2368a4b507e5382",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-178",
+      "source": "ECON 0.2",
+      "sha256": "3fe7ced694f3678ff372bb85c51375f087810bb0f75e38aa4cab0f38323dd5f6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-179",
+      "source": "ECON 0.2",
+      "sha256": "090c6fd4b7d4c01a7e4132c80a0445ca339a74339a4dc7edb3e28444b44d8993",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-180",
+      "source": "ECON 0.2",
+      "sha256": "485db01c5e8bf1394fe9d9148378b1551a92d462e8524fc3532447aa35c50812",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-181",
+      "source": "ECON 0.2",
+      "sha256": "4e42283444feee3bdbc8e6f50458e75339da717e4a3a9880ceef680750275877",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-182",
+      "source": "ECON 0.2",
+      "sha256": "ddee98a9035b6f4f23cad65238dbe86bc0a7f11112ebbc0aa29cf0bdafcbe0c0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-183",
+      "source": "ECON 0.2",
+      "sha256": "4524e57d695f752ad69d3bd238f2d2129ba81cf9c2308fe864d8199c00db6f2d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-184",
+      "source": "ECON 0.2",
+      "sha256": "bd1983d8b99c94ae3859630a7d4615b931a1545f0a4660895da3b0b3f4ae6f54",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-185",
+      "source": "ECON 0.2",
+      "sha256": "d49b307a7f2c8b268cd9ff72ffaf1cdc21c0e97c82dd10107932bb919db19f34",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-186",
+      "source": "ECON 0.2",
+      "sha256": "fc345540ca82d2f90654416528f90cf2add4e6c045f602e5d1bc62cd6d2bf759",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-187",
+      "source": "ECON 0.2",
+      "sha256": "848f8a797421b852237265dd15055cfafed1babd772261b94e5788a00ff0341f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-188",
+      "source": "ECON 0.2",
+      "sha256": "51a8b7f5a270187ddfa6ac63e6a51a1deadf6e0cc267f75f154812bb861abb9d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-189",
+      "source": "ECON 0.2",
+      "sha256": "a4a60c37d42fea80a9a919c176023a924a6b2606127dbfc9a55512d250c74174",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-190",
+      "source": "ECON 0.2",
+      "sha256": "588c6293ba22bd4a612c51e2dc8d6da45685383394a88426a59479921d6ed543",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-191",
+      "source": "ECON 0.2",
+      "sha256": "a4eca9934b848dd3a37efaacb409407342acb87d40096eef3139cee63c82ebe4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-192",
+      "source": "ECON 0.2",
+      "sha256": "9eb696a02b3f8cb11a8175f7d6445fa04dd272bff5cd6077306ecaba49638285",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-193",
+      "source": "ECON 0.2",
+      "sha256": "3294c7154ac66716efdc349d29b8336429501883bced609631281646ff29dd02",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-194",
+      "source": "ECON 0.2",
+      "sha256": "543ef32c118e9d4072c83847fdbffc3eb5d5ae6d32bb3189d8c5f6af55cfcebf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-195",
+      "source": "ECON 0.2",
+      "sha256": "c052f09248cb0e84cae50d1591b00bd423aa3e3a8db46570b45e8be28d02d804",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-196",
+      "source": "ECON 0.2",
+      "sha256": "1011e04561ede44334ca758d09d34a618456aa60656987fdc943703d31fea09a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-197",
+      "source": "ECON 0.2",
+      "sha256": "41d2ce13fa457edfd643bd5083ef0811b1f0b09d904429fd3a07ee7274b997d4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-198",
+      "source": "ECON 0.2",
+      "sha256": "1a6029366ab8d78e7856ad3d9f51ee27614b3c6416f081011ec125f348cf51b4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-199",
+      "source": "ECON 0.2",
+      "sha256": "2e89dada477212ca6122c7ce4f8b12d0600ebf578efa38ca9e6bac27fd6d41c3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-200",
+      "source": "ECON 0.2",
+      "sha256": "19528a84da58f4f87ea4893a9b1708c63b5e1578d499fbc37ff468a72b574045",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-201",
+      "source": "ECON 0.2",
+      "sha256": "b6a439942222831e72363de815580f9198cd11b896d9c6b4e946e6d4d41e1891",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-202",
+      "source": "ECON 0.2",
+      "sha256": "99df7ff9fc30eece004dbcbcc0586be4a791c8d4074c431998c9b35f9c972b79",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-203",
+      "source": "ECON 0.2",
+      "sha256": "83de94adfba7292362e539a649eb9ab385c9cfd6e82193f4c050b96eb150093d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-204",
+      "source": "ECON 0.2",
+      "sha256": "520f80d578789440a11a80874ec3c531e5bce3ebb695f891dbe46d71caa669a8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-205",
+      "source": "ECON 0.2",
+      "sha256": "e2b907d27d2fb9448a513d787cb13b3ed146e101af18017f2cb4d257a098270b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-206",
+      "source": "ECON 0.2",
+      "sha256": "5069a8336bf924a18b0dec66a830e0d2de00eba65f32e6889ea15a6efda2f85d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-207",
+      "source": "ECON 0.2",
+      "sha256": "5a7e70b67253508b2819316527c640ae561c1f7fde37ab63de1f1323381c79e8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-208",
+      "source": "ECON 0.2",
+      "sha256": "1fce51b806c7c8839efcb15cc22c89dbe3c10dd789d5905b832a0ed54626e732",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-209",
+      "source": "ECON 0.2",
+      "sha256": "45a627e993fa7bfaafbb581376d7c8d4bd11b8457d7189db4bc88ab8dfb0c932",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-210",
+      "source": "ECON 0.2",
+      "sha256": "495ac95c64ed688f4da3910083971e42b24e602433f7b504b559bfd75aab6ba5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-211",
+      "source": "ECON 0.2",
+      "sha256": "62d0cdb483f2b7057c50fc1d9e768e959e0e4f3ffbae60cb1f3030bea85cfe76",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-212",
+      "source": "ECON 0.2",
+      "sha256": "31e7462386ae034764a7cff0e1b59b09bf872d60b5603f23c73fa8b245f87a64",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-213",
+      "source": "ECON 0.2",
+      "sha256": "a7e0a722804dfbb1d7dfed8787b2d80f6682a3819a9e7536148e0c03db4fa7be",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-214",
+      "source": "ECON 0.2",
+      "sha256": "3dcac904ff55e313d5e9a29b1f1a206d23577587800555ea26c102b2ac132002",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-215",
+      "source": "ECON 0.2",
+      "sha256": "983d20b0d60b02b1f716fcc24447ba1de71dfbacd94a30edaa446b41df445ddc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-216",
+      "source": "ECON 0.2",
+      "sha256": "ac0be54496ac006545402233dcdc2264c9a064189984bf9abba25f395703cc37",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-217",
+      "source": "ECON 0.2",
+      "sha256": "3ca18d63183817957c3ac35574e01b42c3c777b8e548776682b2394804bd8d0a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-218",
+      "source": "ECON 0.2",
+      "sha256": "e3385d3e0f353d782a9c852db7375f7643160d95439ef54c7c4549d0e7f69d6a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-219",
+      "source": "ECON 0.2",
+      "sha256": "85b038ecf903e6540f44a5109956256fba40323c02580c4e5da87a550a08f4f0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-220",
+      "source": "ECON 0.2",
+      "sha256": "fa79b91d2e1363f5b3f8c6ebd450d9a2f7e7eb30a37a5363b40e45ab625ea579",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-221",
+      "source": "ECON 0.2",
+      "sha256": "e54ad8fa66c3464a1bbd6bdad05f63f7b0307312d210b1d2808bd37256b71a49",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-222",
+      "source": "ECON 0.2",
+      "sha256": "f897756fceb5f4b2f842bead36d574f2e0a3057df585d0972850bba038f5bb42",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-223",
+      "source": "ECON 0.2",
+      "sha256": "e9c1f6cd670debc62d491ee3efdf69fdbd67f248a3452a7be24150d78e9458ce",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-224",
+      "source": "ECON 0.2",
+      "sha256": "e933acc72c9b0dec9db930ff203df384379151eada178e7e94b3f40ae2de9784",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-225",
+      "source": "ECON 0.2",
+      "sha256": "d266a48a44443160d24c67484864a6a739ff296a9842a482b4f0298409c56330",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-226",
+      "source": "ECON 0.2",
+      "sha256": "17bb88a64ec096ed56b736e3cab6980386c936b85938d158061c0f15c9fdff4f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-227",
+      "source": "ECON 0.2",
+      "sha256": "cdc8ddf05c53cbc277f2f7016d950faae35544967787bb0e7c484acbef7009dd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-228",
+      "source": "ECON 0.2",
+      "sha256": "912caf3af3e95026472fe7714e601ef7c400a3454f1b484ccf302cf2614334d6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-229",
+      "source": "ECON 0.2",
+      "sha256": "d058832136b029e8fb1694c31b64a4a58b97f448b657e9f70c9d1bbc6be736df",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-230",
+      "source": "ECON 0.2",
+      "sha256": "69f6d47ab701b3d826b687918f55a65dd1c63d12b74596549de017b95f000bde",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-231",
+      "source": "ECON 0.2",
+      "sha256": "e90ca2a26df3855ed9bd1d8e220d8482ee307d1851e1564dc099c068451cbabe",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-232",
+      "source": "ECON 0.2",
+      "sha256": "5207a8a20e5dcf8a8feb091c0936cf2c7095668c85e68c5698509c73f85b2427",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-233",
+      "source": "ECON 0.2",
+      "sha256": "bdbf00b86fd619a76f1a7c1531dd10fe677928fe3b29a17c2fa93e2969136972",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-234",
+      "source": "ECON 0.2",
+      "sha256": "461af95aa1809b27f314fb9366fa66ae521b85c4bc4812b4c1c6cdc9784c4dc8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-235",
+      "source": "ECON 0.2",
+      "sha256": "5f0573e4d6a923975eee92fe80ba1df720968f9df23cbbc78c41121108f81e52",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-236",
+      "source": "ECON 0.2",
+      "sha256": "78275fe026bc03e9abaa9e2c9aa14f241be35a85394add42d4c4c82832b74110",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-237",
+      "source": "ECON 0.2",
+      "sha256": "0f64f2be81e6f85f02b3f0469ca8a15978e11a3fae2465073b61539f614e54ff",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-238",
+      "source": "ECON 0.2",
+      "sha256": "a0170d8ce0a33c505fa7a194bb90b4cf9994c48919778c706a864edb0c395252",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-239",
+      "source": "ECON 0.2",
+      "sha256": "50c26e23b23581cb8fcc88660a5ee3a0dc622c8f8d37f1381f67195cf81684cf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-240",
+      "source": "ECON 0.2",
+      "sha256": "32d637a400596da3fec818f42da77bf1f76bf771f48f152a38f966168750ddae",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-241",
+      "source": "ECON 0.2",
+      "sha256": "1053e5b61f5ce038a42037cf73087a3456ca113d0cfa67f1640050687a90732e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-242",
+      "source": "ECON 0.2",
+      "sha256": "ee2a4ecfc903aa2ea85e75f7cb1536c2ab18d0f69b1cf8aef31c2043dc7964a3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-243",
+      "source": "ECON 0.2",
+      "sha256": "e37b66dfc874f462f34e2acbdc81e391cb6be824cd37a75447ad23cff3dc57ab",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-244",
+      "source": "ECON 0.2",
+      "sha256": "b0d51f0b3767888b880573dcf4eba253ed72bbaa96aa3bd1d61dcebe2e333bd9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-245",
+      "source": "ECON 0.2",
+      "sha256": "7c517eeca30d62143b3fdd746e74560f9eb26012daac81b8d9ad2a1c2e287684",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-246",
+      "source": "ECON 0.2",
+      "sha256": "0ee1230d46c76b7783e9a6c68d6e1bb9942ed3f2b4784bc67ac1863dcac6a9e0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-247",
+      "source": "ECON 0.2",
+      "sha256": "1c93fac560a933c847ee81b84eb39137b29840cd30f4b7c7e3923fe9259369b2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-248",
+      "source": "ECON 0.2",
+      "sha256": "228a789547af86601d56a76a06023e1a5a11a2a847245ec4c7418a7f85deea5e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-249",
+      "source": "ECON 0.2",
+      "sha256": "7fa1300ae32d94d6492ee90722d8d3921979e69dd998ff8278a1678590af9ae3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-250",
+      "source": "ECON 0.2",
+      "sha256": "e0d4bbbf5b8dc1e5d2ad8abcbbacdcc2a32e3fcc4b7b7566d31c4eba02fb1e92",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-251",
+      "source": "ECON 0.2",
+      "sha256": "cb72fdb39af65e6090e0bd1a1c01d52dafa100137fbd9057ddaeba3fc38b7128",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-252",
+      "source": "ECON 0.2",
+      "sha256": "bc588663f6b8ba70a15198a2fa9c865830385ae3cb9cf2ee359598c471d22d7f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-253",
+      "source": "ECON 0.2",
+      "sha256": "694269c09c4954e77e280f35a93c4fea96263ce3f60ad80452bc86e4d6790299",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-254",
+      "source": "ECON 0.2",
+      "sha256": "91a48d60c12f1404b22dea4941708351b3b4807aacae490a7d35e6757d7a4bc5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-255",
+      "source": "ECON 0.2",
+      "sha256": "b3051c80c05174ce0551b1af5f16b03c1baebbbf400866c6bc8501d6c518b216",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-256",
+      "source": "ECON 0.2",
+      "sha256": "de33c3b1709ce8bd3452aced6ed4fc8ca76894f42c4933263d609bdb3f038888",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-257",
+      "source": "ECON 0.2",
+      "sha256": "c2a6ebe88b85ffb797a21ba6c7a444bc838dcf468623dbb0b1793bbf874ddbfe",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-258",
+      "source": "ECON 0.2",
+      "sha256": "8946f3a3bc032b16730c8869624cb9e9b9f25b99ac65124bd512d7dd4a929b06",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-259",
+      "source": "ECON 0.2",
+      "sha256": "17d40733ee152f5837ae2b76e21f2a51556af36c3aeb2c988b5edd8c63db2e33",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-260",
+      "source": "ECON 0.2",
+      "sha256": "de4ac91d2628fca6afda1e93363df7fd4bb8920dbd98af70f597e0cb09f6ac9d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-261",
+      "source": "ECON 0.2",
+      "sha256": "bc08556380ed9c63f564cb1888fea3266c79d17575dffd70aa15cc9e081060e6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-262",
+      "source": "ECON 0.2",
+      "sha256": "434ce5a0edcd050d6abf59eeab6b99134834a183585dea5e16ed18dc4f03425c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-263",
+      "source": "ECON 0.2",
+      "sha256": "a8229f5da743260a18d544b77adf3531c019f788ac2f69d9c95c102fd8111793",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-264",
+      "source": "ECON 0.2",
+      "sha256": "63a8a77c7f54eacc8374a135eb0ef617b3448ad63ff4de3c74ad805e2aa96646",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-265",
+      "source": "ECON 0.2",
+      "sha256": "222da3bcdd8f983f20b3bfb658e0a379ac3825ab98b2fd16525448b1777466ce",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-266",
+      "source": "ECON 0.2",
+      "sha256": "55db06fcbb11cca4a6cf79edded014dcbab3d324c639731befe3767e11f586e1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-267",
+      "source": "ECON 0.2",
+      "sha256": "b502dfe4890e16206ecc824b71b0af17115834f97b645cfef12978c654fe9ed4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-268",
+      "source": "ECON 0.2",
+      "sha256": "70636bfa0860cfe48327cc418d6232996da2834868e74e5726aff60f0d63e243",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-269",
+      "source": "ECON 0.2",
+      "sha256": "62972e994cc27db5aad3aff5d9cff6875dd839f244f4bcf72dcfe5dd7df993c0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-270",
+      "source": "ECON 0.2",
+      "sha256": "b92b757682aacb55c73f7f68eeabaa7d29f09fb0f6b7f689cd14ae46378225f4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-271",
+      "source": "ECON 0.2",
+      "sha256": "25e70c39f3d62bc8fd0e6740293898529565e5143d5b955321bdb402415184a6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-272",
+      "source": "ECON 0.2",
+      "sha256": "7a3e99c698b9eeebc72b9fb341537afa3c4bc475c286a31458035b1d0292a965",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-273",
+      "source": "ECON 0.2",
+      "sha256": "9b6500f842dcd61e16b76b92e0f34a1ca143b28036f51674a7a477ce2ddebad6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-274",
+      "source": "ECON 0.2",
+      "sha256": "c60aa8966dba4ce76410b8c3187da8f66adce5917f58cc861e78b1841b8052b2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-275",
+      "source": "ECON 0.2",
+      "sha256": "9ff191dbec0de26bc430164c96884fbc8da6ed90fccd4488cd01eaa8a631e00d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-276",
+      "source": "ECON 0.2",
+      "sha256": "330ed5b7f267e5a51546cbe26c1c2e8b97214fb1cb66334ca7064155a6c54992",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-277",
+      "source": "ECON 0.2",
+      "sha256": "28155f98151cfbd217c8002907e34441e3d5cbb302e0fe84badc475e1c1413af",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-278",
+      "source": "ECON 0.2",
+      "sha256": "2389644ca7b42f6495dcc3a914e1ce383d6affb6cdbd51bee4733b3534503277",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-279",
+      "source": "ECON 0.2",
+      "sha256": "d1d3d01b29f42b016877f684af34c549de30bf3dda215180a8b525ccf21e47e3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-280",
+      "source": "ECON 0.2",
+      "sha256": "c9de51e22dda3e32f820f3b9bb7d679782f9b1c86bfd37ec0a373e20e72d468f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-281",
+      "source": "ECON 0.2",
+      "sha256": "1ad71eca13e2fc07b6a7a766b2bf3849fe9d140841c6bd61bf1727d3e7822fb4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-282",
+      "source": "ECON 0.2",
+      "sha256": "cda75363bbf141f22393c8de05da325194dd50d1cd3ed18753ea8b7a5dd631e1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-283",
+      "source": "ECON 0.2",
+      "sha256": "3918ddb17fde44f35f05f917a00fe2e07e203730c6621f3b342f8a68e5a11dcb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-284",
+      "source": "ECON 0.2",
+      "sha256": "5d88db257672b8d58f25562db97e4dfc65be7ebbf424d3822183d990f39041db",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-285",
+      "source": "ECON 0.2",
+      "sha256": "9d782da0dc197b07e9e6449abfd1e3115ed88ece3dc55950f590d83f9176acb3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-286",
+      "source": "ECON 0.2",
+      "sha256": "ba08125e7eee004c8503d3b062b7e09f20a487fc3e45bcf3b091e943d1a2fc8c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-287",
+      "source": "ECON 0.2",
+      "sha256": "4c491db2758b6753fa996e68aed3a8f2ffeb2d327e838b213dee95b54e7e76a6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-288",
+      "source": "ECON 0.2",
+      "sha256": "30e3556d58a012791581ee7b5ad45d79550506be79bfc827c8fe8355d54dae0b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-289",
+      "source": "ECON 0.2",
+      "sha256": "57b74dd84ecd22f956196b1387070ed7b653a41eb674751acbc862093e4ad4af",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-290",
+      "source": "ECON 0.2",
+      "sha256": "e557f290a1db2a455e75b82d8f2bfbeb1ed3d4de87f882655be85afb8861f760",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-291",
+      "source": "ECON 0.2",
+      "sha256": "6087431426f5090b8992ea2115ac66a373a2772ce34f530b8a163eeaa4fc7a8d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-292",
+      "source": "ECON 0.2",
+      "sha256": "90bae6cc2d3de5def5fa9327551620fe9ee139f49b33c22fca1a95d63ec56072",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-293",
+      "source": "ECON 0.2",
+      "sha256": "e5433ecd9039959bbe4ff7809cefb6fb5fdc87f3b3396d8ed5c52050ca010cff",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-294",
+      "source": "ECON 0.2",
+      "sha256": "e96fc2887d7e814bb67d15e260905ae2691be6134e6d7f79284116bb1dd87d86",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-295",
+      "source": "ECON 0.2",
+      "sha256": "ba5113e6912b21a59a557fbeb790362d48f7d390388046793889851d72a20219",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-296",
+      "source": "ECON 0.2",
+      "sha256": "a076945d9427308d3d7468a0f75f973e3d2dea3f22cac4b5b11d9128913d29da",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-297",
+      "source": "ECON 0.2",
+      "sha256": "e4e34192ba20e7055c49ce5edf80adcc917e1904c278bbbf2ad4c1f71b49a23c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-298",
+      "source": "ECON 0.2",
+      "sha256": "f2a3795e4dc37343d371fb88507b9fbbca47f01a7e72ec440a35a8ac832b9c46",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-299",
+      "source": "ECON 0.2",
+      "sha256": "47222b175014d8900ccee8ffae461ed4c85758892e5e3a7dc4aba090931c6adb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-300",
+      "source": "ECON 0.2",
+      "sha256": "41f08f64b0c56f206212c9ec52be638b27300894768359831df1fe495d1954dc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-301",
+      "source": "ECON 0.2",
+      "sha256": "685edf2dd9632761b83f3a607a7936b433170fcbab88b1ada795e64cc68325d6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-302",
+      "source": "ECON 0.2",
+      "sha256": "0367cecd05e7b91d05191bf6a50f11049b291b969813e3c9efe751ae89af2c34",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-303",
+      "source": "ECON 0.2",
+      "sha256": "36de140cb6508cc279508001f1fc2700a7c61693718bb376d2cf12e366cfc4e9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-304",
+      "source": "ECON 0.2",
+      "sha256": "b184a043d849ddfa5f2d612e0b3fe6492348ffc4bdd675c41780df5a454b4c82",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-305",
+      "source": "ECON 0.2",
+      "sha256": "facf34901884eb2112f3deee563797f9e92f8ff1bc32f24a8f7d3cd85bb4f515",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-306",
+      "source": "ECON 0.2",
+      "sha256": "4a5ec975c8ef6b92e3e1dec0ca26dd4c87fa96d560aaac4a0b74dffea7e80e80",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-307",
+      "source": "ECON 0.2",
+      "sha256": "95e7386dc3312f97161679ba276666c86aba9322012f9f8913073d54e747f514",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-308",
+      "source": "ECON 0.2",
+      "sha256": "82c0356b39344f9b6c9083c137e1329fa9dc06ba41feb1b18ef3b2f67b9c18a1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-309",
+      "source": "ECON 0.2",
+      "sha256": "d510f0d6a58e311bf52861e51f28650b776e07995328d6c503386c173606bd71",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-310",
+      "source": "ECON 0.2",
+      "sha256": "303a9dea24dd4b58c858647fa201156a0dbfe35c41c648d43599c28c55005e0c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-311",
+      "source": "ECON 0.2",
+      "sha256": "325a5af0a33299b88e351737f24c7dc50fa912dbfccf96aaa8d5d02369042fd8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-312",
+      "source": "ECON 0.2",
+      "sha256": "109d3339556960e9d33b6072669aa0d0b32f81f87002462addaa0e0974a4a9b4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-313",
+      "source": "ECON 0.2",
+      "sha256": "5af19fde93f95e4473a9a58396694ab14f146262922b40789c9aeddc676e4c67",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-314",
+      "source": "ECON 0.2",
+      "sha256": "d0ca6184b5324e052d0773dc9e9f7e6e119cdfc3e3c6df7cc46cf20dfed8fece",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-315",
+      "source": "ECON 0.2",
+      "sha256": "c2dc9fe7f977843c43d6d16545b9ef316d96f559458618fe8ddd294a1ddb5bb5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-316",
+      "source": "ECON 0.2",
+      "sha256": "2af987201f1ac0f04afcde848ce4ea6135dc6c97ea106259fb8b4da255f4164d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-317",
+      "source": "ECON 0.2",
+      "sha256": "c4283e713f31f6a6f4f5b8d3476030c46dcce9ffd3a6b2f5b2e0a9eb02d8939c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-318",
+      "source": "ECON 0.2",
+      "sha256": "91683c9384ae7e2ed1b14a9db26a6b1591ca0e8a180db4786f2eb0aa35f95659",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-319",
+      "source": "ECON 0.2",
+      "sha256": "9c3727e88e560d8c4783302c69cdb8973462e1f7188704640b3b4e16958e368a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-320",
+      "source": "ECON 0.2",
+      "sha256": "4c45941068f504c63b801d9f78a600e9d913a9fa57527460aa9a3fc90f53027c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-321",
+      "source": "ECON 0.2",
+      "sha256": "0c041d09a1d7bce3e2f7a3c784eac8f50a2751f536908a344af141419a936f26",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-322",
+      "source": "ECON 0.2",
+      "sha256": "8ae8114fa9669d21e69c96cce5165e1b0ef9c59716af398da72afa5b5910254a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-323",
+      "source": "ECON 0.2",
+      "sha256": "533e5b8d235b271935834465fc37b7487d2e62c390ad8126dbbd7f67734b9456",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-324",
+      "source": "ECON 0.2",
+      "sha256": "d7b12fb65aa57d33b7ad689c8ab1e0cdf80dccc05ad8f4eddcaa25273bbe2ddc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-325",
+      "source": "ECON 0.2",
+      "sha256": "9a5546aba9e0791f34125bfbe097e678f938c44906479e73ed65f41d826437a5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-326",
+      "source": "ECON 0.2",
+      "sha256": "8add018d4ec7e4538c84c0cde2daa1a5b72460dbc35863a35bbf0f87fef3a2e8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-327",
+      "source": "ECON 0.2",
+      "sha256": "9dfee3bc4dfa1ef6bf75ee1892ad398130d75fd324dae6605b8c627e9a2312f5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-328",
+      "source": "ECON 0.2",
+      "sha256": "2f0c37e49e42b23cb45778fc6299bbd7112331da1e74931bb232a63ea533f24b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-329",
+      "source": "ECON 0.2",
+      "sha256": "bc5c8c6e0bd2c2a9fdea2bcc8960c217b8ae3ea56a8fd8d11f6ce9f266293922",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-330",
+      "source": "ECON 0.2",
+      "sha256": "ef0876e5d5e59fbf8b8099b5f8721315a6beea4bb553db02076eb0708ce76bbb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-331",
+      "source": "ECON 0.2",
+      "sha256": "754562e1c096c708323f20cf1c82b5622a457461c0c1f144518a2d6aebf18af5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-332",
+      "source": "ECON 0.2",
+      "sha256": "4a53319346712796e0314256e3220234eda32242f1344e2bd93cb73bf3865e3f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-333",
+      "source": "ECON 0.2",
+      "sha256": "31c1f6be41f4c7583ce5603352196354c3a43a9353539905b346951e2f28ca29",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-334",
+      "source": "ECON 0.2",
+      "sha256": "d32367f4074078d96e8799e61122a22dd018396dfb3b233828dc89e822fc27dd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-335",
+      "source": "ECON 0.2",
+      "sha256": "2538cc2fa7bd43481306dbe9a3e473ee9f5ba02b792d857cb8d56f6a304a8a51",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-336",
+      "source": "ECON 0.2",
+      "sha256": "0e3e5d6fc708ffe5ff570cac3a34363f4a78927c758b7991d0a4034a7658d2dc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-337",
+      "source": "ECON 0.2",
+      "sha256": "49742224f2dc91ea71621e34f556247f86e503de726227ea3b82d1026409b8f2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-338",
+      "source": "ECON 0.2",
+      "sha256": "7f20ba17cd446afee05f8250829095a638fac6dfc0edae822b9f7a175bcbe402",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-339",
+      "source": "ECON 0.2",
+      "sha256": "b07ff0bbf1bea7e7be5a96d64ceea92516208173b266f4c9a8d7637c480f5a38",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-340",
+      "source": "ECON 0.2",
+      "sha256": "236f5df2bd5113b0febecd2fba039daa1aa4b826d40edd9addbdee6c5e50b661",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-341",
+      "source": "ECON 0.2",
+      "sha256": "9ced5ec706d6ccaaa901791f221a143569ef5fd772da5eb078db9889572efcfd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-342",
+      "source": "ECON 0.2",
+      "sha256": "9c7ccc90e8fdd6fc03cb49f5b141c32f3c68d142135b321b6ffd97dc13c210cf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-343",
+      "source": "ECON 0.2",
+      "sha256": "bcb2c2a76f562c829f0b5ea2b3b9e36a14cb59ad052825b47b49eef62cfd3e24",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-344",
+      "source": "ECON 0.2",
+      "sha256": "6b14543f515dd2b7752354853362b4ef07855e340f268fe7ea1194d4fa653d46",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-345",
+      "source": "ECON 0.2",
+      "sha256": "f1d063529b7dfaaa20fae44aa416b51e5b5bd316fe54cfd2f2e31735db976c62",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-346",
+      "source": "ECON 0.2",
+      "sha256": "d99a6a3ff836b9cb2f741d6f79ac75c3c6dc63abfb352723125fd52bd21dc448",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-347",
+      "source": "ECON 0.2",
+      "sha256": "862a91508aa526c2ba1c7107c0211cf985d06eeb498d5d94f8bc8d75fbec8700",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-348",
+      "source": "ECON 0.2",
+      "sha256": "1b1c01a0f2361bd8cee9d7596684a1a0c4459ff4c316b4c8613bc4ff35e88d83",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-349",
+      "source": "ECON 0.2",
+      "sha256": "d27f00bee75163028723bdbe85c2d87c58027fab41790c9e988fad47380ebf76",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-350",
+      "source": "ECON 0.2",
+      "sha256": "fe3cc7ddbf509da6d3852f5fa4e69e9fa0404a6f97552ae71601a4c5cecbab07",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-351",
+      "source": "ECON 0.2",
+      "sha256": "993bcaca6add515a1db071dca17ba9a8be98d999f85d753f384e4d34a1d8c230",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-352",
+      "source": "ECON 0.2",
+      "sha256": "cdd683672cd5d6c90beae2f4c158976a6dc9a4f7d96b4e58474022202a72ea3f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-353",
+      "source": "ECON 0.2",
+      "sha256": "f7fe3d885f468bb69d822de3f1eab09e70c58997b5a699ff68e97f1e5a70c9d0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-354",
+      "source": "ECON 0.2",
+      "sha256": "50b8d970e39d654d3ee70e266d0fa8d7f2a3d82d0bbbc43ff8758a7c497a4ad3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-355",
+      "source": "ECON 0.2",
+      "sha256": "8298d43b446bb2c1ee949042850d3b27139fa68a2a8380c941be9e4ff171ade0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-356",
+      "source": "ECON 0.2",
+      "sha256": "fb3a079cc009ff7ed0ed61ca2b08797d207764b783fd39df1aaa8dcd8f1e8a72",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-357",
+      "source": "ECON 0.2",
+      "sha256": "af9bfa876f0544f901cbdab9341e884cf1a683d38f263a3ba5b9706acdcb3be3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-358",
+      "source": "ECON 0.2",
+      "sha256": "6289febf1bc30390f3844ee5d19ebb6fc876109594ba834eb7fad80e6c401b75",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-359",
+      "source": "ECON 0.2",
+      "sha256": "a6e752b19fb5f89256b239e16612ceaad0cfab3162c862265387a2ce031b84d9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-360",
+      "source": "ECON 0.2",
+      "sha256": "4f47c7e8cf66ff43dbe63670445192790213dda90e5407728806b9b24a1b697c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-361",
+      "source": "ECON 0.2",
+      "sha256": "e3b332483f6ce4308831e660e3956a7b03066290cfa11347f459aa3103d98f5d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-362",
+      "source": "ECON 0.2",
+      "sha256": "de4e0a9189c123466098eceb9e78336f655b0454bd5543f03ad9b3fd569bbf54",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-363",
+      "source": "ECON 0.2",
+      "sha256": "49b784baa0ecbad9a6af327de88b06eb165f97d9da0b7b8a5ea6be9fa630e8da",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-364",
+      "source": "ECON 0.3 amendment",
+      "sha256": "7fcee6ee0f1ada795073a240fe880c5dc6187008cb7959ff26c72b6d3aa4bdcc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-365",
+      "source": "ECON 0.2",
+      "sha256": "c75e63b8482fe9ead1092135e6a9a7b023a977809bf7a334cee929bdc5bd5166",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-366",
+      "source": "ECON 0.2",
+      "sha256": "f96c33056bbcc2662fc3f872939a0e4cc774a453d25487021b77976748341c7e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-367",
+      "source": "ECON 0.2",
+      "sha256": "b9c1a07584ac9450525acbc60c3bf232ebb760b3161cb1c99117236d05879713",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-368",
+      "source": "ECON 0.2",
+      "sha256": "3f143047513c7661681fcbe38941737f4f5fcb8d59860acdf3d6d107aea20e07",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-369",
+      "source": "ECON 0.2",
+      "sha256": "bc0775bd3bcdc3c28592d40311ed9eb4e62f36e32830019183f8e7c875cc954a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-370",
+      "source": "ECON 0.2",
+      "sha256": "269060f2b3096ac4eac0c4494b0edeb1ec35a450909462b7edefde0044a06984",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-371",
+      "source": "ECON 0.3 amendment",
+      "sha256": "b64914f77bac4eddcf2d49876403b18be5c9e18f353b9dd51134b7790ebf15f1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-372",
+      "source": "ECON 0.3 amendment",
+      "sha256": "7400d169af58c61caef47261b23383838d0bc4cab6adcc311a204c19d6f4d90f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-373",
+      "source": "ECON 0.2",
+      "sha256": "96c5460e5c6eeb1e8dd1b38821b6ce68cea1b704e25b6d6b4ed57a86065c6ed1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-374",
+      "source": "ECON 0.3 amendment",
+      "sha256": "781eec13b79bc814a7223f5460bd8c6baff13f4109845a92e8bd508e8f9f2cd1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-375",
+      "source": "ECON 0.2",
+      "sha256": "41c2fdb368b3bbbe0636722f6358875500943bff2b287a7f8133f962785eee1d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-376",
+      "source": "ECON 0.2",
+      "sha256": "384365555fd063b4e965fb0aa8768a72a123e99b4ed6005b9c51c9a027f9face",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-377",
+      "source": "ECON 0.2",
+      "sha256": "d190ff7f69ac5633dddb4b06ca16814e534d635f5f5f55d817ecb7c11bf5d1c3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-378",
+      "source": "ECON 0.3 amendment",
+      "sha256": "66e3a339f32b0435a7398f5a38dd55c0c5bbb26c1f534438c3f031e6ba677baf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-379",
+      "source": "ECON 0.3 amendment",
+      "sha256": "f5a1218f114a58b1143e6cb01c70b99b43000f90c41012031e8f6b7025b9aa6d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-380",
+      "source": "ECON 0.2",
+      "sha256": "0b703fb7dd616989c4b1b72ab64154ab6b2f99257f560b50a8bc9d1b13a3b55d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-381",
+      "source": "ECON 0.3 amendment",
+      "sha256": "5615e062f70b26e894316254f34b6fd84f25b7ea79fa492f290ecf5ef7dc1815",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-382",
+      "source": "ECON 0.3 amendment",
+      "sha256": "2b9e75524a03c64737fe97f217926de710ffbf734b9195216cd7bce14b4069d4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-383",
+      "source": "ECON 0.2",
+      "sha256": "26a3c2e77f28ec5e4c3c63c92d84fb98e2d9090864d3c6b768adc3bba67144bb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-384",
+      "source": "ECON 0.2",
+      "sha256": "83df357818b24038f303a045d4df7805f3a3534a71ceaec1fd0e70e631bc8f3c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-385",
+      "source": "ECON 0.2",
+      "sha256": "6084a6c879f67a7174470b0d798df439ca1531d7b9adc990566debb3e3906198",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-386",
+      "source": "ECON 0.2",
+      "sha256": "210e4b0950631501d39339df5e2dc97d28ddb7952b4fd9d827098b39d585225a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-387",
+      "source": "ECON 0.2",
+      "sha256": "9e4093fb1b418b6aab6faae65473d05b5697bd44ecd24917691c43b738855c11",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-388",
+      "source": "ECON 0.2",
+      "sha256": "33e3a6f4b2d79dfd781fb3711f2ad27851b21c0051d62c7128d0095f2297de1d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-389",
+      "source": "ECON 0.2",
+      "sha256": "9231e77e73e784b482480ab6bde92282ce94e7cc3de06c71d913467fcac103fe",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-390",
+      "source": "ECON 0.2",
+      "sha256": "b0cfad5882fd43691951025b51def6e1c07c1400206eafb6eec2b55b8aa14780",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-391",
+      "source": "ECON 0.2",
+      "sha256": "9335233641812d15db5ee322016c6ee929417b4edaac1c3679d836be301b83f6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-392",
+      "source": "ECON 0.2",
+      "sha256": "3a54b4d99c7ae5e72ec83537f2ec4765f388f68c962a3bd024758e40fae07643",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-393",
+      "source": "ECON 0.2",
+      "sha256": "9eb239c778d8308594358baec46584e88cd62cf20c9adaf68d5e8497e15859f3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-394",
+      "source": "ECON 0.2",
+      "sha256": "4fc38d8f1008e7ce1d87e8050ffd2c27db95f6ce4f44fb91b94437c45f745db5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-395",
+      "source": "ECON 0.2",
+      "sha256": "50fa2c6beaca64555feb37ddcac8a5a408bca01048920b4005f4e53c2220f317",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-396",
+      "source": "ECON 0.2",
+      "sha256": "88faac1f3ae7e3d2a3313b76e7ea315c5d35989d68396078add4b5fb6da921da",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-397",
+      "source": "ECON 0.2",
+      "sha256": "50d58132ba312d2fb9806ee524b39223228a102a4dbe45023281abdbd2398b51",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-398",
+      "source": "ECON 0.2",
+      "sha256": "b67d697ac556fbb3076a52d5758b67fce2230e2f532e7324d630cc27c73c6117",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-399",
+      "source": "ECON 0.2",
+      "sha256": "468eac46df282ae71e439aa0afe01dd56dafd8d310801c731a7ff2f2d2c2ee30",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-400",
+      "source": "ECON 0.2",
+      "sha256": "26149306668e7c8bd172f4763048b3b6faec7968a0212b0f1230613fb0d665a5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-401",
+      "source": "ECON 0.2",
+      "sha256": "780eed633ebbfde6bed230427487f48647f1814a7275bac380cc6a80e864f192",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-402",
+      "source": "ECON 0.2",
+      "sha256": "e0dbd35e6a8b5765cbc64e85933790de66d110b35922500511e068bf8771dab6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-403",
+      "source": "ECON 0.2",
+      "sha256": "d554fe4baa997cb7c2b1bc41146dbb8ce3dbad14d354dc6a18c7a59a7c276373",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-404",
+      "source": "ECON 0.2",
+      "sha256": "89747fec803d31e608749e46a539bc69abaf0044778e7ef3a4511097c2612d7b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-405",
+      "source": "ECON 0.2",
+      "sha256": "10771823f83b03d7c214659a5b356b59cd8dfe461865fa93809dea85af53d2ff",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-406",
+      "source": "ECON 0.2",
+      "sha256": "3e867cc6a9be2f8878030caf155f1bf5b12e40a1f85983104f084c78324353ec",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-407",
+      "source": "ECON 0.2",
+      "sha256": "4c8418d243036b9549ba94e4a8e6383529bc10a9fe5192a5c33680be6f79b559",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-408",
+      "source": "ECON 0.2",
+      "sha256": "260a7a5c5149df70743fe40d7be3b0ad7a7336a8d7488d892bdea5264e148fd1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-409",
+      "source": "ECON 0.2",
+      "sha256": "311580c71340b90fcde467373413ca2bdb5a4a57efb3edffa5f63e8e6e6985e2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-410",
+      "source": "ECON 0.2",
+      "sha256": "639127b92dc7b53e5feec197eb38fc75ed52f1ff569d3231b8a253a1d1513b18",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-411",
+      "source": "ECON 0.2",
+      "sha256": "68eb7ec3ea0e0f93825d980b1773ca44148e09ad6b3f833f45bcfa9221f5d3e3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-412",
+      "source": "ECON 0.2",
+      "sha256": "2cb4fa48a6727dc6517ffc8e9a77d32e4cebd1f3de4c2ed799e3d4c7f2f01202",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-413",
+      "source": "ECON 0.2",
+      "sha256": "5ba932eac0574f514501ce4862fe199b548a8c92b59f3e8b68073e5651c86e92",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-414",
+      "source": "ECON 0.2",
+      "sha256": "4df54c94575e0476d767ac190f16ac7d5fc55cd54f4d11871d79a012ebcd26fa",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-415",
+      "source": "ECON 0.2",
+      "sha256": "b021508272980332ed930435568fe153d36bb48f8b5b58d46c92ee70ad196dc6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-416",
+      "source": "ECON 0.2",
+      "sha256": "9ac456b5c8c48cb50dff159e6c707c1a2de68c9228f52a205909a1e3110e29cb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-417",
+      "source": "ECON 0.2",
+      "sha256": "1c24885dfe1683438b23f9136333bff3e0071a015b021e553e72e93549e9c312",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-418",
+      "source": "ECON 0.2",
+      "sha256": "91e3adf9664c545c38d94b50d12877573e548e9aa5d97039610fd9a4742dd98d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-419",
+      "source": "ECON 0.2",
+      "sha256": "97ade0d5c6445f7de3d7c6cf5350361b1a479e7d191dd9b3e85e1e69ad16aaf5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-420",
+      "source": "ECON 0.2",
+      "sha256": "37f4dc2e415ecad21c2e7bae5f9d9f66fb6794da59e72b34f07888f0e0938c94",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-421",
+      "source": "ECON 0.2",
+      "sha256": "413c3762dfde6ec3a1f70fddeaa880b28f8b068b33802f7a2ac7ae527fe9b70a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-422",
+      "source": "ECON 0.2",
+      "sha256": "00e992f76d3470a29af1317b75da363eabc573560953f4a8f46704c9bdce22a8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-423",
+      "source": "ECON 0.2",
+      "sha256": "4b10488f5c8452ab69d83321c655f067347a80a14b6b9fb2472f94a230933ad3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-424",
+      "source": "ECON 0.2",
+      "sha256": "92a0106b009bd2c65bf980d911cf369df41bbb64c411dc806542aba5d523629c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-425",
+      "source": "ECON 0.2",
+      "sha256": "07c964ddf581a50da112e00cbd35d71058f29dc5880d8f43920515cd008708b1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-426",
+      "source": "ECON 0.2",
+      "sha256": "ebe35ba75dddcd9780cbaead8f8fc1b4b0d4163587644ccec6b141e736fdda9a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-427",
+      "source": "ECON 0.2",
+      "sha256": "369e88e58a9c92b49cdab4eec81fa1f68a97959905f10a05206adddcff04f698",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-428",
+      "source": "ECON 0.2",
+      "sha256": "e28c2c84c0a25bd928a7089b73c6cc29eedf7cc21d0054ed783d91054131b958",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-429",
+      "source": "ECON 0.2",
+      "sha256": "096c2b5982936b8233b74971eef76e418b9c890b30f9c9ca6c11d7e5d6276bac",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-430",
+      "source": "ECON 0.2",
+      "sha256": "968b3e503737dfc93d09ce5d42eeb9132eff05489d75f8361ce0799baa697158",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-431",
+      "source": "ECON 0.2",
+      "sha256": "beb94f87eac2d451b76a60f6af2a1a136ba7265ed736448d1e6448b226b1a577",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-432",
+      "source": "ECON 0.2",
+      "sha256": "bfbac13455ffc3c4f4508e44a65305354f9b4833786d9fb4ef5c5fbbe13e9dac",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-433",
+      "source": "ECON 0.2",
+      "sha256": "8419180df7036310b5dc22dee3a39a5f9744e16fca0692a7afe8aacf864510ca",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-434",
+      "source": "ECON 0.2",
+      "sha256": "4e6e462ef44d8c6fa84bfa27f4fa2f4c2caa7ef5bdfb212a2fe36948d9ae40d2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-435",
+      "source": "ECON 0.2",
+      "sha256": "e1182e19766c01052a636b94e8bff476fe0a66e43a1adf46f8aecc4cbfacb2f2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-436",
+      "source": "ECON 0.2",
+      "sha256": "32c8dcbf579285f7aa78f43acc00816f9c9a285724ccdae0aec43d27d5651180",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-437",
+      "source": "ECON 0.2",
+      "sha256": "338b145f3e1b7216f0a16d994ef4fd833434c8b1346534b0ada56b7effb8ff4e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-438",
+      "source": "ECON 0.2",
+      "sha256": "ceb5254f89e5b3eb5182f52843c1f66d996dbe204ffaf7435181c869d6e03e1c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-439",
+      "source": "ECON 0.2",
+      "sha256": "545444c08b4cb8b744870c0181d60a6d51df46f599ef2db6cb14086d25b98fe5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-440",
+      "source": "ECON 0.2",
+      "sha256": "af31b2bfbb619fb3d3d4ccd7b158b31aeeb221e9fe9efbc1bf6164a265424c28",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-441",
+      "source": "ECON 0.2",
+      "sha256": "7cdf43f3830b8366bceaea4a73bd24144026129d5290c49bfb092ba5ad65e76c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-442",
+      "source": "ECON 0.2",
+      "sha256": "af7b3f81e6ed5b93fe4cf0b52c2d85927cb47533a1ec1d47d5ad0a0164f8aaf1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-443",
+      "source": "ECON 0.2",
+      "sha256": "91c328e3bfe8b648f914c695fca01cf1e60c2460f34117c06e0ce5c6b04bbc15",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-444",
+      "source": "ECON 0.2",
+      "sha256": "ce9e92a1fd290db9cb4c7742a114e26ace737118bdada54a8bcd6386d0b2f4a2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-445",
+      "source": "ECON 0.2",
+      "sha256": "85f9fb02673c192a0d7b6c20dbcb5afb15b7e4442c75a4282913074ca9d904b0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-446",
+      "source": "ECON 0.2",
+      "sha256": "3db61efd016512de2b894e1adfcdacbb70b7b1ff99f9123a414b1f2a551fed36",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-447",
+      "source": "ECON 0.2",
+      "sha256": "7db3f49e28d4f70c0eac6a83d8882f7a3ae6bbf6e41d6b5b3e95860c85010d8d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-448",
+      "source": "ECON 0.2",
+      "sha256": "dfbbd7806248e8e1b80bea32c17e458d834139497e6d848f4f45fb8eabda4db6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-449",
+      "source": "ECON 0.2",
+      "sha256": "334ebcc122f49a8bde35f4efcb8f872409cebec6995691c4af7b38faac1406a3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-450",
+      "source": "ECON 0.2",
+      "sha256": "ee1c20329fe38af0516e4f8096e6ed7a0e90611c20564b1bba44468e161207bd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-451",
+      "source": "ECON 0.2",
+      "sha256": "c9a2bac2d46a18b1383779bb30a5d4dbf0640e2f758c08dbf53ff561adff555a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-452",
+      "source": "ECON 0.2",
+      "sha256": "1205a310cb869b9f12cbd1cda089329ee87893a33bd6f5f6ffd679dc2fda04c9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-453",
+      "source": "ECON 0.2",
+      "sha256": "c836715548005be119565764011810b52918ce326663806d94e774f3c3dd565b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-454",
+      "source": "ECON 0.2",
+      "sha256": "b720061c7ed579da1babe47c40fc96538d2549ba0d4abb9b2b962ce3e6823494",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-455",
+      "source": "ECON 0.2",
+      "sha256": "a1ff9be7281113f1e858db95ec2097d4c04530c4ce398a290aabcdde974d774a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-456",
+      "source": "ECON 0.2",
+      "sha256": "a9d250f936f4b66d01919921bde884537462cc387039d972b6db14943ca348c7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-457",
+      "source": "ECON 0.3 amendment",
+      "sha256": "bce2bf611a888aa663bc08bcca6d371addf65378682d955beb2b9b6e4e67ce43",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-458",
+      "source": "ECON 0.3 amendment",
+      "sha256": "2f0b080603742dda7e19bfcbce1611b78acec7a9ee734ba5c016c33d26704837",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-459",
+      "source": "ECON 0.3 amendment",
+      "sha256": "b58cb4acc04dcc5f59db71d9a59832c9db0813e8dc5905a077c82e4b874f9a7c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-460",
+      "source": "ECON 0.3 amendment",
+      "sha256": "04e7b10305f38879348107994103aad73e82e1bcde01c7e474b0ec3c7a5ee8eb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-461",
+      "source": "ECON 0.2",
+      "sha256": "0d5e114328d1652e7853eee2ce3b4dc37321c7d70326883f610870b1667098fb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-462",
+      "source": "ECON 0.3 amendment",
+      "sha256": "a186d7d9c95c47a0c669bdce6fe3489cee889c9e48fa804b86447918d78a1253",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-463",
+      "source": "ECON 0.2",
+      "sha256": "fdcd330ea91f71cd51de131cdd0d6f77588a1c6fd0f4fe3e4e090b6d46166884",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-464",
+      "source": "ECON 0.3 amendment",
+      "sha256": "98d4e1d87bc120c16af9d52a75b7d4675e0589f7dc24937e81ff150ce335e06f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ECON-465",
+      "source": "ECON 0.3 amendment",
+      "sha256": "b84f7dc235ade493df6f8750aae94029dc0488b1879f0ca940a223c913eb4d20",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    }
+  ]
+}

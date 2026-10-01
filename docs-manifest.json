@@ -16,9 +16,21 @@
       "version": "0.1.0",
       "reviewedAt": "2026-09-24",
       "renditions": {
-        "fa": {"source":"fa/foundational/index.mdx","status":"current","sourceVersion":"0.1.0"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "fa/foundational/index.mdx",
+          "status": "current",
+          "sourceVersion": "0.1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -27,15 +39,27 @@
       "slug": "foundational/fc",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "1.1",
-      "reviewedAt": "2026-09-24",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/FC-1.1.fa.md","status":"current","sourceVersion":"1.1"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/FC-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -44,15 +68,27 @@
       "slug": "foundational/ch",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
       "version": "1.0",
-      "reviewedAt": "2026-09-24",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/CH-1.0.fa.md","status":"current","sourceVersion":"1.0"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/CH-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -61,15 +97,27 @@
       "slug": "foundational/co",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
       "version": "1.0",
-      "reviewedAt": "2026-09-24",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/CO-1.0.fa.md","status":"current","sourceVersion":"1.0"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/CO-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -78,15 +126,27 @@
       "slug": "foundational/ex",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "1.1",
-      "reviewedAt": "2026-09-24",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/EX-1.1.fa.md","status":"current","sourceVersion":"1.1"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/EX-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -95,15 +155,27 @@
       "slug": "foundational/econ",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "0.2",
-      "reviewedAt": "2026-09-24",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/ECON-0.2.fa.md","status":"current","sourceVersion":"0.2"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/ECON-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -115,12 +187,24 @@
       "legalStatus": "official_draft",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "0.1",
-      "reviewedAt": "2026-09-28",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"references/economy/ECON-REF-01-0.1.fa.md","status":"current","sourceVersion":"0.1"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/ECON-REF-01-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -129,15 +213,27 @@
       "slug": "foundational/dg",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "0.2",
-      "reviewedAt": "2026-09-24",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/DG-0.2.fa.md","status":"current","sourceVersion":"0.2"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/DG-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -146,15 +242,27 @@
       "slug": "foundational/jud",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "0.2",
-      "reviewedAt": "2026-09-24",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/JUD-0.2.fa.md","status":"current","sourceVersion":"0.2"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/JUD-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -163,15 +271,27 @@
       "slug": "foundational/loc",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "0.2",
-      "reviewedAt": "2026-09-24",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/LOC-0.2.fa.md","status":"current","sourceVersion":"0.2"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/LOC-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -180,15 +300,27 @@
       "slug": "foundational/eth",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "0.2",
-      "reviewedAt": "2026-09-24",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/ETH-0.2.fa.md","status":"current","sourceVersion":"0.2"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/ETH-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     },
@@ -197,15 +329,27 @@
       "slug": "foundational/std",
       "contentClass": "foundational_document",
       "canonicalLanguage": "fa",
-      "legalStatus": "registered_not_effective",
+      "legalStatus": "effective",
       "productStatus": null,
       "authority": "EarthCoop founder",
-      "version": "0.2",
-      "reviewedAt": "2026-09-24",
+      "version": "1.0",
+      "reviewedAt": "2026-10-01",
       "renditions": {
-        "fa": {"source":"published/foundational/STD-0.2.fa.md","status":"current","sourceVersion":"0.2"},
-        "en": {"source":null,"status":"not_translated","sourceVersion":null},
-        "ar": {"source":null,"status":"not_translated","sourceVersion":null}
+        "fa": {
+          "source": "releases/foundational/2026-10-01/consolidated/STD-1.0.full.fa.md",
+          "status": "current",
+          "sourceVersion": "1.0"
+        },
+        "en": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        },
+        "ar": {
+          "source": null,
+          "status": "not_translated",
+          "sourceVersion": null
+        }
       },
       "provisions": []
     }

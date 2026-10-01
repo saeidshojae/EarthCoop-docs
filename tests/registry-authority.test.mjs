@@ -22,7 +22,7 @@ test('declares distinct authority roles for public baseline, knowledge ingestion
   assert.equal(manifest.canonicalDefaultLanguage, 'fa');
   assert.equal(
     registry.latestRegisteredRelease,
-    'releases/foundational/2026-09-20/document-registry.registered.json',
+    'releases/foundational/2026-10-01/document-registry.registered.json',
   );
 });
 
@@ -46,9 +46,13 @@ test('knowledge manifest registered versions are traceable to the latest registe
     assert.equal(entry.renditions.fa.status, 'current', `${entry.documentId} Persian rendition must be current`);
     assert.equal(entry.renditions.fa.sourceVersion, entry.version, `${entry.documentId} Persian source version drift`);
     assert.ok(
-      registered.status === 'registered-not-effective' || registered.status === 'current-unchanged',
+      ['registered-not-effective', 'current-unchanged', 'effective'].includes(registered.status),
       `${entry.documentId} has unexpected registered-release status ${registered.status}`,
     );
+    if (release.status === 'effective') {
+      assert.equal(registered.status, 'effective', `${entry.documentId} must be effective in an effective release`);
+      assert.equal(entry.legalStatus, 'effective', `${entry.documentId} manifest must reflect explicit legal effect`);
+    }
   }
 });
 
@@ -57,4 +61,5 @@ test('documents the registry model for human reviewers', async () => {
   assert.match(model, /public baseline/i);
   assert.match(model, /registered release/i);
   assert.match(model, /does not make.*effective/is);
+  assert.match(model, /فقط status و تصمیم رسمی مربوط به نفاذ\/ثبت را ملاک قرار دهید/);
 });

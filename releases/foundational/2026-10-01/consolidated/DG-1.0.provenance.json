@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "status": "effective",
+  "versionEpoch": "official-v1",
+  "documentId": "DG",
+  "version": "1.0",
+  "previousVersion": null,
+  "preV1SourceVersion": "0.3",
+  "sourceAmendment": "published/foundational/DG-0.3.fa.md",
+  "provisions": [
+    {
+      "id": "DG-001",
+      "source": "DG 0.3 amendment",
+      "sha256": "131747d886dd25fcf4503fd8fe6a44599b15fcf5f945595ebc92a4636d6c9528",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-002",
+      "source": "DG 0.3 amendment",
+      "sha256": "efad57dfbebb08ac298a2ab9e08b615ec0c60d8f8bec6573ef9bfb3ef6d02f92",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-003",
+      "source": "DG 0.2",
+      "sha256": "daf03931fdc124499230627075e52eae6abc98adf952df153e6916736f52c5af",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-004",
+      "source": "DG 0.2",
+      "sha256": "8c676f7ce51621faa96f228359ba27cbeca26165cabdbd51ae1e5ceb1bcab7f4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-005",
+      "source": "DG 0.2",
+      "sha256": "ab247df510b86ccee36268a361430476edf3878dbde099b0b471eed708631270",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-006",
+      "source": "DG 0.2",
+      "sha256": "8f420d8643ab633b50aed1e2585bc082e27c45b8b2e5083e1b3d524bf1ab117b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-007",
+      "source": "DG 0.2",
+      "sha256": "7f5a2d19c03b87cb46ac4b44458064432cbff73dfe69d1ec680280dd54198171",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-008",
+      "source": "DG 0.3 amendment",
+      "sha256": "2dc6d7ccbec589d6b40e581122b962a909f283532ef2fa461fee5b302cb97dfc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-009",
+      "source": "DG 0.2",
+      "sha256": "60909372ba1901542daafe7081c86b05532edbe2ac07668242ff1d15651fa797",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-010",
+      "source": "DG 0.2",
+      "sha256": "989b70c80864b3a7ad10541d8c45eb5dc8207431d64114a88d369b221fdd614e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-011",
+      "source": "DG 0.2",
+      "sha256": "b1bd58fa2c37427c9ca94ea990f97bf4f44710a1212cbc0f9bfeb804da03c778",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-012",
+      "source": "DG 0.2",
+      "sha256": "520bae5651279fe438f480adc8f0332c0ca15121de33e663959b8c2c0b006ed6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-013",
+      "source": "DG 0.2",
+      "sha256": "0fee3b0082296d098094aa020e13631416f849a4a28a74f4e5a4b803737fee6d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-014",
+      "source": "DG 0.2",
+      "sha256": "f7b96deba1fdfffa6ecb1c27158b327b24798a0a1134109b6676cc9146bf9dfd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-015",
+      "source": "DG 0.2",
+      "sha256": "ab381e2ca68aa3e3084aae19593739b56c876bfab5204bc37d6eb9aa549b138e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-016",
+      "source": "DG 0.2",
+      "sha256": "e0cc9562bb1fc7e40be87ab67c2458f184e213da54e1f45991dc621b552c3a4c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-017",
+      "source": "DG 0.2",
+      "sha256": "63888ea1fa0248e474e862f6dbd409f120bb6263e145da51d8b48647a2eed280",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-018",
+      "source": "DG 0.2",
+      "sha256": "3f3a2d091c8e90355ef2caa0e3b1e4df4523c877fb8444bfad5bd771ddb28ea2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-019",
+      "source": "DG 0.2",
+      "sha256": "f8a83cf8c6d15309ed01a41743c51bef009443804a5854a3c4b0cdc00f2deb33",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-020",
+      "source": "DG 0.2",
+      "sha256": "f982dfcce3b27d7c85e58fbd8e208975f6a65f96324dcbe33866bf8db5ae20be",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-021",
+      "source": "DG 0.3 amendment",
+      "sha256": "6dd617d20fdad5179b125f482cd467442837ca1c08b4858e5bf2cb614d6b20b3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-022",
+      "source": "DG 0.3 amendment",
+      "sha256": "8f5e1aafbd31cf979267d2cf6e7842970dc928605b7d283d3ac9f99fdc9c6ee3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-023",
+      "source": "DG 0.3 amendment",
+      "sha256": "7206ae3ba0f4c35e0a549d16ceb56d74fbdea6139ef8493b5234b85bdb3d554a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-024",
+      "source": "DG 0.2",
+      "sha256": "3a33d23e88f7e0da8e547adca3d14753b5340a973478a908619f1256e353d673",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-025",
+      "source": "DG 0.3 amendment",
+      "sha256": "b4036295fb5425ea935c90fcbb25e39aa2ee5a326827b79284433ce3129cf892",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-026",
+      "source": "DG 0.3 amendment",
+      "sha256": "75d087e1b1361566fdab287abaf0b69ac0fe991e514eeb49f7f58ffe3b659d22",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-027",
+      "source": "DG 0.3 amendment",
+      "sha256": "49c6b78ad50ada29ebbd74b08e33e4d0c0096cbda58fec932b28605a299564cd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-028",
+      "source": "DG 0.3 amendment",
+      "sha256": "527106bfcd1d773be84ab7321bcc6ae123c0e394a69008d1167d777c8ec7e73b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-029",
+      "source": "DG 0.3 amendment",
+      "sha256": "2e833c1c9bc99a87cb0ebbb791375b292ecef321329420307593f05a1a5615be",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-030",
+      "source": "DG 0.3 amendment",
+      "sha256": "f215b79c2374a2da4f65049cdb973cfdbbc0260175104853446d0a2b380af3b6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-031",
+      "source": "DG 0.3 amendment",
+      "sha256": "300c38fa4ab1cfbe2a4004178383196dca68aaa5e1ee8ba3a01a59543c23d7d9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-032",
+      "source": "DG 0.3 amendment",
+      "sha256": "b46218a47e5eaa891a2d7dd6ca134ef6c4de197e4af04da5d683c369a722ebed",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-033",
+      "source": "DG 0.2",
+      "sha256": "2dd0a26afde23c084f527b4f138ee72e4bab77ae8ed56882eea672810b124186",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-034",
+      "source": "DG 0.2",
+      "sha256": "b6b6ab35fce576b901b1c0e368fd2caf3a5b708f2491e8fc8fd5895436a301cc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-035",
+      "source": "DG 0.2",
+      "sha256": "bb369572d5941c62c6a5e2c4e3ab8bbfb3eb27843a24595861d9ccb0a6a94064",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-036",
+      "source": "DG 0.2",
+      "sha256": "de7168ef093402fd234e4de46005c016d495e4d20dbdbc312c555f0e6ac10bf0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-037",
+      "source": "DG 0.2",
+      "sha256": "fb96dbacff710f3796872217eb558d2b31058b95629034f874eeca26a0cedfd4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-038",
+      "source": "DG 0.2",
+      "sha256": "ff6bf41f46c1d144adf9121ec4d8200bc361e705cc67f1496c8e937190663b08",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-039",
+      "source": "DG 0.2",
+      "sha256": "3b18f09469a883c254d3c97c0e96ee8c1fc2f131a12eba301e49ec3db03d1adc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-040",
+      "source": "DG 0.2",
+      "sha256": "c3607dccf881c684697664b5b02562114fc70c80f231eed6b85714128a270af3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-041",
+      "source": "DG 0.2",
+      "sha256": "0f150bedcfd1f6038700f54b7b36ddb5eec9c6c4c6217ad25e264077d632ba54",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-042",
+      "source": "DG 0.2",
+      "sha256": "c0b786c7a07940f8e80c3e6cef522f66931cbe08b1b8f4ec6afff8fdee44b7ac",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-043",
+      "source": "DG 0.2",
+      "sha256": "769009594d709ba4950d9f4ee7e8ae63316a7d95eab0218bd751e78fa7c04a88",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-044",
+      "source": "DG 0.2",
+      "sha256": "47c7c95df0033f4af3e226e0634f19bc7f260ba486cc07ceac9b48cbf0f88018",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-045",
+      "source": "DG 0.2",
+      "sha256": "b52aa0fe3efcf713c8c92b65793d0dbf7123a69146ab598443ef0c65ee84903d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-046",
+      "source": "DG 0.2",
+      "sha256": "8b098ac3a83e5095703fd99155298d307a23e2e68ecd722046ffa55b9fdf88db",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-047",
+      "source": "DG 0.2",
+      "sha256": "f60224dcc8377d6517597f9cbd4112893aba1bd0f9942048f2ba377046238995",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-048",
+      "source": "DG 0.2",
+      "sha256": "16ff034f33ff12832041ef6c191b407832563f9834f6db451a047e2b1fe17740",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-049",
+      "source": "DG 0.2",
+      "sha256": "c6493e438eca8fec1e72f2d77d09144ba07c3416d8c3730fa98940db484c29c9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-050",
+      "source": "DG 0.2",
+      "sha256": "210acc5f6d6729f2ef4dee6ec96a237f0b1220ad8e2c04cc2cd771ddcbf5a02c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-051",
+      "source": "DG 0.2",
+      "sha256": "73172fd08d7314b87da88748bccd509512d7ec5d25e2c2a39d27156703082197",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-052",
+      "source": "DG 0.2",
+      "sha256": "7822d581182dfd3a38b7cc8f1e851b59ed5fad040f458fb462ee563a02648c9b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-053",
+      "source": "DG 0.2",
+      "sha256": "4fd2bca9443463a3a188c9b880b4a761e056baa28ee722f6928b9a31ce38e9a6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-054",
+      "source": "DG 0.2",
+      "sha256": "18f40b2c280732ed86201732a14033b567c1ecf3b2da7af0e732b1fb5b43b0f1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-055",
+      "source": "DG 0.2",
+      "sha256": "be5f5c0542c2b47d36f929f3eeb1f2296ca8c883942a928070635989ffb23fb0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-056",
+      "source": "DG 0.2",
+      "sha256": "cfebe0cb656cdf260643a02b915c27db19e4e83330e15a5e6036f10f22f8b780",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-057",
+      "source": "DG 0.2",
+      "sha256": "d8ddac2dc76ed4f1f6f8fd64bc8ec42a3d0a9f340b2249964565dafacdfd7eec",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-058",
+      "source": "DG 0.2",
+      "sha256": "1a6462594975f3cc73581448dd36270badb031d646bf1210db2156a24ce59c87",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-059",
+      "source": "DG 0.2",
+      "sha256": "bdafbef3d34e344689da7543f58ba7d5b2b1255e2e2f1be2de96390e1c174aae",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-060",
+      "source": "DG 0.2",
+      "sha256": "5c936f072016a0f30afd44d0eb4034a70df2fc763d7d1ebc0af7e1f72c674cad",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-061",
+      "source": "DG 0.2",
+      "sha256": "cc1b3c53df67de4a740d6f937c89e97d848f568e10fd704a7741710707042901",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-062",
+      "source": "DG 0.2",
+      "sha256": "30fd69b2d99f55a95e9aa9b21d125529e01405cea615fd73efb85a24684464dd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-063",
+      "source": "DG 0.2",
+      "sha256": "2939b0c2bec3301a8841758b0ca3920a67c2cb9fba9298bedec16d0fbdfe2b74",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-064",
+      "source": "DG 0.2",
+      "sha256": "660d6d1d2afe964617497af4f2d24a239db960976555ece3b87fa3a6ea10ebf3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-065",
+      "source": "DG 0.2",
+      "sha256": "bb98585d9a1207932bdad984c19060670bf2101b03b935b4fb816d2d6210d1b9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-066",
+      "source": "DG 0.2",
+      "sha256": "03d25d00516ae8cb052250bac8cdf4dd77bc35f14b0fb8e1d11326a5777ef361",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-067",
+      "source": "DG 0.2",
+      "sha256": "1c3c46fd906f6138c5de58857e7b23edc46b501d36723a6205f5c829ede51df8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-068",
+      "source": "DG 0.2",
+      "sha256": "f755f61a76c3ccf60990dcb4d1c277cff07986896673a588cf08a97cd1be2515",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-069",
+      "source": "DG 0.2",
+      "sha256": "7667d9f48f016b2cc765a32d43a510c65f7f23e9ec1212d0610e7e2f5c1f6400",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-070",
+      "source": "DG 0.2",
+      "sha256": "5e0eed4320a514a36fe532861f5e74680bfed96282c193d71b3522e26f37169a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-071",
+      "source": "DG 0.2",
+      "sha256": "380d5afe86a469f7e3afabeab614ca30698b1989d7b0f9a632ee600a4ffdf95e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-072",
+      "source": "DG 0.3 amendment",
+      "sha256": "1a4462077db371209c11d1eacc28f0705cf02ddc8958d7549701781abfe8ae98",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-073",
+      "source": "DG 0.3 amendment",
+      "sha256": "616ecf0a121aa25b107df4247a1dedac216361487adb1fcf01a5210e7afe15e6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-074",
+      "source": "DG 0.3 amendment",
+      "sha256": "e7042f78e5c54cd83893cd1fd02c77d02ebc22d2ed1506c91af994fd5ab0396f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-075",
+      "source": "DG 0.2",
+      "sha256": "7573392c9740003128f1fba9172cc623acfe77ce763bee1546e1ae07e20c4eb7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-076",
+      "source": "DG 0.2",
+      "sha256": "012459748bc0373ee60c03ba718bb9cf46a7f63a762dde8401532a63c030e81a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-077",
+      "source": "DG 0.3 amendment",
+      "sha256": "626fb2e25d7ed6174be39dab793ac4d776ebe40ecdf7afba4e1de67acba26871",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-078",
+      "source": "DG 0.3 amendment",
+      "sha256": "358435c0a2115a5a697938e9346f58cd870ffc57a30588e6ea675cfbb6670947",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-079",
+      "source": "DG 0.3 amendment",
+      "sha256": "dabf20b7ed2ec574b95e924005f138947a04ec0373c34e37a38f7fd8a91c31c5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-080",
+      "source": "DG 0.2",
+      "sha256": "b5512ec6fb695b50b16bc27f7b598c888af57867dad37823ce39163ed55d0c50",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "DG-081",
+      "source": "DG 0.3 amendment",
+      "sha256": "27c4ef40caccb962eb55bd72628a4d47b7d61ccb20ca3dbe67e19d3f978cc8e4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    }
+  ]
+}

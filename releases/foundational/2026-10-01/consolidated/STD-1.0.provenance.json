@@ -1,0 +1,558 @@
+{
+  "schemaVersion": 1,
+  "status": "effective",
+  "versionEpoch": "official-v1",
+  "documentId": "STD",
+  "version": "1.0",
+  "previousVersion": null,
+  "preV1SourceVersion": "0.3",
+  "sourceAmendment": "published/foundational/STD-0.3.fa.md",
+  "provisions": [
+    {
+      "id": "STD-001",
+      "source": "STD 0.3 amendment",
+      "sha256": "625984c460261703c35411f6b75edbea0d39a088be861805c57adda1987a123f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-002",
+      "source": "STD 0.2",
+      "sha256": "687f8401258ba5b5247d341d58bbab5d37730d670b0abee2c3e745ca8838809e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-003",
+      "source": "STD 0.2",
+      "sha256": "57273df6adc8482a4d08a5b9ee6fb996e720e6c0e18dd13a578f6d1955d42bfb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-004",
+      "source": "STD 0.3 amendment",
+      "sha256": "753541849a9dab201480890d2f7f99ab57fe4c9f9e2dfcd3cf30b0870a48b7fa",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-005",
+      "source": "STD 0.3 amendment",
+      "sha256": "02ff8c9f09b78fccd2d2d789229e63304602f966a532dda83bfa7eca599f9a5f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-006",
+      "source": "STD 0.2",
+      "sha256": "5f5f7e293a62141467bfe955bd99f085569733c6f4600f794be66cf55fdb5ff6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-007",
+      "source": "STD 0.2",
+      "sha256": "fd80d6e5deff5d9886db692f26c0871624675d3e767cc4f96bf754301a5a1b2f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-008",
+      "source": "STD 0.2",
+      "sha256": "c64079f0cce064156fe69056bd6f98c785057fcf14e3b463954b0faa6184f1ae",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-009",
+      "source": "STD 0.2",
+      "sha256": "c78f95f44d5d08ede5909dff52bd54c8cf362f27e2d652c077ec75b72bac15fa",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-010",
+      "source": "STD 0.2",
+      "sha256": "f5faeec8a72241dd3895b1e42296b65a60aeb3524086ee939815804d9a070b8c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-011",
+      "source": "STD 0.2",
+      "sha256": "22c3fc4ccdb56627cf037b539c0b8b3aafe338e28ebae7deb02900b20bf131ea",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-012",
+      "source": "STD 0.3 amendment",
+      "sha256": "93b686f5b2037294c3a7ffb0fac7ddd2b357867b92b45ffc87e58d282581f57f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-013",
+      "source": "STD 0.3 amendment",
+      "sha256": "585af25a274bc358b72233c53437e42cc041a92b4789f2cc3c316521d8f5bd13",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-014",
+      "source": "STD 0.2",
+      "sha256": "2d624f86efbfd32ebc44139793226fee4f39e0913768f7fcbee97fc5210e64c0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-015",
+      "source": "STD 0.3 amendment",
+      "sha256": "b763ef7ae28b20630710ddaa70428e9a014bcf465ef55532ada131ba3a1adeca",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-016",
+      "source": "STD 0.3 amendment",
+      "sha256": "729323899e9955234c499e04d0ad0116194faee7669498b0a18223239cdeb0a4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-017",
+      "source": "STD 0.3 amendment",
+      "sha256": "281f259be35f811ae9e817f84e827d8cd4dea2cb318fb355a28f47aaf4c0e0f6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-018",
+      "source": "STD 0.3 amendment",
+      "sha256": "c1c296cf442db857bec010bf9ae9bebab5bdaa2f52e16221ced5ee32e626e5ad",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-019",
+      "source": "STD 0.2",
+      "sha256": "cb14ad8397691f144529a585bc2dd9601a62992af70a9419f74b706d979769be",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-020",
+      "source": "STD 0.3 amendment",
+      "sha256": "0e3ddb1b759b53eb8c186f1b83a74138046c143c94b169ac09f2736737bf9d72",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-021",
+      "source": "STD 0.3 amendment",
+      "sha256": "79f11f62ce7ff6ebb90fc04973881c12d38e0b45786719db980d76afbd6c35ac",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-022",
+      "source": "STD 0.3 amendment",
+      "sha256": "100e0348c53d05bea01dcee9404a3dc8cd837e801d093af03555bc512be3eae9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-023",
+      "source": "STD 0.3 amendment",
+      "sha256": "b5aa287e645c2edd9eb606b55bbf4dcfebbbed184b029070febd4e4da98b7675",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-024",
+      "source": "STD 0.3 amendment",
+      "sha256": "2bddccf2bd64144989e166417f1b98c8632adf8ca97f4ee7cf4840c157f116fa",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-025",
+      "source": "STD 0.3 amendment",
+      "sha256": "50cb6fc1abe871ce58f7695b536e47f9e9f9493921a14e821207709181ae89fb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-026",
+      "source": "STD 0.3 amendment",
+      "sha256": "64bd80e63a0fe59d59e97c8bf9d23da3488871e79b8a73e0c49ecee62a23d454",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-027",
+      "source": "STD 0.2",
+      "sha256": "61994efcb1715a8373a9b0000985c1a6b55f33891267d7440586bd0ecbac3ba3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-028",
+      "source": "STD 0.2",
+      "sha256": "b7b7d112f41c7f4fd2298bebbe0551c8cd045e39c1bd947fbf7f81704c33a7e4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-029",
+      "source": "STD 0.2",
+      "sha256": "7791043e5b01925d8aa3b5e784b32a889cd0feb5ce8c6cc3f0f25104c5b39fd5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-030",
+      "source": "STD 0.3 amendment",
+      "sha256": "81af7a624f52cec666385687c439da57ee0bbd6f870cfa2976792a8a0e9a055e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-031",
+      "source": "STD 0.3 amendment",
+      "sha256": "4b180319e6be0961e72e79997d7438f69295fe5e3a13b9c1cb6ed63e24af5058",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-032",
+      "source": "STD 0.2",
+      "sha256": "97bcb2bf3d0807086811234284433cfffeb302f1c444ea1837a40fbdc4a8195a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-033",
+      "source": "STD 0.2",
+      "sha256": "0f1eeee6665d852fd37c6e1bff8984739d27b0c614e1531f316a2053e666ec81",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-034",
+      "source": "STD 0.2",
+      "sha256": "e7a5cec5862e409b67774c6b225c9e715783cc273a29d4ed92f4c80744bea6b6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-035",
+      "source": "STD 0.2",
+      "sha256": "03109f7f69b4825905e9b72c1179887830de2b4c3dfc2ee35ca7fb6378354298",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-036",
+      "source": "STD 0.2",
+      "sha256": "c01276a6f0fb65a78c8500307705c17863e571ef78aadc9826976760344e5936",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-037",
+      "source": "STD 0.2",
+      "sha256": "90c811f1aee615ae633e72fe43a05277decdd30bc425faa9d40b95251ed107f4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-038",
+      "source": "STD 0.2",
+      "sha256": "abb3e0b8d282851beab6f46101a4d42aa11e62f394f2b526e31f74263a4b5f24",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-039",
+      "source": "STD 0.3 amendment",
+      "sha256": "f008a518146fdab92b076747f88b2e3065e9ccb3f6529abe6640b90ef0079cac",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-040",
+      "source": "STD 0.3 amendment",
+      "sha256": "530e57be0a1fef8afa8d290673e774bd02995fcc0dbdfc70c52eed647a9767ca",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-041",
+      "source": "STD 0.3 amendment",
+      "sha256": "eb4e963a0dea906b9278778cf7e93f2c17cbb8029489d0673d3f27b4dcb02531",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-042",
+      "source": "STD 0.2",
+      "sha256": "1ff317ea3be8f4eba0409bae76f25fbc02be6ec5981f83e305396d53a183ec5c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-043",
+      "source": "STD 0.2",
+      "sha256": "c6573981ee50eaaf15ca4baa25fab9003d69532a995a8c0232ae116604992bba",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-044",
+      "source": "STD 0.2",
+      "sha256": "f18303aad380f2c8bbd9044355d09a10d8260ae74fcfe4b628fe13ed35fa4765",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-045",
+      "source": "STD 0.2",
+      "sha256": "6606daa57e80503591395c054df8566d135c333e508d581d5de856029ddf3540",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-046",
+      "source": "STD 0.2",
+      "sha256": "78b7eddb7e61d4352f77cd9647f77b463d792f8828421627ded2aeafe9e798f5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-047",
+      "source": "STD 0.2",
+      "sha256": "6128fd879c7b6678f2fc62aeb19067fec87965824640fbac48f37154ad0aa17f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-048",
+      "source": "STD 0.3 amendment",
+      "sha256": "e19101b32627a4f797ec4e75c4acad361cea18498ed76d399424e0b1ba80ec20",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-049",
+      "source": "STD 0.3 amendment",
+      "sha256": "c07b711ab0645ec20bfc3ec7d6fde5d342d199e62cea121bc61724abbbc65bda",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-050",
+      "source": "STD 0.2",
+      "sha256": "c8949c6561c5a55fcaa3fac9e5f11d5f6e443c933020f889c67dc984675eb8ab",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-051",
+      "source": "STD 0.2",
+      "sha256": "3dd64a89ae598ab388859479dc3176e227374f56f80e07608b8f733a8c67def4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-052",
+      "source": "STD 0.2",
+      "sha256": "704b156c36cbf49430ab78195e2c7d761efde2c0ffe889515caa888369cd8ddb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-053",
+      "source": "STD 0.2",
+      "sha256": "6363d481976892f870c844b532a2c0f6e6c33f50fa93ae7f458265188e97105f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-054",
+      "source": "STD 0.3 amendment",
+      "sha256": "d445e087bd27ef45e19eec73e68743bbdf383f518eccb57ebd826effa43b68e8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-055",
+      "source": "STD 0.2",
+      "sha256": "f72c2030d978f8a58ca26a15337afb003fa679122da99e0dea54c91111db9bbe",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-056",
+      "source": "STD 0.2",
+      "sha256": "806d8cbf91c0d0a4645ec95f6d82a35f4e1e69ac261aec538601523e9481ac12",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-057",
+      "source": "STD 0.2",
+      "sha256": "e53593759c992e81d66152c564ef7d0eb9e5dfbcd8f95e0a3670d2d7bd6ef4f8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-058",
+      "source": "STD 0.3 amendment",
+      "sha256": "6a708e41601730738e2f22e253bd068833b8a591712e86d1185710d9c72eb965",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-059",
+      "source": "STD 0.2",
+      "sha256": "e274f2f1ccccdfa844127503203090bda3607b337ec8e04b61bb89009661882e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-060",
+      "source": "STD 0.2",
+      "sha256": "79443449c92971a97edfc2684f27db01212a272668bd25c4613fa896221f175e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-061",
+      "source": "STD 0.3 amendment",
+      "sha256": "7ff3960cb3afdc5f1ee0d8bf2ec92c0bc97b07b5661753f2a3b1db9e0a92104c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-062",
+      "source": "STD 0.2",
+      "sha256": "18a809efd6c0e9447052607a1372c5979625b8638794ad1a95003bd4a878a483",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-063",
+      "source": "STD 0.2",
+      "sha256": "d7535e0bf8321318da60863a2c93d33fa5f5ef9d91232c4e5ee633baefaa75a7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-064",
+      "source": "STD 0.2",
+      "sha256": "0ebdda365bd4307586d033a54e3460b98e99f4b3a5f0143d57462fdcaf41753f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-065",
+      "source": "STD 0.2",
+      "sha256": "b7062e9c844d19734ca630b993b5dd3fa9bf3aac4f0b88a4c191491cf2d5eae4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-066",
+      "source": "STD 0.2",
+      "sha256": "4e722d1dc5c9a50fb1633662ddf32987ae6832a0a8d5402fdf65127a3faa0e8c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-067",
+      "source": "STD 0.2",
+      "sha256": "39ec5d64e9758a89100b99dd47eb4bb5e39ecf408cbea5373646efc2bff1ab34",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-068",
+      "source": "STD 0.3 amendment",
+      "sha256": "56ef11dc8a5e5221c1dbe6be720a1a0a4d475c85149a3949f54851dca258c428",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-069",
+      "source": "STD 0.2",
+      "sha256": "f205c25b8ea25933e6099fdc725ed19205abee0e84116f4ed0d3b2bffa05f6f8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-070",
+      "source": "STD 0.2",
+      "sha256": "09c5bfdfa04f5cfa73438e69c2b08a21485bc44d71b73a0cab334242dd2eca50",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-071",
+      "source": "STD 0.3 amendment",
+      "sha256": "26e1547792091c470ce201b4b0906fb7e8e921584c82ad4c037f50b24f9e2705",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-072",
+      "source": "STD 0.3 amendment",
+      "sha256": "98690d2319526262dcdcb085416701fe9cd225450abfa66f8e5a267f96b8b5c3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-073",
+      "source": "STD 0.3 amendment",
+      "sha256": "fe538cf0397c112c14bed2fb426998653719ec7b4f2619e746438e7505d228f4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-074",
+      "source": "STD 0.3 amendment",
+      "sha256": "ff7b7f64d447f08a3a896b9635d4eb8de48309ca8b93037280664824537e7466",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-075",
+      "source": "STD 0.3 amendment",
+      "sha256": "fad37b35d007a61a3ab8fe35056857a1ec12b4243f2d95223d4fd32a696b572f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-076",
+      "source": "STD 0.3 amendment",
+      "sha256": "b7ca3bd46614d3942201120d475e2a8b06559f60ad5ad9ec5c9c21fe4ed508c3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-077",
+      "source": "STD 0.3 amendment",
+      "sha256": "1b1939b6265da327fa470a2d3df03023172b32a84f8bbba0e8a49df2648935f8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "STD-078",
+      "source": "STD 0.3 amendment",
+      "sha256": "79c66b3bbed8f88e4f157768305159021b54849753e22550157aa4362e039832",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    }
+  ]
+}

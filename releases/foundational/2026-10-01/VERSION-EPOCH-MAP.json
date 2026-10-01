@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "versionEpoch": "official-v1",
+  "startedAt": "2026-10-01",
+  "rule": "Pre-v1 version numbers remain immutable audit history but are not predecessors in the official-v1 series.",
+  "documents": [
+    {
+      "id": "FC",
+      "preV1ReviewedVersion": "1.2",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "CH",
+      "preV1ReviewedVersion": "1.1",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "CO",
+      "preV1ReviewedVersion": "1.1",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "EX",
+      "preV1ReviewedVersion": "1.2",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "ECON",
+      "preV1ReviewedVersion": "0.3",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "DG",
+      "preV1ReviewedVersion": "0.3",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "JUD",
+      "preV1ReviewedVersion": "0.3",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "LOC",
+      "preV1ReviewedVersion": "0.3",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "ETH",
+      "preV1ReviewedVersion": "0.3",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "STD",
+      "preV1ReviewedVersion": "0.3",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    },
+    {
+      "id": "ECON-REF-01",
+      "preV1ReviewedVersion": "0.2",
+      "officialVersion": "1.0",
+      "predecessorInOfficialSeries": null
+    }
+  ]
+}

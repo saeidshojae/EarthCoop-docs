@@ -1,0 +1,495 @@
+{
+  "schemaVersion": 1,
+  "status": "effective",
+  "versionEpoch": "official-v1",
+  "documentId": "ETH",
+  "version": "1.0",
+  "previousVersion": null,
+  "preV1SourceVersion": "0.3",
+  "sourceAmendment": "published/foundational/ETH-0.3.fa.md",
+  "provisions": [
+    {
+      "id": "ETH-001",
+      "source": "ETH 0.3 amendment",
+      "sha256": "e2e6a5400993fa8a0e43628b785b710ae2f2be871bb72275e0e0dfe9982ddf12",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-002",
+      "source": "ETH 0.2",
+      "sha256": "763064cc31dc3342d3d4cfd8a5ab36b9cfc3f8a545ef394108331f7eba0da799",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-003",
+      "source": "ETH 0.2",
+      "sha256": "1ee1347141f05a7c73fee21ae23ede780fd0f18d03c39a8ed2701aa9190bceff",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-004",
+      "source": "ETH 0.3 amendment",
+      "sha256": "d06a5a7c9cae038b4950cba28c391a5e5a9264700b2c0d194f6e8f2c261cb0b6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-005",
+      "source": "ETH 0.2",
+      "sha256": "480079ece74c88c577a7c5c12773c0b7290e1fc2c4b408888a1420d2b407cf9d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-006",
+      "source": "ETH 0.2",
+      "sha256": "5b015e643fd533c366a01fd2829190ff0264f76825375e63cbd4081e6d81b105",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-007",
+      "source": "ETH 0.2",
+      "sha256": "2805f4fc261a65d1ea517c79605898e694debcd927748f5b62e07257fd853a7d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-008",
+      "source": "ETH 0.2",
+      "sha256": "ad269efa53363655912e09804c8ee8d14be7a45545755cdff744916184ef1a2c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-009",
+      "source": "ETH 0.2",
+      "sha256": "6f76819107413e0068355ceebaf981c6e87f48a8a5b396cc445f0e18a9119fd3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-010",
+      "source": "ETH 0.2",
+      "sha256": "27c63230bb3f5b9aae474e0c6e97a2af73f2f52c86a6907eeabcde9f1f58a028",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-011",
+      "source": "ETH 0.2",
+      "sha256": "7d3d54aaeb14aff3a763e3c0f8cecb56ea117620395cdd19a2f9d18def5b4407",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-012",
+      "source": "ETH 0.2",
+      "sha256": "f6ac0bda3a7e8127e99989e24632d6eedc08511ff681a33289ac7436057f09a1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-013",
+      "source": "ETH 0.2",
+      "sha256": "a5a58ac97ccb3e5a18f8b052f16ee65b27d59e681d0e023b20c8e4bdf9cf3a66",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-014",
+      "source": "ETH 0.2",
+      "sha256": "94a6df8edb8acd6593a28d003a7cdb31b20cf1c25d97b321dc7783bb5219a2d3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-015",
+      "source": "ETH 0.2",
+      "sha256": "2d41d91a5144b6eb2283a5a37f705dc19bc9476b3776ddd37073bb873b7a9dbe",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-016",
+      "source": "ETH 0.2",
+      "sha256": "91e3b88aaca8c045961a215c66fb8b0f87d408da8b24a4ae040fdb679540eee8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-017",
+      "source": "ETH 0.2",
+      "sha256": "bc19bab7eca430659a7a7600b12b5d8504725c1bf77d77707e2b59c7eedb3b6d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-018",
+      "source": "ETH 0.2",
+      "sha256": "7c74ae52ebb0c19f3084008205452fb0a0221594ea88dd8a42e506bee3466f81",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-019",
+      "source": "ETH 0.2",
+      "sha256": "ddbb81852968605a249a17bc2f21b05f1c80bca54296e4635d9ba86d9dd4048e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-020",
+      "source": "ETH 0.2",
+      "sha256": "599275b498b275f06f67f63e7aecf0ea58bb344f2914eb59068c4c670f147309",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-021",
+      "source": "ETH 0.2",
+      "sha256": "55072788e7a6ee571d5438e3c210484278f19f64fdb79fa1a1ba78f5c58efe3a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-022",
+      "source": "ETH 0.2",
+      "sha256": "d2f1e21dd95845a7ff5b4ef680d0928f08b0420f9180250319813a012ff6c26b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-023",
+      "source": "ETH 0.2",
+      "sha256": "fb32e22496ed549111ae99127cc5f73a8e58321f269c99045aa77eb054164f19",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-024",
+      "source": "ETH 0.2",
+      "sha256": "5e0f78d9f4e448643848baa846aebb5405cf2cb18367e7de591378042653ef6d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-025",
+      "source": "ETH 0.2",
+      "sha256": "70b8e7c6fc9b477828f19e72c767c0f9ea9ed8fb2e6f6bf74fe5b987971e8ba9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-026",
+      "source": "ETH 0.2",
+      "sha256": "8653f56c0b1dd4a1a325566fe2caedd8599cad988d15d1c3263ed71f3e31eedc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-027",
+      "source": "ETH 0.2",
+      "sha256": "a2d6394f5402e1a437c33a098974b9004750c0278781620f637fc355127e106f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-028",
+      "source": "ETH 0.2",
+      "sha256": "11e89a4a7c2ec1de80ae635cb336931a275d92e257560f1f6fd58cb7cb44899e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-029",
+      "source": "ETH 0.2",
+      "sha256": "954adbb58563cc6095700b764c744c7616c985fd587ad4732653a4e3ef92a249",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-030",
+      "source": "ETH 0.2",
+      "sha256": "6eab7228aaca0ac5fbf2ff145e48ad7b2aba2e523e272dcc22534b5b9c7af0d9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-031",
+      "source": "ETH 0.2",
+      "sha256": "3cea634e78ca204de1660904d365fa811009f2a53329218a173698c8e01ed169",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-032",
+      "source": "ETH 0.2",
+      "sha256": "ecb34bcdea905e7110509ec2a10a56f10d224fbb19bae758284cb8be15317d8d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-033",
+      "source": "ETH 0.2",
+      "sha256": "42b27ffe2d7ddd750b4fa6cb055a6ca2459e94f15f355aec2c77f9bc788acf24",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-034",
+      "source": "ETH 0.2",
+      "sha256": "f835534a7b01a79f035c147aff6969f53e537f548560560083fa8d2c25e203d8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-035",
+      "source": "ETH 0.3 amendment",
+      "sha256": "91b0305233d2d93aedd6880f7e0c47f15f8a10abb707bbde120bbe0647a59a25",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-036",
+      "source": "ETH 0.2",
+      "sha256": "8ced5c13ec877d09da135360980fe7e905e5ee4aa65083e0cdcbadca71096f6e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-037",
+      "source": "ETH 0.2",
+      "sha256": "22001fba09087f7cf7355dafa6625f809dfa6f11e5422cf4b224c6dc8a9e4eb3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-038",
+      "source": "ETH 0.2",
+      "sha256": "dee2f481f5f4725b38cdeb5517552f9a892ae5c533171446244ea35666888ca7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-039",
+      "source": "ETH 0.3 amendment",
+      "sha256": "3559b7ab20010d8780672c6d2e283064fb3e67207e719f1bc05a01815338b3d1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-040",
+      "source": "ETH 0.2",
+      "sha256": "b5df4569d3574af675602c26f687ee4443d9feb811e05da51c4724c3e93f45c1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-041",
+      "source": "ETH 0.2",
+      "sha256": "05c88c7f5ddced2c966d4910c98606684cfeacdecc310f013d7616fa56e2ec0e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-042",
+      "source": "ETH 0.2",
+      "sha256": "81bf82c218dfa6c0673dd8e4bc7e5c5586dedcf695dd12a98a707e02401cb3ac",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-043",
+      "source": "ETH 0.2",
+      "sha256": "1f37f2e30d8495b4fc5d49f3c025f1556f26388f9975a68be8d01359e8f08cfb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-044",
+      "source": "ETH 0.2",
+      "sha256": "81bba0567b0d4d6a589cdf1604b799e0c042e411f63e9abe8e19e2b1129ba9f7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-045",
+      "source": "ETH 0.2",
+      "sha256": "2806a7ac1e1d470456d98f7e95db92429731f9f956d395c05c8a1b8dc6b92061",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-046",
+      "source": "ETH 0.2",
+      "sha256": "70869ec346386990b753dd94939d8ba263131bc0cd19916e591a1fe783b8656e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-047",
+      "source": "ETH 0.3 amendment",
+      "sha256": "3ae30959be476dbfe14574a8443e80786763fa6122fb61f9f93f1fc49ac2f16a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-048",
+      "source": "ETH 0.3 amendment",
+      "sha256": "a3586a77f2d061ea5bf1557b4998becc4a1ed327bfd4728a4115002a8ea0d391",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-049",
+      "source": "ETH 0.2",
+      "sha256": "53ba73a1040bf82bafac088780ef8925ab9b70c2472bc3a9026a2760576a7ba1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-050",
+      "source": "ETH 0.2",
+      "sha256": "77bf593d69d5c80dbcf687755e793f06606cf562a2f33083b6d407f993ac1d7f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-051",
+      "source": "ETH 0.2",
+      "sha256": "661e1059228a608a75d56de0645810c2c7b7eeafe61faf7cb18879df6cbb6e3a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-052",
+      "source": "ETH 0.2",
+      "sha256": "8dbc2becf1d47b6e3d1c7d3803c8ae4e825bcde2e04ca7e052091b2ecfb587be",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-053",
+      "source": "ETH 0.2",
+      "sha256": "20267ed0367e6adf8a3ac283eb74f0562f5539592157bc4fce6fb61efa64a156",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-054",
+      "source": "ETH 0.2",
+      "sha256": "3e0c25ebd144e9bc2c31a093256820da27496106c7046bea8e4e4b730b115a42",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-055",
+      "source": "ETH 0.2",
+      "sha256": "207c75c9de686bb0f80eb458202eda4885e7c0e2ee53c10dbf5d1a2be44dc0ce",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-056",
+      "source": "ETH 0.3 amendment",
+      "sha256": "8b50d3e9c3e0fbdeb909b6e42f4ab6760b2ebadc0bea8ef290450013d31f05c7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-057",
+      "source": "ETH 0.3 amendment",
+      "sha256": "f2ef09cf31af9c282a56574f8a8b30d8f3769b003633046904c70155434579a1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-058",
+      "source": "ETH 0.3 amendment",
+      "sha256": "10bbe345f4d88bf7eeef949c9f1e0ff26773b9165105ce7aaf599880ae8a4f8b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-059",
+      "source": "ETH 0.3 amendment",
+      "sha256": "fce7e89bb50ae0a3da593def26f70eef15394f26a6c22bbfa8ba689b0779f267",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-060",
+      "source": "ETH 0.3 amendment",
+      "sha256": "bbf58b47b834ab2b8ea5e4d19a11b136fef4c09c1c8e153b5bc8d8a5f0170dd6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-061",
+      "source": "ETH 0.3 amendment",
+      "sha256": "9e2b4fafc185165c1bedf90551a0f699827b3ff04da583950b24461c2c52b307",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-062",
+      "source": "ETH 0.3 amendment",
+      "sha256": "4a1b351e6d9e8e214a677c0e4e3ce4549f1ad1774b5bd6ba094997587f928547",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-063",
+      "source": "ETH 0.2",
+      "sha256": "0e8332e527081d46a631c8a1aeb25fe5eb7d1ac83ed43736373f05bba1295570",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-064",
+      "source": "ETH 0.2",
+      "sha256": "8feaf7983215f2eb1ee7822d286a374aff74c58f294b516660524b2b99aac186",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-065",
+      "source": "ETH 0.3 amendment",
+      "sha256": "5d25530d44e76fa99b29d8a7e38330dc3e42c1a1d8d4fcd5fc882c2ec7bfaa88",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-066",
+      "source": "ETH 0.3 amendment",
+      "sha256": "afb3f3ac42cac886e240287fc019a56d98e7b9a9f55b51fe9273afef12ad30e9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-067",
+      "source": "ETH 0.3 amendment",
+      "sha256": "9635940e7a89e03093fa0c5dc284f5f41b7191315baafbc83d5fc18e3275d837",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-068",
+      "source": "ETH 0.2",
+      "sha256": "e97e5f6d6a10cf0b25e1c5208148e13084653a51410f6638600cd82a6dc5ace4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "ETH-069",
+      "source": "ETH 0.3 amendment",
+      "sha256": "681fc8821535d7ad5bb645eed32bf97943eb6f3a451e386da4fb7a48cd431514",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    }
+  ]
+}

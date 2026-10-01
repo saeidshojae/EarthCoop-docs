@@ -1,0 +1,523 @@
+{
+  "schemaVersion": 1,
+  "status": "effective",
+  "versionEpoch": "official-v1",
+  "documentId": "LOC",
+  "version": "1.0",
+  "previousVersion": null,
+  "preV1SourceVersion": "0.3",
+  "sourceAmendment": "published/foundational/LOC-0.3.fa.md",
+  "provisions": [
+    {
+      "id": "LOC-001",
+      "source": "LOC 0.3 amendment",
+      "sha256": "2e60784663a20640f2526eb71a826dbf61a5a4c9f42a633147804ad19a0b56a2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-002",
+      "source": "LOC 0.3 amendment",
+      "sha256": "bd2a5327d574e70ae3055fca0a1d4f22692e2479d204f40a676d7038f03a8f63",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-003",
+      "source": "LOC 0.3 amendment",
+      "sha256": "f55b5633a854b7fa4ccd45494387c39f26e942464d05ad684b2ca15472e400c8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-004",
+      "source": "LOC 0.3 amendment",
+      "sha256": "22279b038423b079f4921f9917c7533507f74ea760e307331d683375dccd23fd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-005",
+      "source": "LOC 0.2",
+      "sha256": "94127e696fe87ced24a88f8f9ec30dd8f6b7e967e9e324035ee4b87ab38620c8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-006",
+      "source": "LOC 0.2",
+      "sha256": "3a2e2fb82c991ccfd64c6a811fbee69db8f35d2a292794c0b2c9c1c71ce8979b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-007",
+      "source": "LOC 0.3 amendment",
+      "sha256": "08a254237b05ec33f84f38921b475b67c98065e0cf6625c846135333257d7223",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-008",
+      "source": "LOC 0.3 amendment",
+      "sha256": "56a25c317d05fa511890ed4f6c4df5727e162eeb89493e7d6e999784958e0e8d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-009",
+      "source": "LOC 0.2",
+      "sha256": "5c6a1d6ab76bbb9cbb85ff6121c08511795e163b4c3d29f8f09d1436cbac5511",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-010",
+      "source": "LOC 0.2",
+      "sha256": "87ac73f48200a8473de1834223d438524f1eb0ff1bc38092a6850ca49215f4be",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-011",
+      "source": "LOC 0.3 amendment",
+      "sha256": "6ae05a350fa84cfe4504ae228a1024cda7df2e06cfb663ada653139212822254",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-012",
+      "source": "LOC 0.3 amendment",
+      "sha256": "1f729b356cbcc036a84d891f0fe06cc0292f6c243dbae6d7ec3799650519f87e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-013",
+      "source": "LOC 0.3 amendment",
+      "sha256": "6bda5496004950078beaeb082f7e5f5fabed14f1fb128550ee0e13520e8c8603",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-014",
+      "source": "LOC 0.3 amendment",
+      "sha256": "2f38b00fbfffe167f9ab10ac28925a9aa668749b26561f095cadf727fb538668",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-015",
+      "source": "LOC 0.2",
+      "sha256": "99cb314607163cc898996801cedfb24c22b69865a0a68341611847dee1dfce6c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-016",
+      "source": "LOC 0.3 amendment",
+      "sha256": "b69c34882cc84a0450f2a29937f1e321a00aa04a7ef6cbf20f7ab4ac7e57fe78",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-017",
+      "source": "LOC 0.3 amendment",
+      "sha256": "3cc5dc4432726ffbeb89433c69e097e491ef14858170de47d52392818b540f47",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-018",
+      "source": "LOC 0.2",
+      "sha256": "85766be071858349ca643f57e34c67383e9657bac9109505d732a7175c9282f7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-019",
+      "source": "LOC 0.2",
+      "sha256": "e6ae3564690a8fc662cef6ad4864258e73c7a6a85abad8419f79c901681ad608",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-020",
+      "source": "LOC 0.2",
+      "sha256": "30b439aa5fe000838c0b8bffa44706f5809545782050da6044bf4d28514b6ee1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-021",
+      "source": "LOC 0.2",
+      "sha256": "a2be1544d9d6c53b94b88c70e74ff14241efcd7cb8d0f99f4d23b6a62df81d82",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-022",
+      "source": "LOC 0.2",
+      "sha256": "c3072a543f3b0dee393e19758a2c21179e669dda6b6894a62e7f6c6c9770a0a7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-023",
+      "source": "LOC 0.2",
+      "sha256": "0afc743378befd6037dd5031558ea693f777dc990d1fa9a4a5de1b93d4e64c21",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-024",
+      "source": "LOC 0.2",
+      "sha256": "a138c12aea712cdff83d6be6eae837c23ea3ec73ba24f453cb0ddd12add00a16",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-025",
+      "source": "LOC 0.2",
+      "sha256": "ac12e7a8f9aca8691e7a3f3fe248442577e7b52459407388e92cc9411458d1de",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-026",
+      "source": "LOC 0.2",
+      "sha256": "a3ae0d6e068aa01cf483ec49c169e8b0eac412cff6677101813d3896ae45d273",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-027",
+      "source": "LOC 0.2",
+      "sha256": "87aa6d866b530f7835aad5c50fe29b99d2b43494e29b15fe9620c3310c250641",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-028",
+      "source": "LOC 0.2",
+      "sha256": "06f56d889e56be7e9031f5a25f366826f7719b22b4d99f80d7f2de87e33aae0c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-029",
+      "source": "LOC 0.2",
+      "sha256": "7e1c0dfb0cfe52ec6101d1d627778d4fe76be3d6f880d6568341c46a6c2c857d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-030",
+      "source": "LOC 0.2",
+      "sha256": "53e5d68386b44ac116ce2084c68b3709348a418485765e90076f7ebc5c36551e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-031",
+      "source": "LOC 0.2",
+      "sha256": "7aae1a84a19d388e0dfa427a592054b01c4be727df74d2b9f439d7f63f1c2d99",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-032",
+      "source": "LOC 0.2",
+      "sha256": "58e0c8f4e6b462c349686788bf9e10f2fcfb93b71d8be119ea2bc2f42b5ad28a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-033",
+      "source": "LOC 0.2",
+      "sha256": "9558af513e2b3c8cde1a70f2c39d4a1a1532e7dfc0f3fb2d75e395f2ae518de9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-034",
+      "source": "LOC 0.2",
+      "sha256": "7d8afdb327d227a48db676b3d9376e07d2117fab682ed6493461b9e7ce98b3a8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-035",
+      "source": "LOC 0.2",
+      "sha256": "a5e5c4353ba18d9da40316c0fae497e72ac6e80d5e9ccf78e3eb4ab037ddf773",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-036",
+      "source": "LOC 0.2",
+      "sha256": "878dfac474dd3a0891a2e175e72fce6ab6fc36fcec293676b73548f0d2a76621",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-037",
+      "source": "LOC 0.2",
+      "sha256": "99afd5602c85f775805252794e815de19f73e84c981b62d0503de389f5e5f18d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-038",
+      "source": "LOC 0.2",
+      "sha256": "e2e90d5084c78ae6564866860ec82bd0631170f431cc32afa2415d3ae9e7d39d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-039",
+      "source": "LOC 0.2",
+      "sha256": "025b82348dbd78a7efce522e93c6dc8b5c26ffc691606d6bcf0f77f5dabff2db",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-040",
+      "source": "LOC 0.2",
+      "sha256": "ce937c150036e34e78787a3761b0c5b3192364dc8efcd04a2272f9d6124ab292",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-041",
+      "source": "LOC 0.2",
+      "sha256": "b773e42aa3aa5ec47fd9d7e0dfae90f0b45c7ed6c4af994db8cc743125c27926",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-042",
+      "source": "LOC 0.2",
+      "sha256": "dfddd6f1529945081f245fa6a99cf083cf89ba0193162d360a8c3a7e5ec65450",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-043",
+      "source": "LOC 0.2",
+      "sha256": "2609a68dcd0b4cf058f943f4d5c224fb1bb2438774691f5f2b97bf66ff8018be",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-044",
+      "source": "LOC 0.2",
+      "sha256": "cef383f49bf8f9806bba737b52e1946e35ae06efc5ecbfac8e1584ce168ce587",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-045",
+      "source": "LOC 0.2",
+      "sha256": "c026e836040f4920b793cbd9c4f5a4fa1b72daede695d2982397cf000a1b3fe9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-046",
+      "source": "LOC 0.2",
+      "sha256": "0b189ddc3fcf73c2ff884044ea0e33a14f0adff44038096c70e16f6f1d4d962f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-047",
+      "source": "LOC 0.2",
+      "sha256": "ec4e3296025de101e345164e512d067d605cdcb9253d9e96b5ea37de013c3f24",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-048",
+      "source": "LOC 0.2",
+      "sha256": "6aef7c6cb97694dd75a0402b7cdd615f26b6e55eb1ec5308d8e382c7006e7813",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-049",
+      "source": "LOC 0.2",
+      "sha256": "a5629cd016711301925636991e10c89b49e87f20880fc70ebba9fbd2c4806443",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-050",
+      "source": "LOC 0.3 amendment",
+      "sha256": "65744fa0840aee37a77c7931bd4473a1fe23c89282c4cc3a9f1eb913ffdf2f11",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-051",
+      "source": "LOC 0.2",
+      "sha256": "d1f0f67bf430bbbec05135c48ab22b1fd276f829e571bf2ea8ec29cb886969f6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-052",
+      "source": "LOC 0.2",
+      "sha256": "ac95c3b80bc2a60f6cb6c623c94a29cf1138e29e8ca6256d61a3970fb3e397d0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-053",
+      "source": "LOC 0.2",
+      "sha256": "c7e2b8968fef5a4702add0655ba9b8cf7c013cbf0761bbba32a41a18739c6d16",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-054",
+      "source": "LOC 0.2",
+      "sha256": "eb31ca3a4f30200b4690afcbce6d1c2578df66b8c96598840e5ac0f1cda84130",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-055",
+      "source": "LOC 0.2",
+      "sha256": "02fa3a9233ecbcd4d8ea6ba0aa448656f3e502919e191eec9141e6ee5b168197",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-056",
+      "source": "LOC 0.2",
+      "sha256": "6cdd1db8e0aa2a764b167c32c9af48cfd9ec6a45eb4304ce387cf5e255eaf821",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-057",
+      "source": "LOC 0.2",
+      "sha256": "1052264273a06548c9d3a9efd51d49382774d573f6b8cc290b57a24802290881",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-058",
+      "source": "LOC 0.2",
+      "sha256": "21958208c3f22903265680788b2959db9c84a14bddf5d2f7a170c78013e7cb09",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-059",
+      "source": "LOC 0.2",
+      "sha256": "a1b5328f9ddc9a60cd9fdb8dae7ea9ac0449bd838bf3d8fca8815969b1db2272",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-060",
+      "source": "LOC 0.2",
+      "sha256": "fbec6267ceb7be4ef0f355fadefadfc569c8deb40ee8a9d96505a334d81f0d98",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-061",
+      "source": "LOC 0.2",
+      "sha256": "8990a09086f38dde892766397663b379be5497b076b5e4133a4dc459016ff260",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-062",
+      "source": "LOC 0.3 amendment",
+      "sha256": "dd5ab1c18b9e16939898d2c4e472c79bd4c930a95ac5a6935bc4c5d1572356fb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-063",
+      "source": "LOC 0.3 amendment",
+      "sha256": "24f17710cc8b0000997e0d23ae6a78131fe0dd8c30f0e17b55ec0d33358d66a4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-064",
+      "source": "LOC 0.3 amendment",
+      "sha256": "9033f54bf899168eecce724ce13e10fe0bac4e20141356898ecb7dccd5a15af1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-065",
+      "source": "LOC 0.2",
+      "sha256": "4fb350ba7e86c35d241ffd4110a1f37cfb9f8b56438e198768f55ecee57df251",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-066",
+      "source": "LOC 0.3 amendment",
+      "sha256": "07887d3acf9c4ea5ceee17b7fa1458e2acc1db5208ff56da8e16586edf9e5327",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-067",
+      "source": "LOC 0.2",
+      "sha256": "344fe3389112929f7d18a6a964422a46dd5aa4c8e30d6814728a3b9a7ed8b822",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-068",
+      "source": "LOC 0.2",
+      "sha256": "c860904fd251c24aa28501fd6ce9a2e9120b1e88fc5e09bfb6d8b6cbfc66ac4e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-069",
+      "source": "LOC 0.3 amendment",
+      "sha256": "a029e06244110367758616e28a97af0e85782703d98260292dffa49ad11f6f63",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-070",
+      "source": "LOC 0.3 amendment",
+      "sha256": "eb06fdae5526da3d4cfe65e94396fd8d59f326083bd8d41762914829a8b8270e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-071",
+      "source": "LOC 0.3 amendment",
+      "sha256": "0adbf5d7aad923d1a446080a93c7ab7149d26d2f5c1da4d8a019cdbf4938f07d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-072",
+      "source": "LOC 0.2",
+      "sha256": "d563022f1e5b48af598ed753013f506a92122a181b19ec7c2e00003693025b99",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "LOC-073",
+      "source": "LOC 0.3 amendment",
+      "sha256": "ae9d4fbaf7ca56022237c713caa3491d407ba5e3ce4bc3040b571b8357640df2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    }
+  ]
+}
