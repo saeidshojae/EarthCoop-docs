@@ -53,6 +53,37 @@ function assertSequential(articles, documentId) {
   }
 }
 
+function articleNumber(articleId, documentId) {
+  const match = articleId.match(new RegExp(`^${documentId}-(\\d+)$`));
+  return match ? Number(match[1]) : null;
+}
+
+function articleId(documentId, number, width) {
+  return `${documentId}-${String(number).padStart(width, '0')}`;
+}
+
+function validateNewArticles(baseArticles, amendmentArticles, documentId) {
+  const baseIds = new Set(baseArticles.map((article) => article.id));
+  const newArticles = amendmentArticles.filter((article) => !baseIds.has(article.id));
+  if (newArticles.length === 0) return [];
+
+  const lastBase = baseArticles.at(-1);
+  const lastNumber = articleNumber(lastBase.id, documentId);
+  const width = lastBase.id.split('-')[1].length;
+  if (lastNumber === null) {
+    throw new Error(`Cannot append new articles after non-numeric article ${lastBase.id}.`);
+  }
+
+  for (const [index, article] of newArticles.entries()) {
+    const expected = articleId(documentId, lastNumber + index + 1, width);
+    if (article.id !== expected) {
+      throw new Error(`New article IDs must use the next stable sequential ID; expected ${expected}, found ${article.id}.`);
+    }
+  }
+
+  return newArticles;
+}
+
 function normalizeHeadingLevel(text, level) {
   return text.replace(/^#{2,6}(?=\s+ماده\s+)/, '#'.repeat(level));
 }
@@ -91,6 +122,22 @@ function amendmentContext(amendment, articles) {
   return { relation, changeLog };
 }
 
+function findAppendInsertionPoint(document, documentId) {
+  const articles = parseArticles(document, documentId);
+  const lastArticle = articles.at(-1);
+  if (!lastArticle) throw new Error('Cannot append articles to a document without articles.');
+
+  const tail = document.slice(lastArticle.start);
+  const candidates = [
+    tail.search(/^##\s+حکم پایانی[^\n]*$/m),
+    tail.search(/^##\s+Change Log[^\n]*$/m),
+    tail.search(/^\*\*پایان [^\n]*\*\*$/m),
+  ].filter((index) => index >= 0);
+
+  if (candidates.length > 0) return lastArticle.start + Math.min(...candidates);
+  return lastArticle.end;
+}
+
 export function consolidateAmendment({
   base,
   amendment,
@@ -109,11 +156,7 @@ export function consolidateAmendment({
 
   const baseById = new Map(baseArticles.map((article) => [article.id, article]));
   const amendmentById = new Map(amendmentArticles.map((article) => [article.id, article]));
-  for (const article of amendmentArticles) {
-    if (!baseById.has(article.id)) {
-      throw new Error(`Amended article ${article.id} is not present in base ${documentId} ${baseVersion}.`);
-    }
-  }
+  const newArticles = validateNewArticles(baseArticles, amendmentArticles, documentId);
 
   let document = base;
   for (const article of [...baseArticles].reverse()) {
@@ -121,6 +164,15 @@ export function consolidateAmendment({
     if (!replacement) continue;
     const text = `${normalizeHeadingLevel(replacement.text, article.level)}\n\n`;
     document = `${document.slice(0, article.start)}${text}${document.slice(article.end)}`;
+  }
+
+  if (newArticles.length > 0) {
+    const insertionPoint = findAppendInsertionPoint(document, documentId);
+    const level = parseArticles(document, documentId).at(-1).level;
+    const appended = newArticles
+      .map((article) => normalizeHeadingLevel(article.text, level))
+      .join('\n\n');
+    document = `${document.slice(0, insertionPoint).trimEnd()}\n\n${appended}\n\n${document.slice(insertionPoint).trimStart()}`;
   }
 
   document = replaceMetadata(document, { targetVersion, status, authority, decisionDate });
@@ -133,16 +185,15 @@ export function consolidateAmendment({
   if (context.changeLog) document = `${document.trimEnd()}\n\n---\n\n${context.changeLog}\n`;
   else document = `${document.trimEnd()}\n`;
 
-  const finalById = new Map(parseArticles(document, documentId).map((article) => [article.id, article]));
-  const provenance = baseArticles.map((article) => {
-    const amended = amendmentById.has(article.id);
-    const finalArticle = finalById.get(article.id);
-    return {
-      id: article.id,
-      source: amended ? `${documentId} ${targetVersion} amendment` : `${documentId} ${baseVersion}`,
-      sha256: sha256(finalArticle.text),
-    };
-  });
+  const finalArticles = parseArticles(document, documentId);
+  assertSequential(finalArticles, documentId);
+  const provenance = finalArticles.map((article) => ({
+    id: article.id,
+    source: amendmentById.has(article.id)
+      ? `${documentId} ${targetVersion} amendment`
+      : `${documentId} ${baseVersion}`,
+    sha256: sha256(article.text),
+  }));
 
   return { document, provenance };
 }
