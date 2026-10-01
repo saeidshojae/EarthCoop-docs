@@ -10,14 +10,14 @@ import {
   patchRecoveredTocFinalLayoutSource,
 } from '../scripts/patch-recovered-live-uat.mjs';
 
-const OFFICIAL_ORDER = ['FC', 'CH', 'CO', 'EX', 'ECON', 'DG', 'JUD', 'LOC', 'ETH', 'STD'];
+const DISPLAY_ORDER = ['FC', 'CH', 'EX', 'CO', 'ECON', 'DG', 'JUD', 'LOC', 'ETH', 'STD'];
 
-test('official-v1 recovered catalog keeps the registered foundational volume order and a version-independent reference route', async () => {
+test('official-v1 recovered catalog keeps the approved foundational display order and a version-independent reference route', async () => {
   const catalog = await buildRecoveredContentCatalog(process.cwd());
 
-  assert.deepEqual(catalog.documents.map((item) => item.documentId), OFFICIAL_ORDER);
-  assert.deepEqual(catalog.documents.map((item) => item.version), OFFICIAL_ORDER.map(() => '1.0'));
-  assert.deepEqual(catalog.documents.map((item) => item.legalStatus), OFFICIAL_ORDER.map(() => 'effective'));
+  assert.deepEqual(catalog.documents.map((item) => item.documentId), DISPLAY_ORDER);
+  assert.deepEqual(catalog.documents.map((item) => item.version), DISPLAY_ORDER.map(() => '1.0'));
+  assert.deepEqual(catalog.documents.map((item) => item.legalStatus), DISPLAY_ORDER.map(() => 'effective'));
 
   const reference = catalog.references.find((item) => item.documentId === 'ECON-REF-01');
   assert.ok(reference);
@@ -28,7 +28,7 @@ test('official-v1 recovered catalog keeps the registered foundational volume ord
 test('legacy documents metadata has a governed serializer instead of appending references to stale 0.8 metadata', () => {
   assert.equal(typeof legacyGenerator.serializeRecoveredDocumentsMetadata, 'function');
 
-  const foundational = OFFICIAL_ORDER.map((code) => ({
+  const foundational = DISPLAY_ORDER.map((code) => ({
     code,
     title: code,
     summary: `summary-${code}`,
