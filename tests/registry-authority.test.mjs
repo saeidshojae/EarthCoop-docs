@@ -61,5 +61,5 @@ test('documents the registry model for human reviewers', async () => {
   assert.match(model, /public baseline/i);
   assert.match(model, /registered release/i);
   assert.match(model, /does not make.*effective/is);
-  assert.match(model, /explicit.*status.*decision/is);
+  assert.match(model, /فقط status و تصمیم رسمی مربوط به نفاذ\/ثبت را ملاک قرار دهید/);
 });
