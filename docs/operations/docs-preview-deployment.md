@@ -6,12 +6,24 @@ This runbook covers the automated **preview-only** deployment of the independent
 
 - Hostname: `docs-preview.earthcoop.ir`
 - Confirmed cPanel document root: `/home3/btboeapy/docs-preview.earthcoop.ir`
+- Current governed content epoch: `official-v1`, registered on `2026-10-01`
 
 Changing DNS, replacing the current runtime at `docs.earthcoop.ir`, or promoting preview to production is **out of scope**. Production cutover requires a separate reviewed plan and explicit approval after preview UAT.
 
+## Governed content baseline
+
+The current operational baseline is the 2026-10-01 official-v1 release:
+
+- `FC`, `CH`, `CO`, `EX`, `ECON`, `DG`, `JUD`, `LOC`, `ETH`, and `STD` are all version `1.0` with legal status `effective` in `releases/foundational/2026-10-01/document-registry.registered.json`.
+- `ECON-REF-01` is version `1.0` in `releases/foundational/2026-10-01/reference-registry.registered.json`, with `status: registered-reference` and `independentLegalEffect: false`.
+- The knowledge-center ingestion manifest maps `ECON-REF-01` as `documentId: ECON-REF-01`, version `1.0`, slug `reference/economy/econ-ref-01`, content class `reference`.
+- Historical pre-v1 versions and the obsolete runtime identifier `econ-ref-01-fa-0-1` are evidence/history only and must not be used as the current UAT expectation.
+
+Operational documentation must preserve the distinction between legal registration/effect and knowledge-center publication metadata. In particular, a registered reference is not effective legislation merely because its current rendition is published.
+
 ## What the workflow deploys
 
-`.github/workflows/deploy-docs-preview.yml` checks out the approved `main` commit, reruns repository tests and validators, materializes the hash-pinned EarthCoop Knowledge Center 0.8 runtime, regenerates governed document data/static document pages from the repository's current consolidated foundational sources, writes `deployment-manifest.json`, validates the complete recovered artifact with `scripts/validate-recovered-docs-center.mjs`, stores `dist/` as a rollback artifact, and uploads **only `dist/`** over strict FTPS.
+`.github/workflows/deploy-docs-preview.yml` checks out the approved `main` commit, reruns repository tests and validators, materializes the hash-pinned EarthCoop Knowledge Center 0.8 runtime, regenerates governed document data/static document pages from the repository's current consolidated official-v1 sources, writes `deployment-manifest.json`, validates the complete recovered artifact with `scripts/validate-recovered-docs-center.mjs`, stores `dist/` as a rollback artifact, and uploads **only `dist/`** over strict FTPS.
 
 The restored runtime baseline is `earthcoop-knowledge-center-0.8.0`. Its recovery archive is:
 
@@ -26,7 +38,7 @@ The repository itself, `.git`, source Markdown/MDX outside generated indexes, se
 
 This recovery artifact intentionally advertises only Persian (`fa`) as a display locale. The restored 0.8 Persian editorial guide pages are retained as an **under-audit snapshot**, not represented as fully current product guidance. Current reviewed English product/API guides remain in the repository but are not yet mapped into this recovered runtime. Legacy Mintlify `ar/` paths are Persian RTL compatibility material and must not be presented as genuine Arabic translations.
 
-English/Arabic runtime integration is therefore a later, separate checkpoint and is not a prerequisite for verifying the 0.8 UI recovery itself.
+English/Arabic runtime integration is therefore a later, separate checkpoint and is not a prerequisite for verifying the official-v1 Persian release on the recovered 0.8 UI.
 
 ## Required GitHub Actions secrets
 
@@ -85,7 +97,7 @@ Before the first automated merge/deployment:
 8. Add the four required GitHub Actions secrets.
 9. Do not merge the deployment PR until all branch CI is green and the preview-only path has been verified.
 
-## First automated deployment
+## Automated deployment
 
 The normal trigger is a push/merge to `main`. `workflow_dispatch` is also present for a controlled redeploy, but the job is guarded so it runs only when the selected ref is `main`.
 
@@ -95,7 +107,7 @@ The workflow order is intentionally fail-closed:
 2. `node --test`;
 3. existing manifest/terminology/translation validators;
 4. download/read the approved 0.8 recovery archive and verify its pinned SHA-256;
-5. build recovered `dist/`, including current governed foundational content and regenerated static document pages;
+5. build recovered `dist/`, including current governed official-v1 foundational/reference content and regenerated static document pages;
 6. run `node scripts/validate-recovered-docs-center.mjs --out dist`, which verifies the exact `sourceSha`, recovered runtime baseline, preview-only origin, Persian-only display contract, guide freshness policy, required files, recovery archive SHA, and every file hash declared by `deployment-manifest.json`;
 7. preserve the verified 0.8 recovery archive inside `dist/` so the deployment republishes it;
 8. upload the exact validated `dist/` as a GitHub Actions rollback artifact;
@@ -110,17 +122,20 @@ A workflow is not considered successfully deployed merely because the FTPS uploa
 
 Open the preview and verify at minimum:
 
-- `https://docs-preview.earthcoop.ir/`
-- a direct document route such as `/documents/fc/` and the application's document navigation;
+- `https://docs-preview.earthcoop.ir/`;
+- direct routes for all ten foundational documents and the application's document navigation;
+- every foundational document displays version `1.0` and legal status `effective`;
+- `ECON-REF-01` displays version `1.0`, is classified as a reference, and is **not** presented as independently effective legislation;
+- current ECON-REF-01 routing no longer depends on the obsolete `econ-ref-01-fa-0-1` identifier;
 - Persian RTL rendering;
 - language controls do not advertise legacy `ar/` content as Arabic or claim unmapped English content is live;
-- full-text search finds current **foundational document** body text, not only titles;
+- full-text search finds current official-v1 foundational body text and current ECON-REF-01 body text, not only titles;
 - table of contents and document navigation;
-- visible foundational document version/status values match governed repository metadata;
-- copy, print, and download controls;
+- copy, print, available PDF, history and stable-anchor controls;
 - mobile layout;
 - missing route/not-found behavior;
-- refresh/direct load of generated static document pages.
+- refresh/direct load of generated static document pages;
+- `/status/`, `/map/`, `/glossary/` and restored Persian 0.8 guides are not silently represented as fully reconciled current product truth while they remain under editorial audit.
 
 Then fetch:
 
@@ -132,9 +147,10 @@ and verify:
 - `runtimeBaseline` equals `earthcoop-knowledge-center-0.8.0`;
 - `runtimeArchiveSha256` equals `e1c5938f381db7b7f0efeef527dd828c96e13adc9de5a913de624796c6ae0704`;
 - `displayLocales` is exactly `['fa']` for this recovery checkpoint;
-- `guideContentPolicy.fa` identifies the 0.8 editorial snapshot as under audit.
+- `guideContentPolicy.fa` identifies the 0.8 editorial snapshot as under audit;
+- `canonicalOrigin` remains the preview hostname and preview indexing remains disabled.
 
-The workflow automatically checks the source SHA and runtime baseline; the artifact validator checks the remaining build contracts before upload. Manual inspection is still required during first-deploy UAT.
+The workflow automatically checks the source SHA and runtime baseline; the artifact validator checks the remaining build contracts before upload. Manual/live UAT is still required before production cutover.
 
 ## Rollback
 
@@ -162,7 +178,8 @@ Never use rollback as a reason to rewrite registered document history or alter `
 ## Failure triage
 
 - **Recovery archive download/hash failure:** no generated deployment is valid. Restore/provide the exact approved archive bytes and verify the pinned SHA; never silently accept a new archive under the old version name.
-- **Validation/build failure:** no upload should occur. Fix on a branch with a regression test.
+- **Validation/build failure:** no upload should occur. Fix on a branch with a regression test when behavior/code changes are required.
+- **Governed metadata mismatch:** stop deployment/UAT and reconcile the generated artifact with the 2026-10-01 registered official-v1 evidence; never hand-edit displayed legal status to hide the mismatch.
 - **Missing secret:** preflight fails before FTPS. Configure the missing Actions secret; do not hardcode it.
 - **FTPS authentication/TLS failure:** verify host, account scope, TLS support, certificate and provider requirements. Do not switch to plaintext FTP.
 - **Wrong server directory:** stop and correct `DOCS_FTP_SERVER_DIR`; never experiment against production paths.
