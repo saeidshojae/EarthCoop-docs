@@ -94,19 +94,20 @@ test('election guide separates official rules from current implementation and ke
   assert.match(elections, /پیاده‌سازی|محصول/);
 });
 
-test('app patch is fail-closed and injects one audited override before the learning-path runtime', () => {
-  const source = `const pages = {};\nconst LEARNING_PATH = Object.freeze([]);\nfunction article() { return {}; }\n`;
+test('app patch is fail-closed and injects one audited override at the recovered article boundary', () => {
+  const source = `const pages = {};\nfunction article() { return {}; }\nfunction tocFrom(html) { return []; }\n`;
   const patched = patchRecoveredGuideAppSource(source);
   assert.match(patched, /Object\.assign\(pages/);
   assert.match(patched, new RegExp(GUIDE_AUDIT_REVISION.replaceAll('.', '\\.')));
-  assert.ok(patched.indexOf('Object.assign(pages') < patched.indexOf('const LEARNING_PATH'));
-  assert.throws(() => patchRecoveredGuideAppSource('const pages = {};'), /learning-path patch point/i);
+  assert.ok(patched.indexOf('function article') < patched.indexOf('Object.assign(pages'));
+  assert.ok(patched.indexOf('Object.assign(pages') < patched.indexOf('function tocFrom'));
+  assert.throws(() => patchRecoveredGuideAppSource('const pages = {};'), /article override patch point/i);
 });
 
 test('applies the same audited revision to direct static guides, SPA source and page metadata', async () => {
   const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-audited-guides-'));
   await mkdir(path.join(outDir, 'src', 'content'), { recursive: true });
-  await writeFile(path.join(outDir, 'app.js'), `const pages = {};\nconst LEARNING_PATH = Object.freeze([]);\nfunction article() { return {}; }\n`);
+  await writeFile(path.join(outDir, 'app.js'), `const pages = {};\nfunction article() { return {}; }\nfunction tocFrom(html) { return []; }\n`);
   const records = expectedRoutes.map((route) => `{ inventoryId:'page.${route}', route:'${route}', title:'OLD', description:'OLD', contentClass:'guide', status:'under_audit', source:'OLD', sourceType:'editorial', authority:'OLD', version:'0.3.0', reviewedAt:'2026-09-19' }`).join(',\n');
   await writeFile(path.join(outDir, 'src', 'content', 'pages.fa.js'), `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.pageRecords = Object.freeze([\n${records}\n]);\n`);
 
