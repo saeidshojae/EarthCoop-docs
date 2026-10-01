@@ -88,27 +88,43 @@ function normalizeHeadingLevel(text, level) {
   return text.replace(/^#{2,6}(?=\s+ماده\s+)/, '#'.repeat(level));
 }
 
-function replaceMetadata(document, { targetVersion, status, authority, decisionDate }) {
+function replaceMetadata(document, {
+  targetVersion,
+  status,
+  authority,
+  decisionDate,
+  legalEffect = 'این نسخه ثبت شده است، اما هنوز لازم‌الاجرا نیست.',
+  authorityLabel = 'مرجع ثبت',
+  decisionDateLabel = 'تاریخ ثبت',
+}) {
   const versionPattern = /^\*\*نسخه:\*\*[^\n]*$/m;
   const statusPattern = /^\*\*وضعیت:\*\*[^\n]*$/m;
   if (!versionPattern.test(document)) throw new Error('Base document has no version metadata.');
   if (!statusPattern.test(document)) throw new Error('Base document has no status metadata.');
 
+  let cleaned = document
+    .replace(/^\*\*(?:مرجع ثبت|مرجع تهیه):\*\*[^\n]*\n?/gm, '')
+    .replace(/^\*\*(?:تاریخ ثبت|تاریخ تهیه):\*\*[^\n]*\n?/gm, '')
+    .replace(/^\*\*اثر حقوقی:\*\*[^\n]*\n?/gm, '')
+    .replace(/\n{3,}/g, '\n\n');
+
   const authorityLines = [
-    `**مرجع ثبت:** ${authority}`,
+    `**${authorityLabel}:** ${authority}`,
     '',
-    `**تاریخ ثبت:** ${decisionDate}`,
+    `**${decisionDateLabel}:** ${decisionDate}`,
     '',
-    '**اثر حقوقی:** این نسخه ثبت شده است، اما هنوز لازم‌الاجرا نیست.',
+    `**اثر حقوقی:** ${legalEffect}`,
   ].join('\n');
 
-  return document
+  cleaned = cleaned
     .replace(versionPattern, `**نسخه:** ${persianVersion(targetVersion)}`)
     .replace(statusPattern, `**وضعیت:** ${status}\n\n${authorityLines}`)
     .replace(
       /\*\*پایان اساسنامه اجرایی EarthCoop — نسخه [۰-۹.]+\*\*/,
       `**پایان اساسنامه اجرایی EarthCoop — نسخه ${persianVersion(targetVersion)}**`,
     );
+
+  return cleaned;
 }
 
 function amendmentContext(amendment, articles) {
@@ -147,6 +163,9 @@ export function consolidateAmendment({
   status,
   authority,
   decisionDate,
+  legalEffect,
+  authorityLabel,
+  decisionDateLabel,
 }) {
   const baseArticles = parseArticles(base, documentId);
   const amendmentArticles = parseArticles(amendment, documentId);
@@ -154,7 +173,6 @@ export function consolidateAmendment({
   if (amendmentArticles.length === 0) throw new Error('Amendment contains no articles.');
   assertSequential(baseArticles, documentId);
 
-  const baseById = new Map(baseArticles.map((article) => [article.id, article]));
   const amendmentById = new Map(amendmentArticles.map((article) => [article.id, article]));
   const newArticles = validateNewArticles(baseArticles, amendmentArticles, documentId);
 
@@ -175,7 +193,15 @@ export function consolidateAmendment({
     document = `${document.slice(0, insertionPoint).trimEnd()}\n\n${appended}\n\n${document.slice(insertionPoint).trimStart()}`;
   }
 
-  document = replaceMetadata(document, { targetVersion, status, authority, decisionDate });
+  document = replaceMetadata(document, {
+    targetVersion,
+    status,
+    authority,
+    decisionDate,
+    legalEffect,
+    authorityLabel,
+    decisionDateLabel,
+  });
   const context = amendmentContext(amendment, amendmentArticles);
   if (context.relation) {
     const insertionPoint = document.search(/^#\s+بخش\s+/m);
