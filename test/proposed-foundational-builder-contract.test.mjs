@@ -35,6 +35,20 @@ test('builds every proposed foundational target as a non-registered full draft w
   }
 });
 
+test('working full drafts normalize legacy relationship metadata without changing article history', async () => {
+  const packages = await buildProposedFoundational(repositoryRoot);
+
+  for (const item of packages) {
+    assert.match(item.markdown, /\*\*جایگاه و روابط اسنادی پیشنهادی:\*\*/);
+    assert.doesNotMatch(item.markdown, /^\s*-?\s*\*\*نسبت با [^:]+:\*\*/m);
+  }
+
+  for (const id of ['DG', 'JUD', 'LOC']) {
+    const item = packages.find((candidate) => candidate.id === id);
+    assert.doesNotMatch(item.markdown, /\*\*نسبت با اساسنامه اجرایی:\*\*[^\n]*(?:مکمل|تابع)/);
+  }
+});
+
 test('EX 1.2 appends EX-085 without renumbering the historical 84 articles', async () => {
   const packages = await buildProposedFoundational(repositoryRoot);
   const ex = packages.find((item) => item.id === 'EX');
