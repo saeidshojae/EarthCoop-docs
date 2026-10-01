@@ -15,8 +15,10 @@ async function fixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-recovered-build-'));
   const runtime = path.join(root, 'runtime');
   await mkdir(path.join(runtime, 'src/content/document-packages'), { recursive: true });
+  await mkdir(path.join(runtime, 'src/data'), { recursive: true });
   await mkdir(path.join(runtime, 'src/pages'), { recursive: true });
   await mkdir(path.join(runtime, 'src/ui'), { recursive: true });
+  await mkdir(path.join(runtime, 'downloads'), { recursive: true });
   await writeFile(path.join(runtime, 'index.html'), '<h1>مرکز دانش ارث‌کوپ</h1>');
   await writeFile(path.join(runtime, 'app.js'), `function documentsPage(){\n const docs=window.EC_CONTENT.documents;\n return \`<h1>اسناد بنیادین</h1><div class="docs-grid">\${docs.map((d)=>d.title).join('')}</div>\`\n}\nfunction statusPage(){return ''}\n`);
   await writeFile(path.join(runtime, 'styles.css'), 'legacy-css');
@@ -24,6 +26,8 @@ async function fixture() {
   await writeFile(path.join(runtime, 'src/content/document-packages/foundational.generated.fa.js'), 'OLD');
   await writeFile(path.join(runtime, 'src/content/document-packages/index.fa.js'), 'OLD-INDEX');
   await writeFile(path.join(runtime, 'src/content/documents.fa.js'), 'window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documents = Object.freeze([]);\n');
+  await writeFile(path.join(runtime, 'src/data/document-downloads.js'), `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.documentDownloads = Object.freeze({\n  'fc@1.0': { href: '/downloads/documents/EarthCoop-FC-1.0-fa.pdf', filename: 'EarthCoop-FC-1.0-fa.pdf' }\n});\n`);
+  await writeFile(path.join(runtime, 'downloads/document-downloads.json'), JSON.stringify({ 'fc@1.0': { file: 'EarthCoop-FC-1.0-fa.pdf' } }));
   await writeFile(path.join(runtime, 'src/content/pages.fa.js'), `window.EC_CONTENT = window.EC_CONTENT || {};\nwindow.EC_CONTENT.pageRecords = Object.freeze([\n  {route:'map',status:'unofficial_explanation'},\n  {route:'status',status:'under_audit'},\n  {route:'glossary',status:'under_audit'}\n]);\n`);
   await writeFile(path.join(runtime, 'src/pages/document-reader.js'), `function renderDocumentReader(documentRecord) {\n  return \`<div class="breadcrumbs"><a href="/">خانه</a><i></i><a href="/documents/">اسناد بنیادین</a><i></i><span>\${documentRecord.title}</span></div>\`;\n}\n`);
   await writeFile(path.join(runtime, 'src/ui/document-reader-controls.js'), `function syncDocumentTocViewport() {}\nfunction initializeDocumentReaderControls() {\n  window.addEventListener('resize', syncDocumentTocViewport, { passive: true });\n}\n`);
@@ -93,6 +97,18 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   assert.match(generated, /FC-001/);
   assert.match(generated, /registered_not_effective/);
   assert.doesNotMatch(generated, /ar\/fake/);
+
+  const downloadsSource = await readFile(path.join(outDir, 'src/data/document-downloads.js'), 'utf8');
+  assert.match(downloadsSource, /"fc@1\.1"/);
+  assert.match(downloadsSource, /EarthCoop-FC-1\.1-fa\.pdf/);
+  assert.doesNotMatch(downloadsSource, /"fc@1\.0"|EarthCoop-FC-1\.0-fa\.pdf/);
+  const downloadsManifest = JSON.parse(await readFile(path.join(outDir, 'downloads/document-downloads.json'), 'utf8'));
+  assert.deepEqual(downloadsManifest, {
+    'fc@1.1': {
+      href: '/downloads/documents/EarthCoop-FC-1.1-fa.pdf',
+      filename: 'EarthCoop-FC-1.1-fa.pdf',
+    },
+  });
 
   const packageIndex = await readFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), 'utf8');
   assert.match(packageIndex, /referenceDocumentPackages/);
