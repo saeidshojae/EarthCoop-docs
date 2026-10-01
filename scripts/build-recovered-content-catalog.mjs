@@ -28,9 +28,20 @@ function sharedMetadata(entry, source, markdown) {
   };
 }
 
+function isRegisteredReleaseSource(source) {
+  return source.startsWith('releases/foundational/');
+}
+
 export async function buildRecoveredContentCatalog(rootDir, { currentFoundationalPackages } = {}) {
   const manifest = JSON.parse(await readFile(path.join(rootDir, 'docs-manifest.json'), 'utf8'));
-  const current = currentFoundationalPackages ?? await buildCurrentFoundational(rootDir);
+  const needsLegacyFoundational = (manifest.entries ?? []).some((entry) =>
+    entry.contentClass === 'foundational_document'
+    && entry.canonicalLanguage === 'fa'
+    && entry.renditions?.fa?.source
+    && !isRegisteredReleaseSource(entry.renditions.fa.source)
+  );
+  const current = currentFoundationalPackages
+    ?? (needsLegacyFoundational ? await buildCurrentFoundational(rootDir) : []);
   const currentById = new Map(current.map((item) => [item.id, item]));
   const documents = [];
   const references = [];
@@ -41,6 +52,12 @@ export async function buildRecoveredContentCatalog(rootDir, { currentFoundationa
     if (!rendition?.source || !USABLE.has(rendition.status)) continue;
 
     if (entry.contentClass === 'foundational_document') {
+      if (isRegisteredReleaseSource(rendition.source)) {
+        const markdown = await readFile(path.join(rootDir, rendition.source), 'utf8');
+        documents.push(sharedMetadata(entry, rendition.source, markdown));
+        continue;
+      }
+
       const consolidated = currentById.get(entry.documentId);
       if (!consolidated?.markdown) throw new Error(`Missing consolidated source for ${entry.documentId}`);
       if (String(consolidated.version) !== String(entry.version)) {
@@ -50,7 +67,9 @@ export async function buildRecoveredContentCatalog(rootDir, { currentFoundationa
       continue;
     }
 
-    if (entry.contentClass === 'reference' && rendition.source.startsWith('references/')) {
+    if (entry.contentClass === 'reference' && (
+      rendition.source.startsWith('references/') || isRegisteredReleaseSource(rendition.source)
+    )) {
       const markdown = await readFile(path.join(rootDir, rendition.source), 'utf8');
       references.push({
         ...sharedMetadata(entry, rendition.source, markdown),
