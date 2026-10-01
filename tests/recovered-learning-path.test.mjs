@@ -10,6 +10,7 @@ import {
   learningPathNeighbors,
   patchRecoveredLearningPathAppSource,
   patchRecoveredLearningPathHtml,
+  patchRecoveredLearningPathStyles,
   renderLearningPathNavigation,
 } from '../scripts/patch-recovered-learning-path.mjs';
 
@@ -61,6 +62,14 @@ test('final page exposes previous navigation and a path-complete state without i
   assert.doesNotMatch(html, /learning-path-next/);
 });
 
+test('learning path styles keep next title readable and mobile arrows compact in one row', () => {
+  const styles = patchRecoveredLearningPathStyles('.article-body{display:block}\n');
+  assert.match(styles, /\.learning-path-next strong\{[^}]*color:#fff/);
+  assert.match(styles, /@media\(max-width:640px\)[\s\S]*\.learning-path-arrows\{grid-template-columns:1fr 1fr/);
+  assert.doesNotMatch(styles, /@media\(max-width:640px\)[\s\S]*\.learning-path-arrows\{grid-template-columns:1fr\}/);
+  assert.doesNotMatch(styles, /@media\(max-width:640px\)[\s\S]*\.learning-path-arrows a\{[^}]*flex-direction:column/);
+});
+
 test('static guide patch inserts path navigation before related content and preserves related cards verbatim', () => {
   const source = `<main><div class="article-body"><p>بدنه صفحه</p>${RELATED}</div></main>`;
   const patched = patchRecoveredLearningPathHtml(source, 'start');
@@ -110,6 +119,8 @@ test('build integration patches all eight direct guide routes plus SPA and style
   assert.match(app, /location\.pathname/);
   assert.match(app, /href="#\/\$\{next\.route\}"/);
   assert.match(styles, /Recovered learning path navigation/);
+  assert.match(styles, /\.learning-path-next strong\{[^}]*color:#fff/);
+  assert.match(styles, /@media\(max-width:640px\)[\s\S]*\.learning-path-arrows\{grid-template-columns:1fr 1fr/);
   for (const route of ROUTES) {
     const page = await readFile(path.join(outDir, 'guides', route, 'index.html'), 'utf8');
     assert.match(page, new RegExp(`data-learning-path-route="${route}"`));
