@@ -12,8 +12,14 @@ const REQUIRED_RUNTIME_FILES = [
 ];
 
 function validateEditorialTruth(editorialTruth) {
-  if (editorialTruth?.recoveredPersianGuides?.status !== 'historical_snapshot') {
-    throw new Error('Recovered Persian guide editorial truth must remain historical_snapshot');
+  if (editorialTruth?.recoveredPersianGuides?.status !== 'audited_current') {
+    throw new Error('Recovered Persian guide editorial truth must remain audited_current');
+  }
+  if (editorialTruth?.recoveredPersianGuides?.revision !== '2026-10-02-audited-v1') {
+    throw new Error('Recovered Persian guide editorial revision mismatch');
+  }
+  if (editorialTruth?.recoveredPersianGuides?.productTruth !== 'audited_against_current_repository_and_official_v1') {
+    throw new Error('Recovered Persian guide product-truth declaration mismatch');
   }
   if (editorialTruth?.reviewedEnglishGuides?.status !== 'verified_current' || editorialTruth.reviewedEnglishGuides.runtimeMapped !== false) {
     throw new Error('Reviewed English guide evidence must remain current but runtime-unmapped');

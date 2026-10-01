@@ -8,9 +8,11 @@ const inventory = { pages: [
   {path:'groups/overview.mdx', title:'Groups'},
 ]};
 
-test('classifies recovered Persian editorial pages as historical snapshots, not current product truth', () => {
+test('classifies the eight Persian learning-path guides as audited current editorial content after the 2026-10-02 truth sync', () => {
   const truth = buildRecoveredEditorialTruth(inventory);
-  assert.equal(truth.recoveredPersianGuides.status, 'historical_snapshot');
+  assert.equal(truth.recoveredPersianGuides.status, 'audited_current');
+  assert.equal(truth.recoveredPersianGuides.revision, '2026-10-02-audited-v1');
+  assert.equal(truth.recoveredPersianGuides.productTruth, 'audited_against_current_repository_and_official_v1');
   assert.equal(truth.statusPage.status, 'needs_review');
   assert.equal(truth.mapPage.status, 'needs_review');
   assert.equal(truth.glossaryPage.status, 'needs_review');

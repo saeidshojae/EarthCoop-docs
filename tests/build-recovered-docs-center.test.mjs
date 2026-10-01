@@ -119,7 +119,8 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   assert.match(reader, /اسناد بنیادین/);
 
   const editorial = JSON.parse(await readFile(path.join(outDir, 'recovered-editorial-truth.json'), 'utf8'));
-  assert.equal(editorial.recoveredPersianGuides.status, 'historical_snapshot');
+  assert.equal(editorial.recoveredPersianGuides.status, 'audited_current');
+  assert.equal(editorial.recoveredPersianGuides.revision, '2026-10-02-audited-v1');
   assert.equal(editorial.reviewedEnglishGuides.status, 'verified_current');
   assert.equal(editorial.reviewedEnglishGuides.runtimeMapped, false);
   assert.equal(editorial.mapPage.status, 'needs_review');
@@ -157,7 +158,7 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   assert.equal(report.runtimeBaseline, 'earthcoop-knowledge-center-0.8.0');
   assert.deepEqual(report.displayLocales, ['fa']);
   assert.deepEqual(report.guideContentPolicy, {
-    fa: 'recovered_0.8_editorial_snapshot_under_audit',
+    fa: 'audited_current_2026-10-02_official-v1_and_repository_evidence',
     en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
     ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
   });

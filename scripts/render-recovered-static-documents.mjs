@@ -3,7 +3,12 @@ import path from 'node:path';
 import vm from 'node:vm';
 
 import { ensureStaticReaderInitialization } from './recovered-foundational-downloads.mjs';
+import { applyRecoveredGuideContent } from './patch-recovered-guide-content.mjs';
 import { applyRecoveredLearningPath } from './patch-recovered-learning-path.mjs';
+import {
+  patchRecoveredDocumentPrintHtml,
+  patchRecoveredDocumentPrintStyles,
+} from './patch-recovered-print-branding.mjs';
 import { applyRecoveredUiPolish } from './patch-recovered-ui-polish.mjs';
 
 async function loadRecoveredRenderers(runtimeDir, documentDownloads = {}) {
@@ -39,6 +44,14 @@ function replaceDocumentMain(html, body) {
   return replaced;
 }
 
+function governedMainSiteUrl(siteConfigSource) {
+  const match = String(siteConfigSource ?? '').match(/mainSiteUrl:\s*"([^"]+)"/);
+  if (!match) throw new Error('Recovered site config is missing governed mainSiteUrl');
+  const url = new URL(match[1]);
+  if (url.protocol !== 'https:' || url.username || url.password) throw new Error('Recovered mainSiteUrl must be trusted HTTPS');
+  return url.origin;
+}
+
 export async function renderRecoveredStaticDocuments({
   runtimeDir,
   packages,
@@ -48,6 +61,7 @@ export async function renderRecoveredStaticDocuments({
 }) {
   const recovered = await loadRecoveredRenderers(runtimeDir, documentDownloads);
   const template = await readFile(path.join(runtimeDir, 'documents/fc/index.html'), 'utf8');
+  const mainSiteUrl = governedMainSiteUrl(await readFile(path.join(runtimeDir, 'site-config.js'), 'utf8'));
 
   for (const documentPackage of packages) {
     const route = {
@@ -64,6 +78,7 @@ export async function renderRecoveredStaticDocuments({
     const structuredData = recovered.EC_RENDER.renderStructuredData(route, canonicalOrigin, { document: documentPackage });
     let html = replaceDocumentHead(template, seoHead, structuredData);
     html = replaceDocumentMain(html, body);
+    html = patchRecoveredDocumentPrintHtml(html, { mainSiteUrl });
     html = ensureStaticReaderInitialization(html);
 
     const documentDir = path.join(runtimeDir, 'documents', documentPackage.slug);
@@ -71,6 +86,10 @@ export async function renderRecoveredStaticDocuments({
     await writeFile(path.join(documentDir, 'index.html'), html);
   }
 
+  const stylesPath = path.join(runtimeDir, 'styles.css');
+  await writeFile(stylesPath, patchRecoveredDocumentPrintStyles(await readFile(stylesPath, 'utf8')));
+
+  await applyRecoveredGuideContent({ outDir: runtimeDir });
   await applyRecoveredUiPolish({ outDir: runtimeDir, availableLocales: ['fa'] });
   await applyRecoveredLearningPath({ outDir: runtimeDir });
 }

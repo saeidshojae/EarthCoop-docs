@@ -15,7 +15,11 @@ const valid = {
     hreflang:[{locale:'fa',href:'https://docs-preview.earthcoop.ir/documents/econ-ref-01/'}],
   }],
   editorialTruth: {
-    recoveredPersianGuides:{status:'historical_snapshot'},
+    recoveredPersianGuides:{
+      status:'audited_current',
+      revision:'2026-10-02-audited-v1',
+      productTruth:'audited_against_current_repository_and_official_v1',
+    },
     reviewedEnglishGuides:{status:'verified_current',runtimeMapped:false},
     statusPage:{status:'needs_review'}, mapPage:{status:'needs_review'}, glossaryPage:{status:'needs_review'},
     arabic:{status:'unavailable',legacyMintlifyArIsArabic:false},
@@ -75,15 +79,17 @@ test('rejects any production canonical, sitemap or false Arabic alternate on pre
   }
 });
 
-test('rejects editorial truth that silently promotes stale or unavailable surfaces', () => {
+test('rejects editorial truth that regresses audited guides or silently promotes unavailable surfaces', () => {
   for (const mutate of [
-    (x) => { x.editorialTruth.recoveredPersianGuides.status = 'verified_current'; },
+    (x) => { x.editorialTruth.recoveredPersianGuides.status = 'historical_snapshot'; },
+    (x) => { x.editorialTruth.recoveredPersianGuides.revision = 'older'; },
+    (x) => { x.editorialTruth.recoveredPersianGuides.productTruth = 'unreviewed'; },
     (x) => { x.editorialTruth.reviewedEnglishGuides.runtimeMapped = true; },
     (x) => { x.editorialTruth.mapPage.status = 'verified_current'; },
     (x) => { x.editorialTruth.arabic.status = 'verified_current'; },
   ]) {
     const input = cloneValid();
     mutate(input);
-    assert.throws(() => validateRecoveredUatContract(input), /editorial|Arabic|guide|review/i);
+    assert.throws(() => validateRecoveredUatContract(input), /editorial|Arabic|guide|revision|product-truth|review/i);
   }
 });
