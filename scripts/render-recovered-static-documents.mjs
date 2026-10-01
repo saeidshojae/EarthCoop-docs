@@ -3,6 +3,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 
 import { ensureStaticReaderInitialization } from './recovered-foundational-downloads.mjs';
+import { applyRecoveredLearningPath } from './patch-recovered-learning-path.mjs';
 import { applyRecoveredUiPolish } from './patch-recovered-ui-polish.mjs';
 
 async function loadRecoveredRenderers(runtimeDir, documentDownloads = {}) {
@@ -71,4 +72,5 @@ export async function renderRecoveredStaticDocuments({
   }
 
   await applyRecoveredUiPolish({ outDir: runtimeDir, availableLocales: ['fa'] });
+  await applyRecoveredLearningPath({ outDir: runtimeDir });
 }
