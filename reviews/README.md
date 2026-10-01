@@ -1,1 +1,0 @@
-This directory contains non-normative review artifacts for draft legal-document changes. These files do not create legal effect, do not alter registered releases, and are not substitutes for the foundational texts or registries.
