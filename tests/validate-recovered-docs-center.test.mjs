@@ -13,8 +13,8 @@ async function fixture() {
   const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-validate-recovered-'));
   await mkdir(path.join(outDir, 'src/content/document-packages'), { recursive: true });
   const localeCatalog = { globalLocales: ['fa'], byDocument: { 'ECON-REF-01': { available: [{ locale: 'fa', direction: 'rtl', status: 'current' }], unavailable: ['en', 'ar'] } } };
-  const searchRows = [{ documentId: 'ECON-REF-01', contentClass: 'reference', locale: 'fa', title: 'سند مرجع اقتصاد', heading: 'بخش', anchor: 'section-1', body: 'اقتصاد و حق', status: 'official_draft', version: '1.0', route: '#/documents/econ-ref-01-fa-1-0/provisions/section-1' }];
-  const seoRoutes = [{ documentId: 'ECON-REF-01', routeId: 'econ-ref-01-fa-1-0', staticPath: '/documents/econ-ref-01-fa-1-0/', locale: 'fa', legalStatus: 'official_draft', contentClass: 'reference', canonical: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01-fa-1-0/', indexable: false, hreflang: [{ locale: 'fa', href: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01-fa-1-0/' }] }];
+  const searchRows = [{ documentId: 'ECON-REF-01', contentClass: 'reference', locale: 'fa', title: 'سند مرجع اقتصاد', heading: 'بخش', anchor: 'section-1', body: 'اقتصاد و حق', status: 'official_draft', version: '1.0', route: '#/documents/econ-ref-01/provisions/section-1' }];
+  const seoRoutes = [{ documentId: 'ECON-REF-01', routeId: 'econ-ref-01', staticPath: '/documents/econ-ref-01/', locale: 'fa', legalStatus: 'official_draft', contentClass: 'reference', canonical: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01/', indexable: false, hreflang: [{ locale: 'fa', href: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01/' }] }];
   const editorialTruth = {
     recoveredPersianGuides: { status: 'historical_snapshot', source: 'earthcoop-knowledge-center-0.8.0', publicationClaim: 'do_not_present_as_current_product_truth_without_review' },
     reviewedEnglishGuides: { status: 'verified_current', runtimeMapped: false, evidence: 'audits/product-guides/2026-09-28-inventory.json', paths: [] },
@@ -34,10 +34,10 @@ async function fixture() {
     'recovered-seo-routes.json': `${JSON.stringify(seoRoutes, null, 2)}\n`,
     'recovered-editorial-truth.json': `${JSON.stringify(editorialTruth, null, 2)}\n`,
     'robots.txt': 'User-agent: *\nDisallow: /\n',
-    'sitemap.xml': '<?xml version="1.0"?><urlset><url><loc>https://docs-preview.earthcoop.ir/documents/econ-ref-01-fa-1-0/</loc></url></urlset>\n',
+    'sitemap.xml': '<?xml version="1.0"?><urlset><url><loc>https://docs-preview.earthcoop.ir/documents/econ-ref-01/</loc></url></urlset>\n',
     '404/index.html': '<html>404</html>',
     'documents/fc/index.html': '<html>FC</html>',
-    'documents/econ-ref-01-fa-1-0/index.html': '<html>ECON-REF-01</html>',
+    'documents/econ-ref-01/index.html': '<html>ECON-REF-01</html>',
     'src/ui/mobile-navigation.js': 'mobile navigation',
     'src/ui/document-reader-controls.js': 'reader controls',
     'src/ui/search-dialog.js': 'search dialog',
@@ -148,7 +148,7 @@ test('rejects production SEO leakage or false editorial truth even when hashes a
     const relative = scenario === 'seo' ? 'recovered-seo-routes.json' : 'recovered-editorial-truth.json';
     const absolute = path.join(input.outDir, relative);
     const data = JSON.parse(await readFile(absolute, 'utf8'));
-    if (scenario === 'seo') data[0].canonical = 'https://docs.earthcoop.ir/documents/econ-ref-01-fa-1-0/';
+    if (scenario === 'seo') data[0].canonical = 'https://docs.earthcoop.ir/documents/econ-ref-01/';
     else data.recoveredPersianGuides.status = 'verified_current';
     const serialized = `${JSON.stringify(data, null, 2)}\n`;
     await writeFile(absolute, serialized);
