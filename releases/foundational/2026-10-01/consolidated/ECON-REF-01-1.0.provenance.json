@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "status": "registered-reference",
+  "independentLegalEffect": false,
+  "versionEpoch": "official-v1",
+  "documentId": "ECON-REF-01",
+  "version": "1.0",
+  "preV1SourceVersion": "0.2",
+  "provisions": [
+    {
+      "section": "1.1",
+      "changeType": "replaced",
+      "source": "ECON-REF-01 0.2 amendment",
+      "sha256": "85ec5ac461e34a75419618dbdad01427dcd219b5bee7778f03d12d64173df667"
+    },
+    {
+      "section": "1.2",
+      "changeType": "replaced",
+      "source": "ECON-REF-01 0.2 amendment",
+      "sha256": "6ba6e058f6bd15bd1711b00ba2f3e0d4891bae245821388837fdd3dc3748cc7c"
+    },
+    {
+      "section": "1.5",
+      "changeType": "replaced",
+      "source": "ECON-REF-01 0.2 amendment",
+      "sha256": "d9f836d623bd6759f0db2675fb409581f737d2f83ce3b58537067fee9d0439bd"
+    },
+    {
+      "section": "1.7",
+      "changeType": "replaced",
+      "source": "ECON-REF-01 0.2 amendment",
+      "sha256": "2ac018441bc06f6635287ce23470d2f8df96637f5e516f82492105ac5b84d63f"
+    },
+    {
+      "section": "1.8",
+      "changeType": "added",
+      "source": "ECON-REF-01 0.2 amendment",
+      "sha256": "1f6056dcb730f212886029bda5419a8dac15062b9e634bb1204d70e798ed6e10"
+    },
+    {
+      "section": "1.9",
+      "changeType": "added",
+      "source": "ECON-REF-01 0.2 amendment",
+      "sha256": "76c75bf0267a51f8e7e1d1ff2845fffe28c0b934570517bbd56ae61d12a8a8ba"
+    },
+    {
+      "section": "1.10",
+      "changeType": "added",
+      "source": "ECON-REF-01 0.2 amendment",
+      "sha256": "833268c138db44fcbfcf134dccb6efc5bf1222b830501cb4d810febed5d57691"
+    }
+  ]
+}

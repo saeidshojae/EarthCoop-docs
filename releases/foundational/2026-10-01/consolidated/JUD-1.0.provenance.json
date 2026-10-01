@@ -1,0 +1,565 @@
+{
+  "schemaVersion": 1,
+  "status": "effective",
+  "versionEpoch": "official-v1",
+  "documentId": "JUD",
+  "version": "1.0",
+  "previousVersion": null,
+  "preV1SourceVersion": "0.3",
+  "sourceAmendment": "published/foundational/JUD-0.3.fa.md",
+  "provisions": [
+    {
+      "id": "JUD-001",
+      "source": "JUD 0.3 amendment",
+      "sha256": "0eb849fcaa71c54c18d2f41fb2b1f835fbf574c6bfc44d91e28a84e301d84716",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-002",
+      "source": "JUD 0.2",
+      "sha256": "e55fbe64195ff8fce9d37ce7fac681e083dfa893d5b29182fd50f48ef5350e07",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-003",
+      "source": "JUD 0.2",
+      "sha256": "c7fbbd48d3d2a5a3d2e0afac9efed043db83d87ecdfd7d00838f398f9c8b1664",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-004",
+      "source": "JUD 0.3 amendment",
+      "sha256": "f2f964303af50c9ac07e771a2a02d22069abffc8d67c86f65483911eca7ae6a6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-005",
+      "source": "JUD 0.2",
+      "sha256": "db8d30813d629e1fe90cd9c320fadf5ddfce0d9ae47f34d2431d46b0921312d1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-006",
+      "source": "JUD 0.3 amendment",
+      "sha256": "2161f21c618ec2b7d2a9250e6ecb6d82e32dedabb84cc93db69a0b2afe3dd539",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-007",
+      "source": "JUD 0.2",
+      "sha256": "299383b930f86f0c4c6b7cb80b3664766dbd54cc2f5b70c2493b437f0f6c9185",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-008",
+      "source": "JUD 0.3 amendment",
+      "sha256": "ccabafe4c4a770d367becb62a8a14dd406fab0662cd6a77816a34edaf8c246b2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-009",
+      "source": "JUD 0.2",
+      "sha256": "22bce43001ae9b394fc1a08a3efc1681ce364e50685fddb316dbba6a99336cb0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-010",
+      "source": "JUD 0.2",
+      "sha256": "c1b0598003af146c2ca2d176547b9d59ce2fe3892d65f56a45a5eda8516866dd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-011",
+      "source": "JUD 0.2",
+      "sha256": "d3d853196df951d0a5d4226ab28fc5e71255bd6b8f804f0b0523c362e297cacd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-012",
+      "source": "JUD 0.2",
+      "sha256": "5ace4c5e5cfb70626999823eaf0c8a953807c812570c311a2ee403682f0e89d7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-013",
+      "source": "JUD 0.2",
+      "sha256": "74e4e67486ecb1ae189f932ebcf8eecf2d217be06e24da85f72e1d9fc268c817",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-014",
+      "source": "JUD 0.2",
+      "sha256": "879f4a070bf58b7cbe428dd8e180f3625ecc5db2b8e0b257d2aa48fb91998041",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-015",
+      "source": "JUD 0.2",
+      "sha256": "a5ad493eea86a15e421752b89d98b692e32b0994b42692510df46cb5deada768",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-016",
+      "source": "JUD 0.2",
+      "sha256": "db75e6cc702b52e431cb3339021a4d31b07409e31ecaa4b9852537d82e6b0853",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-017",
+      "source": "JUD 0.2",
+      "sha256": "5c9929e9304d79e6232120248bc7a68e935a462ad392298ee70460d94bcfa213",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-018",
+      "source": "JUD 0.2",
+      "sha256": "80e995ae803685b75fea1eebdbe80af9e5efafa4615b91558a951c39ac3cbfcf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-019",
+      "source": "JUD 0.2",
+      "sha256": "e6b28128dcfabe98efb6170764fbc68ea8bf3f88250704ad3c2af80e574206ca",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-020",
+      "source": "JUD 0.2",
+      "sha256": "be603fce83daa778f753e1a69c5abc640d8c469daee6109bd90f1422a5c153bb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-021",
+      "source": "JUD 0.2",
+      "sha256": "67bfa07cf379e0ced0f4fa4fe7a79f4f0ae83fe37301dd318483ac9a561bcf1f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-022",
+      "source": "JUD 0.2",
+      "sha256": "319cebc1a51828ca9c6153a59986257d1f12aad820e56072c822311213bcd1ea",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-023",
+      "source": "JUD 0.2",
+      "sha256": "490ca26743f7d0fb7bd32d7dba3d500637283544d9f1081a563383548784c1d1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-024",
+      "source": "JUD 0.2",
+      "sha256": "7a15fced63ead7fb221705a7e4df7212b68c66237f0bbb33a0bafdc4d2ea0406",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-025",
+      "source": "JUD 0.2",
+      "sha256": "08852e84f4d5a1d7c2ab6f2f921ee319250d48ceff3a437af435284b334b21c0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-026",
+      "source": "JUD 0.2",
+      "sha256": "f1b0c7a4319b5d5b7d34b488d4e5918b37d6d1ac1b3ec661f9f4d07cda1eafc0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-027",
+      "source": "JUD 0.2",
+      "sha256": "2e417226dd5556289f08f17f84ccef4eef287389bfeea5fc3a5e2dadf317f3da",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-028",
+      "source": "JUD 0.2",
+      "sha256": "b2d5998e8305afea16377e4fb1c066d328cc2304298cacde5a4cccb894b79626",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-029",
+      "source": "JUD 0.2",
+      "sha256": "355f4ba3cb4badfb7b1f1a1d8839c63c52d3f09e694100c014f8898e434ae3e9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-030",
+      "source": "JUD 0.2",
+      "sha256": "892b11ee890cca461c004f4ce908e850b129f10896c0e6b47850962799436fb9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-031",
+      "source": "JUD 0.2",
+      "sha256": "b9da906945b77a8da6a9c0eade8bbb4825f0eac2ba525e70124a1df81a5ead88",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-032",
+      "source": "JUD 0.2",
+      "sha256": "9e595df2e24862888fa5d7391ed78f5f4bc87d0f55824eb3bcc974bd0ee52221",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-033",
+      "source": "JUD 0.2",
+      "sha256": "d10d30ff898a0b061da63410513c4df1ee8763a96a428bb403b5492c8168eb11",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-034",
+      "source": "JUD 0.2",
+      "sha256": "9219ca0e9a65829cd811ea5f2e40f7a4cdd8d0cc458385d8287f5b70d1b8ef06",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-035",
+      "source": "JUD 0.2",
+      "sha256": "d61c15c2def1a9fd5f8f76a5b06c26f194593e88f4567df809628ddb2b7fc82c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-036",
+      "source": "JUD 0.2",
+      "sha256": "bc1814b518be43d4015636f20c4cac9b63889a37d5b32d1dc58d997565f75eb0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-037",
+      "source": "JUD 0.2",
+      "sha256": "bd091a38efb27034a6f6ac0e28f644e6c12a86add1937f48e470b828164126de",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-038",
+      "source": "JUD 0.2",
+      "sha256": "88b08f157e37b33962dc9cfa3143cff3d65294d1fde26aa1b561829c77b35baf",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-039",
+      "source": "JUD 0.2",
+      "sha256": "44a307678fe86f9644049f6e6c4eac7e86497b336125d22bcd7e48a9f2fdd5d1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-040",
+      "source": "JUD 0.2",
+      "sha256": "677b420961ee4651625c851af044935fb8338ada88344361cc9b136e6e2c6104",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-041",
+      "source": "JUD 0.2",
+      "sha256": "537e47ecbbc567a8fb86d1b50e9afa86c9aac2fa96699afd9415d0b58caf50c2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-042",
+      "source": "JUD 0.2",
+      "sha256": "4b112efed1e625d9e469b8b4b6a1516f9c144ee01de397339ab2e71e5b064209",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-043",
+      "source": "JUD 0.2",
+      "sha256": "ad3ca72aecee049f49d5204f622e0fa2c98ebfee365443942dea08c1fc31143b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-044",
+      "source": "JUD 0.3 amendment",
+      "sha256": "13df4b68500fc14b75e98a93deac265e761d940850695f43f0de6a32f5aa1fd6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-045",
+      "source": "JUD 0.3 amendment",
+      "sha256": "a3b28bfb88a2dfdd39c5869735ed1542b9637ff26daccf0adfdc0247c4cc9481",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-046",
+      "source": "JUD 0.3 amendment",
+      "sha256": "26a19f14ef8197e8035ec1bb7221217ac5f94224f7d156be439f9f122bb97ecb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-047",
+      "source": "JUD 0.3 amendment",
+      "sha256": "a37e6de6f42870d37fc0240b781b9b44c39ab9b8bc3ed73b52ed9508c0bf90b4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-048",
+      "source": "JUD 0.3 amendment",
+      "sha256": "cba49a022b5a8a77eb2ac4c5a81b68954ed1ef64764f1346a42b402c4519f2f7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-049",
+      "source": "JUD 0.3 amendment",
+      "sha256": "592ba112da7495f2d2f12fd0a7f98c0d71d5390353ab8108c8c1e83732ebfa98",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-050",
+      "source": "JUD 0.3 amendment",
+      "sha256": "cece48f1a8b8f072529ba1e3bfa7f3671aeef63358bab573bb0fd90550f4cea0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-051",
+      "source": "JUD 0.3 amendment",
+      "sha256": "c4824c82373a95887dc460f48db1a00a1872c1c7f8b06ea9c3eec6ba4526a2e5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-052",
+      "source": "JUD 0.3 amendment",
+      "sha256": "d80e1f35a8d84365d724736b4bf8a27f0b2adb8193b7492768685bae44e45074",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-053",
+      "source": "JUD 0.2",
+      "sha256": "a0e751cd28c2a5134e2f428c289663fd7e7f0582df044e74236448e61da63d01",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-054",
+      "source": "JUD 0.2",
+      "sha256": "af30914020b7dceffbd090fb33f647d52155698d29d2d434397401421e0ed0b9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-055",
+      "source": "JUD 0.3 amendment",
+      "sha256": "445594b8618220300a898602ce46fd034cebb62b18536f43992dd3c49a150d47",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-056",
+      "source": "JUD 0.2",
+      "sha256": "c3234a827bff270b49329839b798df391493339966dfcb081d2d6d43938a01d6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-057",
+      "source": "JUD 0.3 amendment",
+      "sha256": "e700d103414263d6bb0cf5bb4dbf86050b18474ba257e169f97ca66d421064d7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-058",
+      "source": "JUD 0.2",
+      "sha256": "2a204271afc2c896c2521b68a20d227e7601a6a467604b991d47310a69b42233",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-059",
+      "source": "JUD 0.2",
+      "sha256": "6e5cc330b5679bd6c92a4453828d437b36d5476bb6618c5973d56289b0718eb0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-060",
+      "source": "JUD 0.2",
+      "sha256": "723e3832af16681ad8ea7585af5b67241d7680f1262a3ff56e3b160a79d1d297",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-061",
+      "source": "JUD 0.2",
+      "sha256": "f3bd50b458a2a8fcae320245b48ebd5cc31bb6c72603172ec58bc5f38b0ff4dc",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-062",
+      "source": "JUD 0.2",
+      "sha256": "d1cdff250db5bcc045b63be7d82680457e4aa2d7b21e249257fa98c5293a8af6",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-063",
+      "source": "JUD 0.2",
+      "sha256": "2d9514ca3c3b238ff2ba486319b6ec74ac97bc7c481622c94e9ed0e27aa1d36a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-064",
+      "source": "JUD 0.2",
+      "sha256": "5a18191deb66af6e4604c26d28cc146502fe6f26776a0231f7e5b2b8f406bee2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-065",
+      "source": "JUD 0.2",
+      "sha256": "39a64a786809c6dc1f8d905060fb60424811e3fbb7ecb48d2a6c6c5adeb8d50a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-066",
+      "source": "JUD 0.3 amendment",
+      "sha256": "e96e7b55cbad17bc635fd8b533cd9f9a5380cc854fb504b948fdf19dc2748ad5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-067",
+      "source": "JUD 0.3 amendment",
+      "sha256": "529fd4f0eb8a72069044f583d9e47100bbc2c4172fe2c0646b2b42f0d8bee87e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-068",
+      "source": "JUD 0.2",
+      "sha256": "cc39b59c3bdcc576cde0347e919c157eac24b2576da1e07d24452ad0227e8260",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-069",
+      "source": "JUD 0.3 amendment",
+      "sha256": "efc092e89931a63ae3bfc262b3a9ca040114bb272c3c50fa3bb6d75a8d21ec1c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-070",
+      "source": "JUD 0.3 amendment",
+      "sha256": "12252a165d69d15861d1246bcb009d172ddf651f1e34a02efc5963b193934e40",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-071",
+      "source": "JUD 0.3 amendment",
+      "sha256": "8c2e03c74ab71e4813f9761b14eec1dfd04a9baac68daa92090e01ec3bb2dda0",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-072",
+      "source": "JUD 0.2",
+      "sha256": "04184e33309016cd9bc2433b999bebf0662955e7c3b96b2d63a04d11695af2b8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-073",
+      "source": "JUD 0.3 amendment",
+      "sha256": "adc40b69d52a44c99bf4672c0392117236f5abd680d1edbed5693d070408fd9b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-074",
+      "source": "JUD 0.3 amendment",
+      "sha256": "88ea9e7dd275dfbec3329a611faee671e7ba435a24a2a8456e426defab61928e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-075",
+      "source": "JUD 0.3 amendment",
+      "sha256": "8da161cf36ac2ce9166f7e36eb769c7770e304821680456da45cbf2bf7557b46",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-076",
+      "source": "JUD 0.3 amendment",
+      "sha256": "9c5cad61894c25319852b14c4ec07a8a68f19c8bf6a7dd3bec5f2f5a1e52e76d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-077",
+      "source": "JUD 0.3 amendment",
+      "sha256": "941b20f13c4624c6722c6100158f3a270a55a0a8a41dd3bba923a15d342eaa71",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-078",
+      "source": "JUD 0.2",
+      "sha256": "0e908386aa54a8ae60289acc34abfa8ed2903708f0d47746f44b4df6a5118223",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    },
+    {
+      "id": "JUD-079",
+      "source": "JUD 0.3 amendment",
+      "sha256": "25e753900f43f2acb869df3740dc3c3be89e590f3d24265cae3ca69b5955e023",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "0.3"
+    }
+  ]
+}

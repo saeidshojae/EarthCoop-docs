@@ -1,0 +1,607 @@
+{
+  "schemaVersion": 1,
+  "status": "effective",
+  "versionEpoch": "official-v1",
+  "documentId": "EX",
+  "version": "1.0",
+  "previousVersion": null,
+  "preV1SourceVersion": "1.2",
+  "sourceAmendment": "published/foundational/EX-1.2.fa.md",
+  "provisions": [
+    {
+      "id": "EX-001",
+      "source": "EX 1.2 amendment",
+      "sha256": "7d600c52e2dc1ebf21481015c1dca85b181adef06b8a0d39dd019bc0c27e9043",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-002",
+      "source": "EX 1.1",
+      "sha256": "4d38efb477ffc250ac7be0b3acd0dbedb398c48585e2658d50e311c7af913dcb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-003",
+      "source": "EX 1.1",
+      "sha256": "12810d12cdc417c4ddd60e5e3512122c7d2de1b0e23e0c42a8c4c5d6df918ce3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-004",
+      "source": "EX 1.1",
+      "sha256": "b9c948a87631cd5f7dc36ca5ef605c7f419e3a25faa3d303bafab4494c27f3eb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-005",
+      "source": "EX 1.2 amendment",
+      "sha256": "e136c8de431074ee0bcac73c171b719cee626a5f48ff3c94c44f48176d631961",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-006",
+      "source": "EX 1.1",
+      "sha256": "2a2badc4317aa747f6925ddcf84e59d6b3f77aa37dccfd93fa1697812d716f0c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-007",
+      "source": "EX 1.2 amendment",
+      "sha256": "d0e46eca934e949b3e5ba7a3c1c12c91571484631564dd4f9cbf58f20793a750",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-008",
+      "source": "EX 1.1",
+      "sha256": "9d80e0fbc5e4fa5f813a18d3d188007ccc1c69a65aa34a296c9c01789c499264",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-009",
+      "source": "EX 1.1",
+      "sha256": "0b57a8888cea397bbec8513f217b43c18cbce49d2a5983fbdc04c2bfa74d1528",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-010",
+      "source": "EX 1.2 amendment",
+      "sha256": "8e67749e2b925e171296c5fc84a1dec01a3053292ad89e5951beb6a1851623cd",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-011",
+      "source": "EX 1.2 amendment",
+      "sha256": "4dfe74e9ae4b0542a3886e080a6d75c273cfddca2a1b3172124b4eac4c2fa11f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-012",
+      "source": "EX 1.1",
+      "sha256": "7452f7471b56ceee5714e9f2f6e7a4df791e65e36527be9ef2c39a3cc4fc4f2d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-013",
+      "source": "EX 1.1",
+      "sha256": "34b2b39f7eead7680167bd55a1de871c8740d4243ebd409a36a813ecdbc395b9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-014",
+      "source": "EX 1.2 amendment",
+      "sha256": "d1900cc6e81a7692ac984bd53cc8e256f70614e25fe65c57ae75df2efc709739",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-015",
+      "source": "EX 1.2 amendment",
+      "sha256": "ea0a4b53a2cc19600e675e4b84bdc3374088d2c772612b63317ab9ac50a21648",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-016",
+      "source": "EX 1.2 amendment",
+      "sha256": "67229c8b2731c9d533c1ea6f70393910767b8d05ba45311f514cccc20ffd75e8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-017",
+      "source": "EX 1.2 amendment",
+      "sha256": "21046bc758a8d3b609ecffff67593871632f1789d89686d9018c8ee1dc164f5f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-018",
+      "source": "EX 1.1",
+      "sha256": "556fed527e37fd41e23839a2c6a68282e2692371aca4b6222b74bd140e722930",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-019",
+      "source": "EX 1.2 amendment",
+      "sha256": "5dd85cba2e78fdd55339e70dd0dea1ede1df74bbe74ad56cfa084e8b7ae0a521",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-020",
+      "source": "EX 1.2 amendment",
+      "sha256": "3da4c3fcef45dce21fcf7fec9934e021df34ecf4258dc2f0e72b2a25cdd898b3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-021",
+      "source": "EX 1.2 amendment",
+      "sha256": "f29f977da5e32c47321dc95f14b9cde21251dc919e91693b451c72bdda96c25a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-022",
+      "source": "EX 1.2 amendment",
+      "sha256": "e6adb7d0adb0907bd79c66bc5be13514faea4237ef8298f75c1f53abeca698fb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-023",
+      "source": "EX 1.2 amendment",
+      "sha256": "89ad1259aeaef958737b955be9b75b28ec2f8ac684b661be9162c5c433857686",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-024",
+      "source": "EX 1.2 amendment",
+      "sha256": "12f17de7090a402e5ee29bf8229dcd0fdded20286d0267cfea8510afaa410cc1",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-025",
+      "source": "EX 1.2 amendment",
+      "sha256": "29db0b9dafb01b5fcbc2bccecfe53ae89eefaadbc35d1f962c8f8e69538caf1f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-026",
+      "source": "EX 1.1",
+      "sha256": "684a833bac746796cb18c12e2283fad2ea823254a57a96d804751fe6770b4032",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-027",
+      "source": "EX 1.2 amendment",
+      "sha256": "e2dc0e6ff58a5f7bef4bab2e048055a516f50568f2cbf7e87b32a99b35a7f341",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-028",
+      "source": "EX 1.2 amendment",
+      "sha256": "4887ee11507f47e4fb90c58e80ea3fbd63ebdd7c22276f0edc8ddddef480e5e8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-029",
+      "source": "EX 1.2 amendment",
+      "sha256": "1278d6959001d4f23b43b1c8adaae0648db63c4bc716d622156a9cb371bb250d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-030",
+      "source": "EX 1.2 amendment",
+      "sha256": "ddd48f9064b2cc8ccf59eb097b9187bf5b3e094c27ccbd416bdd8f4e26ea7487",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-031",
+      "source": "EX 1.1",
+      "sha256": "93c57d3276aee28ad0b14ae576c1c74d2292656aee5cd0e0a0d4a24e4052d35e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-032",
+      "source": "EX 1.1",
+      "sha256": "e009f6fc65d8607b2d42d5451cf3e859336a53e195578a3c68847839eb083e8e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-033",
+      "source": "EX 1.1",
+      "sha256": "cfcba49e83ca8ef0300e47e390e9ea36e0a00b24daf6b03f35b8b77a217be268",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-034",
+      "source": "EX 1.2 amendment",
+      "sha256": "60ee9d790ee57e1a796cd2f9204fa13aac3a720456abeb49d105127c5263043b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-035",
+      "source": "EX 1.2 amendment",
+      "sha256": "57f19c1e05e6610e68274e3897a1b04e5e00bb5007764f0ef1bf47cb737b8d1a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-036",
+      "source": "EX 1.2 amendment",
+      "sha256": "d9239cb2a612d9e3db2ce585a200b11e07436cdecbe7232d537087f35779b5b4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-037",
+      "source": "EX 1.1",
+      "sha256": "124bf818db72fe3fbd7f94cd5e7ab3e51922fcaff8b0c61bb236f6905e85d3f4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-038",
+      "source": "EX 1.1",
+      "sha256": "80089fe626b686e0e46758f35cf32cc5a2e77dc10530ba3116d2f977a9f4be2d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-039",
+      "source": "EX 1.1",
+      "sha256": "23ed0469ea2d8d5b747af8025757c6e3237aadd827365dafe1d2f7d37e29c072",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-040",
+      "source": "EX 1.1",
+      "sha256": "7ea7149615005e8b0c983f952741c8181cf2a5cb8b7c9ecc194493d3ad334cc4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-041",
+      "source": "EX 1.1",
+      "sha256": "7705d2737f47a9b109a79f61b2e697a368152c03b0196cc9c6a9e7850309ff60",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-042",
+      "source": "EX 1.1",
+      "sha256": "bb6274a7ba60466c4e57c50173f32962b7b1c5b7f112065f82ba540eabbe18e7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-043",
+      "source": "EX 1.1",
+      "sha256": "74f1b3068cc94ba1ad6c68788beeb03a0d2c4db544de64de905b0192331b405a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-044",
+      "source": "EX 1.1",
+      "sha256": "6e3e42869986fc2f5667296b3bb6d98bcb36326f9c7c711240b476cb3016b907",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-045",
+      "source": "EX 1.1",
+      "sha256": "ab474ee5e10de583350ebd2ebafd26bae020ee61fa4b3911bbefeee2d0c7c9a5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-046",
+      "source": "EX 1.1",
+      "sha256": "63af4199962148a9f6ee344bbaceab22f98bd2f478493e92773daa5b0fd349ba",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-047",
+      "source": "EX 1.1",
+      "sha256": "0bdce7939c5fd92f872c3579d502c85df5d222000f65cc9f98930616dd85279f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-048",
+      "source": "EX 1.1",
+      "sha256": "c2d5ee167e4fbf219b41ebb3391d3d9a6dba982dd08c9c23f1930c953759eb8e",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-049",
+      "source": "EX 1.1",
+      "sha256": "61e1855c3d58380005b4f5ba326d6a735bd4675bdf4127e599f55506e6c8d82d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-050",
+      "source": "EX 1.1",
+      "sha256": "b0085d6d4b8f2a5203d0469f2301ea49f8d1dda7813d179667803b33a523d8c3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-051",
+      "source": "EX 1.1",
+      "sha256": "8b25b438c66d0fa7ccee8b9cdb55ce46080a68af4cfb009836cac3d7748c8a9c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-052",
+      "source": "EX 1.1",
+      "sha256": "76e21d6e6e3e45ab5d246ee987ed00e73f2f39137cf237739d51d5fe5c445eb2",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-053",
+      "source": "EX 1.1",
+      "sha256": "5fd4c082a0b1e0cc645934de2daf9d69225f9d1a252dd62c41fc05f9452c9766",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-054",
+      "source": "EX 1.1",
+      "sha256": "34e282e92cbb9820f9f489b4bc36a837398142e63fdd79171012204e213f4810",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-055",
+      "source": "EX 1.1",
+      "sha256": "61adb279085f95495ad9edbea5d6b16c17f872dcf7fee9ea84ac6a08983ef908",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-056",
+      "source": "EX 1.1",
+      "sha256": "ce26a2a61292c8a3c943cc7a0a035c23a3595961a27a465e634324a77e29cbc8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-057",
+      "source": "EX 1.1",
+      "sha256": "9c69c5026beaa3886de75f0cba68a77242eb0e1b476db129ccbe2f59757c0132",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-058",
+      "source": "EX 1.1",
+      "sha256": "efd77b6bdee3aad5d87a3e3ceba31f28d5ca3df172880e78788a4139cdfc9311",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-059",
+      "source": "EX 1.1",
+      "sha256": "d08713faecded0f36ce26debd3858d45721badbc005a056412f4b68c109a31d9",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-060",
+      "source": "EX 1.1",
+      "sha256": "0c8fd1d1fb47b805836396a55605cda4952cd63307e2e4a0dcc09cc941e6eac8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-061",
+      "source": "EX 1.1",
+      "sha256": "01424273236eaa5fbeec6de29e155feea05dffb227d3e46e369d782c2bc1389d",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-062",
+      "source": "EX 1.1",
+      "sha256": "8aeefa7ebcb8c72cac436fbb1acc1b1569d1645c121e32fa8a5e6b4971dd9bde",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-063",
+      "source": "EX 1.1",
+      "sha256": "29c0755cff501bae30177eafdf817b3a69acb31478e74a7662fa7a9ba585c9ce",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-064",
+      "source": "EX 1.1",
+      "sha256": "34b485f7371421d8b5e57b68e96e1c477a9f92a42e011a48bdfcb7e3ee59e827",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-065",
+      "source": "EX 1.1",
+      "sha256": "9f2f56b9a4af73cac0c9afd7757633fd418eb355d6f3d07388fc582c9b89def3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-066",
+      "source": "EX 1.1",
+      "sha256": "960c3e71bbc7a54ab9fcaedd195c7ab2f9672773bbd1d9ef10a541c6ad8b96b3",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-067",
+      "source": "EX 1.1",
+      "sha256": "cf4bd9f76f70f2eefaf2b4f22747de295a12083259f3cee64d311887d7d60ee4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-068",
+      "source": "EX 1.1",
+      "sha256": "4019eaef440a3473c2044b11aa69de67a2506ec0b53cb197418e024066a6d605",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-069",
+      "source": "EX 1.1",
+      "sha256": "7a7ce5361fc8c128205ef238230e4298fa745450c102d0fe9aec7f5a09af93ab",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-070",
+      "source": "EX 1.1",
+      "sha256": "6dcca2ff4cff7a123157003f51385938e9ffe7be0015fef813f8c25e7daa7745",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-071",
+      "source": "EX 1.1",
+      "sha256": "44a810ef5a750f82c9f5cfc1f6dec6f66f90830a21bc02207787ff82933adad4",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-072",
+      "source": "EX 1.1",
+      "sha256": "2218c8ed2c7a6404c93b5085c11ada5a921ba8ed727f08a434a5c97bc95d23fb",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-073",
+      "source": "EX 1.2 amendment",
+      "sha256": "6b2c06709c6ee71667856daebcda3e46040e114e53008e7b95fd938621e21e31",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-074",
+      "source": "EX 1.2 amendment",
+      "sha256": "a2df4acde5cbbd8d0f39436c461bd7c3cb532ce185c35346be7aa2b88985f23b",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-075",
+      "source": "EX 1.1",
+      "sha256": "2fad68769252fdd8c775be1160f0f5d76ab122f3172626eb358dbd3382a6251a",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-076",
+      "source": "EX 1.1",
+      "sha256": "94f9bd677782330f85af8a284fd9c7814a8697086a7eb16d41b1daff682962ec",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-077",
+      "source": "EX 1.1",
+      "sha256": "0491d3d671270054b0aadcfeb2d87194d794f6cd49ec69451f7954dc41847b56",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-078",
+      "source": "EX 1.1",
+      "sha256": "0ea612289132b77c1ca889bc70b923eb1303f3b7c2834695a922e08d1b98c78f",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-079",
+      "source": "EX 1.1",
+      "sha256": "06779d4ea56a3a122e8bf54bd52cce2bce8b38dac760c3ce3358b370b9210a51",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-080",
+      "source": "EX 1.2 amendment",
+      "sha256": "44316a3a0a44e96c3bcf4de469aa07210e9baf4f069616aaf52dac5ec3b3e86c",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-081",
+      "source": "EX 1.2 amendment",
+      "sha256": "df1c8942434defbf8b6c63f3537bed39f9f505b89916e3c2eebdc3626bfaa752",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-082",
+      "source": "EX 1.2 amendment",
+      "sha256": "5bcffaf1e66ec3d0d65ce7b0b6e8ed132171ab13b6e1782754ca09f3207470f5",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-083",
+      "source": "EX 1.1",
+      "sha256": "6302330fd6b44d5ccaf9efe602872d42eddf369700d2e973d84dd936a3fe63b8",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-084",
+      "source": "EX 1.2 amendment",
+      "sha256": "fc876d94a01d26c252319879f09bd3cfc58a7be8c830a52bde7cda63227e44e7",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    },
+    {
+      "id": "EX-085",
+      "source": "EX 1.2 amendment",
+      "sha256": "6f881dc1bde98b3a5bd7106b8164dc3f7d3095a03369f12f9208b69d1adca948",
+      "officialVersion": "1.0",
+      "preV1SourceVersion": "1.2"
+    }
+  ]
+}
