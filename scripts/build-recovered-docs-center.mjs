@@ -27,7 +27,6 @@ import {
   patchRecoveredDocumentsPageSource,
   patchRecoveredTocFinalLayoutSource,
 } from './patch-recovered-live-uat.mjs';
-import { applyRecoveredUiPolish } from './patch-recovered-ui-polish.mjs';
 import { renderRecoveredStaticDocuments } from './render-recovered-static-documents.mjs';
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
@@ -183,20 +182,17 @@ export async function buildRecoveredDocsCenter({
   await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
 
   if (renderStaticDocuments) {
-    // Static rendering also applies the established recovered UI-polish pipeline.
+    // Static rendering applies the established recovered UI-polish pipeline.
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
       packages: allPackages,
       canonicalOrigin,
       indexable: false,
     });
-  } else {
-    // Test/non-static builds still exercise the same UI-polish baseline once.
-    await applyRecoveredUiPolish({ outDir, availableLocales: ['fa'] });
   }
 
-  // Live-UAT patches must run after the established UI polish so they extend,
-  // rather than pre-empt or duplicate, the previously approved fixes.
+  // Live-UAT patches run after established UI polish when static rendering is enabled.
+  // In non-static test builds the TOC helper can bootstrap the same targeted control patch itself.
   const appPath = path.join(outDir, 'app.js');
   await writeFile(appPath, patchRecoveredDocumentsPageSource(await readFile(appPath, 'utf8')));
   const controlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
