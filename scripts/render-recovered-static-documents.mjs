@@ -8,6 +8,7 @@ import { applyRecoveredEconomyGuide } from './patch-recovered-economy-guide.mjs'
 import { applyRecoveredEconomyRouteRegistration } from './patch-recovered-economy-route.mjs';
 import { applyRecoveredLearningPath } from './patch-recovered-learning-path.mjs';
 import { applyRecoveredReferencePagesAudit } from './patch-recovered-reference-pages.mjs';
+import { applyRecoveredRoleGuides } from './patch-recovered-role-guides.mjs';
 import {
   patchRecoveredDocumentPrintHtml,
   patchRecoveredDocumentPrintStyles,
@@ -98,4 +99,5 @@ export async function renderRecoveredStaticDocuments({
   await applyRecoveredUiPolish({ outDir: runtimeDir, availableLocales: ['fa'] });
   await applyRecoveredLearningPath({ outDir: runtimeDir });
   await applyRecoveredReferencePagesAudit({ outDir: runtimeDir });
+  await applyRecoveredRoleGuides({ outDir: runtimeDir });
 }
