@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 export const ECONOMY_GUIDE_REVISION = '2026-10-02-economy-story-v1';
@@ -46,7 +46,6 @@ export const ECONOMY_GUIDE = Object.freeze({
   related: Object.freeze([
     Object.freeze(['عضویت و شهروندی', 'membership']),
     Object.freeze(['انتخابات پیوسته', 'elections']),
-    Object.freeze(['قانون اقتصاد EarthCoop', 'documents/econ']),
   ]),
 });
 
@@ -61,10 +60,7 @@ function escapeHtml(value) {
 }
 
 function renderRelated(related) {
-  return related.map(([title, route]) => {
-    const href = route.startsWith('documents/') ? `/${route}/` : `/guides/${route}/`;
-    return `<a href="${href}"><span>مطالعه بعدی</span><strong>${escapeHtml(title)} ←</strong></a>`;
-  }).join('');
+  return related.map(([title, route]) => `<a href="/guides/${route}/"><span>مطالعه بعدی</span><strong>${escapeHtml(title)} ←</strong></a>`).join('');
 }
 
 function renderEconomyGuide() {
@@ -120,15 +116,19 @@ export function patchRecoveredEconomyAppSource(source) {
   if (output.includes('const ECONOMY_GUIDE_REVISION=')) return output;
   const marker = 'const AUDITED_GUIDE_REVISION=';
   if (!output.includes(marker)) throw new Error('Recovered audited guide app marker changed');
-
-  const browserRelated = ECONOMY_GUIDE.related.map(([title, route]) => [title, route.startsWith('documents/') ? 'documents' : route]);
-  const economyOverride = `pages["economy-cycle"]=article(${JSON.stringify(ECONOMY_GUIDE.title)},${JSON.stringify(ECONOMY_GUIDE.category)},${JSON.stringify(ECONOMY_GUIDE.description)},"verified",${JSON.stringify(ECONOMY_GUIDE.bodyHtml)},${JSON.stringify(browserRelated)});\nconst ECONOMY_GUIDE_REVISION=${JSON.stringify(ECONOMY_GUIDE_REVISION)};\nconst ECONOMY_START_TEASER=${JSON.stringify(START_TEASER)};\nif(pages.start?.render){const originalEconomyStartRender=pages.start.render;pages.start.render=()=>{const html=originalEconomyStartRender();return html.includes(${JSON.stringify(START_TEASER_MARKER)})?html:html.replace('<h2 id="next-step">از کجا ادامه دهیم؟</h2>',ECONOMY_START_TEASER+'<h2 id="next-step">از کجا ادامه دهیم؟</h2>');};}\n`;
+  const economyOverride = `pages["economy-cycle"]=article(${JSON.stringify(ECONOMY_GUIDE.title)},${JSON.stringify(ECONOMY_GUIDE.category)},${JSON.stringify(ECONOMY_GUIDE.description)},"verified",${JSON.stringify(ECONOMY_GUIDE.bodyHtml)},${JSON.stringify(ECONOMY_GUIDE.related)});\nconst ECONOMY_GUIDE_REVISION=${JSON.stringify(ECONOMY_GUIDE_REVISION)};\nconst ECONOMY_START_TEASER=${JSON.stringify(START_TEASER)};\nif(pages.start?.render){const originalEconomyStartRender=pages.start.render;pages.start.render=()=>{const html=originalEconomyStartRender();return html.includes(${JSON.stringify(START_TEASER_MARKER)})?html:html.replace('<h2 id="next-step">از کجا ادامه دهیم؟</h2>',ECONOMY_START_TEASER+'<h2 id="next-step">از کجا ادامه دهیم؟</h2>');};}\n`;
   return output.replace(marker, `${economyOverride}${marker}`);
 }
 
-async function patchSidebarFile(filePath) {
-  const source = await readFile(filePath, 'utf8');
-  await writeFile(filePath, patchRecoveredEconomySidebar(source));
+async function htmlFiles(dir) {
+  const output = [];
+  const entries = await readdir(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const absolute = path.join(dir, entry.name);
+    if (entry.isDirectory()) output.push(...await htmlFiles(absolute));
+    else if (entry.isFile() && entry.name.endsWith('.html')) output.push(absolute);
+  }
+  return output;
 }
 
 export async function applyRecoveredEconomyGuide({ outDir }) {
@@ -141,19 +141,21 @@ export async function applyRecoveredEconomyGuide({ outDir }) {
   await mkdir(economyDir, { recursive: true });
   let economyHtml = patchEconomyHead(membershipShell);
   economyHtml = patchMain(economyHtml, renderEconomyGuide());
-  economyHtml = patchRecoveredEconomySidebar(economyHtml);
   await writeFile(economyPath, economyHtml);
 
   const startPath = path.join(outDir, 'guides', 'start', 'index.html');
-  let start = await readFile(startPath, 'utf8');
-  start = patchRecoveredStartEconomyTeaser(start);
-  start = patchRecoveredEconomySidebar(start);
+  const start = patchRecoveredStartEconomyTeaser(await readFile(startPath, 'utf8'));
   await writeFile(startPath, start);
 
-  for (const route of ['justice', 'property', 'digital-country', 'structure', 'groups', 'membership', 'elections']) {
-    await patchSidebarFile(path.join(outDir, 'guides', route, 'index.html'));
+  let sidebarCount = 0;
+  for (const filePath of await htmlFiles(outDir)) {
+    const source = await readFile(filePath, 'utf8');
+    if (source.includes(SIDEBAR_ROUTE)) continue;
+    if (!source.includes('data-route="membership"') || !source.includes('data-route="elections"')) continue;
+    await writeFile(filePath, patchRecoveredEconomySidebar(source));
+    sidebarCount += 1;
   }
-  await patchSidebarFile(path.join(outDir, 'index.html'));
+  if (sidebarCount === 0) throw new Error('Recovered economy guide found no static navigation to patch');
 
   const appPath = path.join(outDir, 'app.js');
   await writeFile(appPath, patchRecoveredEconomyAppSource(await readFile(appPath, 'utf8')));
