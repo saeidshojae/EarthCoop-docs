@@ -14,6 +14,7 @@ import {
   patchRecoveredDocumentPrintStyles,
 } from './patch-recovered-print-branding.mjs';
 import { applyRecoveredUiPolish } from './patch-recovered-ui-polish.mjs';
+import { languageNavigationScript } from './recovered-language-navigation.mjs';
 
 async function loadRecoveredRenderers(runtimeDir, documentDownloads = {}) {
   const window = { EC_CONTENT: { documentDownloads }, EC_PAGES: {}, EC_RENDER: {} };
@@ -94,6 +95,7 @@ export function patchRecoveredBilingualLanguageHtml(source) {
     '<a class="language-option" href="/en/" lang="en" dir="ltr"><bdi dir="ltr">English</bdi><small lang="fa" dir="rtl">راهنماهای انگلیسی</small></a>',
   );
   if (!output.includes('ec-bilingual-language-switcher')) output = output.replace('</body>', `${BILINGUAL_SWITCHER_SCRIPT}\n</body>`);
+  if (!output.includes('ec-language-navigation')) output = output.replace('</body>', `${languageNavigationScript()}\n</body>`);
   return output;
 }
 

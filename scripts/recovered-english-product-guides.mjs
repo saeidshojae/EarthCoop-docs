@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { patchEnglishRouterIsolation } from './recovered-language-navigation.mjs';
 
 export const ENGLISH_PRODUCT_GUIDE_PATHS = Object.freeze([
   'account-setup.mdx',
@@ -285,7 +286,7 @@ export async function applyRecoveredEnglishProductGuides({
   }
 
   const appPath = path.join(outDir, 'app.js');
-  await writeFile(appPath, patchEnglishHashRedirect(await readFile(appPath, 'utf8')));
+  await writeFile(appPath, patchEnglishHashRedirect(patchEnglishRouterIsolation(await readFile(appPath, 'utf8'))));
 
   const searchRecords = guides.map((guide) => ({
     id: `guide:${guide.sourcePath}`,
