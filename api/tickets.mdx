@@ -1,57 +1,61 @@
 ---
-title: "Support Tickets API — Create, Update & Comment"
+title: "Support Tickets API — Current Internal Routes & v1 Boundary"
 sidebarTitle: "Tickets API"
-description: "Current support-ticket API implementation notes; routes and payloads are evolving and are not yet a stable public external contract."
+description: "Understand EarthCoop's current support-ticket application/API behavior and why ticket endpoints are not part of the present /api/v1 native contract."
 ---
 
-EarthCoop has a real support-ticket domain and current API routes used by the application. The API surface is nevertheless **evolving / In development** and is **not a stable public external contract**. This page records verified implementation boundaries rather than promising that every current route, field, workflow detail, or response shape will remain unchanged for third-party clients.
+EarthCoop has a real support-ticket domain and current application/API routes for ticket workflows. At the current application baseline, however, **ticket endpoints are not registered in the `/api/v1` native route set**. This distinction prevents documentation from treating legacy/internal ticket routes as a versioned v1 contract merely because v1 bearer authentication now exists elsewhere.
 
-## Current implementation
+## Current support-domain behavior
 
-The current support subsystem includes ticket creation and lifecycle capabilities, member-visible ticket surfaces, comments/attachments in the support domain, and application routes/controllers for working with tickets.
+The support subsystem includes:
 
-The precise route methods and payload structures are implementation details until a versioned client contract is explicitly published.
+- member ticket creation and listing;
+- ticket detail/history access under ownership rules;
+- comments and attachments while the current ticket state permits them;
+- member close behavior for eligible tickets;
+- staff/admin support processing;
+- conditional NajmHoda escalation integration.
 
-## Ticket identity and ownership
+The member-facing UI is currently under `/tickets`.
 
-A ticket belongs to a support context and may be associated with an authenticated member and related identifying information. Any API operation must still enforce the applicable ownership/access policy; knowing a numeric ticket ID or tracking code must not grant access to another member's support case.
+## Versioned API status
 
-## Creation
+Current `/api/v1` covers native authentication, bootstrap/current-user, notifications/push, selected geography, NajmHoda messaging and media delivery. Ticket routes are not in that route file today.
 
-Where the current API permits ticket creation, the request is validated and the support domain creates the ticket under its own rules. This guide does not promise a guaranteed priority decision, confirmation email, fixed SLA calculation, or one immutable tracking-code format unless the specific current service and contract explicitly establish those behaviors.
+Therefore:
+
+```text
+current support API/application route ≠ current /api/v1 ticket contract
+v1 bearer token existence ≠ every /api route becomes v1
+```
 
 <Warning>
-  A request reaching a ticket route does not bypass validation, authentication, authorization, attachment policy, or support-domain workflow rules.
+  Do not build a native or third-party integration by prepending `/api/v1` to an older ticket endpoint. Use only routes actually registered in the current versioned contract.
 </Warning>
 
-## Listing and reading tickets
+## Ticket ownership and authorization
 
-Current routes can expose a member's own tickets and ticket details. Filtering, pagination, included relationships, and JSON field names may evolve. External clients should therefore not hard-code today's internal response shape as a long-term public contract.
+A ticket belongs to a support context and member/account relationship. Knowing a ticket ID, tracking code, comment ID or attachment path does not grant access. The support domain must enforce the current ownership and staff authorization rules.
 
-## Updating and closing
+## Comments and closed tickets
 
-Ticket state changes are domain actions. Whether a member can update priority/category, close a ticket, reopen it, or add a comment depends on the current support service and authorization rules.
+The current member controller does not allow a new member comment on a closed ticket. Documentation must not claim that commenting automatically reopens a closed case.
 
-A comment, close operation, or status change should leave the appropriate support-domain history rather than silently rewriting earlier facts.
+If reopening becomes an explicit future workflow, it should be documented from that new contract rather than inferred from an older guide.
 
-## Attachments and comments
+## Attachments
 
-The support domain can include comments and attachments. Allowed file types, limits, storage behavior, and download authorization are operational/security controls and may change. Do not rely on an old guide's fixed file-extension list as a permanent external API guarantee.
+Comments/tickets can carry attachments under current validation/storage policy. File type, size and storage details are operational controls and can change; external documentation should not freeze an old extension list as a permanent API guarantee.
 
 ## NajmHoda escalation
 
-NajmHoda can interact with the support-ticket subsystem through conditional escalation logic. That integration does not mean any chat message automatically becomes a ticket. The current orchestration/policy decides whether escalation criteria are met and the support service remains responsible for creating the formal support record.
+NajmHoda can conditionally create or associate support information through the configured escalation service. Chat escalation is policy-driven and does not mean every assistant message automatically creates a ticket.
 
-## Authentication
+## Authentication note
 
-Some current ticket routes are protected by the application's authentication stack. The existence of those routes does not establish a documented general-purpose public token-issuance flow for external clients.
+The current v1 native authentication guide documents how EarthCoop issues and revokes bearer tokens for the v1 client boundary. That does not independently publish a versioned ticket API. Any current unversioned support endpoint must be evaluated under its own route, middleware and intended first-party use.
 
-## Stability guidance
+## Future versioning
 
-For first-party maintenance, inspect the current route, controller/service, policies, models, and tests. For native or third-party clients, use only the future explicitly versioned support API contract once it is published.
-
-```text
-current ticket route ≠ stable public API
-chat escalation ≠ automatic ticket creation
-support record + authorization + domain history = authoritative workflow
-```
+If support tickets are promoted into `/api/v1` or a later version, the published contract should explicitly define the supported methods, request/response schemas, authorization, attachment rules and compatibility expectations. Until then, this page documents the current implementation boundary rather than inventing that contract.
