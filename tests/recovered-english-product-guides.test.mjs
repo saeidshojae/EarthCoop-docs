@@ -76,7 +76,7 @@ test('rewrites only links to the audited English product-guide set into /en/ rou
   assert.match(output, /https:\/\/earthcoop\.ir/);
 });
 
-test('builds LTR English guide pages, search records and Preview-safe routes while legal locales remain separate', async () => {
+test('builds LTR English guide pages, full-text search records and Preview-safe routes while legal locales remain separate', async () => {
   const module = await import('../scripts/recovered-english-product-guides.mjs');
   const rootDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-en-guides-source-'));
   const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-en-guides-runtime-'));
@@ -115,7 +115,9 @@ test('builds LTR English guide pages, search records and Preview-safe routes whi
 
   for (const record of result.searchRecords) {
     assert.equal(record.locale, 'en');
-    assert.equal(record.contentClass, 'guide');
-    assert.match(record.url, /^\/en\//);
+    assert.equal(record.contentClass, 'product_guide');
+    assert.ok(record.body.length > 0, 'English search record must include full-text body');
+    assert.match(record.route, /^\/en(?:\/|$)/);
+    assert.match(record.inventoryId, /^guide\./);
   }
 });
