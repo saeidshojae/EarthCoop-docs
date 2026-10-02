@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { ensureStaticReaderInitialization } from './recovered-foundational-downloads.mjs';
 import { applyRecoveredGuideContent } from './patch-recovered-guide-content.mjs';
 import { applyRecoveredEconomyGuide } from './patch-recovered-economy-guide.mjs';
+import { applyRecoveredEconomyRouteRegistration } from './patch-recovered-economy-route.mjs';
 import { applyRecoveredLearningPath } from './patch-recovered-learning-path.mjs';
 import {
   patchRecoveredDocumentPrintHtml,
@@ -92,6 +93,7 @@ export async function renderRecoveredStaticDocuments({
 
   await applyRecoveredGuideContent({ outDir: runtimeDir });
   await applyRecoveredEconomyGuide({ outDir: runtimeDir });
+  await applyRecoveredEconomyRouteRegistration({ outDir: runtimeDir });
   await applyRecoveredUiPolish({ outDir: runtimeDir, availableLocales: ['fa'] });
   await applyRecoveredLearningPath({ outDir: runtimeDir });
 }
