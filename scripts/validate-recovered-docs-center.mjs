@@ -30,9 +30,14 @@ const REQUIRED_FILES = [
 ];
 const EXPECTED_GUIDE_POLICY = Object.freeze({
   fa: 'audited_current_2026-10-02_official-v1_and_repository_evidence',
-  en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
+  en: 'audited_current_2026-10-02_product_guides_runtime_mapped',
   ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
 });
+const EXPECTED_DISPLAY_LOCALES = Object.freeze(['fa', 'en']);
+const EXPECTED_DOCUMENT_LOCALES = Object.freeze(['fa']);
+const EXPECTED_GUIDE_LOCALES = Object.freeze(['en']);
+const EXPECTED_ENGLISH_GUIDE_COUNT = 31;
+const EXPECTED_ENGLISH_AUDIT_BASELINE = 'f88c28a518749fb81133c3affa5e5fbf353f844a';
 
 function sha256(bytes) {
   return createHash('sha256').update(bytes).digest('hex');
@@ -109,7 +114,11 @@ export async function validateRecoveredDocsCenter({
   if (manifest.runtimeBaseline !== EXPECTED_BASELINE) throw new Error(`Recovered runtime baseline mismatch: ${manifest.runtimeBaseline}`);
   if (manifest.runtimeArchiveSha256 !== expectedRuntimeArchiveSha) throw new Error(`Recovered runtime archive SHA mismatch: ${manifest.runtimeArchiveSha256}`);
   if (manifest.canonicalLanguage !== 'fa') throw new Error('Recovered canonical language must be fa');
-  if (JSON.stringify(manifest.displayLocales) !== JSON.stringify(['fa'])) throw new Error('Recovered display locales must be exactly [fa]');
+  if (JSON.stringify(manifest.displayLocales) !== JSON.stringify(EXPECTED_DISPLAY_LOCALES)) throw new Error('Recovered display locales must be exactly [fa,en]');
+  if (JSON.stringify(manifest.documentLocales) !== JSON.stringify(EXPECTED_DOCUMENT_LOCALES)) throw new Error('Recovered document locales must be exactly [fa]');
+  if (JSON.stringify(manifest.guideLocales) !== JSON.stringify(EXPECTED_GUIDE_LOCALES)) throw new Error('Recovered guide locales must be exactly [en]');
+  if (manifest.englishGuideCount !== EXPECTED_ENGLISH_GUIDE_COUNT) throw new Error(`Recovered English guide count mismatch: ${manifest.englishGuideCount}`);
+  if (manifest.englishGuideAuditBaseline !== EXPECTED_ENGLISH_AUDIT_BASELINE) throw new Error('Recovered English guide audit baseline mismatch');
   assertGuidePolicy(manifest.guideContentPolicy);
   if (manifest.canonicalOrigin !== EXPECTED_ORIGIN) throw new Error(`Recovered preview origin mismatch: ${manifest.canonicalOrigin}`);
   if (manifest.previewIndexing !== 'disabled') throw new Error('Recovered preview indexing must be disabled');
