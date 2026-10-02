@@ -45,8 +45,9 @@ window.EC_PAGES = window.EC_PAGES || {};
   const records = await readFile(path.join(outDir, 'src/content/pages.fa.js'), 'utf8');
   const seoRoutes = await readFile(path.join(outDir, 'src/content/seo-routes.js'), 'utf8');
   const staticRoutes = await readFile(path.join(outDir, 'src/render/static-page.js'), 'utf8');
+  assert.match(app, /\/roles\/\$\{role\.slug\}\//);
   for (const slug of expectedSlugs) {
-    assert.match(app, new RegExp(`roles/${slug}`));
+    assert.match(app, new RegExp(`"slug":"${slug}"`));
     assert.match(records, new RegExp(`role-${slug}`));
     assert.match(seoRoutes, new RegExp(`/roles/${slug}/`));
     assert.match(staticRoutes, new RegExp(`/roles/${slug}/`));
