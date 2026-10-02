@@ -1,61 +1,69 @@
 ---
-title: "API Authentication: Bearer Tokens & Authorization"
+title: "API Authentication: v1 Bearer Tokens & Authorization"
 sidebarTitle: "Authentication"
-description: "Understand the verified Sanctum authentication boundary in EarthCoop without assuming an undocumented public token-issuance workflow."
+description: "Understand EarthCoop's current /api/v1 bearer-token login/logout contract and the separate authorization rules that protect domain actions."
 ---
 
-Some current EarthCoop API routes are protected by Laravel Sanctum, including routes using the `auth:sanctum` middleware. This proves that authenticated requests are part of the current application architecture. It does **not** prove that ordinary web login automatically issues a reusable personal access token for external integrations.
+EarthCoop's current `/api/v1` first-party/native-client contract includes an explicit bearer-token authentication flow. This is stronger evidence than the older state where only Sanctum-protected routes were visible without a documented issuance path.
 
-## Verified current boundary
+## Current v1 login
 
-The repository currently shows Sanctum-protected routes and authenticated controllers. A request reaching such a route must satisfy the authentication mechanism configured by the running EarthCoop application and then pass any additional domain authorization checks.
+The current native session controller accepts the member's email and password at the v1 login endpoint and validates the required EarthCoop agreement state. On successful authentication it issues the current bearer token and returns bootstrapped member data used by the client.
 
-Authentication and authorization are different:
-
-- **authentication** establishes the requesting identity/session/credential;
-- **authorization** determines whether that identity may perform the requested operation;
-- domain services can impose further ownership, role, policy, governance, or monetary constraints.
-
-## Public token issuance
-
-There is **no verified public token issuance flow documented** in the current repository evidence used for this guide. In particular, this documentation does not claim that:
-
-- ordinary `/login` returns a personal access token;
-- every member has a token-management screen;
-- a public password-to-token endpoint is a supported integration contract;
-- external tokens have a particular lifetime, renewal rule, or revocation UI.
-
-Those behaviors must be documented only when a specific current route/controller and supported product contract prove them.
-
-<Warning>
-  Do not send member credentials to a guessed API endpoint in order to obtain a token. A route being protected by `auth:sanctum` does not create a public credential-issuance API.
-</Warning>
-
-## Bearer credentials where explicitly provisioned
-
-If a trusted EarthCoop deployment or future stable API explicitly provisions a Sanctum-compatible bearer credential through an authorized channel, the client can send it using the normal HTTP authorization header:
+Conceptually:
 
 ```http
-Authorization: Bearer YOUR_AUTHORIZED_TOKEN
+POST /api/v1/auth/login
+Accept: application/json
+Content-Type: application/json
+```
+
+The exact request/response fields should be taken from the current controller/tests rather than copied into a permanent external SDK contract without review.
+
+## Presenting the token
+
+Protected v1 requests use the standard bearer authorization header:
+
+```http
+Authorization: Bearer YOUR_TOKEN
 Accept: application/json
 ```
 
-That example describes how a bearer credential is presented. It is not a claim about how a credential is currently issued to general users.
+The token authenticates the member. It does not grant permissions beyond that member's current EarthCoop rights.
 
-## Session-authenticated application requests
+## Logout and revocation
 
-EarthCoop's own web application can use the authentication mechanisms configured for its first-party flows. First-party browser behavior should not be conflated with a supported external-token contract. A future native/mobile authentication design may introduce a versioned client contract with its own issuance, refresh, expiry, and revocation rules.
+The current v1 logout path revokes/deletes the token that authenticated the request. Clients should therefore treat logout as a server-side credential revocation event, not merely as local deletion of cached session state.
 
-## NajmHoda and action authority
+## Authentication is not authorization
 
-Even after authentication, NajmHoda does not receive arbitrary mutation authority from request context. The server applies entry policy, ownership checks, page/domain resolution, and the applicable service authorization before an action-capable path can proceed.
+A valid token answers who the requester is. The requested domain operation can still require:
 
-A valid credential therefore means “the server knows who is making this request,” not “the requester may do anything represented by a route.”
+- ownership of the target record;
+- the applicable member/group role;
+- election or governance eligibility;
+- monetary-state and account rules;
+- current policy/configuration gates;
+- other domain-specific authorization.
+
+For NajmHoda, a valid token also does not turn client-supplied page or actor context into authority. The server re-resolves trusted context before action-capable flows can execute.
+
+<Warning>
+  Never treat possession of a valid token as permission to bypass EarthCoop law, policy, ownership, role, monetary or governance checks.
+</Warning>
+
+## Web and Google authentication are separate product flows
+
+The EarthCoop web application also has its own session-based authentication paths, including the current Google OAuth flow. Their existence does not mean a native bearer token should be obtained by scraping a browser session or reusing a third-party provider credential directly against arbitrary v1 endpoints.
+
+The supported v1 bearer token is issued by EarthCoop's own current native-session contract.
+
+## Third-party/public API boundary
+
+The existence of a v1 bearer-token flow proves a current first-party/native-client authentication contract. It does **not** by itself establish a general developer-platform policy for third-party apps, arbitrary personal access tokens, long-lived token management, OAuth scopes, refresh tokens, or an external credential portal.
+
+Those capabilities should be documented only if a specific supported contract is introduced.
 
 ## Error handling
 
-Protected routes can reject an unauthenticated request. The exact response shape is part of the specific current controller/middleware behavior and should not be generalized into one immutable public API format while the external API remains **In development**.
-
-## External client status
-
-EarthCoop's durable, versioned external/mobile authentication contract is still **In development**. Until it is explicitly published, developers should treat the existing Sanctum-protected routes as implementation evidence rather than a promise of a stable public token lifecycle.
+Login can fail for invalid credentials, invalid/missing agreement state, validation errors, or other current account restrictions. Protected requests can fail authentication or later authorization. Clients should preserve that distinction rather than treating every rejection as an invalid password.

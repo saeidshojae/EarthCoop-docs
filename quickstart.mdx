@@ -1,16 +1,20 @@
 ---
 title: "Get Started with EarthCoop"
 sidebarTitle: "Quickstart"
-description: "Follow EarthCoop's current multi-step registration, complete your identity, profession/expertise and Primary Residence, then enter your automatically assigned system groups."
+description: "Follow EarthCoop's current registration, complete identity, profession/expertise and Primary Residence, then enter your automatically assigned system groups."
 ---
 
-EarthCoop uses a **multi-step registration** process. Registration is not finished by creating an email/password alone: the platform verifies your email, collects the information needed for your member profile, and resolves your Primary Residence to the appropriate base governance level. That information is then used to create or assign your system-group memberships.
+EarthCoop uses a **multi-step member registration** process. Establishing an authenticated account is only the beginning: the platform still needs the member information required for identity, professional dimensions, Primary Residence and governance/group membership.
 
 <Steps>
   <Step title="Accept the governing terms and start registration">
-    Begin from the EarthCoop welcome/registration flow. You must accept the governing terms before the registration form opens. If the invitation gate is enabled for the current deployment, you must also provide a valid invitation code.
+    Begin from the EarthCoop welcome/registration flow and satisfy the current governing-agreement requirements. If the invitation gate is enabled for the deployment, the current invitation policy also applies.
 
-    Create the account with your email address and password. EarthCoop sends an email verification code after the account is created; complete that verification before continuing through the member-registration steps.
+    EarthCoop currently supports the established email/password flow and an implemented Google authentication/registration path. A Google sign-in can establish the authenticated account path, but it does not bypass EarthCoop's agreement, eligibility or member-profile completion requirements.
+  </Step>
+
+  <Step title="Verify/authenticate the account">
+    On the email/password path, complete the current email verification step before continuing. On the supported Google path, the provider authentication is handled through the current OAuth flow. In both cases, EarthCoop remains responsible for the member-registration state that follows.
   </Step>
 
   <Step title="Complete your identity information">
@@ -26,7 +30,7 @@ EarthCoop uses a **multi-step registration** process. Registration is not finish
 
     The terminal registration level is topology-aware. A city without an urban region, an urban region without a neighborhood, or a village without a neighborhood can itself be the relevant base when no lower governance unit exists. A proposed valid base location may remain pending review without forcing the member to abandon registration.
 
-    Street and smaller local-address details are **optional after registration**. They are useful for a more precise local address, but they are not required to complete the Step 3 base-governance registration contract.
+    Street and smaller local-address details are **optional after registration**. They improve local-address precision but are not required to complete the base-governance registration contract.
   </Step>
 
   <Step title="Open My Groups">
@@ -38,20 +42,20 @@ EarthCoop uses a **multi-step registration** process. Registration is not finish
     - **Professional and specialty groups** — based on your occupation and expertise across the relevant geographic hierarchy;
     - **Age/gender groups** — system groups derived from those member dimensions across the relevant hierarchy.
 
-    User-created groups are separate. They can serve purposes such as unions, organizations, companies or other member initiatives, but they do not replace the automatic system-group structure.
+    User-created groups are separate and do not replace the automatic system-group structure.
   </Step>
 
   <Step title="Participate at the level allowed by your role">
-    Your permissions are not identical in every group. At the member's base/local governance level, an Active role can participate according to the current group and governance rules. At higher system levels, membership may be observational rather than a direct right to intervene in every discussion or election.
+    Permissions are not identical in every group. At the member's base/local governance level, an Active role can participate according to the current group and governance rules. At higher system levels, membership may be observational rather than a direct right to intervene in every discussion or election.
 
     A **Temporary Active** role can enable limited participation where the relevant rules allow it, but it does not create systemic-election voting rights and does not count as an ordinary Active member for election eligibility thresholds.
   </Step>
 
-  <Step title="Explore current project, finance and assistant surfaces">
-    From the authenticated product you can explore current project workflows, the implemented Najm Bahar domain, support tickets, and the current Najm Hoda interaction surface. Their detailed guides distinguish implemented behavior from broader economic, API, mobile and AI architecture still in development or planned.
+  <Step title="Explore current project, finance, assistant and client surfaces">
+    From the authenticated product you can explore current project workflows, the implemented Najm Bahar domain, support tickets, the current Najm Hoda interaction surface, and the selected first-party/native capabilities exposed through the current versioned `/api/v1` boundary.
   </Step>
 </Steps>
 
 <Note>
-  Persian is the canonical language for the current foundational/reference document set. English product documentation is being reviewed against current implementation, and Arabic renditions are marked current only after review. Translation status does not determine whether a legal document is effective.
+  Persian is the canonical language for the current foundational/reference document set. These English pages are audited product guides, not English translations of the foundational legal corpus. Genuine Arabic documentation is not yet available. Translation status does not determine legal effect.
 </Note>

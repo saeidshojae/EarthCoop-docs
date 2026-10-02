@@ -47,10 +47,13 @@ test('pull-request validation builds and validates the recovered candidate with 
   assert.ok(build >= 0 && validate > build);
 });
 
-test('recovered validator itself pins preview origin, Persian-only display and official 0.8 archive by default', async () => {
+test('recovered validator pins Preview origin, fa/en site display, Persian-only legal documents, English guides and official 0.8 archive', async () => {
   const validator = await readFile(path.join(root, 'scripts/validate-recovered-docs-center.mjs'), 'utf8');
   assert.match(validator, /https:\/\/docs-preview\.earthcoop\.ir/);
-  assert.match(validator, /JSON\.stringify\(manifest\.displayLocales\) !== JSON\.stringify\(\['fa'\]\)/);
+  assert.match(validator, /EXPECTED_DISPLAY_LOCALES\s*=\s*Object\.freeze\(\['fa', 'en'\]\)/);
+  assert.match(validator, /EXPECTED_DOCUMENT_LOCALES\s*=\s*Object\.freeze\(\['fa'\]\)/);
+  assert.match(validator, /EXPECTED_GUIDE_LOCALES\s*=\s*Object\.freeze\(\['en'\]\)/);
+  assert.match(validator, /EXPECTED_ENGLISH_GUIDE_COUNT\s*=\s*31/);
   assert.match(validator, /expectedRuntimeArchiveSha = RECOVERED_08_ARCHIVE_SHA256/);
   assert.doesNotMatch(validator, /EXPECTED_ORIGIN\s*=\s*['"]https:\/\/docs\.earthcoop\.ir/);
 });

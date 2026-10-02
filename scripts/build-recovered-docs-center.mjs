@@ -26,6 +26,7 @@ import {
   RECOVERED_08_ARCHIVE_SHA256,
   RECOVERED_08_ARCHIVE_URL,
 } from './materialize-docs-center-08.mjs';
+import { applyRecoveredEnglishProductGuides } from './recovered-english-product-guides.mjs';
 import { patchRecoveredDocumentReaderSource } from './patch-recovered-document-reader.mjs';
 import { patchRecoveredEditorialPagesSource } from './patch-recovered-editorial-pages.mjs';
 import {
@@ -36,7 +37,7 @@ import { renderRecoveredStaticDocuments } from './render-recovered-static-docume
 
 const GUIDE_CONTENT_POLICY = Object.freeze({
   fa: 'audited_current_2026-10-02_official-v1_and_repository_evidence',
-  en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
+  en: 'audited_current_2026-10-02_product_guides_runtime_mapped',
   ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
 });
 
@@ -162,16 +163,15 @@ export async function buildRecoveredDocsCenter({
   await writeFile(pagesPath, patchRecoveredEditorialPagesSource(pagesSource));
 
   const productGuideInventory = JSON.parse(await readFile(path.join(rootDir, 'audits/product-guides/2026-09-28-inventory.json'), 'utf8'));
-  const editorialTruth = buildRecoveredEditorialTruth(productGuideInventory);
+  const englishAudit = JSON.parse(await readFile(path.join(rootDir, 'audits/product-guides/2026-10-02-evidence.json'), 'utf8'));
 
   const catalog = await buildRecoveredContentCatalog(rootDir, { currentFoundationalPackages });
   const localeCatalog = buildRecoveredLocaleCatalog(catalog);
   const routes = buildRecoveredRouteEntries(catalog);
-  const seo = buildRecoveredSeoAssets({ canonicalOrigin, routes, preview: true });
   const packages = await buildLegacyFoundationalPackages(rootDir, { catalog });
   const referencePackages = await buildLegacyReferencePackages(rootDir, { catalog });
   const allPackages = [...packages, ...referencePackages];
-  const searchIndex = buildRecoveredSearchIndex(allPackages, { allowedLocales: localeCatalog.globalLocales });
+  let searchIndex = buildRecoveredSearchIndex(allPackages, { allowedLocales: localeCatalog.globalLocales });
   const downloadMap = buildFoundationalDownloadMap(packages);
   const generatedPath = path.join(outDir, 'src/content/document-packages/foundational.generated.fa.js');
   await mkdir(path.dirname(generatedPath), { recursive: true });
@@ -179,12 +179,6 @@ export async function buildRecoveredDocsCenter({
   await writeFile(path.join(outDir, 'src/content/document-packages/index.fa.js'), recoveredPackageIndex());
   await writeFile(path.join(outDir, 'src/data/document-downloads.js'), serializeDocumentDownloadsSource(downloadMap));
   await writeFile(path.join(outDir, 'downloads/document-downloads.json'), `${JSON.stringify(downloadMap, null, 2)}\n`);
-  await writeFile(path.join(outDir, 'recovered-locales.json'), `${JSON.stringify(localeCatalog, null, 2)}\n`);
-  await writeFile(path.join(outDir, 'recovered-search-index.json'), `${JSON.stringify(searchIndex, null, 2)}\n`);
-  await writeFile(path.join(outDir, 'recovered-seo-routes.json'), `${JSON.stringify(seo.routes, null, 2)}\n`);
-  await writeFile(path.join(outDir, 'recovered-editorial-truth.json'), `${JSON.stringify(editorialTruth, null, 2)}\n`);
-  await writeFile(path.join(outDir, 'robots.txt'), seo.robotsTxt);
-  await writeFile(path.join(outDir, 'sitemap.xml'), seo.sitemapXml);
   await writeFile(path.join(outDir, 'src/content/documents.fa.js'), serializeRecoveredDocumentsMetadata(packages, referencePackages));
   await writeFile(path.join(outDir, 'site-config.js'), previewSiteConfig(canonicalOrigin));
   await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
@@ -207,6 +201,41 @@ export async function buildRecoveredDocsCenter({
   const controlsPath = path.join(outDir, 'src/ui/document-reader-controls.js');
   await writeFile(controlsPath, patchRecoveredTocFinalLayoutSource(await readFile(controlsPath, 'utf8')));
 
+  let englishIntegration = {
+    guides: [],
+    searchRecords: [],
+    seoRoutes: [],
+    displayLocales: localeCatalog.globalLocales,
+    foundationalLocales: localeCatalog.globalLocales,
+  };
+  if (renderStaticDocuments) {
+    englishIntegration = await applyRecoveredEnglishProductGuides({ rootDir, outDir, canonicalOrigin });
+  }
+
+  searchIndex = [...searchIndex, ...englishIntegration.searchRecords];
+  const seo = buildRecoveredSeoAssets({
+    canonicalOrigin,
+    routes: [...routes, ...englishIntegration.seoRoutes],
+    preview: true,
+  });
+  const siteLocaleCatalog = {
+    ...localeCatalog,
+    documentLocales: localeCatalog.globalLocales,
+    guideLocales: englishIntegration.guides.length ? ['en'] : [],
+    globalLocales: englishIntegration.displayLocales,
+  };
+  const editorialTruth = buildRecoveredEditorialTruth(productGuideInventory, {
+    englishAudit,
+    runtimeMapped: englishIntegration.guides.length === englishAudit.guideCount,
+  });
+
+  await writeFile(path.join(outDir, 'recovered-locales.json'), `${JSON.stringify(siteLocaleCatalog, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-search-index.json'), `${JSON.stringify(searchIndex, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-seo-routes.json'), `${JSON.stringify(seo.routes, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'recovered-editorial-truth.json'), `${JSON.stringify(editorialTruth, null, 2)}\n`);
+  await writeFile(path.join(outDir, 'robots.txt'), seo.robotsTxt);
+  await writeFile(path.join(outDir, 'sitemap.xml'), seo.sitemapXml);
+
   if (renderStaticDocuments) {
     await generateRecoveredFoundationalPdfs({ runtimeDir: outDir, packages });
   }
@@ -223,13 +252,17 @@ export async function buildRecoveredDocsCenter({
     runtimeBaseline: 'earthcoop-knowledge-center-0.8.0',
     runtimeArchiveSha256: recovered.archiveSha256,
     canonicalLanguage: 'fa',
-    displayLocales: localeCatalog.globalLocales,
+    displayLocales: siteLocaleCatalog.globalLocales,
+    documentLocales: siteLocaleCatalog.documentLocales,
+    guideLocales: siteLocaleCatalog.guideLocales,
     guideContentPolicy: GUIDE_CONTENT_POLICY,
     editorialTruthArtifact: 'recovered-editorial-truth.json',
     canonicalOrigin,
     previewIndexing: 'disabled',
     searchRecordCount: searchIndex.length,
     seoRouteCount: seo.routes.length,
+    englishGuideCount: englishIntegration.guides.length,
+    englishGuideAuditBaseline: englishAudit.applicationBaseline,
     fileCount: inventory.length + 1,
     hashes,
   };

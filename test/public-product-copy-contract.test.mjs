@@ -31,7 +31,7 @@ test('introduction does not flatten current and future capabilities into fully a
 
 test('quickstart reflects multi-step registration and automatic system-group membership', async () => {
   const content = await read('quickstart.mdx');
-  assert.match(content, /multi-step registration/i);
+  assert.match(content, /multi-step.*registration/i);
   assert.match(content, /automatically/i);
   assert.match(content, /public assembl/i);
   assert.match(content, /professional/i);
@@ -40,9 +40,10 @@ test('quickstart reflects multi-step registration and automatic system-group mem
   assert.doesNotMatch(content, /Join or create a group/i);
 });
 
-test('account setup does not claim unsupported Google sign-in and uses canonical residence terminology', async () => {
+test('account setup reflects current Google authentication while preserving canonical residence requirements', async () => {
   const content = await read('account-setup.mdx');
-  assert.doesNotMatch(content, /Continue with Google|Google Sign-In|registered with Google/i);
+  assert.match(content, /Google OAuth|Google authentication/i);
+  assert.match(content, /does not remove|not a shortcut|does not.*bypass/is);
   assert.match(content, /Primary Residence/i);
   assert.match(content, /base governance/i);
   assert.match(content, /Street.*optional|optional.*Street/is);

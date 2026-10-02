@@ -8,13 +8,28 @@ import test from 'node:test';
 import { validateRecoveredDocsCenter } from '../scripts/validate-recovered-docs-center.mjs';
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const englishRuntimeFiles = [
+  'en/index.html',
+  ...Array.from({ length: 30 }, (_, index) => `en/guide-${String(index + 1).padStart(2, '0')}/index.html`),
+];
 
 async function fixture() {
   const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-validate-recovered-'));
   await mkdir(path.join(outDir, 'src/content/document-packages'), { recursive: true });
-  const localeCatalog = { globalLocales: ['fa'], byDocument: { 'ECON-REF-01': { available: [{ locale: 'fa', direction: 'rtl', status: 'current' }], unavailable: ['en', 'ar'] } } };
-  const searchRows = [{ documentId: 'ECON-REF-01', contentClass: 'reference', locale: 'fa', title: 'سند مرجع اقتصاد', heading: 'بخش', anchor: 'section-1', body: 'اقتصاد و حق', status: 'official_draft', version: '1.0', route: '#/documents/econ-ref-01/provisions/section-1' }];
-  const seoRoutes = [{ documentId: 'ECON-REF-01', routeId: 'econ-ref-01', staticPath: '/documents/econ-ref-01/', locale: 'fa', legalStatus: 'official_draft', contentClass: 'reference', canonical: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01/', indexable: false, hreflang: [{ locale: 'fa', href: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01/' }] }];
+  const localeCatalog = {
+    globalLocales: ['fa','en'],
+    documentLocales: ['fa'],
+    guideLocales: ['en'],
+    byDocument: { 'ECON-REF-01': { available: [{ locale: 'fa', direction: 'rtl', status: 'current' }], unavailable: ['en', 'ar'] } },
+  };
+  const searchRows = [
+    { documentId: 'ECON-REF-01', contentClass: 'reference', locale: 'fa', title: 'سند مرجع اقتصاد', heading: 'بخش', anchor: 'section-1', body: 'اقتصاد و حق', status: 'official_draft', version: '1.0', route: '#/documents/econ-ref-01/provisions/section-1' },
+    { inventoryId: 'guide.introduction', contentClass: 'product_guide', locale: 'en', title: 'Introduction', heading: 'Introduction', anchor: null, body: 'EarthCoop guide', status: 'audited_current', version: '1.0', route: '/en/introduction/' },
+  ];
+  const seoRoutes = [
+    { documentId: 'ECON-REF-01', routeId: 'econ-ref-01', staticPath: '/documents/econ-ref-01/', locale: 'fa', legalStatus: 'official_draft', contentClass: 'reference', canonical: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01/', indexable: false, hreflang: [{ locale: 'fa', href: 'https://docs-preview.earthcoop.ir/documents/econ-ref-01/' }] },
+    { inventoryId: 'guide.introduction', staticPath: '/en/introduction/', locale: 'en', contentClass: 'product_guide', canonical: 'https://docs-preview.earthcoop.ir/en/introduction/', indexable: false, hreflang: [{ locale: 'en', href: 'https://docs-preview.earthcoop.ir/en/introduction/' }] },
+  ];
   const editorialTruth = {
     recoveredPersianGuides: {
       status: 'audited_current',
@@ -23,7 +38,12 @@ async function fixture() {
       productTruth: 'audited_against_current_repository_and_official_v1',
       publicationClaim: 'current_user_guide_with_explicit_vision_vs_implementation_boundaries',
     },
-    reviewedEnglishGuides: { status: 'verified_current', runtimeMapped: false, evidence: 'audits/product-guides/2026-09-28-inventory.json', paths: [] },
+    reviewedEnglishGuides: {
+      status: 'audited_current', runtimeMapped: true,
+      evidence: 'audits/product-guides/2026-10-02-evidence.json',
+      applicationBaseline: 'f88c28a518749fb81133c3affa5e5fbf353f844a',
+      guideCount: 31, foundationalEnglishAvailable: false, paths: [],
+    },
     statusPage: { status: 'audited_current', revision: '2026-10-02-reference-audit-v1', source: 'EarthCoop main f88c28a + current tests and official-v1 boundaries' },
     mapPage: { status: 'audited_current', revision: '2026-10-02-reference-audit-v1', source: 'audited Persian guides + current ecosystem architecture' },
     glossaryPage: { status: 'audited_current', revision: '2026-10-02-reference-audit-v1', source: 'canonical terminology + official-v1 + audited Persian guides' },
@@ -48,7 +68,7 @@ async function fixture() {
     'recovered-seo-routes.json': `${JSON.stringify(seoRoutes, null, 2)}\n`,
     'recovered-editorial-truth.json': `${JSON.stringify(editorialTruth, null, 2)}\n`,
     'robots.txt': 'User-agent: *\nDisallow: /\n',
-    'sitemap.xml': '<?xml version="1.0"?><urlset><url><loc>https://docs-preview.earthcoop.ir/documents/econ-ref-01/</loc></url></urlset>\n',
+    'sitemap.xml': '<?xml version="1.0"?><urlset><url><loc>https://docs-preview.earthcoop.ir/documents/econ-ref-01/</loc></url><url><loc>https://docs-preview.earthcoop.ir/en/introduction/</loc></url></urlset>\n',
     '404/index.html': '<html>404</html>',
     'documents/fc/index.html': directFc,
     'documents/econ-ref-01/index.html': '<html>ECON-REF-01</html>',
@@ -60,6 +80,8 @@ async function fixture() {
     'src/content/document-packages/foundational.generated.fa.js': foundationalSource,
     'earthcoop-knowledge-center-0.8.0-cpanel.tar.gz': 'archive-bytes',
   };
+  for (const relative of englishRuntimeFiles) files[relative] = `<html lang="en"><main>${relative}</main></html>`;
+
   const hashes = {};
   for (const [relative, content] of Object.entries(files)) {
     const absolute = path.join(outDir, relative);
@@ -77,10 +99,14 @@ async function fixture() {
     runtimeBaseline: 'earthcoop-knowledge-center-0.8.0',
     runtimeArchiveSha256: archiveSha,
     canonicalLanguage: 'fa',
-    displayLocales: ['fa'],
+    displayLocales: ['fa','en'],
+    documentLocales: ['fa'],
+    guideLocales: ['en'],
+    englishGuideCount: 31,
+    englishGuideAuditBaseline: 'f88c28a518749fb81133c3affa5e5fbf353f844a',
     guideContentPolicy: {
       fa: 'audited_current_2026-10-02_official-v1_and_repository_evidence',
-      en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
+      en: 'audited_current_2026-10-02_product_guides_runtime_mapped',
       ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
     },
     editorialTruthArtifact: 'recovered-editorial-truth.json',
@@ -108,7 +134,7 @@ async function rewriteDeclaredFile(input, relative, content) {
   await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
 }
 
-test('accepts a complete recovered 0.8 preview build and verifies every declared file hash', async () => {
+test('accepts a complete recovered 0.8 fa/en preview build and verifies every declared file hash', async () => {
   const input = await fixture();
   const result = await validateRecoveredDocsCenter(validateArgs(input));
   assert.equal(result.valid, true);
@@ -133,7 +159,7 @@ test('rejects a production redirect in recovered htaccess even when its hash is 
   await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /htaccess.*preview|production redirect/i);
 });
 
-test('rejects wrong source SHA, runtime baseline, preview origin, locale policy, guide policy, or editorial declaration', async () => {
+test('rejects wrong source SHA, runtime baseline, preview origin, locale mapping, guide policy, English audit metadata, or editorial declaration', async () => {
   const input = await fixture();
   const manifestPath = path.join(input.outDir, 'deployment-manifest.json');
   const original = JSON.parse(await readFile(manifestPath, 'utf8'));
@@ -143,15 +169,19 @@ test('rejects wrong source SHA, runtime baseline, preview origin, locale policy,
   for (const mutate of [
     (m) => { m.runtimeBaseline = 'other'; },
     (m) => { m.canonicalOrigin = 'https://docs.earthcoop.ir'; },
-    (m) => { m.displayLocales = ['fa', 'ar']; },
-    (m) => { m.guideContentPolicy.fa = 'current'; },
+    (m) => { m.displayLocales = ['fa']; },
+    (m) => { m.documentLocales = ['fa','en']; },
+    (m) => { m.guideLocales = []; },
+    (m) => { m.englishGuideCount = 30; },
+    (m) => { m.englishGuideAuditBaseline = 'older'; },
+    (m) => { m.guideContentPolicy.en = 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime'; },
     (m) => { m.previewIndexing = 'enabled'; },
     (m) => { m.editorialTruthArtifact = 'other.json'; },
   ]) {
     const changed = structuredClone(original);
     mutate(changed);
     await writeFile(manifestPath, JSON.stringify(changed));
-    await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /baseline|preview origin|display locales|guide content policy|preview indexing|editorial truth/i);
+    await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /baseline|preview origin|display locales|document locales|guide locales|English guide|guide content policy|preview indexing|editorial truth/i);
   }
 });
 
@@ -173,12 +203,12 @@ test('rejects production SEO leakage or false editorial truth even when hashes a
     const absolute = path.join(input.outDir, relative);
     const data = JSON.parse(await readFile(absolute, 'utf8'));
     if (scenario === 'seo') data[0].canonical = 'https://docs.earthcoop.ir/documents/econ-ref-01/';
-    else data.recoveredPersianGuides.status = 'historical_snapshot';
+    else data.reviewedEnglishGuides.runtimeMapped = false;
     const serialized = `${JSON.stringify(data, null, 2)}\n`;
     await writeFile(absolute, serialized);
     manifest.hashes[relative] = sha256(Buffer.from(serialized));
     await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
-    await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /SEO|production|editorial|audited_current|guide/i);
+    await assert.rejects(validateRecoveredDocsCenter(validateArgs(input)), /SEO|production|editorial|audited_current|guide|English/i);
   }
 });
 

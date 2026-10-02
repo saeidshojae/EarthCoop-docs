@@ -1,54 +1,60 @@
 ---
-title: "Notifications API — Fetch, Read & Delete Alerts"
+title: "Notifications API — v1 Alerts & Push Devices"
 sidebarTitle: "Notifications API"
-description: "Current notification-route implementation notes; payloads and client contracts are evolving and are not yet a stable public external API."
+description: "Understand EarthCoop's current /api/v1 notification and push-device contract while keeping notification records distinct from domain truth."
 ---
 
-EarthCoop has current notification capabilities and API routes used by the application, but this surface is **evolving / In development** and is **not a stable public external contract**. Notification classes and routes prove current domain behavior; they do not guarantee that every payload field, route method, or client-facing representation is frozen for external consumers.
+EarthCoop's current `/api/v1` first-party/native-client contract includes authenticated notification delivery and device-push endpoints. This versioned boundary is distinct from older unversioned notification routes used by the web application.
 
-## Current product behavior
+## Current v1 notification contract
 
-The current application can generate notifications for domain events such as project review decisions and other product workflows. Authenticated notification routes also exist for viewing and managing a member's notifications.
+The current v1 route set includes native/client operations for:
 
-The exact set of notification types can change as EarthCoop domains evolve. This guide therefore does not define a permanent closed list of event types.
+- listing the authenticated member's notifications;
+- retrieving an unread-notification count;
+- marking a notification as read;
+- subscribing a device for push delivery;
+- unsubscribing a device from push delivery.
 
-## Payload boundary
-
-A notification payload is a presentation/integration record about another domain event. It is not itself the authoritative record of that event.
-
-For example:
-
-- a project approval notification is not the project review history itself;
-- an investment-related notification is not proof that a NajmBahar Transfer occurred;
-- an amount shown in a notification does not override the monetary ledger;
-- a governance notification does not create a vote, appointment, or legal decision.
-
-When a notification refers to money, the EarthCoop monetary unit is **Bahar**; **Gol is the subunit of Bahar**. Internal storage or payload precision in Gol must not be described as a separate currency.
+Use the current route/controller tests for exact request parameters, payload fields, pagination and validation.
 
 ## Authentication and ownership
 
-Current member notification routes are tied to authenticated application context. A valid request must still be scoped to the authenticated member so one user cannot read or mutate another user's notification merely by supplying an identifier.
+Protected v1 notification operations are scoped to the authenticated member. A notification identifier must not let one member read or mutate another member's notification.
 
-The existence of an authenticated route does not prove a general public bearer-token issuance workflow. See the API authentication guide for that boundary.
+Device push subscription is also an authenticated member/device relationship. A valid bearer token establishes identity; current validation and device rules still apply.
 
-## Read and delete operations
+## Notification truth vs domain truth
 
-Current application routes can support operations such as retrieving notifications, marking a notification as read, and deleting a notification where the implementation permits it. The exact HTTP method, JSON response, and identifier representation remain implementation details while the stable external API is **In development**.
+A notification is a presentation/integration record about another event. It is not itself the authoritative record of that event.
 
-## Domain truth vs notification truth
+For example:
 
-For high-impact actions, always verify the source domain:
+- a project approval notification is not the project review history;
+- an election notification is not the ballot/tally/appointment record;
+- an investment-related notification is not proof that a NajmBahar Transfer occurred;
+- an amount in a notification does not override the monetary ledger.
+
+Use this mental model:
 
 ```text
-notification → points to an event
-project/election/support record → domain truth
-NajmBahar ledger → monetary truth
+notification → event signal
+source domain record → authoritative workflow fact
+NajmBahar ledger → authoritative monetary fact
 ```
 
-A client should never infer a payment, refund, project completion, or economic guarantee solely from a notification label.
+## Web notification settings are separate
 
-## Stability guidance
+EarthCoop also has a member notification-settings surface for channel/category preferences and applicable thresholds. That settings UI/configuration is separate from the v1 transport contract documented here. A preference controls whether/how some notifications are delivered; it does not redefine the underlying domain event.
 
-For first-party development, inspect the current notification classes, controllers/routes, and tests. For third-party or native clients, wait for the explicitly versioned notification contract and its documented payload schemas.
+## Push boundary
 
-Until that contract is published, the current notification payload is **not a stable public payload contract**.
+The v1 device endpoints establish a current native push-delivery contract. They do not guarantee delivery by a device vendor, network, operating system, or notification service after EarthCoop has accepted the subscription/event. Clients should distinguish server acceptance from downstream delivery success.
+
+## Legacy/unversioned routes
+
+Older `/api` notification routes may still serve the web application or compatibility flows. Do not silently merge their response shapes or methods into the v1 contract.
+
+<Warning>
+  `/api/v1` is the current versioned first-party/native boundary. It is not permission to treat every historical notification route or payload as a stable public third-party API.
+</Warning>

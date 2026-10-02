@@ -41,6 +41,16 @@ async function fixture() {
     { path:'introduction.mdx', title:'Introduction' },
     { path:'groups/overview.mdx', title:'Groups' },
   ] }));
+  await writeFile(path.join(root, 'audits/product-guides/2026-10-02-evidence.json'), JSON.stringify({
+    auditDate: '2026-10-02',
+    applicationBaseline: 'f88c28a518749fb81133c3affa5e5fbf353f844a',
+    guideCount: 2,
+    foundationalEnglishAvailable: false,
+    guides: [
+      { path:'introduction.mdx', status:'revalidated_current' },
+      { path:'groups/overview.mdx', status:'revalidated_current' },
+    ],
+  }));
 
   await writeFile(path.join(root, 'docs-manifest.json'), JSON.stringify({
     schemaVersion: 2,
@@ -121,8 +131,10 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   const editorial = JSON.parse(await readFile(path.join(outDir, 'recovered-editorial-truth.json'), 'utf8'));
   assert.equal(editorial.recoveredPersianGuides.status, 'audited_current');
   assert.equal(editorial.recoveredPersianGuides.revision, '2026-10-02-audited-v1');
-  assert.equal(editorial.reviewedEnglishGuides.status, 'verified_current');
+  assert.equal(editorial.reviewedEnglishGuides.status, 'revalidated_current');
   assert.equal(editorial.reviewedEnglishGuides.runtimeMapped, false);
+  assert.equal(editorial.reviewedEnglishGuides.evidence, 'audits/product-guides/2026-10-02-evidence.json');
+  assert.equal(editorial.reviewedEnglishGuides.applicationBaseline, 'f88c28a518749fb81133c3affa5e5fbf353f844a');
   assert.equal(editorial.statusPage.status, 'audited_current');
   assert.equal(editorial.mapPage.status, 'audited_current');
   assert.equal(editorial.glossaryPage.status, 'audited_current');
@@ -138,6 +150,8 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
 
   const locales = JSON.parse(await readFile(path.join(outDir, 'recovered-locales.json'), 'utf8'));
   assert.deepEqual(locales.globalLocales, ['fa']);
+  assert.deepEqual(locales.documentLocales, ['fa']);
+  assert.deepEqual(locales.guideLocales, []);
 
   const search = JSON.parse(await readFile(path.join(outDir, 'recovered-search-index.json'), 'utf8'));
   assert.equal(search.length, 1);
@@ -165,10 +179,12 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   assert.deepEqual(report.displayLocales, ['fa']);
   assert.deepEqual(report.guideContentPolicy, {
     fa: 'audited_current_2026-10-02_official-v1_and_repository_evidence',
-    en: 'reviewed_repository_guides_not_yet_mapped_to_recovered_runtime',
+    en: 'audited_current_2026-10-02_product_guides_runtime_mapped',
     ar: 'unavailable_legacy_rtl_alias_is_not_arabic',
   });
   assert.equal(report.documentCount, 1);
   assert.equal(report.referenceCount, 0);
   assert.equal(report.searchRecordCount, 1);
+  assert.equal(report.englishGuideCount, 0);
+  assert.equal(report.englishGuideAuditBaseline, 'f88c28a518749fb81133c3affa5e5fbf353f844a');
 });

@@ -1,61 +1,56 @@
 ---
-title: "Geographic API: Provinces, Cities & Regions"
+title: "Geographic API: v1 Lookups & Canonical Governance Topology"
 sidebarTitle: "Geographic API"
-description: "Current and legacy geographic route notes; EarthCoop's canonical location/governance architecture is newer than parts of this evolving API surface."
+description: "Use EarthCoop's current /api/v1 native geography lookups while preserving the distinction from the richer canonical location/governance topology."
 ---
 
-EarthCoop currently exposes several geographic/location routes under `/api`, but this family is **evolving / In development** and is **not a stable public external contract**. The application still contains **legacy** geography helpers alongside the newer **canonical location/governance** model.
+EarthCoop now exposes a small versioned geography contract under `/api/v1` for the first-party/native client. The application also retains older unversioned geography helpers and a richer canonical Location/Governance model. These layers must not be confused.
 
-## Why the distinction matters
+## Current v1 geography endpoints
 
-The current EarthCoop location architecture is topology-aware. It supports governance areas and residence paths that cannot be accurately reduced to one fixed sequence such as “province → city → neighborhood” for every place in the world.
+The current v1 route set includes native/client lookups for:
 
-Examples include:
+```text
+/api/v1/geography/countries
+/api/v1/geography/provinces
+/api/v1/geography/cities
+```
 
-- cities with no regions;
-- regions with no neighborhoods;
-- villages with no neighborhoods;
+Use the current route/controller tests for exact request parameters and response fields.
+
+These endpoints are a versioned client contract for the data they expose. They are **not** a complete representation of every canonical governance level supported by EarthCoop.
+
+## Canonical topology is richer than the v1 lookup set
+
+EarthCoop's current location/governance architecture is topology-aware. Supported structures can include:
+
+- cities with or without urban regions;
+- regions with or without neighborhoods;
+- villages with or without neighborhoods;
 - rural branches;
-- optional local micro-levels such as Street, Alley, Complex, Block, and Building;
-- pending proposed locations that can participate in the registration/governance workflow before final administrative approval under the applicable rules.
+- optional Street, Alley, Complex, Block/Building-style local detail where applicable;
+- pending proposed locations that participate in registration/governance flows under their own review/support rules.
 
-A legacy route returning children at one level must therefore not be interpreted as the complete governance model.
+Therefore:
 
-## Current route families
+```text
+v1 countries/provinces/cities lookup ≠ complete governance topology
+```
 
-The present application contains older helper routes such as province/county/district/city/village lookups and broader geographic child traversal routes. These can still be useful to first-party code or compatibility flows, but their existence does not make them the final client-facing location contract.
+A client that needs Primary Residence or governance membership semantics must follow the canonical product contract, not infer those semantics from a three-endpoint lookup family.
+
+## Legacy/unversioned geography routes
+
+Older `/api` geography helpers still exist for web/compatibility flows. Their identifiers, hierarchy assumptions, and response shapes should not be treated as if they were automatically part of `/api/v1`.
 
 <Warning>
-  Do not build a durable external location client around the assumption that the current legacy hierarchy, identifier prefixes, or response shapes are permanent. The stable canonical client/mobile contract remains to be versioned and published.
+  Do not combine legacy helper behavior and v1 behavior into one invented stable schema. Bind to the exact versioned endpoint you use and keep the canonical governance model as the conceptual authority for residence/governance logic.
 </Warning>
-
-## Canonical location/governance model
-
-The canonical model separates at least these concepts:
-
-- reference geographic entities;
-- the member's primary residence;
-- governance areas derived from actual topology;
-- official system-group membership dimensions;
-- optional community/micro-location membership;
-- proposed/pending locations and their support/approval lifecycle.
-
-That model is the correct conceptual basis for new development. Current legacy API helpers should be treated as adapters or implementation history where they do not express the full model.
 
 ## Authentication and exposure
 
-Some existing geography helpers may currently be reachable without authenticated user context. That implementation fact must not be generalized into a promise that all future canonical location APIs will be public or unauthenticated.
-
-## Response shapes
-
-Legacy helpers can return different shapes and identifiers. A route may return plain objects, arrays, or compatibility identifiers used by older cascading selectors. Those formats are implementation details until the stable canonical API specification is published.
+The exact authentication requirement belongs to each current endpoint. The fact that a geography lookup can be exposed without member-specific state does not imply that all future governance/location operations should be public or unauthenticated.
 
 ## Guidance for developers
 
-For current first-party maintenance, inspect the exact route, service, and tests in the application repository. For new third-party or native-client work, use the future explicitly versioned canonical location/governance contract rather than treating legacy helpers as the recommended permanent API.
-
-```text
-legacy geography route ≠ canonical governance model
-current response shape ≠ stable public contract
-canonical topology + versioned client API = target contract
-```
+For the native client, use the explicit `/api/v1/geography/*` routes currently provided. For richer Location/Governance workflows, use the corresponding canonical services/product contract. For third-party integration, do not assume the first-party v1 geography subset is an unrestricted public data API unless EarthCoop explicitly designates it as such.
