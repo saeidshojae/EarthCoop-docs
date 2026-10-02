@@ -16,12 +16,9 @@ export function patchRecoveredEconomyPageRecords(source) {
 function patchRouteMap(source, label) {
   const input = String(source);
   if (input.includes(`'${ROUTE}':'${ROUTE_PATH}'`)) return input;
-  const needle = "    membership:'/guides/membership/', elections:'/guides/elections/'";
+  const needle = "membership:'/guides/membership/',";
   if (!input.includes(needle)) throw new Error(`Recovered economy ${label} insertion point changed`);
-  return input.replace(
-    needle,
-    `    membership:'/guides/membership/', '${ROUTE}':'${ROUTE_PATH}', elections:'/guides/elections/'`,
-  );
+  return input.replace(needle, `${needle} '${ROUTE}':'${ROUTE_PATH}',`);
 }
 
 export function patchRecoveredEconomySeoRoutesSource(source) {
