@@ -1,5 +1,6 @@
 const PREVIEW_ORIGIN = 'https://docs-preview.earthcoop.ir';
 const REFERENCE_ROUTE_ID = 'econ-ref-01';
+const REFERENCE_AUDIT_REVISION = '2026-10-02-reference-audit-v1';
 const REQUIRED_RUNTIME_FILES = [
   '404/index.html',
   'documents/fc/index.html',
@@ -25,7 +26,8 @@ function validateEditorialTruth(editorialTruth) {
     throw new Error('Reviewed English guide evidence must remain current but runtime-unmapped');
   }
   for (const key of ['statusPage','mapPage','glossaryPage']) {
-    if (editorialTruth?.[key]?.status !== 'needs_review') throw new Error(`Recovered editorial ${key} must remain needs_review`);
+    if (editorialTruth?.[key]?.status !== 'audited_current') throw new Error(`Recovered editorial ${key} must remain audited_current`);
+    if (editorialTruth?.[key]?.revision !== REFERENCE_AUDIT_REVISION) throw new Error(`Recovered editorial ${key} audit revision mismatch`);
   }
   if (editorialTruth?.arabic?.status !== 'unavailable' || editorialTruth.arabic.legacyMintlifyArIsArabic !== false) {
     throw new Error('Arabic editorial truth is invalid');
