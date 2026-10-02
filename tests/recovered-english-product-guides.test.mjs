@@ -76,7 +76,7 @@ test('rewrites only links to the audited English product-guide set into /en/ rou
   assert.match(output, /https:\/\/earthcoop\.ir/);
 });
 
-test('builds LTR English guide pages, full-text search records and Preview-safe routes while legal locales remain separate', async () => {
+test('builds LTR English guide pages, full-text search records, working fa/en switcher and Preview-safe routes', async () => {
   const module = await import('../scripts/recovered-english-product-guides.mjs');
   const rootDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-en-guides-source-'));
   const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-en-guides-runtime-'));
@@ -86,7 +86,8 @@ test('builds LTR English guide pages, full-text search records and Preview-safe 
   await writeFile(path.join(rootDir, 'account/profile.mdx'), `---\ntitle: "Profile"\ndescription: "Current profile guide"\n---\n# Profile\n\nCurrent profile body.\n`);
 
   await mkdir(path.join(outDir, 'guides/start'), { recursive: true });
-  await writeFile(path.join(outDir, 'guides/start/index.html'), '<!doctype html><html lang="fa" dir="rtl"><head><title>FA</title><link rel="canonical" href="https://docs-preview.earthcoop.ir/guides/start/"></head><body><main id="app"><div class="page"><h1>FA</h1></div></main></body></html>');
+  const language = `<details class="language-switcher"><summary><span class="language-current">فا</span></summary><div class="language-menu"><span class="language-option is-active" lang="fa" dir="rtl" aria-current="true"><span>فارسی</span><small>فعال</small></span><span class="language-option is-unavailable" lang="en" dir="ltr" aria-disabled="true"><bdi dir="ltr">English</bdi><small lang="fa" dir="rtl">ترجمه موجود نیست</small></span><span class="language-option is-unavailable" lang="ar" dir="rtl" aria-disabled="true"><bdi dir="rtl">العربية</bdi><small lang="fa" dir="rtl">ترجمه موجود نیست</small></span></div></details>`;
+  await writeFile(path.join(outDir, 'guides/start/index.html'), `<!doctype html><html lang="fa" dir="rtl"><head><title>FA</title><link rel="canonical" href="https://docs-preview.earthcoop.ir/guides/start/"></head><body>${language}<main id="app"><div class="page"><h1>FA</h1></div></main></body></html>`);
   await writeFile(path.join(outDir, 'app.js'), 'const pages={start:{title:"شروع"}}; function render(){return pages;}');
 
   const result = await module.applyRecoveredEnglishProductGuides({
@@ -104,6 +105,7 @@ test('builds LTR English guide pages, full-text search records and Preview-safe 
 
   const indexHtml = await readFile(path.join(outDir, 'en/index.html'), 'utf8');
   const profileHtml = await readFile(path.join(outDir, 'en/account/profile/index.html'), 'utf8');
+  const persianHtml = await readFile(path.join(outDir, 'guides/start/index.html'), 'utf8');
   const app = await readFile(path.join(outDir, 'app.js'), 'utf8');
 
   assert.match(indexHtml, /<html[^>]+lang="en"[^>]+dir="ltr"/);
@@ -112,6 +114,11 @@ test('builds LTR English guide pages, full-text search records and Preview-safe 
   assert.match(profileHtml, /data-content-class="guide"/);
   assert.match(profileHtml, /data-locale="en"/);
   assert.match(app, /#\/en\//);
+  assert.match(persianHtml, /<a class="language-option"[^>]+href="\/en\/"[^>]*>[\s\S]*English/);
+  assert.doesNotMatch(persianHtml, /English[\s\S]{0,120}ترجمه موجود نیست/);
+  assert.match(indexHtml, /<span class="language-option is-active"[^>]+lang="en"[^>]+aria-current="true"/);
+  assert.match(indexHtml, /<a class="language-option"[^>]+href="\/"[^>]*>[\s\S]*فارسی/);
+  assert.match(indexHtml, /العربية[\s\S]{0,120}ترجمه موجود نیست/);
 
   for (const record of result.searchRecords) {
     assert.equal(record.locale, 'en');
