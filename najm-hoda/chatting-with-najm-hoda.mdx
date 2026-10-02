@@ -4,30 +4,23 @@ sidebarTitle: "Chatting"
 description: "Use NajmHoda's current member chat while understanding conversation ownership, support escalation, and the server-side authorization boundary for actions."
 ---
 
-NajmHoda has a real authenticated chat flow in the current EarthCoop application. You can ask questions in natural language and continue an existing conversation. Ordinary members are routed through the **Steward** mode by the current controller.
+NajmHoda has a real authenticated chat flow in the current EarthCoop application. You can ask questions in natural language and continue an existing conversation. Ordinary members are routed through the **Steward** mode by the current web controller.
 
 ## Asking a question
 
-The current chat request accepts a message of up to **2,000 characters**. A conversation can be continued by supplying its existing conversation context through the product flow. Conversations are owner-scoped: one member must not be able to retrieve or operate on another member's conversation simply by knowing an ID.
+The current web chat request accepts a message under the controller's current validation rules. A conversation can be continued through the product's existing conversation context. Conversations are owner-scoped: one member must not be able to retrieve or operate on another member's conversation simply by knowing an ID.
 
 NajmHoda may return an answer, suggestions, and other response metadata produced by the current orchestration path. The exact wording and knowledge sources can vary with the active model, policy, available sources, and subsystem state.
 
 ## Conversation history
 
-The current controller supports these conversation operations for the authenticated owner:
-
-- list conversations;
-- open a conversation and its messages;
-- archive a conversation;
-- mark a conversation as deleted.
-
-The user interface around those operations may evolve, so this guide documents the verified capability rather than promising a particular icon position or menu label.
+The current web controller supports owner-scoped conversation operations including listing, opening, archiving, and deletion state. The user interface around those operations may evolve, so this guide documents the verified capability rather than promising a particular icon position or menu label.
 
 ## Page context and action safety
 
 NajmHoda can receive page context to make assistance more relevant, but browser context is **informational**, not a source of authority. The server resolves the authenticated member and trusted page/domain context again before an action-capable helper can proceed.
 
-All mutating actions require trusted **server authorization** plus the applicable role, ownership, policy, and domain checks. A client cannot grant itself permission by sending fields such as an actor, role, target, or page identifier in chat context.
+All mutating actions require trusted **server authorization** plus the applicable role, ownership, policy, and domain checks. A client cannot grant itself permission by sending actor, role, target, or page identifiers in chat context.
 
 <Warning>
   Asking NajmHoda to perform an action does not make that action authorized. The underlying EarthCoop service remains responsible for permission, validation, execution, and audit.
@@ -37,16 +30,22 @@ All mutating actions require trusted **server authorization** plus the applicabl
 
 Selected contexts have dedicated assistance. In the secretariat context, for example, the current helper can preview or save a **Draft**. It is deliberately constrained: it does not submit, register, dispatch, or publish the draft on its own.
 
-That boundary is important throughout EarthCoop. A draft, recommendation, or conversational confirmation is not a formal governance, economic, or administrative act until the responsible workflow executes it under its own rules.
+A draft, recommendation, or conversational confirmation is not a formal governance, economic, or administrative act until the responsible workflow executes it under its own rules.
 
 ## Support escalation
 
-The current chat flow includes a support-escalation service. Escalation is conditional: the policy/service evaluates the message and response and may create or link a support ticket when the criteria are met. A failed or uncertain answer should therefore not be described as an automatic guarantee that a ticket is always created.
+The current chat flow includes a support-escalation service. Escalation is conditional: the policy/service evaluates the message and response and may create or link support-ticket information when the criteria are met. It is not a guarantee that every failed or uncertain answer creates a ticket.
 
 When you need a formal support case, see [Support Tickets](/account/support-tickets).
 
-## API boundary
+## Native/client API boundary
 
-EarthCoop currently has internal `/api` routes used by application capabilities, including NajmHoda. Those routes are still part of an evolving application contract and should not be treated from this member guide as a stable external integration API.
+EarthCoop now has a real versioned native/client NajmHoda endpoint at:
 
-Authentication and action authority are enforced on the server. The existence of a controller method or route does not by itself establish a supported external-client contract or a public credential-issuance workflow.
+```text
+/api/v1/najm-hoda/message
+```
+
+That endpoint is part of the current first-party/native `/api/v1` contract. It does **not** automatically expose the entire web conversation-history controller or every specialized NajmHoda helper as a v1 endpoint, and it is not a blanket third-party automation API.
+
+Authentication and action authority remain enforced on the server in both web and native/client flows.
