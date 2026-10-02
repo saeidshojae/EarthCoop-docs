@@ -14,6 +14,7 @@ export const LEARNING_PATH = Object.freeze([
 ]);
 
 const RELATED_HEADING = '<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div>';
+const CLEAN_RELATED_HEADING = '<div class="section-title"><div><h2>مطالب مرتبط</h2></div></div>';
 const STYLE_MARKER = '/* Recovered learning path navigation */';
 
 export function learningPathNeighbors(route) {
@@ -48,9 +49,11 @@ export function renderLearningPathNavigation(route, { mode = 'static' } = {}) {
 export function patchRecoveredLearningPathHtml(source, route) {
   const input = String(source);
   if (!LEARNING_PATH.some((item) => item.route === route)) return input;
-  if (input.includes(`data-learning-path-route="${route}"`)) return input;
+  if (input.includes(`data-learning-path-route="${route}"`)) {
+    return input.replaceAll(RELATED_HEADING, CLEAN_RELATED_HEADING);
+  }
   if (!input.includes(RELATED_HEADING)) throw new Error(`Recovered guide related-content marker changed for ${route}`);
-  return input.replace(RELATED_HEADING, `${renderLearningPathNavigation(route, { mode: 'static' })}${RELATED_HEADING}`);
+  return input.replace(RELATED_HEADING, `${renderLearningPathNavigation(route, { mode: 'static' })}${CLEAN_RELATED_HEADING}`);
 }
 
 function browserLearningPathSource() {
@@ -65,11 +68,14 @@ export function patchRecoveredLearningPathAppSource(source) {
     output = output.replace(articleNeedle, `${browserLearningPathSource()}\n${articleNeedle}`);
   }
 
-  if (!output.includes('${body}${learningPathNavigation()}<div class="section-title">')) {
-    const bodyNeedle = '${body}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div>';
-    if (!output.includes(bodyNeedle)) throw new Error('Recovered article learning-path insertion point changed');
-    output = output.replace(bodyNeedle, '${body}${learningPathNavigation()}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div>');
-  }
+  const oldBodyNeedle = '${body}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div>';
+  const oldPatchedNeedle = '${body}${learningPathNavigation()}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div>';
+  const cleanPatchedNeedle = '${body}${learningPathNavigation()}<div class="section-title"><div><h2>مطالب مرتبط</h2></div></div>';
+
+  if (output.includes(oldBodyNeedle)) output = output.replace(oldBodyNeedle, cleanPatchedNeedle);
+  else if (output.includes(oldPatchedNeedle)) output = output.replace(oldPatchedNeedle, cleanPatchedNeedle);
+  else if (!output.includes(cleanPatchedNeedle)) throw new Error('Recovered article learning-path insertion point changed');
+
   return output;
 }
 
