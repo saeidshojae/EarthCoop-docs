@@ -15,7 +15,9 @@ import {
 } from '../scripts/patch-recovered-learning-path.mjs';
 
 const ROUTES = ['start', 'justice', 'property', 'digital-country', 'structure', 'groups', 'membership', 'economy-cycle', 'elections'];
-const RELATED = '<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related"><a href="/guides/structure/"><span>مطالعه بعدی</span><strong>از کوچه تا سیاره ←</strong></a></div>';
+const RELATED_HEADING = '<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div>';
+const RELATED_CARDS = '<div class="related"><a href="/guides/structure/"><span>مطالعه بعدی</span><strong>از کوچه تا سیاره ←</strong></a></div>';
+const RELATED = `${RELATED_HEADING}${RELATED_CARDS}`;
 const APP_SOURCE = `function article(title, category, desc, state, body, related=[]) {
   return {title,desc,render:()=>\`<div class="article-body">\${body}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related">\${related.map(([t,r])=>\`<a href="#/\${r}">\${t}</a>\`).join('')}</div></div>\`};
 }`;
@@ -79,13 +81,15 @@ test('learning path styles keep next title readable and mobile arrows compact in
   assert.doesNotMatch(styles, /@media\(max-width:640px\)[\s\S]*\.learning-path-arrows a\{[^}]*flex-direction:column/);
 });
 
-test('static guide patch inserts path navigation before related content and preserves related cards verbatim', () => {
+test('static guide patch inserts path navigation before related content, preserves related cards and removes duplicate label', () => {
   const source = `<main><div class="article-body"><p>بدنه صفحه</p>${RELATED}</div></main>`;
   const patched = patchRecoveredLearningPathHtml(source, 'start');
   assert.match(patched, /learning-path-navigation/);
   assert.ok(patched.indexOf('learning-path-navigation') < patched.indexOf('مطالب مرتبط'));
   assert.match(patched, /href="\/guides\/justice\/"/);
-  assert.ok(patched.includes(RELATED));
+  assert.ok(patched.includes(RELATED_CARDS));
+  assert.match(patched, /<div class="section-title"><div><h2>مطالب مرتبط<\/h2><\/div><\/div>/);
+  assert.equal((patched.match(/ادامه مسیر/g) ?? []).length, 1);
 });
 
 test('SPA patch keeps learning-path navigation on direct /guides/... URLs after client rerender', () => {
@@ -96,7 +100,8 @@ test('SPA patch keeps learning-path navigation on direct /guides/... URLs after 
   assert.match(patched, /location\.hash\.match/);
   assert.match(patched, /const route = resolveLearningPathRoute\(\)/);
   assert.match(patched, /learningPathNavigation/);
-  assert.match(patched, /مطالب مرتبط/);
+  assert.match(patched, /<h2>مطالب مرتبط<\/h2>/);
+  assert.doesNotMatch(patched, /<span class="eyebrow">ادامه مسیر<\/span><h2>مطالب مرتبط<\/h2>/);
   assert.match(patched, /related\.map/);
 });
 
@@ -132,12 +137,14 @@ test('build integration patches all nine direct guide routes plus SPA and styles
   assert.match(app, /function resolveLearningPathRoute\(\)/);
   assert.match(app, /location\.pathname/);
   assert.match(app, /href="#\/\$\{next\.route\}"/);
+  assert.doesNotMatch(app, /<span class="eyebrow">ادامه مسیر<\/span><h2>مطالب مرتبط<\/h2>/);
   assert.match(styles, /Recovered learning path navigation/);
   assert.match(styles, /\.learning-path-next strong\{[^}]*color:#fff/);
   assert.match(styles, /@media\(max-width:640px\)[\s\S]*\.learning-path-arrows\{grid-template-columns:1fr 1fr/);
   for (const route of ROUTES) {
     const page = await readFile(path.join(outDir, 'guides', route, 'index.html'), 'utf8');
     assert.match(page, new RegExp(`data-learning-path-route="${route}"`));
-    assert.ok(page.includes(RELATED), `related cards changed for ${route}`);
+    assert.ok(page.includes(RELATED_CARDS), `related cards changed for ${route}`);
+    assert.doesNotMatch(page, /<span class="eyebrow">ادامه مسیر<\/span><h2>مطالب مرتبط<\/h2>/);
   }
 });
