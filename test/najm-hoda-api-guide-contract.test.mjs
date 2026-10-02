@@ -29,17 +29,19 @@ test('knowledge guide avoids fixed article counts and absolute freshness guarant
   assert.match(content, /source|knowledge/i);
 });
 
-test('API overview labels current routes as an evolving internal contract, not a complete stable public API', async () => {
+test('API overview documents the current v1 native contract without claiming a complete public developer API', async () => {
   const content = await read('api/overview.mdx');
-  assert.match(content, /In development|evolving/i);
-  assert.match(content, /not.*stable.*public API|not.*public.*stable API/is);
+  assert.match(content, /versioned `?\/api\/v1`?|\/api\/v1/i);
+  assert.match(content, /first-party|native-client|native client/i);
+  assert.match(content, /not.*public|not.*third-party|does not.*public/is);
   assert.doesNotMatch(content, /A complete guide to the EarthCoop REST API/i);
 });
 
-test('authentication guide does not invent token issuance through ordinary login', async () => {
+test('authentication guide documents the verified v1 bearer flow without inventing a general third-party token platform', async () => {
   const content = await read('api/authentication.mdx');
-  assert.doesNotMatch(content, /When you log in, the platform issues a personal access token/i);
-  assert.doesNotMatch(content, /successful response returns your token/i);
-  assert.match(content, /auth:sanctum|Sanctum/i);
-  assert.match(content, /not.*documented.*public token|no.*verified.*public token/is);
+  assert.match(content, /POST \/api\/v1\/auth\/login/i);
+  assert.match(content, /bearer token/i);
+  assert.match(content, /Sanctum|authorization/i);
+  assert.match(content, /does \*\*not\*\* by itself establish a general developer-platform policy|does not.*general.*developer|not.*third-party/is);
+  assert.doesNotMatch(content, /arbitrary personal access tokens.*supported/i);
 });
