@@ -4,19 +4,21 @@ sidebarTitle: "Introduction"
 description: "Understand EarthCoop's cooperative local-to-global structure and the difference between current, in-development, and planned capabilities."
 ---
 
-EarthCoop is a cooperative socio-economic platform designed to connect participation from the local community up through wider geographic and professional structures. Its current product combines structured registration, canonical location/governance, automatically assigned system groups, communication and participation tools, project workflows, financial-domain services, support, and an evolving AI assistant.
+EarthCoop is a cooperative socio-economic platform designed to connect participation from the local community up through wider geographic and professional structures. Its current product combines structured registration, canonical location/governance, automatically assigned system groups, communication and participation tools, project workflows, financial-domain services, support, an evolving AI assistant, and a versioned first-party/native client delivery boundary.
 
-The documentation uses three capability labels so an architectural goal is never mistaken for a live feature.
+The documentation uses capability boundaries so an architectural goal is never mistaken for a live feature.
 
 ## Current product
 
-The current product includes a multi-step member-registration flow, profile and Primary Residence data, canonical Location/Governance, system-group membership derived from member information, group communication and participation surfaces, systemic-election services, project workflows, Najm Bahar domain services, support tickets, and a member-facing Najm Hoda interaction surface.
+The current product includes multi-step member registration, email/password and Google authentication paths, profile and Primary Residence data, canonical Location/Governance, system-group membership derived from member information, group communication and participation surfaces, systemic-election services, project workflows, Najm Bahar domain services, support tickets, a member-facing Najm Hoda interaction surface, and a real `/api/v1` contract for selected first-party/native capabilities.
+
+The current v1 boundary includes authentication, bootstrap/current-user, notifications/push delivery, selected geography, Najm Hoda messaging and media delivery. That does not mean every EarthCoop domain is already exposed as a versioned API.
 
 EarthCoop's system groups are not simply generic public or private communities. Membership is formed from structured dimensions such as public assemblies, professional/specialty identity, and age/gender groupings across relevant geographic levels. User-created groups are a separate concept and are documented separately from those automatic system memberships.
 
 ## In development
 
-Some domains are implemented but are still being separated behind clearer, stable client contracts or are receiving further product hardening. Examples include the versioned API/mobile boundary, parts of the wider Najm Bahar client surface, and broader Najm Hoda integrations. An endpoint or internal service existing in the repository does not by itself mean that the capability is a stable public API.
+Several broader client/domain integrations are still being hardened or expanded. Examples include extending the versioned client boundary to additional domains, parts of the wider Najm Bahar client surface, and broader Najm Hoda integrations. An internal endpoint or service existing in the repository does not by itself mean that capability is part of the supported `/api/v1` contract or a public third-party API.
 
 ## Planned
 
@@ -24,7 +26,7 @@ EarthCoop's broader architecture includes additional marketplace, mobile, econom
 
 ## Language status
 
-Persian is the canonical language for EarthCoop's current foundational/reference document set. English product guides are being audited and corrected against the current product. Arabic is part of the multilingual documentation architecture, but Arabic renditions are published as current only after they are reviewed against a current source. Do not interpret documentation-translation status as a statement about legal effect.
+Persian is the canonical language for EarthCoop's current foundational/reference document set. These English product guides are reviewed against the current application; they are **not** English renditions of the foundational legal corpus. Genuine Arabic documentation is not yet available. Documentation-translation status does not determine legal effect.
 
 ## Core areas
 
