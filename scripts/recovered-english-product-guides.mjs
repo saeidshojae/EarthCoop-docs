@@ -290,14 +290,16 @@ export async function applyRecoveredEnglishProductGuides({
   const searchRecords = guides.map((guide) => ({
     id: `guide:${guide.sourcePath}`,
     documentId: null,
-    contentClass: 'guide',
+    inventoryId: `guide.${stripMdxExtension(guide.sourcePath).replaceAll('/', '.')}`,
+    contentClass: 'product_guide',
     locale: 'en',
     title: guide.title,
-    summary: guide.description,
-    text: guide.bodyHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
-    url: guide.staticPath,
+    heading: guide.title,
+    anchor: null,
+    body: guide.bodyHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
     status: 'audited_current',
     version: null,
+    route: guide.staticPath,
   }));
 
   const seoRoutes = guides.map((guide) => ({
