@@ -4,9 +4,39 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { renderRecoveredStaticDocuments } from '../scripts/render-recovered-static-documents.mjs';
+import {
+  patchRecoveredDocumentsLandingHtml,
+  renderRecoveredStaticDocuments,
+} from '../scripts/render-recovered-static-documents.mjs';
 
 const fixtureRuntime = process.env.EARTHCOOP_KC08_FIXTURE;
+
+test('static documents landing is rebuilt from current governed packages and excludes publication-policy snapshot cards', () => {
+  const stale = '<html><body><main id="app"><div class="page"><a href="/documents/publication-policy/">سیاست انتشار مرکز دانش</a><p>ثبت‌شده؛ هنوز نافذ نیست</p></div></main></body></html>';
+  const foundational = Array.from({ length: 10 }, (_, index) => ({
+    code: ['FC','CH','CO','ECON','DG','JUD','LOC','EX','ETH','STD'][index],
+    slug: ['fc','ch','co','econ','dg','jud','loc','ex','eth','std'][index],
+    title: `سند ${index + 1}`,
+    summary: 'خلاصه',
+    status: 'effective',
+  }));
+  const reference = {
+    code: 'ECON-REF-01',
+    slug: 'econ-ref-01',
+    title: 'سند مرجع اقتصاد ارث‌کوپ و معماری نجم بهار',
+    summary: 'نسخه مرجع',
+    status: 'official_draft',
+    contentClass: 'reference',
+  };
+  const result = patchRecoveredDocumentsLandingHtml(stale, [...foundational, reference]);
+  assert.doesNotMatch(result, /publication-policy|سیاست انتشار مرکز دانش/);
+  assert.doesNotMatch(result, /ثبت‌شده؛ هنوز نافذ نیست/);
+  assert.match(result, /10 سند بنیادین/);
+  assert.match(result, /href="\/documents\/econ-ref-01\/"/);
+  assert.match(result, /ECON-REF-01/);
+  assert.match(result, /اسناد مرجع/);
+  assert.equal((result.match(/class="doc-card"/g) || []).length, 11);
+});
 
 test('uses recovered 0.8 renderers to regenerate direct document pages from current packages', {
   skip: !fixtureRuntime,
