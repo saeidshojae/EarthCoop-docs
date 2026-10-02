@@ -27,17 +27,29 @@ test('creates one dedicated, user-facing guide for every role card', async () =>
 
   const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-role-guides-'));
   await mkdir(path.join(outDir, 'roles'), { recursive: true });
+  await mkdir(path.join(outDir, 'src/content'), { recursive: true });
+  await mkdir(path.join(outDir, 'src/render'), { recursive: true });
   await writeFile(path.join(outDir, 'app.js'), `
+const pages={roles:{title:'راهنما براساس نقش',render:rolesPage}};
 function rolesPage(){const roles=[['◌','عضو تازه‌وارد','شناخت ایده، عضویت، مکان، گروه‌ها و نخستین مشارکت','start'],['◎','عضو فعال','گفت‌وگو، نظرسنجی، انتخابات، پروژه‌ها و امتیاز مشارکت','groups'],['✓','مدیر گروه','مسئولیت اجرایی، پاسخ‌گویی، تصمیم‌ها و محدودیت‌های مسئولیت','elections'],['◇','بازرس','نظارت، گزارش، شفافیت و تفکیک مسئولیت از مدیریت','elections'],['¤','پیشنهاددهنده پروژه','فرایند پیشنهاد، ارزیابی، بیمه و تأمین مالی پروژه','status'],['▤','پژوهشگر یا حقوق‌دان','سلسله‌مراتب، نسخه‌ها، وضعیت اعتبار و پیشنهاد اصلاح','documents'],['⌘','توسعه‌دهنده','معماری، API، قرارداد داده و وضعیت قابلیت‌ها','status'],['◈','مترجم و ویراستار','زبان مبنا، اصطلاحات پایدار و هم‌ارزی نسخه‌ها','glossary']];return \`<div class="role-grid">\${roles.map(r=>\`<a href="#/\${r[3]}">\${r[1]}</a>\`).join('')}</div>\`}
-const routes={roles:{title:'راهنما براساس نقش',render:rolesPage}};
+window.EC_PAGES = window.EC_PAGES || {};
 `);
-  await writeFile(path.join(outDir, 'roles/index.html'), `<!doctype html><html><head><title>راهنما براساس نقش</title></head><body><main id="app"><div class="page"><h1>راهنما براساس نقش</h1></div></main></body></html>`);
+  await writeFile(path.join(outDir, 'roles/index.html'), `<!doctype html><html><head><title>راهنما براساس نقش</title><link rel="canonical" href="https://docs.earthcoop.ir/roles/"></head><body><main id="app"><div class="page"><h1>راهنما براساس نقش</h1></div></main></body></html>`);
+  await writeFile(path.join(outDir, 'src/content/pages.fa.js'), `window.EC_CONTENT=window.EC_CONTENT||{};window.EC_CONTENT.pageRecords=Object.freeze([\n  { inventoryId:'page.roles', route:'roles', title:'راهنما براساس نقش', description:'مسیرهای متفاوت', contentClass:'reference', status:'unofficial_explanation', source:'editorial', sourceType:'editorial', authority:'تحریریه', version:'1.0.0', reviewedAt:'2026-09-19' },\n]);`);
+  await writeFile(path.join(outDir, 'src/content/seo-routes.js'), `const staticRoutePaths={roles:'/roles/',membership:'/guides/membership/',};`);
+  await writeFile(path.join(outDir, 'src/render/static-page.js'), `const staticRoutePaths={roles:'/roles/',membership:'/guides/membership/',};`);
 
   await module.applyRecoveredRoleGuides({ outDir });
 
   const app = await readFile(path.join(outDir, 'app.js'), 'utf8');
+  const records = await readFile(path.join(outDir, 'src/content/pages.fa.js'), 'utf8');
+  const seoRoutes = await readFile(path.join(outDir, 'src/content/seo-routes.js'), 'utf8');
+  const staticRoutes = await readFile(path.join(outDir, 'src/render/static-page.js'), 'utf8');
   for (const slug of expectedSlugs) {
     assert.match(app, new RegExp(`roles/${slug}`));
+    assert.match(records, new RegExp(`role-${slug}`));
+    assert.match(seoRoutes, new RegExp(`/roles/${slug}/`));
+    assert.match(staticRoutes, new RegExp(`/roles/${slug}/`));
     const html = await readFile(path.join(outDir, 'roles', slug, 'index.html'), 'utf8');
     assert.match(html, /data-role-guide=/);
     assert.match(html, /بازگشت به راهنما براساس نقش/);
