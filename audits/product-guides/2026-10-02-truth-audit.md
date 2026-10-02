@@ -62,14 +62,14 @@ The existence of `/api/v1` does **not** mean every legacy `/api` route is now a 
 | 23 | `najm-bahar/transfers.mdx` | **Revalidated current** | Canonical transfer and Dim/Active rules remain valid. |
 | 24 | `najm-hoda/chatting-with-najm-hoda.mdx` | **Needs correction** | Update API-boundary paragraph to acknowledge current `/api/v1/najm-hoda/message` without turning it into a general public integration promise. |
 | 25 | `najm-hoda/knowledge-base.mdx` | **Revalidated current** | Source-authority/freshness language remains conservative and current. |
-| 26 | `projects/investing.mdx` | **Revalidated current** | Investment-record vs executed-transfer distinction remains valid. |
-| 27 | `projects/overview.mdx` | **Revalidated current** | Review lifecycle and ECON separation remain valid. |
-| 28 | `projects/submitting-a-project.mdx` | **Revalidated current** | Broad governance-scope stopping behavior and review states remain valid. |
-| 29 | `projects/tracking-status.mdx` | **Revalidated current** | Status/history/ledger distinctions remain valid. |
-| 30 | `quickstart.mdx` | **Needs correction** | Mention the current Google path while preserving the complete member-profile/base-governance steps required after account authentication. |
-| 31 | `account/notifications.mdx` / inventory reconciliation | **Covered above** | Inventory remains exactly 31 unique paths; no extra root/legacy page is promoted into the audited set. |
+| 26 | `najm-hoda/overview.mdx` | **Revalidated current** | Current chat/orchestration/authority boundary remains valid; the API-specific v1 change is handled in the API and chatting guides. |
+| 27 | `projects/investing.mdx` | **Revalidated current** | Investment-record vs executed-transfer distinction remains valid. |
+| 28 | `projects/overview.mdx` | **Revalidated current** | Review lifecycle and ECON separation remain valid. |
+| 29 | `projects/submitting-a-project.mdx` | **Revalidated current** | Broad governance-scope stopping behavior and review states remain valid. |
+| 30 | `projects/tracking-status.mdx` | **Revalidated current** | Status/history/ledger distinctions remain valid. |
+| 31 | `quickstart.mdx` | **Needs correction** | Mention the current Google path while preserving the complete member-profile/base-governance steps required after account authentication. |
 
-> The final row records the inventory reconciliation check rather than a second content review. The canonical machine-readable inventory remains the authority for exact uniqueness/count, and the runtime integration must assert exactly 31 audited source paths.
+The machine-readable inventory must continue to assert exactly these 31 unique paths; no extra root/legacy page is promoted into the audited set.
 
 ## Correction policy
 
