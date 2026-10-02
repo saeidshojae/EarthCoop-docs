@@ -123,12 +123,18 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   assert.equal(editorial.recoveredPersianGuides.revision, '2026-10-02-audited-v1');
   assert.equal(editorial.reviewedEnglishGuides.status, 'verified_current');
   assert.equal(editorial.reviewedEnglishGuides.runtimeMapped, false);
-  assert.equal(editorial.mapPage.status, 'needs_review');
+  assert.equal(editorial.statusPage.status, 'audited_current');
+  assert.equal(editorial.mapPage.status, 'audited_current');
+  assert.equal(editorial.glossaryPage.status, 'audited_current');
+  assert.equal(editorial.mapPage.revision, '2026-10-02-reference-audit-v1');
   assert.equal(editorial.arabic.status, 'unavailable');
 
   const pagesMetadata = await readFile(path.join(outDir, 'src/content/pages.fa.js'), 'utf8');
-  assert.match(pagesMetadata, /\['status','map','glossary'\]/);
-  assert.match(pagesMetadata, /status:'under_audit'/);
+  assert.match(pagesMetadata, /recovered-reference-pages-audited-2026-10-02/);
+  assert.match(pagesMetadata, /glossary:[\s\S]*status:'unofficial_explanation'[\s\S]*version:'1\.0\.0'[\s\S]*reviewedAt:'2026-10-02'/);
+  assert.match(pagesMetadata, /map:[\s\S]*status:'unofficial_explanation'/);
+  assert.match(pagesMetadata, /status:[\s\S]*status:'unofficial_explanation'/);
+  assert.doesNotMatch(pagesMetadata, /\['status','map','glossary'\][\s\S]*under_audit/);
 
   const locales = JSON.parse(await readFile(path.join(outDir, 'recovered-locales.json'), 'utf8'));
   assert.deepEqual(locales.globalLocales, ['fa']);

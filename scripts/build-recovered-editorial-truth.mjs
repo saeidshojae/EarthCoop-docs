@@ -1,5 +1,10 @@
 export function buildRecoveredEditorialTruth(inventory = { pages: [] }) {
   const paths = (inventory.pages ?? []).map((page) => page.path).sort((a, b) => a.localeCompare(b, 'en'));
+  const auditedReference = (source) => ({
+    status: 'audited_current',
+    revision: '2026-10-02-reference-audit-v1',
+    source,
+  });
   return {
     recoveredPersianGuides: {
       status: 'audited_current',
@@ -15,9 +20,9 @@ export function buildRecoveredEditorialTruth(inventory = { pages: [] }) {
       evidence: 'audits/product-guides/2026-09-28-inventory.json',
       paths,
     },
-    statusPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
-    mapPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
-    glossaryPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
+    statusPage: auditedReference('EarthCoop main f88c28a + current tests and official-v1 boundaries'),
+    mapPage: auditedReference('audited Persian guides + current ecosystem architecture'),
+    glossaryPage: auditedReference('canonical terminology + official-v1 + audited Persian guides'),
     arabic: {
       status: 'unavailable',
       legacyMintlifyArIsArabic: false,

@@ -8,14 +8,15 @@ const inventory = { pages: [
   {path:'groups/overview.mdx', title:'Groups'},
 ]};
 
-test('classifies the eight Persian learning-path guides as audited current editorial content after the 2026-10-02 truth sync', () => {
+test('classifies the Persian learning-path guides and audited public reference pages as current editorial content', () => {
   const truth = buildRecoveredEditorialTruth(inventory);
   assert.equal(truth.recoveredPersianGuides.status, 'audited_current');
   assert.equal(truth.recoveredPersianGuides.revision, '2026-10-02-audited-v1');
   assert.equal(truth.recoveredPersianGuides.productTruth, 'audited_against_current_repository_and_official_v1');
-  assert.equal(truth.statusPage.status, 'needs_review');
-  assert.equal(truth.mapPage.status, 'needs_review');
-  assert.equal(truth.glossaryPage.status, 'needs_review');
+  for (const page of [truth.statusPage, truth.mapPage, truth.glossaryPage]) {
+    assert.equal(page.status, 'audited_current');
+    assert.equal(page.revision, '2026-10-02-reference-audit-v1');
+  }
 });
 
 test('preserves reviewed English inventory as verified source evidence without claiming runtime mapping', () => {

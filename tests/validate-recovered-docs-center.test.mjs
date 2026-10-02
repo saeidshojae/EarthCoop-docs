@@ -24,9 +24,9 @@ async function fixture() {
       publicationClaim: 'current_user_guide_with_explicit_vision_vs_implementation_boundaries',
     },
     reviewedEnglishGuides: { status: 'verified_current', runtimeMapped: false, evidence: 'audits/product-guides/2026-09-28-inventory.json', paths: [] },
-    statusPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
-    mapPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
-    glossaryPage: { status: 'needs_review', source: 'earthcoop-knowledge-center-0.8.0' },
+    statusPage: { status: 'audited_current', revision: '2026-10-02-reference-audit-v1', source: 'EarthCoop main f88c28a + current tests and official-v1 boundaries' },
+    mapPage: { status: 'audited_current', revision: '2026-10-02-reference-audit-v1', source: 'audited Persian guides + current ecosystem architecture' },
+    glossaryPage: { status: 'audited_current', revision: '2026-10-02-reference-audit-v1', source: 'canonical terminology + official-v1 + audited Persian guides' },
     arabic: { status: 'unavailable', legacyMintlifyArIsArabic: false },
   };
   const foundationalPackages = [{
