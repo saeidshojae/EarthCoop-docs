@@ -40,8 +40,8 @@ test('economy guide tells Sara story with the current group vocabulary and a tru
   const html = ECONOMY_GUIDE.bodyHtml;
   assert.match(html, /سارا/);
   assert.match(html, /گروه عمومی/);
-  assert.match(html, /گروه تخصصی/);
-  assert.match(html, /گروه اختصاصی/);
+  assert.match(html, /گروه‌های تخصصی/);
+  assert.match(html, /گروه‌های اختصاصی/);
   assert.match(html, /امتیاز مشارکت/);
   assert.match(html, /پروژه عمومی/);
   assert.match(html, /تعهد/);
@@ -56,10 +56,11 @@ test('economy guide tells Sara story with the current group vocabulary and a tru
 
 test('start teaser introduces the economy briefly and links to the dedicated guide', () => {
   const patched = patchRecoveredStartEconomyTeaser(SHELL);
-  assert.match(patched, /بهار و گل/);
+  assert.match(patched, /بهار/);
+  assert.match(patched, /گل/);
   assert.match(patched, /۱۰٬۰۰۰ بهار کمرنگ/);
   assert.match(patched, /\/guides\/economy-cycle\//);
-  assert.ok(patched.indexOf('بهار و گل') < patched.indexOf('از کجا ادامه دهیم؟'));
+  assert.ok(patched.indexOf('اقتصاد EarthCoop با چه پولی کار می‌کند؟') < patched.indexOf('از کجا ادامه دهیم؟'));
 });
 
 test('sidebar adds the economy guide between membership and elections exactly once', () => {
