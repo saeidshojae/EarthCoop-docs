@@ -1,59 +1,60 @@
 ---
-title: "NajmHoda AI Assistant — Chat & Conversations API"
+title: "NajmHoda API — v1 Messaging & Authorization Boundaries"
 sidebarTitle: "NajmHoda API"
-description: "Current NajmHoda API implementation notes and authorization boundaries; this surface is evolving and is not yet a stable public integration contract."
+description: "Understand EarthCoop's current /api/v1 NajmHoda messaging endpoint and the server-side authorization boundary for assistant actions."
 ---
 
-EarthCoop currently exposes controller-backed NajmHoda routes under `/api`. These routes support real application behavior, but the API surface is **evolving / In development** and is **not a stable public external contract** yet. Endpoint presence in the Laravel application should therefore be read as implementation evidence, not as a compatibility promise for third-party clients.
+EarthCoop's current `/api/v1` first-party/native-client contract includes a versioned NajmHoda messaging endpoint:
 
-## Verified current capabilities
+```text
+/api/v1/najm-hoda/message
+```
 
-The current NajmHoda controller contains application paths for authenticated chat, owner-scoped conversation listing and retrieval, conversation archive/delete state changes, feedback, selected support/escalation integration, and page/context-aware orchestration used by first-party EarthCoop flows.
+This endpoint is real current product behavior. It does not turn NajmHoda into an unrestricted public automation API and it does not give the client authority to mutate EarthCoop state merely by describing an action in a message.
 
-The exact route list, response payload, authentication mode, and client contract can change while the stable API is still being designed.
+## Current v1 messaging contract
 
-## Chat boundary
+The versioned endpoint accepts an authenticated native/client request under the current v1 middleware and domain rules. Use the current controller/tests for exact payload fields, response shape, rate limits and validation.
 
-The current chat controller validates a member message, keeps conversation ownership tied to the authenticated user, and routes ordinary non-admin members through the **Steward** mode. An existing conversation can be continued where the current controller accepts its conversation identifier.
-
-This is current application behavior; it is not a guarantee that a future versioned public API will use the same request or response fields.
+The broader web application also has unversioned NajmHoda routes for conversation history and specialized first-party flows. Those paths should not be silently treated as part of `/api/v1` unless they are actually registered there.
 
 ## Server authorization
 
-Browser/client context is informational. It cannot grant authority to mutate EarthCoop state.
+Client context is informational. It cannot grant authority.
 
-Any action-capable NajmHoda flow requires trusted **server authorization** and the applicable domain checks. The server re-resolves identity, context, ownership, role, and policy before an authorized mutation can occur. Client-supplied actor, role, target, or page fields do not create permission.
+Any action-capable NajmHoda path must pass trusted server-side checks such as:
+
+- authenticated identity;
+- ownership of the target context;
+- current group/role or domain authorization;
+- applicable policy and validation;
+- the underlying domain service's own execution rules.
 
 <Warning>
-  An AI response, suggestion, draft, or apparent confirmation is not proof that the underlying governance, economic, administrative, or support action has been authorized or executed. The responsible domain service must perform and record the action.
+  A NajmHoda response, suggestion, draft, or conversational confirmation is not evidence that a governance, economic, administrative or support action has been authorized or completed. The responsible domain must perform and record the operation.
 </Warning>
 
-## Conversation ownership
+## Conversation and specialized web capabilities
 
-Conversation operations are scoped to the authenticated owner. Knowing a conversation ID must not be sufficient to read, archive, or delete another member's conversation.
+The current web NajmHoda subsystem contains additional owner-scoped conversation and context-aware capabilities. These can include listing/showing conversations, archive/delete state, feedback, support escalation, and selected context-specific assistance.
 
-The current controller includes list, show, archive, and delete-oriented methods. Their exact JSON representation is an implementation detail until a stable client contract is published.
+They are current application capabilities where implemented, but they are not all automatically exported through the current v1 native route set.
 
-## Escalation and support
+## Support escalation
 
-NajmHoda has a conditional support-escalation path. Escalation depends on the current policy/service decision and can create or associate support-ticket information where the criteria are met.
-
-Do not interpret the existence of an escalation route as a guarantee that every message, low-confidence answer, or external request can create a support case. Rate limiting, validation, policy, authentication context, and deployment configuration can all matter.
+NajmHoda can participate in conditional support escalation. The policy/service decides when the criteria are met and the support subsystem remains responsible for the formal ticket record. A message sent to the v1 assistant endpoint does not guarantee ticket creation.
 
 ## Draft-capable helpers
 
-Some NajmHoda contexts can prepare drafts or previews. Those helpers do not inherit formal authority from the chat. For example, a secretariat draft helper can prepare or save draft material but is not thereby authorized to submit, register, dispatch, or publish it.
+Selected helpers can prepare or save drafts under their own trusted server context. Draft assistance does not inherit authority to submit, register, dispatch, publish or execute a protected domain action.
 
-## Authentication
+## Stability and public integration boundary
 
-Some NajmHoda routes are protected through the current application's authentication stack. EarthCoop does not yet document a verified general-purpose public token-issuance flow for external clients.
-
-## Stability status
-
-For first-party development, inspect the current route/controller code and tests. For third-party or native clients, wait for the explicitly versioned stable contract.
+`/api/v1/najm-hoda/message` is a current versioned first-party/native-client endpoint. EarthCoop has not thereby declared every internal NajmHoda controller method or orchestration capability to be a stable third-party public API.
 
 ```text
-current Laravel route ≠ stable public API
+versioned v1 message route = current native/client contract
 client context ≠ authority
+assistant suggestion ≠ executed domain action
 server authorization + domain execution + audit = valid mutation
 ```
