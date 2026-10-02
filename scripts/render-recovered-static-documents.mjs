@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
 
@@ -56,6 +56,59 @@ function governedMainSiteUrl(siteConfigSource) {
   return url.origin;
 }
 
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+function statusPresentation(status) {
+  if (status === 'effective') return { label: 'نافذ', className: 'effective' };
+  if (status === 'official_draft') return { label: 'سند مرجع رسمی', className: 'review' };
+  if (status === 'registered_not_effective') return { label: 'ثبت‌شده؛ غیرنافذ', className: 'draft' };
+  return { label: String(status ?? 'وضعیت نامشخص'), className: 'review' };
+}
+
+function documentCard(record) {
+  const status = statusPresentation(record.status);
+  return `<a class="doc-card" href="/documents/${escapeHtml(record.slug)}/"><div class="doc-id">${escapeHtml(record.code)}</div><div><h3>${escapeHtml(record.title)}</h3><p>${escapeHtml(record.summary)}</p><div class="doc-meta"><span class="badge ${status.className}">${status.label}</span><span class="badge review">فارسی</span></div><span class="document-availability available">مطالعه سند ←</span></div></a>`;
+}
+
+export function patchRecoveredDocumentsLandingHtml(source, packages) {
+  const foundational = (packages ?? []).filter((record) => record.contentClass !== 'reference');
+  const references = (packages ?? []).filter((record) => record.contentClass === 'reference');
+  const body = `<div class="breadcrumbs"><a href="/">خانه</a><i></i><span>مراجع</span></div><header class="article-head"><span class="eyebrow">مجموعه حقوقی نسخه‌پذیر</span><h1>اسناد بنیادین</h1><p>${foundational.length} سند بنیادین نسل رسمی ۱.۰ از داده‌های ثبت‌شده و جاری مرکز اسناد نمایش داده می‌شوند. وضعیت هر سند از همان منبع حاکم بر خوانشگر آن گرفته می‌شود.</p></header><div class="filters" aria-label="فیلتر اسناد بنیادین"><button class="filter active" data-document-filter="all" aria-pressed="true">همه اسناد</button><button class="filter" data-document-filter="effective" aria-pressed="false">نافذ</button></div><p class="filter-count" id="documentCount" aria-live="polite">${foundational.length} سند بنیادین</p><div class="docs-grid">${foundational.map(documentCard).join('')}</div>${references.length ? `<div class="section-title"><div><span class="eyebrow">مجموعه مرجع</span><h2>اسناد مرجع</h2></div></div><p>اسناد مرجع برای توضیح و معماری سامانه منتشر می‌شوند و به‌خودی‌خود اثر حقوقی مستقل ندارند.</p><div class="docs-grid">${references.map(documentCard).join('')}</div>` : ''}<div class="callout info"><div><strong>قاعده انتشار</strong><p>حضور سند در مرکز اسناد به‌تنهایی به معنای نفاذ نیست؛ وضعیت درج‌شده در همان سند و داده ثبت رسمی ملاک است.</p></div></div>`;
+  return replaceDocumentMain(String(source), body);
+}
+
+const BILINGUAL_SWITCHER_SCRIPT = `<script id="ec-bilingual-language-switcher">(function(){var menu=document.querySelector('.language-menu');if(!menu)return;var current=document.querySelector('.language-current');if(document.documentElement.lang==='en'){if(current)current.textContent='EN';var fa=menu.querySelector('[lang="fa"]');if(fa)fa.outerHTML='<a class="language-option" href="/" lang="fa" dir="rtl"><span>فارسی</span><small>Persian</small></a>';var en=menu.querySelector('[lang="en"]');if(en)en.outerHTML='<span class="language-option is-active" lang="en" dir="ltr" aria-current="true"><span>English</span><small>Active</small></span>';}})();</script>`;
+
+export function patchRecoveredBilingualLanguageHtml(source) {
+  let output = String(source);
+  output = output.replace(
+    /<span class="language-option is-unavailable" lang="en" dir="ltr" aria-disabled="true"><bdi dir="ltr">English<\/bdi><small[^>]*>ترجمه موجود نیست<\/small><\/span>/,
+    '<a class="language-option" href="/en/" lang="en" dir="ltr"><bdi dir="ltr">English</bdi><small lang="fa" dir="rtl">راهنماهای انگلیسی</small></a>',
+  );
+  if (!output.includes('ec-bilingual-language-switcher')) output = output.replace('</body>', `${BILINGUAL_SWITCHER_SCRIPT}\n</body>`);
+  return output;
+}
+
+async function applyRecoveredBilingualLanguage({ outDir }) {
+  const visit = async (dir) => {
+    const entries = await readdir(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const absolute = path.join(dir, entry.name);
+      if (entry.isDirectory()) await visit(absolute);
+      else if (entry.isFile() && entry.name.endsWith('.html')) {
+        await writeFile(absolute, patchRecoveredBilingualLanguageHtml(await readFile(absolute, 'utf8')));
+      }
+    }
+  };
+  await visit(outDir);
+}
+
 export async function renderRecoveredStaticDocuments({
   runtimeDir,
   packages,
@@ -100,4 +153,8 @@ export async function renderRecoveredStaticDocuments({
   await applyRecoveredLearningPath({ outDir: runtimeDir });
   await applyRecoveredReferencePagesAudit({ outDir: runtimeDir });
   await applyRecoveredRoleGuides({ outDir: runtimeDir });
+
+  const documentsIndex = path.join(runtimeDir, 'documents/index.html');
+  await writeFile(documentsIndex, patchRecoveredDocumentsLandingHtml(await readFile(documentsIndex, 'utf8'), packages));
+  await applyRecoveredBilingualLanguage({ outDir: runtimeDir });
 }

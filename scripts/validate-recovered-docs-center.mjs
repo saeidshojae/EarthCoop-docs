@@ -38,6 +38,7 @@ const EXPECTED_DOCUMENT_LOCALES = Object.freeze(['fa']);
 const EXPECTED_GUIDE_LOCALES = Object.freeze(['en']);
 const EXPECTED_ENGLISH_GUIDE_COUNT = 31;
 const EXPECTED_ENGLISH_AUDIT_BASELINE = 'f88c28a518749fb81133c3affa5e5fbf353f844a';
+const EXPECTED_FOUNDATIONAL_SLUGS = Object.freeze(['fc', 'ch', 'co', 'econ', 'dg', 'jud', 'loc', 'ex', 'eth', 'std']);
 
 function sha256(bytes) {
   return createHash('sha256').update(bytes).digest('hex');
@@ -69,6 +70,42 @@ function assertPreviewHtaccess(content) {
   if (!content.includes('ErrorDocument 404 /404/index.html')) throw new Error('Recovered htaccess 404 contract is missing');
   if (!content.includes('Header always set X-Robots-Tag "noindex, nofollow"')) throw new Error('Recovered htaccess preview noindex header is missing');
   if (/X-Robots-Tag\s+"noindex, nofollow"\s+env=/.test(content)) throw new Error('Recovered htaccess preview noindex header must be unconditional');
+}
+
+function assertPublicSurfaceContract({ persianHome, englishHome, documentsLanding }) {
+  if (!/<a class="language-option"[^>]+href="\/en\/"[^>]*>[\s\S]*?English/.test(persianHome)) {
+    throw new Error('Recovered Persian UI does not expose a clickable English guide locale');
+  }
+  if (/English[\s\S]{0,120}ترجمه موجود نیست/.test(persianHome)) {
+    throw new Error('Recovered Persian UI still labels English guides unavailable');
+  }
+  if (!/<html[^>]+lang="en"[^>]+dir="ltr"/i.test(englishHome)) {
+    throw new Error('Recovered English guide root is not marked English LTR');
+  }
+  if (!englishHome.includes('id="ec-bilingual-language-switcher"') || !englishHome.includes("document.documentElement.lang==='en'")) {
+    throw new Error('Recovered English guide root is missing active-locale switcher behavior');
+  }
+  if (!englishHome.includes('العربية') || !/العربية[\s\S]{0,120}ترجمه موجود نیست/.test(englishHome)) {
+    throw new Error('Recovered language UI must keep unavailable Arabic explicit');
+  }
+
+  if (documentsLanding.includes('/documents/publication-policy/') || documentsLanding.includes('سیاست انتشار مرکز دانش')) {
+    throw new Error('Recovered documents landing exposes publication policy as a foundational/reference document card');
+  }
+  if (documentsLanding.includes('ثبت‌شده؛ هنوز نافذ نیست')) {
+    throw new Error('Recovered documents landing contains stale pre-official-v1 legal status copy');
+  }
+  for (const slug of EXPECTED_FOUNDATIONAL_SLUGS) {
+    if (!documentsLanding.includes(`href="/documents/${slug}/"`)) {
+      throw new Error(`Recovered documents landing is missing foundational document: ${slug}`);
+    }
+  }
+  if (!documentsLanding.includes('href="/documents/econ-ref-01/"') || !documentsLanding.includes('ECON-REF-01')) {
+    throw new Error('Recovered documents landing is missing ECON-REF-01');
+  }
+  if (!documentsLanding.includes('اسناد مرجع')) throw new Error('Recovered documents landing is missing its reference-document section');
+  const cardCount = (documentsLanding.match(/class="doc-card"/g) ?? []).length;
+  if (cardCount !== 11) throw new Error(`Recovered documents landing must expose exactly 10 foundational + 1 reference card; found ${cardCount}`);
 }
 
 function parseExpectedFoundationalVersions(source) {
@@ -168,6 +205,15 @@ export async function validateRecoveredDocsCenter({
     sitemapXml,
     runtimeFiles: new Set(declaredFiles),
   });
+
+  // Full recovered artifacts always include the direct documents landing. Minimal unit fixtures may omit it;
+  // when present, these checks bind CI to the actual user-visible surfaces that previously regressed.
+  if (Object.hasOwn(manifest.hashes, 'documents/index.html')) {
+    const persianHome = await readFile(path.join(outDir, 'index.html'), 'utf8');
+    const englishHome = await readFile(await assertRegularFile(outDir, 'en/index.html'), 'utf8');
+    const documentsLanding = await readFile(await assertRegularFile(outDir, 'documents/index.html'), 'utf8');
+    assertPublicSurfaceContract({ persianHome, englishHome, documentsLanding });
+  }
 
   const foundationalSource = await readFile(path.join(outDir, FOUNDATIONAL_PACKAGE_FILE), 'utf8');
   const expectedDocumentVersions = parseExpectedFoundationalVersions(foundationalSource);
