@@ -9,6 +9,7 @@ export const LEARNING_PATH = Object.freeze([
   Object.freeze({ route: 'structure', title: 'از کوچه تا سیاره' }),
   Object.freeze({ route: 'groups', title: 'گروه‌های ارث‌کوپ' }),
   Object.freeze({ route: 'membership', title: 'عضویت و شهروندی' }),
+  Object.freeze({ route: 'economy-cycle', title: 'اقتصاد EarthCoop و چرخه بهار' }),
   Object.freeze({ route: 'elections', title: 'انتخابات پیوسته' }),
 ]);
 

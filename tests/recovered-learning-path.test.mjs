@@ -14,7 +14,7 @@ import {
   renderLearningPathNavigation,
 } from '../scripts/patch-recovered-learning-path.mjs';
 
-const ROUTES = ['start', 'justice', 'property', 'digital-country', 'structure', 'groups', 'membership', 'elections'];
+const ROUTES = ['start', 'justice', 'property', 'digital-country', 'structure', 'groups', 'membership', 'economy-cycle', 'elections'];
 const RELATED = '<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related"><a href="/guides/structure/"><span>مطالعه بعدی</span><strong>از کوچه تا سیاره ←</strong></a></div>';
 const APP_SOURCE = `function article(title, category, desc, state, body, related=[]) {
   return {title,desc,render:()=>\`<div class="article-body">\${body}<div class="section-title"><div><span class="eyebrow">ادامه مسیر</span><h2>مطالب مرتبط</h2></div></div><div class="related">\${related.map(([t,r])=>\`<a href="#/\${r}">\${t}</a>\`).join('')}</div></div>\`};
@@ -32,7 +32,10 @@ test('learning path neighbors are deterministic for first, middle and final page
   });
   assert.equal(learningPathNeighbors('property').previous.route, 'justice');
   assert.equal(learningPathNeighbors('property').next.route, 'digital-country');
-  assert.equal(learningPathNeighbors('elections').previous.route, 'membership');
+  assert.equal(learningPathNeighbors('membership').next.route, 'economy-cycle');
+  assert.equal(learningPathNeighbors('economy-cycle').previous.route, 'membership');
+  assert.equal(learningPathNeighbors('economy-cycle').next.route, 'elections');
+  assert.equal(learningPathNeighbors('elections').previous.route, 'economy-cycle');
   assert.equal(learningPathNeighbors('elections').next, null);
 });
 
@@ -55,9 +58,15 @@ test('middle page exposes previous and next controls without replacing related c
   assert.match(html, /ادامه مسیر/);
 });
 
+test('membership continues to economy guide before elections', () => {
+  const html = renderLearningPathNavigation('membership', { mode: 'static' });
+  assert.match(html, /href="\/guides\/economy-cycle\/"/);
+  assert.match(html, /اقتصاد EarthCoop و چرخه بهار/);
+});
+
 test('final page exposes previous navigation and a path-complete state without inventing a next route', () => {
   const html = renderLearningPathNavigation('elections', { mode: 'static' });
-  assert.match(html, /href="\/guides\/membership\/"/);
+  assert.match(html, /href="\/guides\/economy-cycle\/"/);
   assert.match(html, /پایان مسیر/);
   assert.doesNotMatch(html, /learning-path-next/);
 });
@@ -91,7 +100,7 @@ test('SPA patch keeps learning-path navigation on direct /guides/... URLs after 
   assert.match(patched, /related\.map/);
 });
 
-test('build integration patches all eight direct guide routes plus SPA and styles from one canonical path', async () => {
+test('build integration patches all nine direct guide routes plus SPA and styles from one canonical path', async () => {
   const outDir = await mkdtemp(path.join(os.tmpdir(), 'earthcoop-learning-path-'));
   for (const route of ROUTES) {
     const guideDir = path.join(outDir, 'guides', route);
@@ -105,6 +114,8 @@ test('build integration patches all eight direct guide routes plus SPA and style
 
   const start = await readFile(path.join(outDir, 'guides/start/index.html'), 'utf8');
   const justice = await readFile(path.join(outDir, 'guides/justice/index.html'), 'utf8');
+  const membership = await readFile(path.join(outDir, 'guides/membership/index.html'), 'utf8');
+  const economy = await readFile(path.join(outDir, 'guides/economy-cycle/index.html'), 'utf8');
   const elections = await readFile(path.join(outDir, 'guides/elections/index.html'), 'utf8');
   const app = await readFile(path.join(outDir, 'app.js'), 'utf8');
   const styles = await readFile(path.join(outDir, 'styles.css'), 'utf8');
@@ -113,7 +124,10 @@ test('build integration patches all eight direct guide routes plus SPA and style
   assert.doesNotMatch(start, /learning-path-previous/);
   assert.match(justice, /href="\/guides\/start\/"/);
   assert.match(justice, /href="\/guides\/property\/"/);
-  assert.match(elections, /href="\/guides\/membership\/"/);
+  assert.match(membership, /href="\/guides\/economy-cycle\/"/);
+  assert.match(economy, /href="\/guides\/membership\/"/);
+  assert.match(economy, /href="\/guides\/elections\/"/);
+  assert.match(elections, /href="\/guides\/economy-cycle\/"/);
   assert.match(elections, /پایان مسیر/);
   assert.match(app, /function resolveLearningPathRoute\(\)/);
   assert.match(app, /location\.pathname/);
