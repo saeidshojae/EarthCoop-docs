@@ -91,9 +91,11 @@ Implementation/editorial status is now:
 - audited Persian learning-path guides: `audited_current`;
 - Bahar/economy guide and role-based guides: current and runtime-integrated;
 - `/status/`, `/map/`, `/glossary/`: `audited_current`;
-- 31 English product/API guides: re-audited against `EarthCoop@f88c28a518749fb81133c3affa5e5fbf353f844a`; corrected where current product truth changed; runtime mapping is the active delivery task;
+- 31 English product/API guides: re-audited against `EarthCoop@f88c28a518749fb81133c3affa5e5fbf353f844a`, corrected where current product truth changed, and runtime-mapped under the explicit `/en/` namespace in the integration candidate;
 - English foundational translations: unavailable;
 - genuine Arabic: unavailable.
+
+The English runtime integration is **implementation-complete in the candidate**, but it is not a live-UAT PASS until the exact merged commit is deployed to Preview and the checks below are verified there.
 
 Live checks:
 
