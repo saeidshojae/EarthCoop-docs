@@ -21,7 +21,9 @@ const valid = {
       productTruth:'audited_against_current_repository_and_official_v1',
     },
     reviewedEnglishGuides:{status:'verified_current',runtimeMapped:false},
-    statusPage:{status:'needs_review'}, mapPage:{status:'needs_review'}, glossaryPage:{status:'needs_review'},
+    statusPage:{status:'audited_current',revision:'2026-10-02-reference-audit-v1'},
+    mapPage:{status:'audited_current',revision:'2026-10-02-reference-audit-v1'},
+    glossaryPage:{status:'audited_current',revision:'2026-10-02-reference-audit-v1'},
     arabic:{status:'unavailable',legacyMintlifyArIsArabic:false},
   },
   robotsTxt: 'User-agent: *\nDisallow: /\n',
@@ -79,17 +81,19 @@ test('rejects any production canonical, sitemap or false Arabic alternate on pre
   }
 });
 
-test('rejects editorial truth that regresses audited guides or silently promotes unavailable surfaces', () => {
+test('rejects editorial truth regressions for guides, audited reference pages or unavailable Arabic', () => {
   for (const mutate of [
     (x) => { x.editorialTruth.recoveredPersianGuides.status = 'historical_snapshot'; },
     (x) => { x.editorialTruth.recoveredPersianGuides.revision = 'older'; },
     (x) => { x.editorialTruth.recoveredPersianGuides.productTruth = 'unreviewed'; },
     (x) => { x.editorialTruth.reviewedEnglishGuides.runtimeMapped = true; },
-    (x) => { x.editorialTruth.mapPage.status = 'verified_current'; },
+    (x) => { x.editorialTruth.statusPage.status = 'needs_review'; },
+    (x) => { x.editorialTruth.mapPage.revision = 'older'; },
+    (x) => { x.editorialTruth.glossaryPage.status = 'needs_review'; },
     (x) => { x.editorialTruth.arabic.status = 'verified_current'; },
   ]) {
     const input = cloneValid();
     mutate(input);
-    assert.throws(() => validateRecoveredUatContract(input), /editorial|Arabic|guide|revision|product-truth|review/i);
+    assert.throws(() => validateRecoveredUatContract(input), /editorial|Arabic|guide|revision|product-truth|audit/i);
   }
 });
