@@ -1,77 +1,90 @@
 ---
-title: "EarthCoop REST API — Overview & Base URL"
+title: "EarthCoop API — Versioned Native Contract & Legacy Boundaries"
 sidebarTitle: "Overview"
-description: "Understand the current EarthCoop /api surface and why it is still an evolving internal application contract rather than a complete stable public API."
+description: "Understand EarthCoop's current /api/v1 first-party/native-client contract and the separate legacy/internal /api routes that are not automatically stable public APIs."
 ---
 
-EarthCoop has real HTTP routes under `/api`, but the current route file contains a mixture of application endpoints, legacy compatibility paths, closure-based geographic helpers, and newer controller-backed services. This surface is **evolving / In development** and is **not a stable public API contract** for third-party or native clients yet.
+EarthCoop now has a real **versioned `/api/v1` contract** used for the first-party/native delivery boundary. This is materially different from the older unversioned `/api` surface, which still contains application routes, legacy compatibility paths, and domain endpoints that are not automatically part of the v1 contract.
 
-## Current status
+## Current `/api/v1` scope
 
-The current repository proves that API routes exist for several domains, including NajmHoda, support-related capabilities, notifications, account/user access, and geographic/location data. Route existence is implementation evidence; it does not by itself establish a versioned external contract, compatibility guarantee, or supported SDK surface.
-
-<Warning>
-  Do not build a long-lived external integration by assuming every current `/api` route, payload, authentication mechanism, or response field is frozen. Stable client/mobile API work remains a separate product-readiness task.
-</Warning>
-
-## Base path
-
-Current application routes are mounted under:
+The current application mounts the versioned route set at:
 
 ```text
-/api
+/api/v1
 ```
 
-There is no general version prefix that turns the whole current file into a stable `/v1` public contract. A future stable client API may therefore differ from legacy/current internal paths.
+At the current application baseline, that contract includes first-party/native endpoints for:
+
+- authentication login/logout;
+- bootstrap and current-member data;
+- notifications and unread counts;
+- marking notifications as read;
+- device push subscription/unsubscription;
+- basic geography lookups used by the native client;
+- NajmHoda messaging;
+- media URL delivery.
+
+The exact route/controller implementation is the source of truth for payload details and authorization.
+
+<Warning>
+  `/api/v1` is a current versioned **first-party/native-client contract**. Its existence does not make every unversioned `/api` route a supported v1 endpoint or a general third-party public API. Domains such as support tickets may still live outside the current v1 surface.
+</Warning>
 
 ## Authentication
 
-Some current routes use Laravel Sanctum authentication, including routes protected by `auth:sanctum`. This establishes an authentication mechanism for those implementation paths; it does not prove that EarthCoop currently publishes a general-purpose external token-issuance workflow.
+The current v1 authentication flow includes a password-based login endpoint that can issue a bearer token after validating the account and required agreement state. Protected v1 routes use the current bearer/Sanctum authorization boundary, and logout revokes the current token.
 
-See [Authentication](/api/authentication) for the verified boundary.
+See [Authentication](/api/authentication) for the verified current contract and limitations.
 
-## Response contracts
+## Legacy and internal `/api` routes
 
-Different current controllers and legacy closure routes can return different JSON shapes. Do not assume one universal envelope such as `{ success, data, meta }` unless the specific controller or future stable API specification defines it.
+EarthCoop still has unversioned `/api` routes used by the web application, compatibility layers, or domains not yet promoted into v1. Those paths can be real and useful without being part of the durable v1 native contract.
 
-For implementation work, verify the exact current route and controller. For a public/mobile client, wait for or use the explicitly versioned contract designated for that client rather than inferring stability from present Laravel routes.
+Use this distinction:
+
+```text
+/api/v1 route = current versioned native/client contract
+unversioned /api route = inspect its own current implementation/status
+route existence ≠ universal third-party support promise
+```
 
 ## Authorization and domain rules
 
-Authentication answers only who the requester is. Each protected operation can also require domain authorization, ownership, role, policy, governance topology, monetary state, or other business rules.
+Authentication establishes requester identity. It does not bypass domain authorization. A protected operation can still require ownership, role, policy, governance topology, monetary state, or other business rules.
 
-For action-capable NajmHoda paths in particular, client/browser context cannot grant authority. Trusted server-side policy and domain services decide whether a mutation is permitted.
+For NajmHoda and other action-capable flows, browser/client context cannot grant mutation authority. Trusted server-side policy and domain services remain responsible for permission and execution.
 
-## Legacy and canonical location routes
+## Response contracts
 
-The current API file still contains older geography/location helpers alongside the newer canonical location/governance architecture. Their presence is one reason the entire `/api` file must not be described as the final external geographic contract.
+Do not assume one universal JSON envelope for every EarthCoop API domain. The current v1 controllers define their own validated request/response contract, while legacy/internal routes can retain different shapes.
+
+For client work, bind only to endpoints explicitly present in the current versioned contract and verify their current tests/controller behavior.
 
 ## API sections
 
-The following pages document current implementation evidence and known boundaries; they should not be read as a guarantee that these paths are already the final stable external API:
-
 <CardGroup cols={2}>
   <Card title="Authentication" icon="key" href="/api/authentication">
-    Current Sanctum-protected behavior and the absence of a verified general public token-issuance flow.
+    Current v1 bearer-token login/logout and the distinction between native-client support and general third-party token policy.
   </Card>
 
   <Card title="NajmHoda API" icon="robot" href="/api/najm-hoda">
-    Current controller-backed chat capabilities and their server-side policy boundary.
-  </Card>
-
-  <Card title="Tickets API" icon="ticket" href="/api/tickets">
-    Current ticket-related routes, documented as an evolving application contract.
+    Current v1 messaging path plus server-side action-authority boundaries.
   </Card>
 
   <Card title="Geographic API" icon="map" href="/api/geographic">
-    Current and legacy geographic paths pending a stable canonical client contract.
+    Current v1 native geography lookups and the richer canonical location/governance model behind them.
   </Card>
 
   <Card title="Notifications API" icon="bell" href="/api/notifications">
-    Current notification routes without promising a final mobile/public payload contract.
+    Current v1 notification and push-device delivery contract.
+  </Card>
+
+  <Card title="Tickets API" icon="ticket" href="/api/tickets">
+    Current support-ticket implementation notes; tickets are not part of the current v1 route set.
   </Card>
 </CardGroup>
 
-## Integration guidance
+## Public/third-party integration status
 
-For internal development, treat the checked-in route/controller code and tests as the implementation source of truth. For third-party or native-client integrations, treat the stable versioned API specification—once explicitly published—as the contract. Until then, the current `/api` surface remains **In development** from the perspective of a durable public API.
+The current v1 boundary is evidence of a durable versioned first-party/native contract. It should not be broadened by documentation into an unrestricted public developer platform without an explicit product/API policy. Third-party consumers should use only contracts that EarthCoop explicitly designates for that purpose.
