@@ -7,6 +7,7 @@ function stripFrontmatter(text) {
 
 function cleanInline(value) {
   return String(value ?? '')
+    .replace(/^#{1,6}\s+/, '')
     .replace(/\*\*([^*]+)\*\*/g, '$1')
     .replace(/__([^_]+)__/g, '$1')
     .replace(/`([^`]+)`/g, '$1')

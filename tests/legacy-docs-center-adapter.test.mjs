@@ -66,6 +66,7 @@ test('parses official Markdown into stable flat provisions without inventing sec
   assert.equal(parsed.title, 'سند مادر EarthCoop');
   assert.match(parsed.preamble, /شناسه سند:\s*FC/);
   assert.match(parsed.preamble, /دیباچه/);
+  assert.doesNotMatch(parsed.preamble, /^#{1,6}\s+/m);
   assert.deepEqual(parsed.provisions.map((item) => [item.id, item.stableSlug, item.title]), [
     ['FC-001', 'fc-001', 'ماده FC-001 — ماهیت سند مادر'],
     ['FC-002', 'fc-002', 'ماده FC-002 — هدف اصلی'],
@@ -108,4 +109,5 @@ test('adapts registered metadata to the 0.8 package and normalizes embedded pre-
   assert.equal(result.provisions.length, 2);
   assert.match(result.preamble, /نسخه:\s*1\.0/);
   assert.doesNotMatch(result.preamble, /نسخه:\s*1\.1/);
+  assert.doesNotMatch(result.preamble, /^#{1,6}\s+/m);
 });
