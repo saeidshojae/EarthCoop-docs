@@ -1,26 +1,32 @@
 ---
 title: "EarthCoop Account Setup: Identity, Expertise, and Residence"
 sidebarTitle: "Account Setup"
-description: "Understand EarthCoop's current account-registration flow: governing terms, email verification, identity, profession/expertise, and canonical Primary Residence."
+description: "Understand EarthCoop's current account-registration flow: governing terms, email or Google authentication, identity, profession/expertise, and canonical Primary Residence."
 ---
 
-EarthCoop registration is a structured process rather than a single sign-up form. The current flow starts with acceptance of the governing terms, creates and verifies the email-based account, and then collects the information required for member identity, professional dimensions, and canonical residence/governance membership.
+EarthCoop registration is a structured process rather than a single sign-up form. The current product supports the established email/password path and an implemented Google authentication path. Whichever supported authentication path starts the account, a member still has to satisfy the current EarthCoop registration requirements and complete the profile dimensions used for membership and governance.
 
 ## Before registration
 
-You must accept the governing terms before the registration form becomes available. EarthCoop can also operate with an invitation gate. When that gate is enabled for the deployment, a valid, unused and unexpired invitation code is required before the account can be created.
+You must accept the governing terms before the applicable registration flow can be completed. EarthCoop can also operate with an invitation gate. When that gate is enabled for the deployment, the account/registration flow must satisfy the current invitation policy rather than bypass it through a different authentication provider.
 
-## Create and verify the account
+## Create or authenticate the account
 
-Provide a valid email address and password in the registration form. A phone number may also be supplied where the current form allows it. After the account record is created, EarthCoop sends an email verification code and opens the verification step.
+### Email/password path
+
+Provide a valid email address and password in the registration form. A phone number may also be supplied where the current form allows it. After the account record is created, EarthCoop sends the verification step required by the current email-registration flow.
+
+### Google path
+
+EarthCoop also has a current Google OAuth authentication/registration flow. A Google identity can establish the authenticated account path, but it does not remove EarthCoop's own agreement, eligibility, profile-completion, profession/expertise, or Primary Residence requirements. Provider authentication proves the external sign-in identity; EarthCoop still controls the member-registration state.
 
 <Note>
-  This guide documents the verified current email/password registration path. It does not claim a third-party sign-in method unless that method is evidenced in the current product contract.
+  A supported authentication method is not a shortcut around EarthCoop registration. The member profile and governance dimensions remain EarthCoop data and must be completed under the current product rules.
 </Note>
 
 ## Complete the member profile
 
-After verification, the registration flow continues through the member-information steps. The exact visible fields are controlled by the current product, but the important architecture is stable:
+After the authentication/verification stage, the registration flow continues through the member-information steps. The exact visible fields are controlled by the current product, but the important architecture is stable:
 
 1. **Identity information** establishes the real member profile.
 2. **Profession and expertise** provide the structured occupational/specialty dimensions used by the system.
@@ -68,5 +74,5 @@ Your role and participation rights can differ by level. Being represented in a h
 Use the profile and Location/Governance surfaces to review and update supported profile information. Residence/governance changes are subject to the canonical location rules and should not be treated as a simple free-text address edit.
 
 <Note>
-  Product-language preferences and documentation-language status are separate from the legal status of EarthCoop documents. Persian remains the canonical language for the current foundational/reference set; English product guides are being reviewed against current implementation, and Arabic renditions become current only after review.
+  Product-language preferences and documentation-language status are separate from the legal status of EarthCoop documents. Persian remains the canonical language for the current foundational/reference set; English product guides are reviewed against current implementation, and Arabic renditions become current only after review.
 </Note>
