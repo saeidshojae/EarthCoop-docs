@@ -1,5 +1,11 @@
-export function buildRecoveredEditorialTruth(inventory = { pages: [] }) {
-  const paths = (inventory.pages ?? []).map((page) => page.path).sort((a, b) => a.localeCompare(b, 'en'));
+export function buildRecoveredEditorialTruth(
+  inventory = { pages: [] },
+  { englishAudit = null, runtimeMapped = false } = {},
+) {
+  const inventoryPaths = (inventory.pages ?? []).map((page) => page.path);
+  const auditGuides = englishAudit?.guides ?? [];
+  const auditPaths = auditGuides.map((guide) => guide.path);
+  const paths = (auditPaths.length ? auditPaths : inventoryPaths).sort((a, b) => a.localeCompare(b, 'en'));
   const auditedReference = (source) => ({
     status: 'audited_current',
     revision: '2026-10-02-reference-audit-v1',
@@ -14,7 +20,16 @@ export function buildRecoveredEditorialTruth(inventory = { pages: [] }) {
       publicationClaim: 'current_user_guide_with_explicit_vision_vs_implementation_boundaries',
       maintenance: 're-audit_changed_product_claims_against_current_repository_and_official_sources',
     },
-    reviewedEnglishGuides: {
+    reviewedEnglishGuides: englishAudit ? {
+      status: runtimeMapped ? 'audited_current' : 'revalidated_current',
+      runtimeMapped,
+      evidence: 'audits/product-guides/2026-10-02-evidence.json',
+      auditDate: englishAudit.auditDate ?? '2026-10-02',
+      applicationBaseline: englishAudit.applicationBaseline ?? null,
+      guideCount: englishAudit.guideCount ?? paths.length,
+      foundationalEnglishAvailable: englishAudit.foundationalEnglishAvailable === true,
+      paths,
+    } : {
       status: 'verified_current',
       runtimeMapped: false,
       evidence: 'audits/product-guides/2026-09-28-inventory.json',
