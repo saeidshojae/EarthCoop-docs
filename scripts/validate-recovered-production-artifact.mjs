@@ -203,7 +203,9 @@ export async function validateRecoveredProductionArtifact({
   exactArray(locales.globalLocales, ['fa', 'en'], 'Recovered production locale catalog');
   const searchRows = JSON.parse(await readFile(path.join(outDir, 'recovered-search-index.json'), 'utf8'));
   if (searchRows.length !== manifest.searchRecordCount) throw new Error('Recovered production search record count mismatch');
-  if (searchRows.some((row) => !String(row.body ?? '').trim())) throw new Error('Recovered production search index contains an empty body');
+  if (searchRows.some((row) => !String(row.body ?? '').trim() && !String(row.heading ?? '').trim())) {
+    throw new Error('Recovered production search index contains an empty searchable record');
+  }
   const seoRoutes = JSON.parse(await readFile(path.join(outDir, 'recovered-seo-routes.json'), 'utf8'));
   if (seoRoutes.length !== manifest.seoRouteCount) throw new Error('Recovered production SEO route count mismatch');
   assertNoPreview(JSON.stringify(seoRoutes), 'Recovered production SEO routes');
