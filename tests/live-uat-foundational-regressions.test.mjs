@@ -104,14 +104,14 @@ function initializeDocumentReaderControls(activeProvisionSlug = null) {
 });
 
 test('preview static JavaScript and CSS are revalidated during UAT so a new deployment cannot reuse stale layout code', async () => {
-  const buildSource = await readFile(path.join(process.cwd(), 'scripts/build-recovered-docs-center.mjs'), 'utf8');
-  const assetBlock = buildSource.match(/<FilesMatch "\\\\\.\(css\|js\)\$">[\s\S]*?<\/FilesMatch>/)?.[0] ?? '';
+  const hostingSource = await readFile(path.join(process.cwd(), 'scripts/recovered-deployment-artifact.mjs'), 'utf8');
+  const assetBlock = hostingSource.match(/<FilesMatch "\\\\\.\(css\|js\)\$">[\s\S]*?<\/FilesMatch>/)?.[0] ?? '';
   assert.match(assetBlock, /Cache-Control "no-cache, max-age=0, must-revalidate"/);
   assert.doesNotMatch(assetBlock, /max-age=3600/);
 });
 
 test('preview HTML is never served from a stale browser cache after a language-shell deployment', async () => {
-  const buildSource = await readFile(path.join(process.cwd(), 'scripts/build-recovered-docs-center.mjs'), 'utf8');
-  const htmlBlock = buildSource.match(/<FilesMatch [^\n]*html[^\n]*>[\s\S]*?<\/FilesMatch>/)?.[0] ?? '';
+  const hostingSource = await readFile(path.join(process.cwd(), 'scripts/recovered-deployment-artifact.mjs'), 'utf8');
+  const htmlBlock = hostingSource.match(/<FilesMatch [^\n]*html[^\n]*>[\s\S]*?<\/FilesMatch>/)?.[0] ?? '';
   assert.match(htmlBlock, /Cache-Control "no-store, max-age=0, must-revalidate"/);
 });
