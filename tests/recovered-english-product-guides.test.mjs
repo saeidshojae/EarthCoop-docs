@@ -120,7 +120,9 @@ test('builds LTR English guide pages, full-text search records, working fa/en sw
   assert.match(persianHtml, /<a class="language-option"[^>]+href="\/en\/"[^>]*>[\s\S]*English/);
   assert.doesNotMatch(persianHtml, /English[\s\S]{0,120}ترجمه موجود نیست/);
   assert.match(indexHtml, /id="ec-bilingual-language-switcher"/);
-  assert.match(indexHtml, /document\.documentElement\.lang==='en'/);
+  assert.match(indexHtml, /window\.location\.pathname/);
+  assert.match(indexHtml, /\/en\(\?:\\\/\|\$\)/);
+  assert.doesNotMatch(indexHtml, /document\.documentElement\.lang==='en'/);
   assert.match(indexHtml, /current\.textContent='EN'/);
   assert.match(indexHtml, /aria-current="true"/);
   assert.match(indexHtml, /href="\/" lang="fa"/);

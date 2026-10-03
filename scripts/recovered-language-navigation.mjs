@@ -25,11 +25,11 @@ function initializeLanguageNavigation(pairs) {
     } catch { return null; }
   };
   const currentPath = normalize(location.pathname);
-  const english = document.documentElement.lang === 'en';
+  const english = /^\/en(?:\/|$)/.test(currentPath);
   if (english) {
     const counterpart = Object.keys(pairs).find(key => pairs[key] === currentPath) || '/';
     const returnTo = safeReturn(new URLSearchParams(location.search).get('returnTo'));
-    const destination = returnTo || (allowedPersianPath(currentPath) ? currentPath : counterpart);
+    const destination = returnTo || counterpart;
     const fa = menu.querySelector('[lang="fa"]');
     if (fa) fa.href = destination;
     if (returnTo) {
@@ -75,8 +75,9 @@ export function patchEnglishRouterIsolation(source) {
   if (output.includes('EC_ENGLISH_STATIC_ROUTE')) return output;
   const render = /function render\(\)\s*\{/;
   if (!render.test(output)) throw new Error('Recovered render initialization contract changed');
-  output = output.replace(render, "$&\n    /* EC_ENGLISH_STATIC_ROUTE: preserve the audited static English article. */\n    if (document.documentElement.lang === 'en') return;");
-  output = output.replace('const migrated=preview?null:', "const migrated=preview||document.documentElement.lang === 'en'?null:");
-  output = output.replace("if(!preview&&location.hash.startsWith('#/'))", "if(document.documentElement.lang !== 'en'&&!preview&&location.hash.startsWith('#/'))");
+  const englishPath = "/^\\/en(?:\\/|$)/.test(window.location.pathname)";
+  output = output.replace(render, `$&\n    /* EC_ENGLISH_STATIC_ROUTE: preserve the audited static English article. */\n    if (${englishPath}) return;`);
+  output = output.replace('const migrated=preview?null:', `const migrated=preview||${englishPath}?null:`);
+  output = output.replace("if(!preview&&location.hash.startsWith('#/'))", `if(!${englishPath}&&!preview&&location.hash.startsWith('#/'))`);
   return output;
 }
