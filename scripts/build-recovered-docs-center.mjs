@@ -10,6 +10,10 @@ import { buildRecoveredLocaleCatalog } from './recovered-locale-catalog.mjs';
 import { buildRecoveredRouteEntries } from './recovered-route-policy.mjs';
 import { buildRecoveredSearchIndex } from './build-recovered-search-index.mjs';
 import { buildRecoveredSeoAssets } from './build-recovered-seo.mjs';
+import {
+  applyRecoveredStaticSeoProfile,
+  renderRecoveredHostingHtaccess,
+} from './recovered-deployment-artifact.mjs';
 import { resolveRecoveredDeploymentProfile } from './recovered-deployment-profile.mjs';
 import {
   buildLegacyFoundationalPackages,
@@ -57,59 +61,6 @@ async function listFiles(dir, prefix = '') {
     else if (entry.isFile()) output.push(relative);
   }
   return output;
-}
-
-function escapeApacheRegex(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function previewHtaccess(canonicalOrigin) {
-  const url = new URL(canonicalOrigin);
-  const origin = url.origin;
-  const hostPattern = escapeApacheRegex(url.host);
-  return `Options -Indexes
-DirectoryIndex index.html
-
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{HTTPS} !=on
-  RewriteRule ^ ${origin}%{REQUEST_URI} [R=301,L]
-
-  RewriteCond %{HTTP_HOST} !^${hostPattern}$ [NC]
-  RewriteRule ^ ${origin}%{REQUEST_URI} [R=301,L]
-
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteCond %{REQUEST_URI} !/$
-  RewriteRule ^ %{REQUEST_URI}/ [R=301,L]
-</IfModule>
-
-ErrorDocument 404 /404/index.html
-
-<IfModule mod_headers.c>
-  Header always set X-Content-Type-Options "nosniff"
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  Header always set X-Robots-Tag "noindex, nofollow"
-  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json|recovered-editorial-truth\\.json)$">
-    Header set Cache-Control "no-store, max-age=0"
-  </FilesMatch>
-  <FilesMatch "\\.html$">
-    Header set Cache-Control "no-store, max-age=0, must-revalidate"
-  </FilesMatch>
-  <FilesMatch "\\.(css|js)$">
-    Header set Cache-Control "no-cache, max-age=0, must-revalidate"
-  </FilesMatch>
-  <FilesMatch "\\.(svg|woff2)$">
-    Header set Cache-Control "public, max-age=3600, must-revalidate"
-  </FilesMatch>
-</IfModule>
-
-<IfModule mod_mime.c>
-  AddType application/javascript .js
-  AddType font/woff2 .woff2
-</IfModule>
-`;
 }
 
 function recoveredSiteConfig(canonicalOrigin) {
@@ -176,15 +127,20 @@ export async function buildRecoveredDocsCenter({
   await writeFile(path.join(outDir, 'downloads/document-downloads.json'), `${JSON.stringify(downloadMap, null, 2)}\n`);
   await writeFile(path.join(outDir, 'src/content/documents.fa.js'), serializeRecoveredDocumentsMetadata(packages, referencePackages));
   await writeFile(path.join(outDir, 'site-config.js'), recoveredSiteConfig(resolvedOrigin));
-  await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(resolvedOrigin));
+  await writeFile(path.join(outDir, '.htaccess'), renderRecoveredHostingHtaccess(deploymentProfile));
 
   if (renderStaticDocuments) {
-    // Static rendering applies the established recovered UI-polish pipeline.
+    // The recovered renderer still performs its legacy Preview-safe final HTML pass.
+    // Production therefore renders through that safe baseline and is normalized to
+    // the explicit Production profile after all static/English integrations finish.
+    const rendererOrigin = deploymentProfile.target === 'production'
+      ? 'https://docs-preview.earthcoop.ir'
+      : resolvedOrigin;
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
       packages: allPackages,
       documentDownloads: downloadMap,
-      canonicalOrigin: resolvedOrigin,
+      canonicalOrigin: rendererOrigin,
       indexable: deploymentProfile.indexable,
     });
   }
@@ -205,6 +161,7 @@ export async function buildRecoveredDocsCenter({
   };
   if (renderStaticDocuments) {
     englishIntegration = await applyRecoveredEnglishProductGuides({ rootDir, outDir, canonicalOrigin: resolvedOrigin });
+    await applyRecoveredStaticSeoProfile({ outDir, deploymentProfile });
   }
 
   searchIndex = [...searchIndex, ...englishIntegration.searchRecords];
