@@ -1,0 +1,121 @@
+name: Rollback docs production
+
+on:
+  workflow_dispatch:
+    inputs:
+      artifact_id:
+        description: GitHub Actions artifact id for a retained docs-production artifact
+        required: true
+        type: string
+      expected_source_sha:
+        description: Exact source SHA stored in the retained artifact
+        required: true
+        type: string
+      confirmation:
+        description: Type ROLLBACK DOCS PRODUCTION to continue
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: docs-production
+  cancel-in-progress: false
+
+jobs:
+  rollback-production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require explicit rollback confirmation
+        shell: bash
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          set -euo pipefail
+          [ "$CONFIRMATION" = "ROLLBACK DOCS PRODUCTION" ] || { echo "::error::Exact rollback confirmation is required"; exit 1; }
+
+      - name: Checkout validator source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: Download retained Production artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p rollback-production
+          curl --fail --silent --show-error --location \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${{ inputs.artifact_id }}/zip" \
+            -o rollback-production.zip
+          unzip -q rollback-production.zip -d rollback-production
+
+      - name: Validate retained Production artifact
+        run: node scripts/validate-recovered-production-artifact.mjs --out rollback-production --source-sha "${{ inputs.expected_source_sha }}"
+
+      - name: Preflight Production FTPS secrets
+        shell: bash
+        env:
+          DOCS_PROD_FTP_SERVER: ${{ secrets.DOCS_PROD_FTP_SERVER }}
+          DOCS_PROD_FTP_USERNAME: ${{ secrets.DOCS_PROD_FTP_USERNAME }}
+          DOCS_PROD_FTP_PASSWORD: ${{ secrets.DOCS_PROD_FTP_PASSWORD }}
+          DOCS_PROD_FTP_SERVER_DIR: ${{ secrets.DOCS_PROD_FTP_SERVER_DIR }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for name in DOCS_PROD_FTP_SERVER DOCS_PROD_FTP_USERNAME DOCS_PROD_FTP_PASSWORD DOCS_PROD_FTP_SERVER_DIR; do
+            if [ -z "${!name}" ]; then echo "::error::$name is not configured"; missing=1; fi
+          done
+          [ "$missing" -eq 0 ] || exit 1
+          case "$DOCS_PROD_FTP_SERVER_DIR" in */) ;; *) echo "::error::DOCS_PROD_FTP_SERVER_DIR must end with /"; exit 1 ;; esac
+
+      - name: Restore retained artifact over strict FTPS
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ${{ secrets.DOCS_PROD_FTP_SERVER }}
+          username: ${{ secrets.DOCS_PROD_FTP_USERNAME }}
+          password: ${{ secrets.DOCS_PROD_FTP_PASSWORD }}
+          protocol: ftps
+          security: strict
+          local-dir: ./rollback-production/
+          server-dir: ${{ secrets.DOCS_PROD_FTP_SERVER_DIR }}
+          dangerous-clean-slate: false
+          log-level: standard
+
+      - name: Verify restored live Production manifest
+        shell: bash
+        env:
+          EXPECTED_SOURCE_SHA: ${{ inputs.expected_source_sha }}
+        run: |
+          set -euo pipefail
+          live_manifest="$(mktemp)"
+          for attempt in {1..12}; do
+            if curl --fail --silent --show-error --connect-timeout 10 --max-time 20 -H 'Cache-Control: no-cache' \
+              "https://docs.earthcoop.ir/deployment-manifest.json?sha=${EXPECTED_SOURCE_SHA}&attempt=${attempt}" -o "$live_manifest"; then
+              if node - "$live_manifest" "$EXPECTED_SOURCE_SHA" <<'NODE'
+          const fs = require('fs');
+          const [file, expectedSha] = process.argv.slice(2);
+          const manifest = JSON.parse(fs.readFileSync(file, 'utf8'));
+          if (manifest.sourceSha !== expectedSha) process.exit(1);
+          if (manifest.deploymentTarget !== 'production') process.exit(1);
+          if (manifest.indexing !== 'enabled') process.exit(1);
+          if (manifest.canonicalOrigin !== 'https://docs.earthcoop.ir') process.exit(1);
+          NODE
+              then exit 0; fi
+            fi
+            sleep 5
+          done
+          echo "::error::Live Production rollback verification failed after bounded retries"
+          exit 1
