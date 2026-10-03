@@ -14,11 +14,31 @@ function navigation(url, locale) {
   const menu = { querySelector(selector){return options[selector.includes('"fa"')?'fa':'en'];} };
   const links = [{href:'/en/account/profile/',getAttribute(){return this.href;}}];
   const document = { documentElement:{lang:locale}, querySelectorAll(){return links;}, querySelector(selector){return selector === '.language-switcher' ? switcher : selector === '.language-menu' ? menu : null;}, addEventListener(type,fn){handlers[type]=fn;} };
-  const html = patchRecoveredBilingualLanguageHtml('<html><body></body></html>');
+  const html = patchRecoveredBilingualLanguageHtml('<html><head></head><body></body></html>');
   const source = html.match(/<script id="ec-language-navigation">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(source, 'language navigation must be initialized');
   vm.runInNewContext(source,{document,window:{location:new URL(url)},URL,URLSearchParams});
   return {options,switcher,handlers,links};
+}
+
+function bilingualShell(url, locale) {
+  const current = { textContent:'FA' };
+  const nav = { innerHTML:'FA NAV', setAttribute(){} };
+  const menu = { querySelector(){return null;} };
+  const document = {
+    documentElement:{lang:locale,dir:'rtl'},
+    querySelector(selector){
+      if(selector === '.language-menu') return menu;
+      if(selector === '.language-current') return current;
+      if(selector === '#mainNav') return nav;
+      return null;
+    },
+  };
+  const html = patchRecoveredBilingualLanguageHtml('<html lang="fa" dir="rtl"><head></head><body></body></html>');
+  const source = html.match(/<script id="ec-bilingual-language-switcher">([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(source, 'bilingual shell script must be initialized');
+  vm.runInNewContext(source,{document,window:{location:new URL(url)}});
+  return {current,nav,document,html};
 }
 
 test('language roundtrip returns to the original Persian page and fragment',()=>{
@@ -43,6 +63,19 @@ test('Persian routes ignore a browser-translated html lang when wiring the langu
   assert.equal(enUrl.pathname,'/en/');
   assert.equal(enUrl.searchParams.get('returnTo'),'/documents/');
   assert.match(state.options.en.innerHTML,/راهنماهای انگلیسی/);
+});
+
+test('Persian shell ignores translated html lang and keeps Persian chrome',()=>{
+  const state = bilingualShell('https://docs-preview.earthcoop.ir/documents/fc/','en');
+  assert.equal(state.current.textContent,'FA');
+  assert.equal(state.nav.innerHTML,'FA NAV');
+  assert.equal(state.document.documentElement.dir,'rtl');
+});
+
+test('bilingual static pages opt out of automatic browser translation',()=>{
+  const html = patchRecoveredBilingualLanguageHtml('<html lang="fa"><head></head><body></body></html>');
+  assert.match(html,/<meta\s+name="google"\s+content="notranslate"\s*\/?>/i);
+  assert.match(html,/<html[^>]*\btranslate="no"/i);
 });
 
 test('outside pointer, click, focus and Escape dismiss the language menu',()=>{
