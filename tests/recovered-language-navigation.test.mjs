@@ -37,6 +37,14 @@ test('untranslated pages open the English collection with an explicit return des
   assert.match(fa.options.en.innerHTML,/راهنماهای انگلیسی/);
 });
 
+test('Persian routes ignore a browser-translated html lang when wiring the language menu',()=>{
+  const state = navigation('https://docs-preview.earthcoop.ir/documents/','en');
+  const enUrl = new URL(state.options.en.href,'https://docs-preview.earthcoop.ir');
+  assert.equal(enUrl.pathname,'/en/');
+  assert.equal(enUrl.searchParams.get('returnTo'),'/documents/');
+  assert.match(state.options.en.innerHTML,/راهنماهای انگلیسی/);
+});
+
 test('outside pointer, click, focus and Escape dismiss the language menu',()=>{
   const state = navigation('https://docs-preview.earthcoop.ir/','fa');
   for(const type of ['pointerdown','click','focusin']) {
@@ -65,11 +73,6 @@ test('English navigation retains the Persian return page when browsing the colle
   assert.equal(navigation(next.href,'en').options.fa.href,'/documents/fc/#provision-1');
 });
 
-test('English shell on a Persian-only route returns to that same route instead of the home page',()=>{
-  const state = navigation('https://docs-preview.earthcoop.ir/documents/','en');
-  assert.equal(state.options.fa.href,'/documents/');
-});
-
 test('English generated pages retain their English article when the shared router runs', async()=>{
   const rootDir=await mkdtemp(path.join(os.tmpdir(),'ec-language-source-'));
   const outDir=await mkdtemp(path.join(os.tmpdir(),'ec-language-out-'));
@@ -81,6 +84,19 @@ test('English generated pages retain their English article when the shared route
   const html=await readFile(path.join(outDir,'en/index.html'),'utf8');
   assert.match(html,/Real English body/);
   const window={location:{pathname:'/en/',hash:'',replace(){}},addEventListener(){}};
+  vm.runInNewContext(await readFile(path.join(outDir,'app.js'),'utf8'),{window,document:{documentElement:{lang:'fa'}}});
+  assert.equal(window.rendered,undefined,'Persian router must not overwrite the static English article even if a translator changes html lang');
+});
+
+test('Persian runtime still renders when a browser translator changes html lang to English', async()=>{
+  const rootDir=await mkdtemp(path.join(os.tmpdir(),'ec-language-source-'));
+  const outDir=await mkdtemp(path.join(os.tmpdir(),'ec-language-out-'));
+  await writeFile(path.join(rootDir,'index.mdx'),'---\ntitle: "English content"\n---\nReal English body.');
+  await mkdir(path.join(outDir,'guides/start'),{recursive:true});
+  await writeFile(path.join(outDir,'guides/start/index.html'),'<html lang="fa"><head></head><body><main id="app">فارسی</main></body></html>');
+  await writeFile(path.join(outDir,'app.js'),`function render(){window.rendered=(window.rendered||0)+1;} render();`);
+  await applyRecoveredEnglishProductGuides({rootDir,outDir,sourcePaths:['index.mdx']});
+  const window={location:{pathname:'/documents/',hash:'',replace(){}},addEventListener(){}};
   vm.runInNewContext(await readFile(path.join(outDir,'app.js'),'utf8'),{window,document:{documentElement:{lang:'en'}}});
-  assert.equal(window.rendered,undefined,'Persian router must not overwrite the static English article');
+  assert.equal(window.rendered,1,'Persian route must keep the shared runtime active so search, theme and navigation can initialize');
 });
