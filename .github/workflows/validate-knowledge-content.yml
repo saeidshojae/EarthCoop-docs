@@ -29,3 +29,7 @@ jobs:
         run: node scripts/build-recovered-docs-center.mjs --out dist-recovered
       - name: Validate recovered 0.8 candidate
         run: node scripts/validate-recovered-docs-center.mjs --out dist-recovered
+      - name: Build recovered Production candidate (validation only)
+        run: node scripts/build-recovered-docs-center.mjs --out dist-production --target production --canonical-origin https://docs.earthcoop.ir
+      - name: Validate recovered Production candidate
+        run: node scripts/validate-recovered-production-artifact.mjs --out dist-production

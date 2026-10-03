@@ -11,6 +11,11 @@ import { buildRecoveredRouteEntries } from './recovered-route-policy.mjs';
 import { buildRecoveredSearchIndex } from './build-recovered-search-index.mjs';
 import { buildRecoveredSeoAssets } from './build-recovered-seo.mjs';
 import {
+  applyRecoveredStaticSeoProfile,
+  renderRecoveredHostingHtaccess,
+} from './recovered-deployment-artifact.mjs';
+import { resolveRecoveredDeploymentProfile } from './recovered-deployment-profile.mjs';
+import {
   buildLegacyFoundationalPackages,
   buildLegacyReferencePackages,
   serializeLegacyFoundationalPackages,
@@ -58,74 +63,7 @@ async function listFiles(dir, prefix = '') {
   return output;
 }
 
-function canonicalPreviewUrl(canonicalOrigin) {
-  let url;
-  try {
-    url = new URL(canonicalOrigin);
-  } catch {
-    throw new Error('canonicalOrigin must be a valid HTTPS URL');
-  }
-  if (url.protocol !== 'https:' || url.username || url.password || url.pathname !== '/' || url.search || url.hash) {
-    throw new Error('canonicalOrigin must be a bare HTTPS origin');
-  }
-  return url;
-}
-
-function escapeApacheRegex(value) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function previewHtaccess(canonicalOrigin) {
-  const url = canonicalPreviewUrl(canonicalOrigin);
-  const origin = url.origin;
-  const hostPattern = escapeApacheRegex(url.host);
-  return `Options -Indexes
-DirectoryIndex index.html
-
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{HTTPS} !=on
-  RewriteRule ^ ${origin}%{REQUEST_URI} [R=301,L]
-
-  RewriteCond %{HTTP_HOST} !^${hostPattern}$ [NC]
-  RewriteRule ^ ${origin}%{REQUEST_URI} [R=301,L]
-
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteCond %{REQUEST_URI} !/$
-  RewriteRule ^ %{REQUEST_URI}/ [R=301,L]
-</IfModule>
-
-ErrorDocument 404 /404/index.html
-
-<IfModule mod_headers.c>
-  Header always set X-Content-Type-Options "nosniff"
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  Header always set X-Robots-Tag "noindex, nofollow"
-  <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json|recovered-editorial-truth\\.json)$">
-    Header set Cache-Control "no-store, max-age=0"
-  </FilesMatch>
-  <FilesMatch "\\.html$">
-    Header set Cache-Control "no-store, max-age=0, must-revalidate"
-  </FilesMatch>
-  <FilesMatch "\\.(css|js)$">
-    Header set Cache-Control "no-cache, max-age=0, must-revalidate"
-  </FilesMatch>
-  <FilesMatch "\\.(svg|woff2)$">
-    Header set Cache-Control "public, max-age=3600, must-revalidate"
-  </FilesMatch>
-</IfModule>
-
-<IfModule mod_mime.c>
-  AddType application/javascript .js
-  AddType font/woff2 .woff2
-</IfModule>
-`;
-}
-
-function previewSiteConfig(canonicalOrigin) {
-  canonicalPreviewUrl(canonicalOrigin);
+function recoveredSiteConfig(canonicalOrigin) {
   return `window.EC_SITE_CONFIG = Object.freeze({\n  deploymentTarget: "self-hosted",\n  canonicalOrigin: "${canonicalOrigin}",\n  mainSiteUrl: "https://earthcoop.ir",\n  integrations: Object.freeze({\n    api: Object.freeze({enabled: false, baseUrl: "https://earthcoop.ir/api/docs/v1"}),\n    sso: Object.freeze({enabled: false, startUrl: "https://earthcoop.ir/docs/sso/start"}),\n  }),\n});\n`;
 }
 
@@ -142,13 +80,18 @@ export async function buildRecoveredDocsCenter({
   runtimeArchiveSha256 = RECOVERED_08_ARCHIVE_SHA256,
   verifyRecoveredFiles = true,
   renderStaticDocuments = true,
-  canonicalOrigin = 'https://docs-preview.earthcoop.ir',
+  deploymentTarget = 'preview',
+  canonicalOrigin,
   currentFoundationalPackages,
 }) {
   if (!rootDir || !outDir) throw new TypeError('rootDir and outDir are required');
   if (!/^[0-9a-f]{40}$/i.test(sourceSha ?? '')) throw new Error('sourceSha must be a full 40-character commit SHA');
   if (!builtAt || Number.isNaN(Date.parse(builtAt))) throw new Error('builtAt must be an ISO timestamp');
-  canonicalPreviewUrl(canonicalOrigin);
+  const deploymentProfile = resolveRecoveredDeploymentProfile({
+    target: deploymentTarget,
+    canonicalOrigin,
+  });
+  const resolvedOrigin = deploymentProfile.canonicalOrigin;
 
   const recovered = await materializeRecoveredDocsCenter({
     archiveSource: runtimeArchiveSource,
@@ -183,17 +126,22 @@ export async function buildRecoveredDocsCenter({
   await writeFile(path.join(outDir, 'src/data/document-downloads.js'), serializeDocumentDownloadsSource(downloadMap));
   await writeFile(path.join(outDir, 'downloads/document-downloads.json'), `${JSON.stringify(downloadMap, null, 2)}\n`);
   await writeFile(path.join(outDir, 'src/content/documents.fa.js'), serializeRecoveredDocumentsMetadata(packages, referencePackages));
-  await writeFile(path.join(outDir, 'site-config.js'), previewSiteConfig(canonicalOrigin));
-  await writeFile(path.join(outDir, '.htaccess'), previewHtaccess(canonicalOrigin));
+  await writeFile(path.join(outDir, 'site-config.js'), recoveredSiteConfig(resolvedOrigin));
+  await writeFile(path.join(outDir, '.htaccess'), renderRecoveredHostingHtaccess(deploymentProfile));
 
   if (renderStaticDocuments) {
-    // Static rendering applies the established recovered UI-polish pipeline.
+    // The recovered renderer still performs its legacy Preview-safe final HTML pass.
+    // Production therefore renders through that safe baseline and is normalized to
+    // the explicit Production profile after all static/English integrations finish.
+    const rendererOrigin = deploymentProfile.target === 'production'
+      ? 'https://docs-preview.earthcoop.ir'
+      : resolvedOrigin;
     await renderRecoveredStaticDocuments({
       runtimeDir: outDir,
       packages: allPackages,
       documentDownloads: downloadMap,
-      canonicalOrigin,
-      indexable: false,
+      canonicalOrigin: rendererOrigin,
+      indexable: deploymentProfile.indexable,
     });
   }
 
@@ -212,14 +160,15 @@ export async function buildRecoveredDocsCenter({
     foundationalLocales: localeCatalog.globalLocales,
   };
   if (renderStaticDocuments) {
-    englishIntegration = await applyRecoveredEnglishProductGuides({ rootDir, outDir, canonicalOrigin });
+    englishIntegration = await applyRecoveredEnglishProductGuides({ rootDir, outDir, canonicalOrigin: resolvedOrigin });
+    await applyRecoveredStaticSeoProfile({ outDir, deploymentProfile });
   }
 
   searchIndex = [...searchIndex, ...englishIntegration.searchRecords];
   const seo = buildRecoveredSeoAssets({
-    canonicalOrigin,
+    canonicalOrigin: resolvedOrigin,
     routes: [...routes, ...englishIntegration.seoRoutes],
-    preview: true,
+    preview: deploymentProfile.seoPreview,
   });
   const siteLocaleCatalog = {
     ...localeCatalog,
@@ -254,14 +203,16 @@ export async function buildRecoveredDocsCenter({
     builtAt,
     runtimeBaseline: 'earthcoop-knowledge-center-0.8.0',
     runtimeArchiveSha256: recovered.archiveSha256,
+    deploymentTarget: deploymentProfile.target,
+    indexing: deploymentProfile.indexable ? 'enabled' : 'disabled',
     canonicalLanguage: 'fa',
     displayLocales: siteLocaleCatalog.globalLocales,
     documentLocales: siteLocaleCatalog.documentLocales,
     guideLocales: siteLocaleCatalog.guideLocales,
     guideContentPolicy: GUIDE_CONTENT_POLICY,
     editorialTruthArtifact: 'recovered-editorial-truth.json',
-    canonicalOrigin,
-    previewIndexing: 'disabled',
+    canonicalOrigin: resolvedOrigin,
+    previewIndexing: deploymentProfile.target === 'preview' ? 'disabled' : undefined,
     searchRecordCount: searchIndex.length,
     seoRouteCount: seo.routes.length,
     englishGuideCount: englishIntegration.guides.length,
@@ -269,6 +220,7 @@ export async function buildRecoveredDocsCenter({
     fileCount: inventory.length + 1,
     hashes,
   };
+  if (deploymentManifest.previewIndexing === undefined) delete deploymentManifest.previewIndexing;
   await writeFile(path.join(outDir, 'deployment-manifest.json'), `${JSON.stringify(deploymentManifest, null, 2)}\n`);
 
   return {
@@ -286,6 +238,7 @@ function parseArgs(argv) {
     else if (argv[index] === '--source-sha') args.sourceSha = argv[++index];
     else if (argv[index] === '--built-at') args.builtAt = argv[++index];
     else if (argv[index] === '--archive') args.runtimeArchiveSource = argv[++index];
+    else if (argv[index] === '--target') args.deploymentTarget = argv[++index];
     else if (argv[index] === '--canonical-origin') args.canonicalOrigin = argv[++index];
   }
   return args;
@@ -301,13 +254,15 @@ async function main() {
   const outDir = path.resolve(args.outDir ?? path.join(rootDir, 'dist'));
   const sourceSha = args.sourceSha ?? process.env.GITHUB_SHA ?? gitHead(rootDir);
   const builtAt = args.builtAt ?? process.env.DOCS_BUILD_TIMESTAMP ?? new Date().toISOString();
+  const deploymentTarget = args.deploymentTarget ?? process.env.DOCS_DEPLOYMENT_TARGET ?? 'preview';
   const report = await buildRecoveredDocsCenter({
     rootDir,
     outDir,
     sourceSha,
     builtAt,
     runtimeArchiveSource: args.runtimeArchiveSource ?? process.env.DOCS_CENTER_08_ARCHIVE ?? RECOVERED_08_ARCHIVE_URL,
-    canonicalOrigin: args.canonicalOrigin ?? process.env.DOCS_CANONICAL_ORIGIN ?? 'https://docs-preview.earthcoop.ir',
+    deploymentTarget,
+    canonicalOrigin: args.canonicalOrigin ?? process.env.DOCS_CANONICAL_ORIGIN,
   });
   process.stdout.write(`${JSON.stringify(report)}\n`);
 }
