@@ -92,6 +92,7 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
     verifyRecoveredFiles: false,
     renderStaticDocuments: false,
     canonicalOrigin: 'https://docs-preview.earthcoop.ir',
+    deploymentTarget: 'preview',
     currentFoundationalPackages: input.currentFoundationalPackages,
   });
 
@@ -176,6 +177,8 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   assert.doesNotMatch(htaccess, /!\^docs\\\.earthcoop\\\.ir\$/);
 
   assert.equal(report.runtimeBaseline, 'earthcoop-knowledge-center-0.8.0');
+  assert.equal(report.deploymentTarget, 'preview');
+  assert.equal(report.indexing, 'disabled');
   assert.deepEqual(report.displayLocales, ['fa']);
   assert.deepEqual(report.guideContentPolicy, {
     fa: 'audited_current_2026-10-02_official-v1_and_repository_evidence',
@@ -187,4 +190,46 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   assert.equal(report.searchRecordCount, 1);
   assert.equal(report.englishGuideCount, 0);
   assert.equal(report.englishGuideAuditBaseline, 'f88c28a518749fb81133c3affa5e5fbf353f844a');
+});
+
+test('builds a production profile only for the production origin and marks it indexable', async () => {
+  const input = await fixture();
+  const outDir = path.join(input.root, 'dist-production');
+  const report = await buildRecoveredDocsCenter({
+    rootDir: input.root,
+    outDir,
+    sourceSha: '2'.repeat(40),
+    builtAt: '2026-10-03T00:00:00Z',
+    runtimeArchiveSource: input.archive,
+    runtimeArchiveSha256: input.archiveHash,
+    verifyRecoveredFiles: false,
+    renderStaticDocuments: false,
+    canonicalOrigin: 'https://docs.earthcoop.ir',
+    deploymentTarget: 'production',
+    currentFoundationalPackages: input.currentFoundationalPackages,
+  });
+
+  assert.equal(report.deploymentTarget, 'production');
+  assert.equal(report.indexing, 'enabled');
+  assert.equal(report.canonicalOrigin, 'https://docs.earthcoop.ir');
+});
+
+test('rejects crossed deployment target and canonical origin combinations', async () => {
+  const input = await fixture();
+  await assert.rejects(
+    buildRecoveredDocsCenter({
+      rootDir: input.root,
+      outDir: path.join(input.root, 'bad-dist'),
+      sourceSha: '3'.repeat(40),
+      builtAt: '2026-10-03T00:00:00Z',
+      runtimeArchiveSource: input.archive,
+      runtimeArchiveSha256: input.archiveHash,
+      verifyRecoveredFiles: false,
+      renderStaticDocuments: false,
+      canonicalOrigin: 'https://docs.earthcoop.ir',
+      deploymentTarget: 'preview',
+      currentFoundationalPackages: input.currentFoundationalPackages,
+    }),
+    /deployment target.*origin|origin.*deployment target/i,
+  );
 });
