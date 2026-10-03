@@ -29,7 +29,7 @@ function initializeLanguageNavigation(pairs) {
   if (english) {
     const counterpart = Object.keys(pairs).find(key => pairs[key] === currentPath) || '/';
     const returnTo = safeReturn(new URLSearchParams(location.search).get('returnTo'));
-    const destination = returnTo || counterpart;
+    const destination = returnTo || (allowedPersianPath(currentPath) ? currentPath : counterpart);
     const fa = menu.querySelector('[lang="fa"]');
     if (fa) fa.href = destination;
     if (returnTo) {
