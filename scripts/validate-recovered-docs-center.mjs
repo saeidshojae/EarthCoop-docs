@@ -82,8 +82,11 @@ function assertPublicSurfaceContract({ persianHome, englishHome, documentsLandin
   if (!/<html[^>]+lang="en"[^>]+dir="ltr"/i.test(englishHome)) {
     throw new Error('Recovered English guide root is not marked English LTR');
   }
-  if (!englishHome.includes('id="ec-bilingual-language-switcher"') || !englishHome.includes("document.documentElement.lang==='en'")) {
-    throw new Error('Recovered English guide root is missing active-locale switcher behavior');
+  if (!englishHome.includes('id="ec-bilingual-language-switcher"') || !englishHome.includes('window.location.pathname')) {
+    throw new Error('Recovered English guide root is missing path-driven active-locale switcher behavior');
+  }
+  if (englishHome.includes("document.documentElement.lang==='en'")) {
+    throw new Error('Recovered language shell must not derive locale from mutable html lang');
   }
   if (!englishHome.includes('العربية') || !/العربية[\s\S]{0,120}ترجمه موجود نیست/.test(englishHome)) {
     throw new Error('Recovered language UI must keep unavailable Arabic explicit');
