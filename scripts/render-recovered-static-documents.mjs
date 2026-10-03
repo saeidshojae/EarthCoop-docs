@@ -8,7 +8,7 @@ import { applyRecoveredEconomyGuide } from './patch-recovered-economy-guide.mjs'
 import { applyRecoveredEconomyRouteRegistration } from './patch-recovered-economy-route.mjs';
 import { applyRecoveredLearningPath } from './patch-recovered-learning-path.mjs';
 import { applyRecoveredReferencePagesAudit } from './patch-recovered-reference-pages.mjs';
-import { applyRecoveredRoleGuides } from './patch-recovered-role-guides.mjs';
+import { applyRecoveredRoleGuides, ROLE_GUIDES_REVISION } from './patch-recovered-role-guides.mjs';
 import {
   patchRecoveredDocumentPrintHtml,
   patchRecoveredDocumentPrintStyles,
@@ -102,14 +102,35 @@ export function patchRecoveredBilingualLanguageHtml(source) {
   return output;
 }
 
-async function applyRecoveredBilingualLanguage({ outDir }) {
+export function patchRecoveredPreviewStaticSeoHtml(source, canonicalOrigin = 'https://docs-preview.earthcoop.ir') {
+  const origin = new URL(canonicalOrigin).origin;
+  if (origin !== 'https://docs-preview.earthcoop.ir') throw new Error('Recovered preview static SEO origin mismatch');
+  let output = String(source).replaceAll('https://docs.earthcoop.ir', origin);
+  output = output.replace(/<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i, '<meta name="robots" content="noindex,nofollow">');
+  if (!/<meta\s+name="robots"/i.test(output)) output = output.replace(/<\/head>/i, '<meta name="robots" content="noindex,nofollow">\n</head>');
+  return output;
+}
+
+export function patchRecoveredRoleGuideRuntimeRevision(source) {
+  const input = String(source);
+  const declaration = `const ROLE_GUIDES_REVISION = ${JSON.stringify(ROLE_GUIDES_REVISION)};`;
+  if (input.includes(declaration)) return input;
+  const marker = 'const ROLE_GUIDE_RUNTIME = Object.freeze(';
+  if (!input.includes(marker)) throw new Error('Recovered role-guide runtime marker is missing');
+  return input.replace(marker, `${declaration}\n${marker}`);
+}
+
+async function applyRecoveredBilingualLanguage({ outDir, canonicalOrigin }) {
   const visit = async (dir) => {
     const entries = await readdir(dir, { withFileTypes: true });
     for (const entry of entries) {
       const absolute = path.join(dir, entry.name);
       if (entry.isDirectory()) await visit(absolute);
       else if (entry.isFile() && entry.name.endsWith('.html')) {
-        await writeFile(absolute, patchRecoveredBilingualLanguageHtml(await readFile(absolute, 'utf8')));
+        let html = await readFile(absolute, 'utf8');
+        html = patchRecoveredBilingualLanguageHtml(html);
+        html = patchRecoveredPreviewStaticSeoHtml(html, canonicalOrigin);
+        await writeFile(absolute, html);
       }
     }
   };
@@ -161,7 +182,10 @@ export async function renderRecoveredStaticDocuments({
   await applyRecoveredReferencePagesAudit({ outDir: runtimeDir });
   await applyRecoveredRoleGuides({ outDir: runtimeDir });
 
+  const appPath = path.join(runtimeDir, 'app.js');
+  await writeFile(appPath, patchRecoveredRoleGuideRuntimeRevision(await readFile(appPath, 'utf8')));
+
   const documentsIndex = path.join(runtimeDir, 'documents/index.html');
   await writeFile(documentsIndex, patchRecoveredDocumentsLandingHtml(await readFile(documentsIndex, 'utf8'), packages));
-  await applyRecoveredBilingualLanguage({ outDir: runtimeDir });
+  await applyRecoveredBilingualLanguage({ outDir: runtimeDir, canonicalOrigin });
 }
