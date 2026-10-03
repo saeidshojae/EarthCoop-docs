@@ -1,6 +1,0 @@
-- [ ] Task 1 — deployment profiles
-- [ ] Task 2 — profile-safe SEO and hosting metadata
-- [ ] Task 3 — Production artifact validator
-- [ ] Task 4 — guarded deploy and rollback workflows
-- [ ] Task 5 — EarthCoop link contract
-- [ ] Task 6 — final readiness gate
