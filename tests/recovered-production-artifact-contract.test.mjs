@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
+import { renderRecoveredHostingHtaccess } from '../scripts/build-recovered-docs-center.mjs';
 import { resolveRecoveredDeploymentProfile } from '../scripts/recovered-deployment-profile.mjs';
 import * as staticDocuments from '../scripts/render-recovered-static-documents.mjs';
 
@@ -31,4 +32,18 @@ test('preview static HTML remains Preview-only and globally noindex', () => {
   assert.doesNotMatch(output, /https:\/\/docs\.earthcoop\.ir/);
   assert.match(output, /https:\/\/docs-preview\.earthcoop\.ir\/documents\/fc\//);
   assert.match(output, /meta name="robots" content="noindex,nofollow"/);
+});
+
+test('hosting headers preserve Preview noindex but omit it entirely in Production', () => {
+  assert.equal(typeof renderRecoveredHostingHtaccess, 'function');
+  const previewHtaccess = renderRecoveredHostingHtaccess(preview);
+  assert.match(previewHtaccess, /docs-preview\.earthcoop\.ir/);
+  assert.match(previewHtaccess, /X-Robots-Tag "noindex, nofollow"/);
+
+  const productionHtaccess = renderRecoveredHostingHtaccess(production);
+  assert.match(productionHtaccess, /https:\/\/docs\.earthcoop\.ir/);
+  assert.doesNotMatch(productionHtaccess, /docs-preview\.earthcoop\.ir/);
+  assert.doesNotMatch(productionHtaccess, /X-Robots-Tag "noindex, nofollow"/);
+  assert.match(productionHtaccess, /X-Content-Type-Options "nosniff"/);
+  assert.match(productionHtaccess, /Referrer-Policy "strict-origin-when-cross-origin"/);
 });
