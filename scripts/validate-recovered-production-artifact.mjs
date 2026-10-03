@@ -32,6 +32,8 @@ const REQUIRED_FILES = Object.freeze([
   'recovered-editorial-truth.json',
   'robots.txt',
   'sitemap.xml',
+  'src/ui/search-dialog.js',
+  'src/ui/theme.js',
   FOUNDATIONAL_PACKAGE_FILE,
   RECOVERED_08_DEPLOYED_ARCHIVE_NAME,
 ]);
@@ -123,7 +125,7 @@ function parseExpectedFoundationalVersions(source) {
   return versions;
 }
 
-function assertPublicRuntime({ persianHome, englishHome, documentsLanding, appSource }) {
+function assertPublicRuntime({ persianHome, englishHome, documentsLanding, appSource, searchSource, themeSource }) {
   if (!/<a class="language-option"[^>]+href="\/en\/"[^>]*>[\s\S]*?English/.test(persianHome)) {
     throw new Error('Recovered production Persian UI is missing English locale navigation');
   }
@@ -131,8 +133,8 @@ function assertPublicRuntime({ persianHome, englishHome, documentsLanding, appSo
   if (!documentsLanding.includes('href="/documents/econ-ref-01/"')) throw new Error('Recovered production documents landing is missing stable ECON-REF-01 route');
   const cardCount = (documentsLanding.match(/class="doc-card"/g) ?? []).length;
   if (cardCount !== 11) throw new Error(`Recovered production documents landing must contain 11 governed document cards; found ${cardCount}`);
-  if (!appSource.includes('initializeSearchDialog()')) throw new Error('Recovered production runtime is missing Search initialization');
-  if (!appSource.includes('initializeTheme()')) throw new Error('Recovered production runtime is missing Theme initialization');
+  if (!/search/i.test(searchSource) || !/addEventListener/.test(searchSource)) throw new Error('Recovered production Search runtime module is incomplete');
+  if (!/theme/i.test(themeSource) || !/addEventListener/.test(themeSource)) throw new Error('Recovered production Theme runtime module is incomplete');
   if (!appSource.includes('const ROLE_GUIDES_REVISION = "2026-10-02-role-guides-v1";')) {
     throw new Error('Recovered production runtime is missing role-guide revision declaration');
   }
@@ -178,7 +180,7 @@ export async function validateRecoveredProductionArtifact({
   const archiveHash = sha256(await readFile(path.join(outDir, RECOVERED_08_DEPLOYED_ARCHIVE_NAME)));
   if (archiveHash !== expectedRuntimeArchiveSha) throw new Error('Recovered production recovery archive hash mismatch');
 
-  const [htaccess, siteConfig, robotsTxt, sitemapXml, persianHome, englishHome, documentsLanding, appSource] = await Promise.all([
+  const [htaccess, siteConfig, robotsTxt, sitemapXml, persianHome, englishHome, documentsLanding, appSource, searchSource, themeSource] = await Promise.all([
     readFile(path.join(outDir, '.htaccess'), 'utf8'),
     readFile(path.join(outDir, 'site-config.js'), 'utf8'),
     readFile(path.join(outDir, 'robots.txt'), 'utf8'),
@@ -187,13 +189,15 @@ export async function validateRecoveredProductionArtifact({
     readFile(path.join(outDir, 'en/index.html'), 'utf8'),
     readFile(path.join(outDir, 'documents/index.html'), 'utf8'),
     readFile(path.join(outDir, 'app.js'), 'utf8'),
+    readFile(path.join(outDir, 'src/ui/search-dialog.js'), 'utf8'),
+    readFile(path.join(outDir, 'src/ui/theme.js'), 'utf8'),
   ]);
   const htmlSamples = [];
   for (const relative of declaredFiles.filter((file) => file.endsWith('.html'))) {
     htmlSamples.push(await readFile(path.join(outDir, relative), 'utf8'));
   }
   assertRecoveredProductionPolicy({ manifest, htaccess, siteConfig, robotsTxt, sitemapXml, htmlSamples });
-  assertPublicRuntime({ persianHome, englishHome, documentsLanding, appSource });
+  assertPublicRuntime({ persianHome, englishHome, documentsLanding, appSource, searchSource, themeSource });
 
   const locales = JSON.parse(await readFile(path.join(outDir, 'recovered-locales.json'), 'utf8'));
   exactArray(locales.globalLocales, ['fa', 'en'], 'Recovered production locale catalog');
