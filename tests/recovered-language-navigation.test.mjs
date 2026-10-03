@@ -65,6 +65,11 @@ test('English navigation retains the Persian return page when browsing the colle
   assert.equal(navigation(next.href,'en').options.fa.href,'/documents/fc/#provision-1');
 });
 
+test('English shell on a Persian-only route returns to that same route instead of the home page',()=>{
+  const state = navigation('https://docs-preview.earthcoop.ir/documents/','en');
+  assert.equal(state.options.fa.href,'/documents/');
+});
+
 test('English generated pages retain their English article when the shared router runs', async()=>{
   const rootDir=await mkdtemp(path.join(os.tmpdir(),'ec-language-source-'));
   const outDir=await mkdtemp(path.join(os.tmpdir(),'ec-language-out-'));

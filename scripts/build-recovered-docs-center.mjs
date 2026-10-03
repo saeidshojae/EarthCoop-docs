@@ -106,6 +106,9 @@ ErrorDocument 404 /404/index.html
   <FilesMatch "^(site-config\\.js|deployment-manifest\\.json|recovered-locales\\.json|recovered-search-index\\.json|recovered-seo-routes\\.json|recovered-editorial-truth\\.json)$">
     Header set Cache-Control "no-store, max-age=0"
   </FilesMatch>
+  <FilesMatch "\\.html$">
+    Header set Cache-Control "no-store, max-age=0, must-revalidate"
+  </FilesMatch>
   <FilesMatch "\\.(css|js)$">
     Header set Cache-Control "no-cache, max-age=0, must-revalidate"
   </FilesMatch>
