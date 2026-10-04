@@ -20,6 +20,10 @@ export function patchRecoveredStaticSeoHtml(source, deploymentProfile) {
     .replaceAll('https://docs-preview.earthcoop.ir', profile.canonicalOrigin)
     .replaceAll('https://docs.earthcoop.ir', profile.canonicalOrigin);
 
+  if (profile.target === 'production') {
+    output = output.replaceAll('href="/"', 'href="/home/"');
+  }
+
   const robots = profile.globalNoindex ? 'noindex,nofollow' : 'index,follow';
   output = output.replace(
     /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i,
@@ -45,6 +49,9 @@ export function renderRecoveredHostingHtaccess(deploymentProfile) {
   const robotsHeader = profile.globalNoindex
     ? '  Header always set X-Robots-Tag "noindex, nofollow"\n'
     : '';
+  const productionHomeAlias = profile.target === 'production'
+    ? '  RewriteRule ^home/?$ index.html [L]\n\n'
+    : '';
 
   return `Options -Indexes
 DirectoryIndex index.html
@@ -57,7 +64,7 @@ DirectoryIndex index.html
   RewriteCond %{HTTP_HOST} !^${hostPattern}$ [NC]
   RewriteRule ^ ${profile.canonicalOrigin}%{REQUEST_URI} [R=301,L]
 
-  RewriteCond %{REQUEST_FILENAME} -d
+${productionHomeAlias}  RewriteCond %{REQUEST_FILENAME} -d
   RewriteCond %{REQUEST_URI} !/$
   RewriteRule ^ %{REQUEST_URI}/ [R=301,L]
 </IfModule>
