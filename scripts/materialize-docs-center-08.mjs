@@ -10,6 +10,7 @@ const execFileAsync = promisify(execFile);
 export const RECOVERED_08_DEPLOYED_ARCHIVE_NAME = 'earthcoop-knowledge-center-0.8.0-cpanel.tar.gz';
 export const RECOVERED_08_ARCHIVE_SHA256 = 'e1c5938f381db7b7f0efeef527dd828c96e13adc9de5a913de624796c6ae0704';
 export const RECOVERED_08_ARCHIVE_URL = `https://docs-preview.earthcoop.ir/${RECOVERED_08_DEPLOYED_ARCHIVE_NAME}`;
+export const RECOVERED_08_ARCHIVE_MIRROR_URL = `https://docs.earthcoop.ir/${RECOVERED_08_DEPLOYED_ARCHIVE_NAME}`;
 export const RECOVERED_08_FILE_HASHES = Object.freeze({
   'index.html': 'db2afdbe08b013f10fd3c643d430d0ef4cb9eb3442ca5f266cf71083045422a5',
   'app.js': 'e961f95541d99ca940c19b860f315eba366e50e4c9dcb9f7302cfc04b156713e',
@@ -20,13 +21,29 @@ function sha256(bytes) {
   return createHash('sha256').update(bytes).digest('hex');
 }
 
-async function sourceBytes(source) {
-  if (/^https:\/\//.test(source)) {
-    const response = await fetch(source, { redirect: 'follow' });
-    if (!response.ok) throw new Error(`Recovery archive download failed: ${response.status}`);
-    return Buffer.from(await response.arrayBuffer());
+async function fetchSourceBytes(source, fetchImpl) {
+  const response = await fetchImpl(source, { redirect: 'follow' });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  return Buffer.from(await response.arrayBuffer());
+}
+
+async function sourceBytes(source, { fetchImpl = globalThis.fetch } = {}) {
+  if (!/^https:\/\//.test(source)) return readFile(source);
+
+  const candidates = source === RECOVERED_08_ARCHIVE_URL
+    ? [RECOVERED_08_ARCHIVE_URL, RECOVERED_08_ARCHIVE_MIRROR_URL]
+    : [source];
+  const failures = [];
+
+  for (const candidate of candidates) {
+    try {
+      return await fetchSourceBytes(candidate, fetchImpl);
+    } catch (error) {
+      failures.push(`${candidate}: ${error?.message ?? String(error)}`);
+    }
   }
-  return readFile(source);
+
+  throw new Error(`Recovery archive download failed from all configured sources (${failures.join('; ')})`);
 }
 
 export async function materializeRecoveredDocsCenter({
@@ -34,9 +51,10 @@ export async function materializeRecoveredDocsCenter({
   outDir,
   expectedSha256 = RECOVERED_08_ARCHIVE_SHA256,
   verifyFiles = true,
+  fetchImpl = globalThis.fetch,
 }) {
   if (!outDir) throw new TypeError('outDir is required');
-  const bytes = await sourceBytes(archiveSource);
+  const bytes = await sourceBytes(archiveSource, { fetchImpl });
   const archiveSha256 = sha256(bytes);
   if (archiveSha256 !== expectedSha256) {
     throw new Error(`Recovered 0.8 archive SHA mismatch: ${archiveSha256}`);

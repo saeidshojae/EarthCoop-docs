@@ -22,6 +22,18 @@ export function patchRecoveredStaticSeoHtml(source, deploymentProfile) {
 
   if (profile.target === 'production') {
     output = output.replaceAll('href="/"', 'href="/home/"');
+
+    const firstPaintBootstrap = [
+      '<script id="ec-prepaint-theme">(function(){try{var theme=localStorage.getItem(\'ec-theme\');if(theme===\'dark\'||theme===\'light\')document.documentElement.dataset.theme=theme;}catch(_){}})();</script>',
+      '<style id="ec-production-render-stability">.page{animation:none!important}</style>',
+    ].join('\n');
+
+    if (!output.includes('id="ec-prepaint-theme"')) {
+      if (!output.includes('<head>')) {
+        throw new Error('Recovered production HTML is missing <head> for first-paint stability');
+      }
+      output = output.replace('<head>', `<head>\n${firstPaintBootstrap}`);
+    }
   }
 
   const robots = profile.globalNoindex ? 'noindex,nofollow' : 'index,follow';
