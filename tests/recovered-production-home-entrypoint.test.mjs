@@ -30,7 +30,8 @@ test('production rewrites clickable root-home links to the cache-safe /home/ ent
 
 test('production hosting serves /home/ internally from index.html without a redirect', () => {
   const htaccess = renderRecoveredHostingHtaccess(production);
+  const rule = 'RewriteRule ^home/?$ index.html [L]';
 
-  assert.match(htaccess, /RewriteRule \^home\/?\$ index\.html \[L\]/);
-  assert.doesNotMatch(htaccess, /RewriteRule \^home\/?\$[^\n]*\[R=/);
+  assert.ok(htaccess.includes(rule));
+  assert.ok(!htaccess.includes('RewriteRule ^home/?$ index.html [R='));
 });
