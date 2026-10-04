@@ -42,6 +42,19 @@ export function patchRecoveredStaticSeoHtml(source, deploymentProfile) {
   return output;
 }
 
+export function patchRecoveredClientHomeAlias(source, deploymentProfile) {
+  const profile = validatedProfile(deploymentProfile);
+  const input = String(source);
+  if (profile.target !== 'production') return input;
+
+  const needle = "  const path = normalizePathname(locationLike.pathname);\n  if (path === '/404/') return null;";
+  const replacement = "  const normalizedPath = normalizePathname(locationLike.pathname);\n  const path = normalizedPath === '/home/' ? '/' : normalizedPath;\n  if (path === '/404/') return null;";
+  if (!input.includes(needle)) {
+    throw new Error('Recovered client router no longer matches the audited production home-alias patch point');
+  }
+  return input.replace(needle, replacement);
+}
+
 export function renderRecoveredHostingHtaccess(deploymentProfile) {
   const profile = validatedProfile(deploymentProfile);
   const url = new URL(profile.canonicalOrigin);
@@ -111,4 +124,10 @@ export async function applyRecoveredStaticSeoProfile({ outDir, deploymentProfile
     }
   };
   await visit(outDir);
+
+  if (profile.target === 'production') {
+    const routerPath = path.join(outDir, 'src', 'ui', 'legacy-route-migration.js');
+    const router = await readFile(routerPath, 'utf8');
+    await writeFile(routerPath, patchRecoveredClientHomeAlias(router, profile));
+  }
 }
