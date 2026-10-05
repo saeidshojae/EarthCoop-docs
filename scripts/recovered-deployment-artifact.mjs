@@ -14,7 +14,40 @@ function escapeApacheRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-export function patchRecoveredStaticSeoHtml(source, deploymentProfile) {
+function decodeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&amp;', '&');
+}
+
+function htmlAttribute(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
+function replaceOrInsertMeta(html, attribute, key, content) {
+  const escaped = htmlAttribute(content);
+  const pattern = new RegExp(`<meta\\s+${attribute}="${key}"\\s+content="[^"]*"\\s*\\/?>`, 'i');
+  const tag = `<meta ${attribute}="${key}" content="${escaped}">`;
+  if (pattern.test(html)) return html.replace(pattern, tag);
+  return html.replace(/<\/head>/i, `${tag}\n</head>`);
+}
+
+function pageSeoIdentity(html) {
+  const canonical = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"[^>]*>/i)?.[1] ?? null;
+  const title = decodeHtml(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.replace(/<[^>]+>/g, '').trim() ?? '');
+  const description = decodeHtml(html.match(/<meta\s+name="description"\s+content="([^"]*)"\s*\/?>/i)?.[1] ?? '');
+  const lang = html.match(/<html[^>]*\blang="([^"]+)"/i)?.[1]?.toLowerCase() ?? 'fa';
+  return { canonical, title, description, lang };
+}
+
+export function patchRecoveredStaticSeoHtml(source, deploymentProfile, { forceNoindex = false } = {}) {
   const profile = validatedProfile(deploymentProfile);
   let output = String(source)
     .replaceAll('https://docs-preview.earthcoop.ir', profile.canonicalOrigin)
@@ -36,14 +69,25 @@ export function patchRecoveredStaticSeoHtml(source, deploymentProfile) {
     }
   }
 
-  const robots = profile.globalNoindex ? 'noindex,nofollow' : 'index,follow';
-  output = output.replace(
-    /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i,
-    `<meta name="robots" content="${robots}">`,
-  );
-  if (!/<meta\s+name="robots"/i.test(output)) {
-    output = output.replace(/<\/head>/i, `<meta name="robots" content="${robots}">\n</head>`);
+  const identity = pageSeoIdentity(output);
+  const englishGuideNoindex = profile.target === 'production' && identity.lang.startsWith('en');
+  const robots = profile.globalNoindex || forceNoindex || englishGuideNoindex
+    ? 'noindex,nofollow'
+    : 'index,follow';
+  output = replaceOrInsertMeta(output, 'name', 'robots', robots);
+
+  if (identity.canonical) {
+    output = replaceOrInsertMeta(output, 'property', 'og:url', identity.canonical);
   }
+  if (identity.title) {
+    output = replaceOrInsertMeta(output, 'property', 'og:title', identity.title);
+    output = replaceOrInsertMeta(output, 'name', 'twitter:title', identity.title);
+  }
+  if (identity.description) {
+    output = replaceOrInsertMeta(output, 'property', 'og:description', identity.description);
+    output = replaceOrInsertMeta(output, 'name', 'twitter:description', identity.description);
+  }
+  output = replaceOrInsertMeta(output, 'property', 'og:locale', identity.lang.startsWith('en') ? 'en_US' : 'fa_IR');
 
   const forbiddenOrigin = profile.target === 'production'
     ? 'https://docs-preview.earthcoop.ir'
@@ -131,7 +175,10 @@ export async function applyRecoveredStaticSeoProfile({ outDir, deploymentProfile
       if (entry.isDirectory()) await visit(absolute);
       else if (entry.isFile() && entry.name.endsWith('.html')) {
         const html = await readFile(absolute, 'utf8');
-        await writeFile(absolute, patchRecoveredStaticSeoHtml(html, profile));
+        const relative = path.relative(outDir, absolute).replaceAll('\\', '/');
+        await writeFile(absolute, patchRecoveredStaticSeoHtml(html, profile, {
+          forceNoindex: relative === '404/index.html',
+        }));
       }
     }
   };

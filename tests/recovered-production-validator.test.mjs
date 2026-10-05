@@ -3,6 +3,11 @@ import test from 'node:test';
 
 import * as productionValidator from '../scripts/validate-recovered-production-artifact.mjs';
 
+const productionPage = {
+  relative: 'documents/fc/index.html',
+  html: '<html lang="fa"><head><title>FC — EarthCoop</title><meta name="description" content="Foundational document"><meta name="robots" content="index,follow"><link rel="canonical" href="https://docs.earthcoop.ir/documents/fc/"><meta property="og:title" content="FC — EarthCoop"><meta property="og:description" content="Foundational document"><meta property="og:url" content="https://docs.earthcoop.ir/documents/fc/"><meta property="og:locale" content="fa_IR"><meta name="twitter:title" content="FC — EarthCoop"><meta name="twitter:description" content="Foundational document"></head></html>',
+};
+
 const good = {
   manifest: {
     schemaVersion: 2,
@@ -21,7 +26,7 @@ const good = {
   siteConfig: 'deploymentTarget: "self-hosted"\ncanonicalOrigin: "https://docs.earthcoop.ir"',
   robotsTxt: 'User-agent: *\nAllow: /\nSitemap: https://docs.earthcoop.ir/sitemap.xml\n',
   sitemapXml: '<urlset><url><loc>https://docs.earthcoop.ir/documents/fc/</loc></url></urlset>',
-  htmlSamples: ['<meta name="robots" content="index,follow"><link rel="canonical" href="https://docs.earthcoop.ir/documents/fc/">'],
+  htmlSamples: [productionPage],
 };
 
 test('accepts a production policy surface with exact origin and indexing state', () => {
@@ -33,7 +38,13 @@ test('rejects Preview leakage, global noindex, wrong manifest target, or wrong c
   const validate = productionValidator.assertRecoveredProductionPolicy;
   assert.throws(() => validate({ ...good, siteConfig: `${good.siteConfig}\nhttps://docs-preview.earthcoop.ir` }), /preview/i);
   assert.throws(() => validate({ ...good, htaccess: `${good.htaccess}\nX-Robots-Tag "noindex, nofollow"` }), /noindex/i);
-  assert.throws(() => validate({ ...good, htmlSamples: ['<meta name="robots" content="noindex,nofollow">'] }), /noindex/i);
+  assert.throws(() => validate({
+    ...good,
+    htmlSamples: [{
+      ...productionPage,
+      html: productionPage.html.replace('index,follow', 'noindex,nofollow'),
+    }],
+  }), /indexable|noindex/i);
   assert.throws(() => validate({ ...good, manifest: { ...good.manifest, deploymentTarget: 'preview' } }), /production target/i);
   assert.throws(() => validate({ ...good, manifest: { ...good.manifest, canonicalOrigin: 'https://docs-preview.earthcoop.ir' } }), /origin/i);
 });

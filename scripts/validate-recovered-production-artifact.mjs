@@ -70,6 +70,66 @@ function assertNoPreview(value, label) {
   }
 }
 
+function metaContent(html, attribute, key) {
+  const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return html.match(new RegExp(`<meta\\s+${attribute}="${escaped}"\\s+content="([^"]*)"`, 'i'))?.[1] ?? null;
+}
+
+function decodeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&amp;', '&');
+}
+
+function assertHtmlSeoIdentity(relative, html) {
+  const noindex = /meta\s+name="robots"\s+content="[^"]*noindex/i.test(html);
+  const allowedNoindex = relative === '404/index.html' || relative.startsWith('en/');
+  if (allowedNoindex && !noindex) throw new Error(`Recovered production ${relative} must be noindex`);
+  if (!allowedNoindex && noindex) throw new Error(`Recovered production ${relative} must remain indexable`);
+
+  const canonical = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"/i)?.[1] ?? null;
+  if (canonical && !canonical.startsWith(EXPECTED_ORIGIN)) throw new Error(`Recovered production ${relative} canonical origin mismatch`);
+  if (!canonical) return;
+
+  const ogUrl = metaContent(html, 'property', 'og:url');
+  if (ogUrl !== canonical) throw new Error(`Recovered production ${relative} OpenGraph URL does not match canonical`);
+
+  const lang = html.match(/<html[^>]*\blang="([^"]+)"/i)?.[1]?.toLowerCase() ?? 'fa';
+  const expectedLocale = lang.startsWith('en') ? 'en_US' : 'fa_IR';
+  if (metaContent(html, 'property', 'og:locale') !== expectedLocale) {
+    throw new Error(`Recovered production ${relative} OpenGraph locale mismatch`);
+  }
+
+  const title = decodeHtml(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.replace(/<[^>]+>/g, '').trim() ?? '');
+  if (title) {
+    if (decodeHtml(metaContent(html, 'property', 'og:title')) !== title) throw new Error(`Recovered production ${relative} OpenGraph title mismatch`);
+    if (decodeHtml(metaContent(html, 'name', 'twitter:title')) !== title) throw new Error(`Recovered production ${relative} Twitter title mismatch`);
+  }
+
+  const description = decodeHtml(metaContent(html, 'name', 'description'));
+  if (description) {
+    if (decodeHtml(metaContent(html, 'property', 'og:description')) !== description) throw new Error(`Recovered production ${relative} OpenGraph description mismatch`);
+    if (decodeHtml(metaContent(html, 'name', 'twitter:description')) !== description) throw new Error(`Recovered production ${relative} Twitter description mismatch`);
+  }
+}
+
+function sitemapLocations(sitemapXml) {
+  return [...String(sitemapXml).matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]).sort();
+}
+
+function assertSitemapMatchesIndexableRoutes(sitemapXml, seoRoutes) {
+  const actual = sitemapLocations(sitemapXml);
+  const expected = (seoRoutes ?? [])
+    .filter((route) => route.indexable === true)
+    .map((route) => route.canonical)
+    .sort();
+  exactArray(actual, expected, 'Recovered production sitemap/indexable route set');
+  if (actual.some((url) => url.includes('/en/'))) throw new Error('Recovered production sitemap must not include non-indexable English guides');
+}
+
 export function assertRecoveredProductionPolicy({
   manifest,
   htaccess,
@@ -87,7 +147,7 @@ export function assertRecoveredProductionPolicy({
   assertNoPreview(siteConfig, 'Recovered production site config');
   assertNoPreview(robotsTxt, 'Recovered production robots');
   assertNoPreview(sitemapXml, 'Recovered production sitemap');
-  for (const html of htmlSamples) assertNoPreview(html, 'Recovered production HTML');
+  for (const sample of htmlSamples) assertNoPreview(sample.html, `Recovered production HTML ${sample.relative}`);
 
   if (!String(htaccess).includes(EXPECTED_ORIGIN)) throw new Error('Recovered production htaccess origin mismatch');
   if (/X-Robots-Tag\s+"?noindex/i.test(String(htaccess))) throw new Error('Recovered production htaccess must not emit global noindex');
@@ -95,10 +155,7 @@ export function assertRecoveredProductionPolicy({
   if (/^\s*Disallow:\s*\/\s*$/mi.test(String(robotsTxt))) throw new Error('Recovered production robots must not disallow the entire site');
   if (!String(robotsTxt).includes(`Sitemap: ${EXPECTED_ORIGIN}/sitemap.xml`)) throw new Error('Recovered production robots sitemap origin mismatch');
   if (!String(sitemapXml).includes(EXPECTED_ORIGIN)) throw new Error('Recovered production sitemap is missing Production origin');
-  for (const html of htmlSamples) {
-    if (/meta\s+name="robots"\s+content="[^"]*noindex/i.test(html)) throw new Error('Recovered production HTML must not contain noindex');
-    if (/rel="canonical"/i.test(html) && !html.includes(EXPECTED_ORIGIN)) throw new Error('Recovered production HTML canonical origin mismatch');
-  }
+  for (const sample of htmlSamples) assertHtmlSeoIdentity(sample.relative, sample.html);
 }
 
 function parseExpectedFoundationalVersions(source) {
@@ -194,7 +251,7 @@ export async function validateRecoveredProductionArtifact({
   ]);
   const htmlSamples = [];
   for (const relative of declaredFiles.filter((file) => file.endsWith('.html'))) {
-    htmlSamples.push(await readFile(path.join(outDir, relative), 'utf8'));
+    htmlSamples.push({ relative, html: await readFile(path.join(outDir, relative), 'utf8') });
   }
   assertRecoveredProductionPolicy({ manifest, htaccess, siteConfig, robotsTxt, sitemapXml, htmlSamples });
   assertPublicRuntime({ persianHome, englishHome, documentsLanding, appSource, searchSource, themeSource });
@@ -209,6 +266,7 @@ export async function validateRecoveredProductionArtifact({
   const seoRoutes = JSON.parse(await readFile(path.join(outDir, 'recovered-seo-routes.json'), 'utf8'));
   if (seoRoutes.length !== manifest.seoRouteCount) throw new Error('Recovered production SEO route count mismatch');
   assertNoPreview(JSON.stringify(seoRoutes), 'Recovered production SEO routes');
+  assertSitemapMatchesIndexableRoutes(sitemapXml, seoRoutes);
 
   const foundationalSource = await readFile(path.join(outDir, FOUNDATIONAL_PACKAGE_FILE), 'utf8');
   const expectedDocumentVersions = parseExpectedFoundationalVersions(foundationalSource);
