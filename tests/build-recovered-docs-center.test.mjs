@@ -36,6 +36,9 @@ async function fixture() {
   await execFileAsync('tar', ['-czf', archive, '-C', runtime, '.']);
   const archiveHash = createHash('sha256').update(await readFile(archive)).digest('hex');
 
+  await mkdir(path.join(root, 'images'), { recursive: true });
+  await writeFile(path.join(root, 'images/earthcoop-brand-192.png'), 'png-fixture');
+
   await mkdir(path.join(root, 'audits/product-guides'), { recursive: true });
   await writeFile(path.join(root, 'audits/product-guides/2026-09-28-inventory.json'), JSON.stringify({ pages: [
     { path:'introduction.mdx', title:'Introduction' },
@@ -97,6 +100,7 @@ test('builds recovered 0.8 runtime with governed data, editorial truth, full-tex
   });
 
   assert.match(await readFile(path.join(outDir, 'index.html'), 'utf8'), /مرکز دانش/);
+  assert.equal(await readFile(path.join(outDir, 'assets/brand/earthcoop-brand-192.png'), 'utf8'), 'png-fixture');
   const app = await readFile(path.join(outDir, 'app.js'), 'utf8');
   assert.match(app, /collection === 'foundational'/);
   assert.match(app, /اسناد مرجع/);
