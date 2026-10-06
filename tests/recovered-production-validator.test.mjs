@@ -5,7 +5,7 @@ import * as productionValidator from '../scripts/validate-recovered-production-a
 
 const productionPage = {
   relative: 'documents/fc/index.html',
-  html: '<html lang="fa"><head><title>FC — EarthCoop</title><meta name="description" content="Foundational document"><meta name="robots" content="index,follow"><link rel="canonical" href="https://docs.earthcoop.ir/documents/fc/"><meta property="og:title" content="FC — EarthCoop"><meta property="og:description" content="Foundational document"><meta property="og:url" content="https://docs.earthcoop.ir/documents/fc/"><meta property="og:locale" content="fa_IR"><meta name="twitter:title" content="FC — EarthCoop"><meta name="twitter:description" content="Foundational document"></head></html>',
+  html: '<html lang="fa"><head><link rel="icon" type="image/png" href="/assets/brand/earthcoop-brand-192.png"><title>FC — EarthCoop</title><meta name="description" content="Foundational document"><meta name="robots" content="index,follow"><link rel="canonical" href="https://docs.earthcoop.ir/documents/fc/"><meta property="og:title" content="FC — EarthCoop"><meta property="og:description" content="Foundational document"><meta property="og:url" content="https://docs.earthcoop.ir/documents/fc/"><meta property="og:locale" content="fa_IR"><meta name="twitter:title" content="FC — EarthCoop"><meta name="twitter:description" content="Foundational document"></head></html>',
 };
 
 const good = {
