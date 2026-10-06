@@ -68,5 +68,5 @@
   },
   "background": {"decoration": "grid"},
   "logo": {"light": "/images/icon.svg", "dark": "/images/icon.svg", "href": "https://EarthCoop.ir"},
-  "favicon": {"light": "/images/icon.svg", "dark": "/images/icon.svg"}
+  "favicon": {"light": "/images/earthcoop-brand-192.png", "dark": "/images/earthcoop-brand-192.png"}
 }
