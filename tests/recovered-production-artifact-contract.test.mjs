@@ -24,6 +24,7 @@ test('production static HTML uses only Production origin and is not globally noi
   assert.match(output, /https:\/\/docs\.earthcoop\.ir\/documents\/fc\//);
   assert.doesNotMatch(output, /content="noindex,nofollow"/);
   assert.match(output, /meta name="robots" content="index,follow"/);
+  assert.match(output, /<link rel="icon" type="image\/png" href="\/assets\/brand\/earthcoop-brand-192\.png">/);
 });
 
 test('preview static HTML remains Preview-only and globally noindex', () => {
@@ -32,6 +33,7 @@ test('preview static HTML remains Preview-only and globally noindex', () => {
   assert.doesNotMatch(output, /https:\/\/docs\.earthcoop\.ir/);
   assert.match(output, /https:\/\/docs-preview\.earthcoop\.ir\/documents\/fc\//);
   assert.match(output, /meta name="robots" content="noindex,nofollow"/);
+  assert.match(output, /<link rel="icon" type="image\/png" href="\/assets\/brand\/earthcoop-brand-192\.png">/);
 });
 
 test('hosting headers preserve Preview noindex but omit it entirely in Production', () => {

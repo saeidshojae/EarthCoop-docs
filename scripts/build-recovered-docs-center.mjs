@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -99,6 +99,13 @@ export async function buildRecoveredDocsCenter({
     expectedSha256: runtimeArchiveSha256,
     verifyFiles: verifyRecoveredFiles,
   });
+
+  const searchBrandDir = path.join(outDir, 'assets', 'brand');
+  await mkdir(searchBrandDir, { recursive: true });
+  await copyFile(
+    path.join(rootDir, 'images', 'earthcoop-brand-192.png'),
+    path.join(searchBrandDir, 'earthcoop-brand-192.png'),
+  );
 
   const readerPath = path.join(outDir, 'src/pages/document-reader.js');
   const readerSource = await readFile(readerPath, 'utf8');

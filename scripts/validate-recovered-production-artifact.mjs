@@ -34,6 +34,7 @@ const REQUIRED_FILES = Object.freeze([
   'sitemap.xml',
   'src/ui/search-dialog.js',
   'src/ui/theme.js',
+  'assets/brand/earthcoop-brand-192.png',
   FOUNDATIONAL_PACKAGE_FILE,
   RECOVERED_08_DEPLOYED_ARCHIVE_NAME,
 ]);
@@ -85,6 +86,10 @@ function decodeHtml(value) {
 }
 
 function assertHtmlSeoIdentity(relative, html) {
+  if (!/<link\s+rel=["']icon["']\s+type=["']image\/png["']\s+href=["']\/assets\/brand\/earthcoop-brand-192\.png["'][^>]*>/i.test(html)) {
+    throw new Error(`Recovered production ${relative} is missing the canonical PNG favicon`);
+  }
+
   const noindex = /meta\s+name="robots"\s+content="[^"]*noindex/i.test(html);
   const allowedNoindex = relative === '404/index.html' || relative.startsWith('en/');
   if (allowedNoindex && !noindex) throw new Error(`Recovered production ${relative} must be noindex`);

@@ -39,6 +39,16 @@ function replaceOrInsertMeta(html, attribute, key, content) {
   return html.replace(/<\/head>/i, `${tag}\n</head>`);
 }
 
+const SEARCH_FAVICON_PATH = '/assets/brand/earthcoop-brand-192.png';
+
+function replaceOrInsertFavicon(html) {
+  const tag = `<link rel="icon" type="image/png" href="${SEARCH_FAVICON_PATH}">`;
+  const pattern = /<link\s+rel=["']icon["'][^>]*>/i;
+  if (pattern.test(html)) return html.replace(pattern, tag);
+  if (!/<\/head>/i.test(html)) throw new Error('Recovered HTML is missing </head> for favicon insertion');
+  return html.replace(/<\/head>/i, `${tag}\n</head>`);
+}
+
 function pageSeoIdentity(html) {
   const canonical = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"[^>]*>/i)?.[1] ?? null;
   const title = decodeHtml(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.replace(/<[^>]+>/g, '').trim() ?? '');
@@ -52,6 +62,8 @@ export function patchRecoveredStaticSeoHtml(source, deploymentProfile, { forceNo
   let output = String(source)
     .replaceAll('https://docs-preview.earthcoop.ir', profile.canonicalOrigin)
     .replaceAll('https://docs.earthcoop.ir', profile.canonicalOrigin);
+
+  output = replaceOrInsertFavicon(output);
 
   if (profile.target === 'production') {
     output = output.replaceAll('href="/"', 'href="/home/"');
